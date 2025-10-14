@@ -1,0 +1,42 @@
+ <?php
+include_once('inc.php'); 
+include_once('config/session-check.inc.php'); // check user login session
+
+$sql_inss="SELECT id from "._SHAREANDUPDATES_TABLE_." WHERE userId= ".$_SESSION["sessUserId"]." AND id=".$_REQUEST['postId']."";
+$resresults=mysqli_query($conn, $sql_inss) or die(mysqli_error($conn)); 
+$rowResults=mysqli_fetch_array($resresults);
+$postId=$rowResults["id"];
+?>
+
+
+
+ 
+ 
+  
+           
+		  <?php
+		  
+		/*if($postId!=0 && is_numeric($postId))
+		{*/
+		    $selectFields= [];
+			$whereFields =[];
+			$whereVals =[];
+	
+		$sqlLogin="";
+		$sqlLogin="select * from "._IMAGE_MASTER_TABLE_." where postId=".$postId."";
+		$resLogin=getRecords(_IMAGE_MASTER_TABLE_,$selectFields,$whereFields,$whereVals,_Y_,$sqlLogin); 	
+		if($resLogin)
+		{
+			while($rowimg=mysqli_fetch_array($resLogin))
+			{
+		  ?>
+          
+		 <img src="<?php echo $fullurl;?>uploads/<?php echo $rowimg['imageName']; ?>"><span class="close"><a href="common_action.php?postId=<?php echo $postId; ?>&action=removepostimg" target="actionfrm"><i class="fa fa-times" aria-hidden="true"></i></a></span> 
+			<?php
+			}
+			}
+		//}
+			?>
+			
+ <div class="uploadanimg"><div class="uploadanimgbtn">Upload Photo<input name="imagefilehome" id="imagefilehome" type="file"  onChange="$('#frmposthomeimg').submit();" style="   filter: alpha(opacity=0);opacity:0; position:absolute; left:0px; top:0px; width:100%; height:100%;   "> </div><input type="hidden" id="uploadarticleimg" name="uploadarticleimg" value="1">
+	<input type="hidden" id="articleId" name="articleId" value="<?php echo $postId; ?>"><input type="hidden" id="addeditpost" name="addeditpost" value="edit"></div>

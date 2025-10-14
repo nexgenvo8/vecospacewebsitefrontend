@@ -1,0 +1,66 @@
+body{padding:0px; margin:0px; font-size:13px; color:#666666; font-family:Arial, Helvetica, sans-serif;}
+.smallnoshare{border:1px #ef7b00 solid; height:20px; width:20px; background-color:#FFFFFF; cursor:pointer; text-align:center; background-image:url(../images/logo_connecwrk_60.png); background-size: auto 12px; background-position: center center; background-repeat:no-repeat; border-radius: 2px;} 
+.smallwithshare{border:1px #ef7b00 solid; height:20px; width:58px; cursor:pointer;  background-repeat:no-repeat; border-radius: 2px; background-color:#ef7b00;}
+.smallwithshare .icon {
+    width: 14px;
+    height: 14px;
+    background-color: #FFFFFF;
+    background-image: url(../images/logo_connecwrk_60.png);
+    background-size: auto 8px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: left;
+    margin: 3px;
+    border-radius: 2px;
+}
+.smallwithshare .text{color:#FFFFFF; float:left; font-weight:bold; font-size:12px; margin-top: 4px;}
+
+
+.mediumnoshare{border:1px #ef7b00 solid; height:28px; width:28px; background-color:#FFFFFF; cursor:pointer; text-align:center; background-image:url(../images/logo_connecwrk_60.png); background-size: auto 12px; background-position: center center; background-repeat:no-repeat; border-radius: 2px;} 
+.mediumwithshare{border:1px #ef7b00 solid; height:28px; width:78px; cursor:pointer;  background-repeat:no-repeat; border-radius: 2px; background-color:#ef7b00;}
+.mediumwithshare .icon {
+    width: 22px;
+    height: 22px;
+    background-color: #FFFFFF;
+    background-image: url(../images/logo_connecwrk_60.png);
+    background-size: auto 14px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: left;
+    margin: 3px;
+    border-radius: 2px;
+}
+.mediumwithshare .text {
+    color: #FFFFFF;
+    float: left;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 7px;
+    margin-left: 3px;
+}
+
+
+
+
+.largenoshare{border:1px #ef7b00 solid; height:38px; width:38px; background-color:#FFFFFF; cursor:pointer; text-align:center; background-image:url(../images/logo_connecwrk_60.png); background-size: auto 14px; background-position: center center; background-repeat:no-repeat; border-radius: 2px;} 
+.largewithshare{border:1px #ef7b00 solid; height:38px; width:98px; cursor:pointer;  background-repeat:no-repeat; border-radius: 2px; background-color:#ef7b00;}
+.largewithshare .icon {
+    width: 28px;
+    height: 28px;
+    background-color: #FFFFFF;
+    background-image: url(../images/logo_connecwrk_60.png);
+    background-size: auto 14px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    float: left;
+    margin: 4.8px;
+    border-radius: 2px;
+}
+.largewithshare .text {
+    color: #FFFFFF;
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 11px;
+    margin-left: 3px;
+}

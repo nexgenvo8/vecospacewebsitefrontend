@@ -1,0 +1,6 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+
+ 
+RewriteRule ^sharebtn.html$ sharebutton.php  [NC,L]

@@ -1,0 +1,43 @@
+#loadshareddata2 .comnt-write{ display:none;}
+#loadshareddata2 .commnts-cont{ display:none;}
+#loadshareddata2 .likes-mmbr{ display:none;}
+#loadshareddata2 .views{ display:none;}
+#loadshareddata2 .errow-drop{ display:none;}
+#loadshareddata2 .tmln_fttr{ display:none;}
+
+#loadshareddatabox .comnt-write{ display:none;}
+#loadshareddatabox .commnts-cont{ display:none;}
+#loadshareddatabox .likes-mmbr{ display:none;}
+#loadshareddatabox .views{ display:none;}
+#loadshareddatabox .errow-drop{ display:none;}
+#loadshareddatabox .tmln_fttr{ display:none;}
+.timlist .timlist .hdr_right span{ display:none !important;}
+
+/*pagination css*/
+
+.pagingdiv{margin:18px; color:#464659;}
+
+.pagingnumbers{    border: 1px #EAEAEA solid;
+border-radius: 2px;
+overflow: hidden;
+float: left;
+margin: 20px;
+margin-left: 36%;}
+
+.pagingnumbers a{display: inline-block;
+padding: 9px 10px;
+min-width: 12px;
+text-align: center;
+color: #3c8dbc;
+text-decoration: none; 
+font-size: 12px;}
+.pagingnumbers .nextprev{font-size: 20px;line-height: 20px;padding-top: 5px;}
+.pagingnumbers a:hover{background-color:#EAEAEA; color:#3c8dbc; }
+.pagingnumbers .active{background-color:#6990C3; color:#FFFFFF;}
+.pagingnumbers .current {
+display: inline-block;
+padding: 9px 8px;
+font-size: 12px; background-color:#1a94c3; color:#fff;
+}
+.pagingnumbers .disabled{display: inline-block; padding:7px 8px;color: #CECECE;}
+

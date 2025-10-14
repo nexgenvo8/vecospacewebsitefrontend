@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700');
+
+body, html {
+    background-color: gray;
+    height: 100%;
+    font-family: 'Source Sans Pro',sans-serif !important; 
+}
+
+#videos {
+    position: relative;
+    width: 100%;
+    height: 100%;float: right;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+#subscriber {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+#publisher {
+    position: absolute;
+    width: 260px;
+    height: 180px;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    border: 0px solid white;
+    border-radius: 3px;
+}
+
+.vdo-chat-cont.active {
+    display: block;
+}
+.vdo-chat-cont.active ~ #videos {
+    width: 75%;
+}
+.vdo-chat-main {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+.vdo-chat-hdr .vdo-usr-img img {
+    max-width: 100%;
+}
+.vdo-chat-hdr {
+    float: left;
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px 10px 0 0;
+    box-sizing: border-box;
+}
+.vdo-chat-hdr .vdo-usr-img {
+    float: left;
+    width: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 40px;
+    text-align: center;
+    border: solid 2px #e7e7e7;
+}
+.vdo-chat-hdr .vdo-usr-nm {
+    padding-left: 10px;
+    float: left;
+    padding-top: 5px;
+}
+.vdo-usr-nm a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+.vdo-usr-nm span {
+    color: #9a9a9a;
+    font-size: 12px;
+}
+.vdo-chat-box {
+float: left;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+    height: 80%;
+    margin: 60px 0;
+    overflow-y: auto;
+}
+.vdo-chat.user {
+    text-align: left;
+}
+.vdo-chat.me {
+    text-align: right;
+}
+.vdo-chat {
+    float: left;
+    width: 100%;
+    position: relative;
+    margin-bottom: 10px;
+}
+.vdo-chat .writen-chat-user {
+    clear: both;
+    float: left;
+    padding: 6px 10px 7px;
+    border-radius: 10px 10px 10px 0;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 8px 0;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: 5px;
+    color: rgba(255, 255, 255, 0.5);
+    position: relative;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.vdo-chat.user .tm {
+    display: block;
+    float: left;
+    clear: both;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+}
+.vdo-chat.me .tm {
+    display: block;
+    float: right;
+    clear: both;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+}
+.writen-chat-me {
+    float: right;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: right;
+    background: -webkit-linear-gradient(330deg, #1db055, #41a8da);
+    background:linear-gradient(120deg, #1db055, #41a8da);
+    display: inline-block;
+    padding: 6px 10px 7px;
+    border-radius: 10px 10px 0 10px;
+    margin: 8px 0;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-left: 35px;
+    position: relative;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+.vdo-chat-box .chat-date {
+    float: left;
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
+    color: rgba(241, 241, 241, 0.5);
+}
+.vdo-chat-fttr {
+    float: left;
+    position: fixed;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: 337px;
+}
+.vdo-chat-fttr textarea {
+    width: 100%;
+    background-color: rgba(0,0,0,0.8);
+    border: 0;
+    outline: none;
+    padding: 5px;
+    position: relative;
+}
+.vdo-chat-fttr input[type="submit"] {
+    position: absolute;
+    right: 20px;
+    cursor:pointer;
+    top: 20px;
+    color: #fff;
+    border: none;
+    background-color: #1db055;
+    font-size: 10px;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 6px 10px;
+    border-radius: 10px;
+    outline: 0;
+}

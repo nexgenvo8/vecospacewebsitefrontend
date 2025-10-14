@@ -1,0 +1,35 @@
+/*
+ * Techcare Image Gallery
+ * http://techcareonline.in
+ *
+ * Copyright (c) 2016 Techcare Online
+ *
+ * Date: 2016-09-22 10:58:48 +0530 (Thu, 22 Sep 2016)
+ */
+
+body{margin:0px; padding:0px; font-family:Arial, Helvetica, sans-serif; font-size:14px;}
+#TGimageboxouter{margin:20px; overflow:hidden;}
+#TGimageboxouter img{ /*cursor:pointer; margin:10px; height:100px; width:100px;  padding:5px; background-color:#FFFFFF; border:1px #CCCCCC solid; display:inline-block; overflow:hidden; text-align:center;*/} 
+#TGgallerybg{width:100%; height:100%; background-color:rgba(0,0,0,0.8); position:fixed; z-index:999999; display:none; left:0px; top:0px; }
+#TGpopouter{position:fixed; left:0px; top:0px; width:100%; height:100%; overflow:auto; display:none; z-index:9999999;}
+#TGpopouter #popbox{width:900px; margin:auto; position:relative;margin-top: 80px;}
+#TGpopouter #popbox img{width:880px; background-color:#FFFFFF; padding:10px; height:auto; box-shadow: 0px 0px 40px #000;}
+#TGpopouter .imgtitle{font-size:20px; color:#FFFFFF; padding:15px 0px;}
+.TGimgdisplayclass{display:none; text-align:center; position:absolute;}
+#TGclosegallerybutton{
+padding: 2px 8px;
+background-color: #FFFFFF;
+position: absolute;
+right: 11px;
+top: 19px;
+font-size: 16px;
+color: #333333;
+font-weight: normal;
+cursor: pointer;
+z-index: 999;
+border-radius: 5px;
+border: 3px #ffffff solid;
+font-weight: bold;
+}
+#TGnextbtn{position:fixed; right:100px;  top:50%; width:64px; height:64px; background-image:url(../images/next.png); background-repeat:no-repeat; background-size: 50px auto; cursor:pointer; z-index:999;}
+#TGprevbtn{ position:fixed; left:100px; top:50%; width:64px; height:64px; background-image:url(../images/prev.png); background-repeat:no-repeat; background-size: 50px auto; cursor:pointer; z-index:999;}

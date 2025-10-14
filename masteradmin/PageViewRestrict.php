@@ -1,0 +1,1 @@
+<?php if($PageViewRestrict!='1'){exit();}?>

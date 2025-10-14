@@ -1,0 +1,163 @@
+Options +FollowSymLinks
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^jmi.vecospace.com [NC]
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+ErrorDocument 404 https://jmi.vecospace.com/page-not-found.html
+
+RewriteRule ^sme-blogs/(.*)/(.*).html$ viewsmeblogs.php?postId=$1&t=$2  [NC,L]
+
+RewriteRule ^groups/(.*)/(.*).html$ mygroupsdetail.php?groupId=$1&gr=$2  [NC,L]
+RewriteRule ^articles-and-trivia/(.*)/(.*).html$ viewarticle.php?postId=$1&t=$2  [NC,L]
+RewriteRule ^corporate-connect/(.*)/(.*).html$ companyprofile.php?companyId=$1&c=$2  [NC,L]
+RewriteRule ^events/(.*)/(.*).html$ eventsdetail.php?eventId=$1&ev=$2  [NC,L]
+
+RewriteRule ^project/(.*)/(.*).html$ previewproject.php?projId=$1&pr=$2  [NC,L]
+
+
+RewriteRule ^downloads/(.*)/(.*)/(.*).html$ downloaddocuments.php?id=$1&userId=$2&u=$3  [NC,L]
+RewriteRule ^downloads/(.*)/(.*).html$ commondownload.php?id=$1&t=$2  [NC,L]
+
+RewriteRule ^profile/(.*)/(.*)/(.*).html$ friendprofile.php?id=$1&username=$2&r=$3  [NC,L]
+RewriteRule ^profile/(.*)/(.*).html$ friendprofile.php?id=$1&username=$2  [NC,L]
+RewriteRule ^myprofile/(.*)/(.*).html$ userprofile.php?id=$1&username=$2  [NC,L]
+
+RewriteRule ^smbkonectt/(.*)/(.*).html$ businessdetail.php?id=$1&pname=$2  [NC,L]
+
+RewriteRule ^vault/(.*)/(.*).html$ vault_detail.php?id=$1&t=$2  [NC,L]
+
+
+
+RewriteRule ^timeline.html$ home.php
+RewriteRule ^complete-registration.html$ completeregistration.php  [NC,L]
+RewriteRule ^update-profile.html$ updateprofile.php  [NC,L]
+RewriteRule ^post-article.html$ postarticle.php  [NC,L]
+RewriteRule ^edit-article.html$ editarticle.php  [NC,L]
+RewriteRule ^my-contacts.html$ mycontacts.php [L] 
+RewriteRule ^single-post.html$ singlepost.php [L] 
+RewriteRule ^logout.html$ logoutpage.php [L]
+RewriteRule ^my-groups.html$ mygroup.php [L]
+RewriteRule ^groups.html$ grouppage.php [L]
+RewriteRule ^groups-detail.html$ redirectmygroupsdetail.php [L]
+RewriteRule ^single-group-post.html$ singlegrouppost.php [L] 
+RewriteRule ^group-setting.html$ groupsetting.php [L]  
+RewriteRule ^about-group.html$ aboutgroup.php [L] 
+RewriteRule ^private-group.html$ privategroup.php [L]
+RewriteRule ^joining-requests.html$ joiningrequests.php [L]
+RewriteRule ^discover-groups.html$ discovergrouppage.php [L]
+RewriteRule ^invitation.html$ sendinvitation.php [L]
+RewriteRule ^view-article.html$ redirectviewarticle.php [L]
+RewriteRule ^view-sme-blog.html$ redirectsmeblogs.php [L]
+RewriteRule ^events.html$ eventspage.php [L]
+RewriteRule ^events-detail.html$ redirecteventsdetail.php [L]
+RewriteRule ^post-events.html$ postevents.php [L]
+RewriteRule ^my-events.html$ myevents.php [L]
+RewriteRule ^contact-events.html$ contactevents.php [L]
+RewriteRule ^articles-and-trivia.html$ articlesandtrivia.php [L]
+RewriteRule ^companies.html$ companies.php [L]
+RewriteRule ^company-profile.html$ redirectcompanyprofile.php [L]
+RewriteRule ^create-new-company.html$ createnewcompany.php [L]
+RewriteRule ^employees.html$ employees.php [L]
+RewriteRule ^profile-views.html$ profileviews.php [L]
+RewriteRule ^activity.html$ activitypage.php [L]
+RewriteRule ^user-activity.html$ useractivitypage.php [L]
+RewriteRule ^notifications.html$ notificationapage.php [L]
+RewriteRule ^user-requests.html$ userrequestpage.php [L]
+RewriteRule ^messaging.html$ messagepage.php [L]
+RewriteRule ^faq.html$ faqpage.php [L]
+RewriteRule ^contacts.html$ contactspage.php [L]
+RewriteRule ^conduct-guidelines.html$ conductguidelines.php  [NC,L]
+RewriteRule ^user-articles.html$ userarticles.php  [NC,L]
+RewriteRule ^search.html$ searchpage.php  [NC,L]
+RewriteRule ^group-request.html$ groupaccept.php  [NC,L]
+RewriteRule ^search-events.html$ searchevents.php  [NC,L]
+RewriteRule ^search-group.html$ searchgroup.php  [NC,L]
+RewriteRule ^ask-join-group.html$ askjoingroup.php  [NC,L]
+RewriteRule ^projects.html$ projects.php  [NC,L]
+RewriteRule ^post-project.html$ postprojects.php  [NC,L]
+RewriteRule ^register-freelancer.html$ registerfreelancer.php  [NC,L]
+RewriteRule ^freelancer-profile.html$ freelancerprofile.php  [NC,L]
+RewriteRule ^freelancers.html$ freelancerlist.php  [NC,L]
+RewriteRule ^search-projects.html$ searchprojects.php  [NC,L]
+RewriteRule ^manage-projects.html$ manageprojects.php  [NC,L]
+RewriteRule ^preview-project.html$ redirectpreviewproject.php  [NC,L]
+RewriteRule ^project-faq.html$ projectfaq.php  [NC,L]
+RewriteRule ^bookmarked-projects.html$ bookmarkedprojects.php  [NC,L]
+RewriteRule ^interested-projects.html$ myintrestedprojects.php  [NC,L]
+RewriteRule ^thanks-project.html$ thanksproject.php  [NC,L]
+RewriteRule ^company-updates.html$ companyupdates.php  [NC,L]
+RewriteRule ^404error.html$ 404_error.php  [NC,L]
+RewriteRule ^page-not-found.html$ 404_error2.php  [NC,L]
+RewriteRule ^settings.html$ settings.php  [NC,L]
+RewriteRule ^personal-data.html$ personaldata.php  [NC,L]
+RewriteRule ^privacy-setting.html$ privacysetting.php  [NC,L]
+RewriteRule ^notification-setting.html$ notificationsetting.php  [NC,L]
+RewriteRule ^fblogin.html$ fb-login.php  [NC,L]
+RewriteRule ^forgot-password.html$ forgotpassword.php  [NC,L]
+RewriteRule ^reset-password.html$ resetpassword.php  [NC,L]
+RewriteRule ^page-not-found.html$ pagenotfound.php  [NC,L]
+RewriteRule ^search-companies.html$ searchcompanies.php  [NC,L]
+RewriteRule ^confirm-registration.html$ confirm.php  [NC,L]
+RewriteRule ^terms.html$ termspage.php  [NC,L]
+RewriteRule ^privacy.html$ privacypage.php  [NC,L]
+RewriteRule ^about.html$ aboutpage.php  [NC,L]
+RewriteRule ^thankyou.html$ thankyoupage.php  [NC,L]
+RewriteRule ^registration-form.html$ registrationform.php  [NC,L]
+RewriteRule ^konectt-live.html$ videocallpage.php  [NC,L]
+
+
+RewriteRule ^smb-categories.html$ businesslist.php  [NC,L]
+RewriteRule ^all-sme-blogs.html$ allsmeblogslist.php  [NC,L]
+RewriteRule ^my-business.html$ mybusinesslist.php  [NC,L]
+RewriteRule ^all-companies.html$ allcompanies.php  [NC,L]
+RewriteRule ^all-articles-and-trivia.html$ allarticlesandtrivia.php  [NC,L]
+RewriteRule ^talent-konectt.html$ talentkonectt.php  [NC,L]
+RewriteRule ^talent-profile.html$ talentprofile.php  [NC,L]
+RewriteRule ^talent-profile-detail.html$ talentdetail.php  [NC,L]
+RewriteRule ^more-talent-profiles.html$ talentlist.php  [NC,L]
+RewriteRule ^my-talent-profiles.html$ mytalentlist.php  [NC,L]
+RewriteRule ^company-jobs.html$ companyjobs.php  [NC,L]
+RewriteRule ^jobs.html$ jobshome.php  [NC,L]
+RewriteRule ^add-job.html$ postjobs.php  [NC,L]
+RewriteRule ^view-job.html$ previewjobs.php  [NC,L]
+RewriteRule ^search-job.html$ jobsearchpage.php  [NC,L]
+RewriteRule ^vault.html$ vaultpage.php  [NC,L]
+RewriteRule ^upload-documents.html$ upload_document.php  [NC,L]
+RewriteRule ^search-vault.html$ searchvaultpage.php  [NC,L]
+RewriteRule ^my-vault.html$ myvaultdoc.php  [NC,L]
+RewriteRule ^find-mentor.html$ findmentor.php  [NC,L]
+RewriteRule ^become-a-mentor.html$ become-a-mentor.php  [NC,L]
+RewriteRule ^guide-messaging.html$ guidemessage.php  [NC,L]
+RewriteRule ^load_stmtchat.html$ load_studentmentorchat.php  [NC,L]
+RewriteRule ^view-document.html$ redirectviewvault.php [L]
+RewriteRule ^myads.html$ myads.php [L]
+RewriteRule ^redirecturl.html$ redirecturl.php [L]
+
+RewriteRule ^downloads.html$ redirectviewvaultdocs.php [L]
+
+
+
+RewriteRule ^smb.html$ smbpage.php [L]
+RewriteRule ^cbp.html$ cbppage.php [L]
+RewriteRule ^invitation-sent.html$ invitation-sent.php [L]
+RewriteRule ^useraccount.html$ useraccountpage.php [L]
+RewriteRule ^disabled-account.html$ disabled_account.php  [NC,L]
+
+RewriteRule ^my-blogs.html$ myatricleblogs.php  [NC,L]
+
+RewriteRule ^developer.html$ developerpage.php  [NC,L]
+
+RewriteRule ^contact-us.html$ contactuspage.php  [NC,L]
+RewriteRule ^job-fair.html$ jobfair.php  [NC,L]
+RewriteRule ^tedx-jmi.html$ tedxjmi.php  [NC,L]
+RewriteRule ^all-notice.html$ allnotice.php [L]
+RewriteRule ^view-notice.html$ viewnotice.php [L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php55” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php55 .php .php5 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
