@@ -6,7 +6,7 @@ if ($userAccountCloseStatus == 1) {
 
 ?>
 <?php
-$fullurl = "http://localhost/jmivecospace/jmi/";
+$fullurl = "http://localhost/jmiwebsite/vecospacewebsitefrontend/";
 ?>
 
 <script>

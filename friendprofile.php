@@ -438,7 +438,7 @@ if (file_exists($userfilename)) {
 
 
 									<ul class="frnd-usractivity-button">
-										<?php if ($getUserSettings["activityTabVisible"] == "All members") { ?>
+										<?php if (!empty($getUserSettings) && isset($getUserSettings["activityTabVisible"]) && $getUserSettings["activityTabVisible"] == "All members") { ?>
 											<li class="activty"> <a <?php if ($requestSent > 0) {
 											} else {
 												if ($aabb['id'] != '') { ?>href="<?php echo $fullurl; ?>user-activity.html?userId=<?php echo $_GET['id']; ?>&view=1"
@@ -447,8 +447,10 @@ if (file_exists($userfilename)) {
 													<span>Activity</span> </a>
 												</a></li>
 										<?php }
-										if ($getUserSettings["activityTabVisible"] == "My contacts only") {
-
+										if (!empty($getUserSettings) && isset($getUserSettings["activityTabVisible"]) && $getUserSettings["activityTabVisible"] == "My contacts only") {
+											$activityTab = $getUserSettings['activityTabVisible'] ?? ''; // safe access
+											$requestSent = $requestSent ?? 0; // default to 0 if not set
+										
 
 											$sql = "SELECT userId from " . _CONTACT_MASTER_TABLE_ . " WHERE userId= " . decodeStr($_GET['id']) . " and contactId=" . $_SESSION['sessUserId'] . " and status=1 ";
 											$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
@@ -465,8 +467,12 @@ if (file_exists($userfilename)) {
 											<?php
 											//}
 										} ?>
-										<?php if ($getUserSettings["contactListVisible"] == 1) { ?>
-											<?php if ($getUserSettings["contactTabvisible"] == "All members") { ?>
+										<?php
+										$contactListVisible = $getUserSettings['contactListVisible'] ?? 0;  // default 0 if not set
+										$contactTabVisible = $getUserSettings['contactTabvisible'] ?? '';    // default empty string if not set
+										
+										if ($contactListVisible == 1) {
+											if ($contactTabVisible == "All members") { ?>
 												<li class="contcts"> <a <?php if ($totalcontacts > 0) { ?>
 															onClick="funcommonpopupwin('400px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=viewcontacts&id=<?php echo $_GET['id']; ?>','<?php echo $myfirstName; ?>&prime;s Contacts');"
 														<?php } ?>><strong><?php echo $totalcontacts; ?></strong>
@@ -480,14 +486,19 @@ if (file_exists($userfilename)) {
 												$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
 												$getUserSettingsContactVisible = mysqli_fetch_array($getSql);
 
-												if ($getUserSettingsContactVisible["userId"] != '') {
+												if (isset($getUserSettingsContactVisible["userId"]) && !empty($getUserSettingsContactVisible["userId"])) {
 													?>
-													<li class="contcts"> <a <?php if ($totalcontacts > 0) { ?>
-																onClick="funcommonpopupwin('400px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=viewcontacts&id=<?php echo $_GET['id']; ?>','<?php echo $myfirstName; ?>&prime;s Contacts');"
-															<?php } ?>><strong><?php echo $totalcontacts; ?></strong>
-															<span>Contacts</span> </a>
-														</a></li>
-
+													<li class="contcts">
+														<a <?php if (!empty($totalcontacts) && $totalcontacts > 0) { ?> onClick="funcommonpopupwin(
+					'400px',
+					'auto',
+					'<?php echo $fullurl; ?>common_popup_inner.php?type=viewcontacts&id=<?php echo $_GET['id']; ?>',
+					'<?php echo $myfirstName; ?>\'s Contacts'
+				);" <?php } ?>>
+															<strong><?php echo $totalcontacts ?? 0; ?></strong>
+															<span>Contacts</span>
+														</a>
+													</li>
 													<?php
 												}
 											}

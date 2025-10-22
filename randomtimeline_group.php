@@ -5,7 +5,9 @@ $postWhere = "select * from " . _TIMELINE_MASTER_TABLE_ . " where status=1 and g
 
 
 
-
+$selectFields = [];
+$whereFields = [];
+$whereVals = [];
 $sqlLogin = "";
 $sqlLogin = $postWhere;
 $resLogin = getRecords(_TIMELINE_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
@@ -24,16 +26,16 @@ if ($resLogin) {
 
 
 
-			$jobTitle = $userres["jobTitle"];
-			$companyName = $userres["companyName"];
-
-			$friendnameurl = $userres['userurl'];
-
-			if ($userres["profilePhoto"] != '') {
-				$userphoto = $userres["profilePhoto"];
+			if (is_array($userres)) {
+				$jobTitle = $userres['jobTitle'] ?? '';
+				$companyName = $userres['companyName'] ?? '';
+				$friendnameurl = $userres['userurl'] ?? '';
+				$userphoto = !empty($userres['profilePhoto']) ? $userres['profilePhoto'] : 'user-placeholder.jpg';
 			} else {
+				$jobTitle = $companyName = $friendnameurl = '';
 				$userphoto = 'user-placeholder.jpg';
 			}
+
 
 
 

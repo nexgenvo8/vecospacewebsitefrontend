@@ -730,7 +730,7 @@ if (isset($_FILES['imagefilehome']) && $_FILES['imagefilehome']['name'] != '' &&
 		?>
 		<script>
 			parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['articleId']; ?>');
-																																	/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
+																																			/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
 		</script>
 
 		<?php
@@ -1959,7 +1959,7 @@ if ($_REQUEST['action'] == 'groupchat' && trim($_REQUEST['grouptext']) != '' && 
 
 		<script>
 			<?php if ($rowGroupchat['msgType'] == 'text') { ?>
-				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																													 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
+				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
 				$(".chats").animate({ scrollTop: $("#groupchatlist").outerHeight() }, 600);
 
 				<?php
@@ -5091,7 +5091,8 @@ if ($_REQUEST['action'] == 'settings' && $_SESSION['sessUserId'] != 0 && $_SESSI
 }
 
 
-if (trim(isset($_REQUEST['evnid']) && $_REQUEST['evntid']) != '' && $_REQUEST['action'] == 'delevnt') {
+if (isset($_REQUEST['evntid']) && trim($_REQUEST['evntid']) != '' && $_REQUEST['action'] == 'delevnt') {
+
 	?>
 	<script>
 		parent.$('#commonloader').show();
@@ -6094,17 +6095,17 @@ if (
 	?>
 	<div id="sendalert" style="display:none;"></div>
 	<div id="sendalert" style="display:none;"></div>
-	
+
 	<script>
 		header('Content-Type: application/json');
-echo json_encode([
-    'status' => 'success',
-    'type' => $fileExtention,
-    'file_url' => $fullurl . 'uploads/' . $file_name,
-    'thumb_url' => $fullurl . 'uploads/x_' . $file_name,
-    'filename' => $file_name
-]);
-exit;
+	echo json_encode([
+			'status' => 'success',
+			'type' => $fileExtention,
+			'file_url' => $fullurl. 'uploads/'.$file_name,
+			'thumb_url' => $fullurl. 'uploads/x_'.$file_name,
+			'filename' => $file_name
+		]);
+		exit;
 
 		$token = isset($token) ? urlencode($token) : '';
 
@@ -6197,7 +6198,7 @@ if ($_REQUEST['action'] == 'uploaddocuments' && $_FILES['uploaddocumentsfile']['
 
 }
 
-if ($_POST['action'] == 'updatedocuments' && trim($_POST["name"]) != '' && trim($_POST["longDescription"]) != '' && trim($_POST["catIds"]) != '' && trim($_POST["fileId"]) != '') {
+if (isset($_POST['action']) && $_POST['action'] == 'updatedocuments' && trim($_POST["name"]) != '' && trim($_POST["longDescription"]) != '' && trim($_POST["catIds"]) != '' && trim($_POST["fileId"]) != '') {
 
 	?>
 	<script>

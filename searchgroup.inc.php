@@ -1,5 +1,6 @@
 <div class="grp_banner grp_back">
-  <h1 class="headline grp" style="padding-top: 45px; line-height:42px;    text-align: left; padding-right: 150px;">
+  <h1 class="headline grp"
+    style="padding-top: 45px; line-height:42px;color:black;    text-align: left; padding-right: 150px;">
     Productive discussions and networking <br>amongst like minded people.<br>
     <span style="font-size: 26px;font-weight: 700;">Join a Group</span>
     or <span style="font-weight: 700;font-size: 26px;">Create your own Group</span>
@@ -11,7 +12,9 @@
   <form class="grp-search groupspagesearch" id="grpsearch" name="grpsearch" method="get"
     action="<?php echo $fullurl; ?>search-group.html" style="float: left;padding-left: 50px;">
     <input type="text" name="searchgroups" id="searchgroups" value="<?php echo $strSearchGroup; ?>"
-      placeholder="Enter interests or groups">
+      placeholder="Enter interests or groups"
+      style="background-color: #fff; color: #000; border: 1px solid #ccc; padding: 8px; border-radius: 6px; width: 100%;">
+
     <button type="button" class="srch" onClick="subsrchfrm();" style="background-color: #f67700;">Search</button>
   </form>
 

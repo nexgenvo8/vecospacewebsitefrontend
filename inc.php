@@ -1,10 +1,14 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // ini_set('session.gc_maxlifetime', 2592000);
 // ini_set('session.cookie_lifetime', 2592000);
 // session_set_cookie_params(2592000);
 
 // session_start();
-// error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 include_once(__DIR__ . '/config/config.php');
 include_once(__DIR__ . '/config/database.php');
@@ -27,9 +31,9 @@ function openConn()
 // $withouthttpsurl = 'https://jmi.vecospace.com/';
 // $domainname = 'vecospace.com';
 
-$fullurl = 'http://localhost/jmivecospace/jmi/';
-$withoutwwwurl = 'http://localhost/jmivecospace/jmi/';
-$withouthttpsurl = 'http://localhost/jmivecospace/jmi/';
+$fullurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
+$withoutwwwurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
+$withouthttpsurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
 $domainname = 'vecospace.com';
 
 $actual_sitelink1 = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];

@@ -255,38 +255,43 @@ if ($_REQUEST['eventId'] != '') {
                           $whereFields = [];
                           $whereVals = [];
 
-                          $sqlGroupMembers = "";
-                          $sqlGroupMembers = "select * from " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE  eventId= " . $rowEvents["id"] . " and status=1 order by id desc LIMIT 0,6 ";
+                          $sqlGroupMembers = "SELECT * FROM " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE eventId = " . intval($rowEvents["id"]) . " AND status = 1 ORDER BY id DESC LIMIT 0,6";
                           $resGroupMembers = getRecords(_EVENT_GUEST_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlGroupMembers);
+
                           if ($resGroupMembers) {
                             while ($rowgroup = mysqli_fetch_array($resGroupMembers)) {
 
                               $eventfriendnameurl = '';
                               $eventuserphoto = '';
+                              $eventFirstName = '';
+                              $eventLastName = '';
+                              $eventUserId = 0;
 
                               $aa = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " WHERE userId = " . intval($rowgroup["userId"]);
                               $ba = mysqli_query($conn, $aa) or die(mysqli_error($conn));
 
-                              if ($eventuserres = mysqli_fetch_array($ba)) {
-                                $eventfriendnameurl = $eventuserres['userurl'] ?? '';
-
-                                if (!empty($eventuserres["profilePhoto"])) {
-                                  $eventuserphoto = $eventuserres["profilePhoto"];
-                                } else {
-                                  $eventuserphoto = 'user-placeholder.jpg';
-                                }
+                              if ($user = mysqli_fetch_array($ba)) {
+                                $eventfriendnameurl = $user['userurl'] ?? '';
+                                $eventuserphoto = !empty($user["profilePhoto"]) ? $user["profilePhoto"] : 'user-placeholder.jpg';
+                                $eventFirstName = stripslashes(trim($user["firstName"] ?? ''));
+                                $eventLastName = stripslashes(trim($user["lastName"] ?? ''));
+                                $eventUserId = $user['userId'] ?? 0;
                               } else {
-                                // Default values agar user data nahi mile
+                                // Defaults if no user found
                                 $eventfriendnameurl = '';
                                 $eventuserphoto = 'user-placeholder.jpg';
+                                $eventFirstName = '';
+                                $eventLastName = '';
+                                $eventUserId = 0;
                               }
-
                               ?>
-                              <li><a
-                                  href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($eventuserres['userId']); ?>/<?php echo $eventfriendnameurl; ?>.html"><img
-                                    src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($eventuserphoto)); ?>"
-                                    title="<?php echo stripslashes(trim($eventuserres["firstName"])); ?> <?php echo stripslashes(trim($eventuserres["lastName"])); ?>"
-                                    alt="<?php echo stripslashes(trim($eventuserres["firstName"])); ?> <?php echo stripslashes(trim($eventuserres["lastName"])); ?>"></a>
+                              <li>
+                                <a
+                                  href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($eventUserId); ?>/<?php echo $eventfriendnameurl; ?>.html">
+                                  <img src="<?php echo $fullurl; ?>uploads/<?php echo $eventuserphoto; ?>"
+                                    title="<?php echo $eventFirstName . ' ' . $eventLastName; ?>"
+                                    alt="<?php echo $eventFirstName . ' ' . $eventLastName; ?>">
+                                </a>
                               </li>
                               <?php
                               $m++;
@@ -295,9 +300,10 @@ if ($_REQUEST['eventId'] != '') {
                           ?>
                         </ul>
                         <span
-                          class="going-mmbr"><strong><?php echo $totalimages; ?></strong><?php echo $companNameTitle; ?>
+                          class="going-mmbr"><strong><?php echo $totalimages ?? 0; ?></strong><?php echo $companNameTitle ?? ''; ?>
                           members are going to be there.</span>
                       </div>
+
                     <?php } ?>
 
                     <!--<div class="left-guest">

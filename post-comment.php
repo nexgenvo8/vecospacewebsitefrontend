@@ -1,18 +1,20 @@
 <?php
+//error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include_once('inc.php');
-
-
 if (
-	isset($_REQUEST['action']) && $_REQUEST['action'] === 'postcomment' &&
-	isset($_REQUEST['postId']) && $_REQUEST['postId'] !== '' &&
-	isset($_REQUEST['parentId']) && $_REQUEST['parentId'] !== '' &&
-	isset($_REQUEST['commentbox']) && trim($_REQUEST['commentbox']) !== ''
+	isset($_REQUEST['commentbox'], $_REQUEST['parentId'], $_REQUEST['postId'], $_REQUEST['action']) &&
+	trim($_REQUEST['commentbox']) !== '' &&
+	trim($_REQUEST['parentId']) !== '' &&
+	trim($_REQUEST['postId']) !== '' &&
+	$_REQUEST['action'] === 'postcomment'
 ) {
 	include('mail.php');
 
 
-	unset($insertFields);
-	unset($insertVals);
+	$insertFields = [];
+	$insertVals = [];
 	$whereFields = [];
 	$whereVals = [];
 
@@ -33,115 +35,85 @@ if (
 
 	$resInsert = insertDB(_COMMENT_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
-
-
-	// Notification
 	$dateAdded = time();
+	//$userId=decodeStr($_REQUEST['userId']);
 	$userId = decodeStr($_REQUEST['contactuserId']);
+
 
 	if ($_REQUEST["postType"] == 1 || $_REQUEST["postType"] == 2) {
 		$notificationText = 'postcomment';
-	} elseif ($_REQUEST["postType"] == 3) {
+	}
+	if ($_REQUEST["postType"] == 3) {
 		$notificationText = 'articlecomment';
-	} elseif ($_REQUEST["postType"] == 4) {
+	}
+	if ($_REQUEST["postType"] == 4) {
 		$notificationText = 'groupcomment';
 	}
 
-	$conn = getDbConnection(); // ✅ mysqli connection
 
-	$sql_ins = "INSERT INTO " . _NOTIFICATION_MASTER_TABLE_ . " 
-    SET contactId='" . $_SESSION["sessUserId"] . "',
-        userId='" . $conn->real_escape_string($userId) . "',
-        postId=" . intval($_REQUEST["postId"]) . ",
-        postType=" . intval($_REQUEST["postType"]) . ",
-        notificationText='" . $conn->real_escape_string($notificationText) . "',
-        dateAdded='" . $dateAdded . "'";
+	$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "',userId='" . $userId . "',postId= " . ($_REQUEST["postId"]) . ",postType=" . $_REQUEST["postType"] . ",notificationText='$notificationText',dateAdded='$dateAdded'";
+	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
-	if (!$conn->query($sql_ins)) {
-		die("Notification insert error: " . $conn->error);
+
+	if ($_REQUEST["postuserId"] != '') {
+
+		$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "',userId='" . decodeStr($_REQUEST["postuserId"]) . "',parentId='" . decodeStr($_REQUEST["postuserId"]) . "',postId= " . ($_REQUEST["postId"]) . ",postType=" . $_REQUEST["postType"] . ",notificationText='$notificationText',dateAdded='$dateAdded'";
+		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
 	}
 
-	if (!empty($_REQUEST["postuserId"])) {
-		$postUserId = decodeStr($_REQUEST["postuserId"]);
-		$sql_ins = "INSERT INTO " . _NOTIFICATION_MASTER_TABLE_ . " 
-        SET contactId='" . $_SESSION["sessUserId"] . "',
-            userId='" . $conn->real_escape_string($postUserId) . "',
-            parentId='" . $conn->real_escape_string($postUserId) . "',
-            postId=" . intval($_REQUEST["postId"]) . ",
-            postType=" . intval($_REQUEST["postType"]) . ",
-            notificationText='" . $conn->real_escape_string($notificationText) . "',
-            dateAdded='" . $dateAdded . "'";
-		if (!$conn->query($sql_ins)) {
-			die("Notification insert error: " . $conn->error);
-		}
-	}
-
-	// Fetch user
-	$aa = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,email,onlineStatus 
-         FROM " . _USERS_MASTER_TABLE_ . " 
-         WHERE userId='" . $conn->real_escape_string($userId) . "'";
-
-	$res5 = $conn->query($aa);
-	$getuser = $res5->fetch_assoc();
-
+	$aa = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,email,onlineStatus from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $userId . "' ";
+	$res5 = mysqli_query($conn, $aa);
+	$getuser = mysqli_fetch_array($res5);
 	$email = $getuser["email"];
 	$firstName = $getuser['firstName'];
 	$lastName = $getuser['lastName'];
-	$profilePhoto = $getuser['profilePhoto'] ?: 'user-placeholder.jpg';
+	$profilePhoto = $getuser['profilePhoto'];
 	$onlineStatus = $getuser['onlineStatus'];
 	$userurl = $getuser["userurl"];
-	if ($profilePhoto == '') {
+	if ($profilePhoto != '') {
+		$profilePhoto = $profilePhoto;
+	} else {
 		$profilePhoto = 'user-placeholder.jpg';
 	}
 
 
 	if ($onlineStatus != 1) {
 
-		$conn = getDbConnection(); // ✅ Ensure MySQLi connection
+		$sqlCmnsts = "";
+		$sqlCmnsts = "select dateAdded from " . _COMMENT_MASTER_TABLE_ . " where userId='" . $_SESSION['sessUserId'] . "'  order by id desc limit 1,1";
+		echo $sqlCmnsts;
+		$resCmnsts = mysqli_query($conn, $sqlCmnsts);
+		$getCmnsts = mysqli_fetch_array($resCmnsts);
+		$getDateAddedCmnts = $getCmnsts["dateAdded"];
 
-		$sqlCmnsts = "SELECT dateAdded 
-                  FROM " . _COMMENT_MASTER_TABLE_ . " 
-                  WHERE userId='" . $conn->real_escape_string($_SESSION['sessUserId']) . "'  
-                  ORDER BY id DESC LIMIT 1,1";
 
-		$resCmnsts = $conn->query($sqlCmnsts);
-		if ($resCmnsts && $resCmnsts->num_rows > 0) {
-			$getCmnsts = $resCmnsts->fetch_assoc();
-			$getDateAddedCmnts = $getCmnsts["dateAdded"];
-		} else {
-			$getDateAddedCmnts = 0; // fallback if no record
-		}
+		if ($getCmnsts["dateAdded"] < strtotime("-10 minutes", time()))//You can send an email after 10 minutes according last message
+		{
 
-		if ($getDateAddedCmnts < strtotime("-10 minutes", time())) { // Email condition
+			$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,cityName,countryName from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+			$res52 = mysqli_query($conn, $aa2);
+			$getuser2 = mysqli_fetch_array($res52);
 
-			$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,cityName,countryName 
-                FROM " . _USERS_MASTER_TABLE_ . " 
-                WHERE userId='" . $conn->real_escape_string($_SESSION['sessUserId']) . "'";
+			$firstName2 = $getuser2['firstName'];
+			$lastName2 = $getuser2['lastName'];
+			$profilePhoto2 = $getuser2['profilePhoto'];
+			$jobTitle = $getuser2["jobTitle"];
+			$companyName = $getuser2["companyName"];
+			$userurl2 = $getuser2["userurl"];
+			$cityName = $getuser2["cityName"];
+			$countryName = $getuser2["countryName"];
 
-			$res52 = $conn->query($aa2);
-			if ($res52 && $res52->num_rows > 0) {
-				$getuser2 = $res52->fetch_assoc();
-
-				$firstName2 = $getuser2['firstName'];
-				$lastName2 = $getuser2['lastName'];
-				$profilePhoto2 = $getuser2['profilePhoto'] ?: 'user-placeholder.jpg';
-				$jobTitle = $getuser2["jobTitle"];
-				$companyName = $getuser2["companyName"];
-				$userurl2 = $getuser2["userurl"];
-				$cityName = $getuser2["cityName"];
-				$countryName = $getuser2["countryName"];
-			}
-
-			$sql = "SELECT emailCommentLike 
-                FROM " . _USER_SETTINGS_MASTER_TABLE_ . " 
-                WHERE userId= " . intval($userId);
-
-			$getSql = $conn->query($sql);
-			if ($getSql && $getSql->num_rows > 0) {
-				$getUserSettings = $getSql->fetch_assoc();
+			if ($profilePhoto2 != '') {
+				$profilePhoto2 = $profilePhoto2;
 			} else {
-				$getUserSettings = [];
+				$profilePhoto2 = 'user-placeholder.jpg';
 			}
+
+
+			$sql = "SELECT emailCommentLike from " . _USER_SETTINGS_MASTER_TABLE_ . " WHERE userId= " . $userId . " ";
+			$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
+			$getUserSettings = mysqli_fetch_array($getSql);
 
 			if ($_REQUEST['parentId'] == 0) {
 
@@ -158,7 +130,7 @@ if (
 							$cmlink = $fullurl . 'view-article.html?postId=' . encodeStr($_REQUEST["postId"]) . '&cuid=' . $_SESSION['sessUserId'] . '&t=4';
 						}
 
-						$mailBodyContent = '';
+
 						$mailBodyContent .= '';
 						$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 		<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
@@ -180,25 +152,25 @@ if (
 							  
 							  <div style="text-align:center; margin-bottom:5px; margin-top:5px;font-size:18px;">' . $cmTitle . '</div>
 							  <div style="text-align:center; margin-top:10px; margin-bottom:30px;"><table border="0" align="center" cellpadding="5" cellspacing="0">
-		  <tbody><tr>
-			<td colspan="2" align="center"><a href="' . $cmlink . '" style="display:inline-block;text-decoration:none;padding:15px 25px;font-weight:600;font-size:18px;margin:0 0 30px;color:#fff;background:#1a94c3;border-radius:5px;margin-bottom: 0px;" target="_blank">View Comment </a></td>
-			</tr>
-		</tbody></table>
-		</div>
-								<div style="text-align:center;"><div style="
-			width: 80px;
-			height: 80px;
-			overflow: hidden;margin:auto;
-			margin-bottom:12px;
-			border-radius: 100%;
-			border: 3px #e9e9e9 solid; margin:auto;
-		"><a href="' . $fullurl . 'profile/' . encodeStr($_SESSION['sessUserId']) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2"><img src="' . $fullurl . 'uploads/' . $profilePhoto2 . '" style="
-			width: 100%;
-		"></a></div>
-		<div style="text-align:center; margin-bottom:5px; margin-top:5px;"><strong>' . $firstName2 . ' ' . $lastName2 . '</strong></div>
-		<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $jobTitle . ' at ' . $companyName . '</div>
-		<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $cityName . ', ' . $countryName . '</div> 
-		</div>
+							<tbody><tr>
+								<td colspan="2" align="center"><a href="' . $cmlink . '" style="display:inline-block;text-decoration:none;padding:15px 25px;font-weight:600;font-size:18px;margin:0 0 30px;color:#fff;background:#1a94c3;border-radius:5px;margin-bottom: 0px;" target="_blank">View Comment </a></td>
+								</tr>
+							</tbody></table>
+							</div>
+													<div style="text-align:center;"><div style="
+								width: 80px;
+								height: 80px;
+								overflow: hidden;margin:auto;
+								margin-bottom:12px;
+								border-radius: 100%;
+								border: 3px #e9e9e9 solid; margin:auto;
+							"><a href="' . $fullurl . 'profile/' . encodeStr($_SESSION['sessUserId']) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2"><img src="' . $fullurl . 'uploads/' . $profilePhoto2 . '" style="
+								width: 100%;
+							"></a></div>
+							<div style="text-align:center; margin-bottom:5px; margin-top:5px;"><strong>' . $firstName2 . ' ' . $lastName2 . '</strong></div>
+							<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $jobTitle . ' at ' . $companyName . '</div>
+							<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $cityName . ', ' . $countryName . '</div> 
+							</div>
 							  </div>
 								 
 						  </td>
@@ -280,13 +252,13 @@ if (
 }
 
 
-if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
+if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
 	$aa = "select * from " . _COMMENT_MASTER_TABLE_ . " where postId=" . $_REQUEST['postId'] . " and postType=" . $_REQUEST['postType'] . " and parentId=0 ";
 	$res5 = mysqli_query($conn, $aa);
 	$totalpostcomment = mysqli_num_rows($res5);
 
 	?>
-	<?php if (isset($_POST['limit']) && $totalpostcomment > 5 && $_REQUEST['limit'] == 5) { ?>
+	<?php if (isset($_REQUEST['limit']) && $totalpostcomment > 5 && $_REQUEST['limit'] == 5) { ?>
 
 		<div style="padding:0px; font-size:13px;">
 
@@ -316,7 +288,7 @@ if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
 
 	<?php
 
-	if (isset($_POST['limit']) && $_REQUEST['limit'] == 5) {
+	if (isset($_REQUEST['limit']) && $_REQUEST['limit'] == 5) {
 		$limit = '5';
 
 		if ($totalpostcomment > 5) {
@@ -414,8 +386,10 @@ if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
 						placeholder="Type your reply" maxlength="250" autocomplete="off">
 
 					<button type="button"
-						onclick="postcmnt('<?php echo $_REQUEST['postId']; ?>','<?php echo $_REQUEST['postType']; ?>','<?php echo encodeStr($postuserres2['userId']); ?>','<?php echo encodeStr($comment["userId"]); ?>','<?php echo $comment['id']; ?>','<?php echo $comment['id']; ?>');"><i
+						onclick="postcmnt('<?php echo $_REQUEST['postId']; ?>','<?php echo $_REQUEST['postType']; ?>','<?php echo encodeStr($postuserres2['userId']); ?>','<?php echo encodeStr($comment['userId']); ?>','<?php echo $comment['id']; ?>','<?php echo $comment['id']; ?>');"><i
 							class="fa fa-paper-plane" aria-hidden="true"></i></button>
+
+
 
 
 				</div>

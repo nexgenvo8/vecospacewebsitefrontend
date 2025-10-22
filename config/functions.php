@@ -21,7 +21,7 @@ if (isset($_SESSION['sessUserId']) && !empty($_SESSION['sessUserId'])) {
 // 	}
 // }
 
-$conn = getDbConnection(); // ya jo bhi aapki connection function ka naam hai
+$conn = getDbConnection();
 
 mysqli_query($conn, "SET NAMES 'utf8'");
 mysqli_query($conn, "SET CHARACTER SET utf8");
