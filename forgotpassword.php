@@ -131,7 +131,7 @@ if (isPost()) {
 	<div id="wrapper">
 		<header>
 			<div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+						src="<?php echo $fullurl; ?>images/ndimlogo.png"></a></div>
 		</header>
 		<div class="banner">
 			<div class="container">
@@ -141,48 +141,48 @@ if (isPost()) {
 					<form name="frmkonectt" id="frmkonectt" class="personal-data" method="post">
 
 						<?php if (!isset($_GET['send']) || $_GET['send'] != 1) { ?>
-							<div id="stepsdetail1" style="text-align: center;">
-								<div class="half-input">
-									<?php if (!empty($errMsg)) { ?>
-										<div style="margin-bottom:10px; color:#FF0000;"><?php echo htmlspecialchars($errMsg); ?>
-										</div>
-									<?php } ?>
-									<input type="email" class="input validate" name="email" id="email"
-										value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
-										placeholder="Enter email address" maxlength="60" onKeyUp="hideerrordiv(this.id);">
+								<div id="stepsdetail1" style="text-align: center;">
+									<div class="half-input">
+										<?php if (!empty($errMsg)) { ?>
+												<div style="margin-bottom:10px; color:#FF0000;"><?php echo htmlspecialchars($errMsg); ?>
+												</div>
+										<?php } ?>
+										<input type="email" class="input validate" name="email" id="email"
+											value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
+											placeholder="Enter email address" maxlength="60" onKeyUp="hideerrordiv(this.id);">
+									</div>
+
+									<input type="hidden" name="txtAction" id="txtAction"
+										value="<?php echo isset($action) ? htmlspecialchars($action) : ''; ?>">
+									<button type="button" onClick="formValidation('frmkonectt');"
+										class="continue-process-btn">Send
+									</button>
+									<a href="<?php echo $fullurl; ?>">
+										<button style="background-color:#e0e0e0; color:#333; margin-right:10px;" type="button"
+											class="continue-process-btn">Cancel
+										</button>
+									</a>
 								</div>
 
-								<input type="hidden" name="txtAction" id="txtAction"
-									value="<?php echo isset($action) ? htmlspecialchars($action) : ''; ?>">
-								<button type="button" onClick="formValidation('frmkonectt');"
-									class="continue-process-btn">Send
-								</button>
-								<a href="<?php echo $fullurl; ?>">
-									<button style="background-color:#e0e0e0; color:#333; margin-right:10px;" type="button"
-										class="continue-process-btn">Cancel
-									</button>
-								</a>
-							</div>
-
 						<?php } else { ?>
-							<div style="text-align:center;">
-								<strong>Please check your messages.</strong><br>
-								Please check your inbox as we've sent an e-mail to the e-mail address you linked to your
-								<?php echo isset($companNameTitle) ? htmlspecialchars($companNameTitle) : ''; ?> profile.
-								When you click on the link in the e-mail, you'll be
-								automatically forwarded to a page explaining how to create your new password.&nbsp;<br>
-								<br>
-								<strong>Haven't received an e-mail yet?</strong>&nbsp;<br>
-								Please check your spam folder and make sure our e-mail hasn't ended up there. If don't
-								receive our e-mail within 2 hours.<br>
-								<br>
+								<div style="text-align:center;">
+									<strong>Please check your messages.</strong><br>
+									Please check your inbox as we've sent an e-mail to the e-mail address you linked to your
+									<?php echo isset($companNameTitle) ? htmlspecialchars($companNameTitle) : ''; ?> profile.
+									When you click on the link in the e-mail, you'll be
+									automatically forwarded to a page explaining how to create your new password.&nbsp;<br>
+									<br>
+									<strong>Haven't received an e-mail yet?</strong>&nbsp;<br>
+									Please check your spam folder and make sure our e-mail hasn't ended up there. If don't
+									receive our e-mail within 2 hours.<br>
+									<br>
 
-								<a href="<?php echo $fullurl; ?>">
-									<button style="background-color:#e0e0e0; float:none; color:#333; margin-right:10px;"
-										type="button" class="continue-process-btn">Back to login page
-									</button>
-								</a>
-							</div>
+									<a href="<?php echo $fullurl; ?>">
+										<button style="background-color:#e0e0e0; float:none; color:#333; margin-right:10px;"
+											type="button" class="continue-process-btn">Back to login page
+										</button>
+									</a>
+								</div>
 						<?php } ?>
 
 					</form>

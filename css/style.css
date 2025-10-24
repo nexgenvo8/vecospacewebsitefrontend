@@ -95,7 +95,7 @@ html {
 
 a {
     text-decoration: none;
-    color: #20741f;
+    color: #EE4B2B;
     cursor: pointer;
 }
 
@@ -417,7 +417,7 @@ header#header .logo {
     padding: 8px 18px;
     border: solid 1px #016401;
     border-radius: 0px;
-    background-color: #20741f;
+    background-color: #EE4B2B;
     font-weight: 600;
     margin-top: 8px;
     color: #ffffff;
@@ -432,7 +432,7 @@ header#header .logo {
     height: 560px;
     float: left;
     /* background-position: center center; */
-    background-image: url(../images/loginpage-background1234567.png.jpg);
+    background-image: url(../images/loginpage-ndimvecospac.png);
     background-repeat: no-repeat;
     position: relative;
     background-size: 100%;
@@ -470,7 +470,7 @@ header#header .logo {
     width: 815px;
     height: 360px;
     float: left;
-    background-image: url(../images/middle-image.png);
+    /* background-image: url(../images/middle-image.png); */
     background-size: 100%;
     background-repeat: no-repeat;
     margin-left: 185px;

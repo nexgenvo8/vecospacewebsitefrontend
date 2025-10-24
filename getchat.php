@@ -47,10 +47,10 @@ if ($_REQUEST['contactId'] != '' && $_REQUEST['action'] == 'chat' && trim($_REQU
 			$sql_ins = "UPDATE " . _CONTACT_MASTER_TABLE_ . " SET birthdayStatus=1 WHERE contactId= '" . decodeStr($_REQUEST['contactId']) . "' AND userId='" . $_SESSION["sessUserId"] . "' ";
 			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 			?>
-			<script>
-				parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactId']); ?>').slideUp();
-			</script>
-			<?php
+						<script>
+							parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactId']); ?>').slideUp();
+						</script>
+						<?php
 		}
 		$token = '';
 		$sqlMsgToken = "";
@@ -59,56 +59,56 @@ if ($_REQUEST['contactId'] != '' && $_REQUEST['action'] == 'chat' && trim($_REQU
 		$getLastToken = mysqli_fetch_array($resMsgToken);
 		$token = $getLastToken["token"];
 		?>
-		<div id="sendalert" style="display:none;"></div>
-		<script>
-			$('#loadchatusermsg').append('<div class="userchatboxmain"><div class="userchatboxmain_me"><div  class="userchatboxmain_name_me" >&nbsp;</div><div class="userchatboxmain_text_me"><div class="chatmsg"><?php echo showsmily($text); ?></div><div  class="userchatboxmain_time_me" id="usermsgid<?php echo $lastchatid; ?>"><?php echo date("h:i A"); ?></div></div></div></div>');
-			$("#loadchatusermsg").scrollTop($("#loadchatusermsg")[0].scrollHeight);
+				<div id="sendalert" style="display:none;"></div>
+				<script>
+					$('#loadchatusermsg').append('<div class="userchatboxmain"><div class="userchatboxmain_me"><div  class="userchatboxmain_name_me" >&nbsp;</div><div class="userchatboxmain_text_me"><div class="chatmsg"><?php echo showsmily($text); ?></div><div  class="userchatboxmain_time_me" id="usermsgid<?php echo $lastchatid; ?>"><?php echo date("h:i A"); ?></div></div></div></div>');
+					$("#loadchatusermsg").scrollTop($("#loadchatusermsg")[0].scrollHeight);
 
-			<?php
-			$a = "";
-			$a = "select blockUser from " . _CONTACT_MASTER_TABLE_ . " where contactId='" . $_SESSION["sessUserId"] . "' AND userId='" . decodeStr($_REQUEST["contactId"]) . "' ";
-			$b = mysqli_query($conn, $a);
-			$c = mysqli_fetch_array($b);
-			if ($c["blockUser"] != 1) {
-				?>
-				$("#sendalert").load('app/firebase/Send.php?title=<?php echo $notititle . ',' . $_SESSION["sessUserId"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>');
-			<?php } ?>
-
-
-		</script>
-
-		<?php
-		$contactId = decodeStr($_REQUEST['contactId']);
-		//////////////////////
-		$a = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,email,onlineStatus from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $contactId . " ";
-		$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
-		$userres = mysqli_fetch_array($b);
-		$email = $userres['email'];
-		if ($userres['onlineStatus'] == 0 && $_SESSION['msgsent'] != $contactId) {
-
-			$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,cityName,countryName from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-			$res52 = mysqli_query($conn, $aa2);
-			$getuser2 = mysqli_fetch_array($res52);
-
-			$firstName2 = $getuser2['firstName'];
-			$lastName2 = $getuser2['lastName'];
-			$profilePhoto21 = $getuser2['profilePhoto'];
-			$jobTitle = $getuser2["jobTitle"];
-			$companyName = $getuser2["companyName"];
-			$userurl2 = $getuser2["userurl"];
-			$cityName = $getuser2["cityName"];
-			$countryName = $getuser2["countryName"];
-
-			if ($profilePhoto21 != '') {
-				$profilePhoto2 = $profilePhoto21;
-			} else {
-				$profilePhoto21 = 'user-placeholder.jpg';
-			}
+					<?php
+					$a = "";
+					$a = "select blockUser from " . _CONTACT_MASTER_TABLE_ . " where contactId='" . $_SESSION["sessUserId"] . "' AND userId='" . decodeStr($_REQUEST["contactId"]) . "' ";
+					$b = mysqli_query($conn, $a);
+					$c = mysqli_fetch_array($b);
+					if ($c["blockUser"] != 1) {
+						?>
+							$("#sendalert").load('app/firebase/Send.php?title=<?php echo $notititle . ',' . $_SESSION["sessUserId"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>');
+					<?php } ?>
 
 
+				</script>
 
-			$mailBodyContent .= '';
-			$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
+				<?php
+				$contactId = decodeStr($_REQUEST['contactId']);
+				//////////////////////
+				$a = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,email,onlineStatus from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $contactId . " ";
+				$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
+				$userres = mysqli_fetch_array($b);
+				$email = $userres['email'];
+				if ($userres['onlineStatus'] == 0 && $_SESSION['msgsent'] != $contactId) {
+
+					$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,cityName,countryName from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+					$res52 = mysqli_query($conn, $aa2);
+					$getuser2 = mysqli_fetch_array($res52);
+
+					$firstName2 = $getuser2['firstName'];
+					$lastName2 = $getuser2['lastName'];
+					$profilePhoto21 = $getuser2['profilePhoto'];
+					$jobTitle = $getuser2["jobTitle"];
+					$companyName = $getuser2["companyName"];
+					$userurl2 = $getuser2["userurl"];
+					$cityName = $getuser2["cityName"];
+					$countryName = $getuser2["countryName"];
+
+					if ($profilePhoto21 != '') {
+						$profilePhoto2 = $profilePhoto21;
+					} else {
+						$profilePhoto21 = 'user-placeholder.jpg';
+					}
+
+
+
+					$mailBodyContent .= '';
+					$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
     <tbody>
     <tr>
@@ -118,7 +118,7 @@ if ($_REQUEST['contactId'] != '' && $_REQUEST['action'] == 'chat' && trim($_REQU
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -176,12 +176,12 @@ if ($_REQUEST['contactId'] != '' && $_REQUEST['action'] == 'chat' && trim($_REQU
 </div>';
 
 
-			$subject = 'You have a new message on ' . $companNameTitle . '';
+					$subject = 'You have a new message on ' . $companNameTitle . '';
 
-			send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
-			$_SESSION['msgsent'] = $contactId;
+					send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
+					$_SESSION['msgsent'] = $contactId;
 
-		}
+				}
 
 		//////////////////////
 
@@ -229,29 +229,29 @@ if (trim($_REQUEST['contactId']) != '' && $_REQUEST['action'] == 'getchat') {
 			$contentimg = 'x_' . $row["chatFileName"];
 			?>
 
-			<script>
-				var contentimg = '<?php echo $contentimg; ?>';
+						<script>
+							var contentimg = '<?php echo $contentimg; ?>';
 
 
-				$('#loadchatusermsg').append('<div class="userchatboxmain"><div class="userchatboxmain_user"><div class="userchatboxmain_name">&nbsp;</div><div class="userchatboxmain_text" <?php if ($img == 1) { ?>style=" padding:0px !important;"<?php } ?>><?php if ($img == 0) { ?><div class="chatmsg<?php if (strpos($row["chatText"], 'maps/place') !== false) { ?> iframehave<?php } ?>"><?php echo nl2br(showsmily(str_replace("'", "&#39;", $row["chatText"]))); ?></div><?php } else { ?><div class="imgbox"><img src="<?php echo $fullurl; ?>uploads/<?php echo $row["chatFileName"]; ?>" style="width:200px;" onClick="imagepopupmain(\'' + contentimg + '\');" /></div><?php } ?><div class="userchatboxmain_time"><?php echo date("h:i A", $row['dateAdded']); ?></div></div></div></div>');
+							$('#loadchatusermsg').append('<div class="userchatboxmain"><div class="userchatboxmain_user"><div class="userchatboxmain_name">&nbsp;</div><div class="userchatboxmain_text" <?php if ($img == 1) { ?>style=" padding:0px !important;"<?php } ?>><?php if ($img == 0) { ?><div class="chatmsg<?php if (strpos($row["chatText"], 'maps/place') !== false) { ?> iframehave<?php } ?>"><?php echo nl2br(showsmily(str_replace("'", "&#39;", $row["chatText"]))); ?></div><?php } else { ?><div class="imgbox"><img src="<?php echo $fullurl; ?>uploads/<?php echo $row["chatFileName"]; ?>" style="width:200px;" onClick="imagepopupmain(\'' + contentimg + '\');" /></div><?php } ?><div class="userchatboxmain_time"><?php echo date("h:i A", $row['dateAdded']); ?></div></div></div></div>');
 
-				$('#chatlist<?php echo ($_REQUEST['contactId']); ?>').removeClass('active');
+							$('#chatlist<?php echo ($_REQUEST['contactId']); ?>').removeClass('active');
 
-				$("#loadchatusermsg").scrollTop($("#loadchatusermsg")[0].scrollHeight);
-			</script>
+							$("#loadchatusermsg").scrollTop($("#loadchatusermsg")[0].scrollHeight);
+						</script>
 
-			<?php
-			$sql_ins = "UPDATE " . _CHAT_MASTER_TABLE_ . " SET status=1 WHERE contactId= '" . decodeStr($_REQUEST['contactId']) . "' AND userId='" . $_SESSION["sessUserId"] . "' and id='" . $msgid . "' ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						<?php
+						$sql_ins = "UPDATE " . _CHAT_MASTER_TABLE_ . " SET status=1 WHERE contactId= '" . decodeStr($_REQUEST['contactId']) . "' AND userId='" . $_SESSION["sessUserId"] . "' and id='" . $msgid . "' ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
-			if ($row["meeting"] == 1 && $row["status"] == 0) {
-				?>
-				<script>
-					parent.$('#loadchatusermsg').load("<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=<?php echo $_REQUEST['contactId']; ?>");
-				</script>
-			<?php } ?>
+						if ($row["meeting"] == 1 && $row["status"] == 0) {
+							?>
+								<script>
+									parent.$('#loadchatusermsg').load("<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=<?php echo $_REQUEST['contactId']; ?>");
+								</script>
+						<?php } ?>
 
-			<?php
+						<?php
 
 		}
 	}
@@ -280,12 +280,12 @@ if (trim($_REQUEST['contactId']) != '' && $_REQUEST['action'] == 'getchat') {
 				if ($getread['readDate'] != 0 && $getread['readDate'] != '') {
 
 					?>
-					<script>
-						$('.fa-check-circle span').remove();
-						$('.fa-check-circle').removeClass('fa-check-circle');
-						$('#usermsgid<?php echo $row2['id']; ?>').html('<i class="fa fa-check-circle" aria-hidden="true"> <span>Read</span></i><?php echo date("h:i A", $row2['dateAdded']); ?>');
-					</script>
-					<?php
+										<script>
+											$('.fa-check-circle span').remove();
+											$('.fa-check-circle').removeClass('fa-check-circle');
+											$('#usermsgid<?php echo $row2['id']; ?>').html('<i class="fa fa-check-circle" aria-hidden="true"> <span>Read</span></i><?php echo date("h:i A", $row2['dateAdded']); ?>');
+										</script>
+										<?php
 
 				}
 

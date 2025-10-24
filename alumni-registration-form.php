@@ -213,7 +213,7 @@ if (isPost()) {
             $mailBodyContent = '';
 
             $mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . 'timeline.html" style="border:0px;">
-		<img src="' . $fullurl . 'images/logo.png" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:scroll; padding:30px 0px;text-align:center;">
+		<img src="' . $fullurl . 'images/ndimlogo.png" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:scroll; padding:30px 0px;text-align:center;">
 <div style="margin:auto; width:100%; background-color:#FFFFFF; text-align:left;">
 <table style="width:100%;background-color: #e8e8e8;">
 <tbody><tr>
@@ -465,7 +465,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
     <div id="wrapper">
         <header class="container">
             <div class="logo logo_marg"><a href="<?php echo $fullurl; ?>"><img
-                        src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+                        src="<?php echo $fullurl; ?>images/ndimlogo.png"></a></div>
             <div class="header_right" style="display:none;">
                 <form class="login-form" name="kUserLogin" id="kUserLogin" method="post" style="display:none1;">
                     <div class="login-inputs">
@@ -546,8 +546,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                    <option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?></option>
-                                    <?php
+                                        <option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?></option>
+                                        <?php
                                 }
                                 ?>
                             </select>
@@ -563,11 +563,11 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                    <option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
-                                        <?php //echo $m; 
-                                            ?>     <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
-                                    </option>
-                                    <?php
+                                        <option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
+                                            <?php //echo $m; 
+                                                ?>         <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
+                                        </option>
+                                        <?php
                                 }
                                 ?>
 
@@ -584,8 +584,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                    <option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?></option>
-                                    <?php
+                                        <option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?></option>
+                                        <?php
                                 }
                                 ?>
                             </select>
@@ -661,10 +661,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
                                             ?>
-                                            <option value="<?php echo trim($rowOptions['course_name']); ?>">
-                                                <?php echo trim($rowOptions['course_name']); ?>
-                                            </option>
-                                            <?php
+                                                    <option value="<?php echo trim($rowOptions['course_name']); ?>">
+                                                        <?php echo trim($rowOptions['course_name']); ?>
+                                                    </option>
+                                                    <?php
                                         }
                                     }
                                     ?>
@@ -688,10 +688,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
                                             ?>
-                                            <option value="<?php echo trim($rowOptions['department_name']); ?>">
-                                                <?php echo trim($rowOptions['department_name']); ?>
-                                            </option>
-                                            <?php
+                                                    <option value="<?php echo trim($rowOptions['department_name']); ?>">
+                                                        <?php echo trim($rowOptions['department_name']); ?>
+                                                    </option>
+                                                    <?php
                                         }
                                     }
                                     ?>
@@ -708,11 +708,11 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                     $end = date('Y-m-d', strtotime('+5 years'));
                                     while ($currentdate <= $end) {
                                         ?>
-                                        <option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
-                                               echo 'selected';
-                                           } ?>> <?php echo $currentdate;
-                                            $currentdate++; ?></option>
-                                        <?php
+                                            <option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
+                                                   echo 'selected';
+                                               } ?>> <?php echo $currentdate;
+                                                $currentdate++; ?></option>
+                                            <?php
                                     }
                                     ?>
                                 </select>
@@ -728,9 +728,9 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                     $currentdate = date("Y");
                                     while ($staringdate <= $currentdate) {
                                         ?>
-                                        <option value="<?php echo $staringdate; ?>"><?php echo $staringdate;
-                                           $staringdate++; ?></option>
-                                        <?php
+                                            <option value="<?php echo $staringdate; ?>"><?php echo $staringdate;
+                                               $staringdate++; ?></option>
+                                            <?php
                                     }
                                     ?>
                                 </select>
@@ -760,10 +760,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                                 $strSelected = "";
                                             }
                                             ?>
-                                            <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
-                                                <?php echo trim($rowOptions['optionName']); ?>
-                                            </option>
-                                            <?php
+                                                    <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
+                                                        <?php echo trim($rowOptions['optionName']); ?>
+                                                    </option>
+                                                    <?php
                                         }
                                     }
                                     ?>

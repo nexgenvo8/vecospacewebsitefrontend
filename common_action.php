@@ -35,12 +35,12 @@ if (isset($_REQUEST['addskillaction']) && $_REQUEST['addskillaction'] == 'add') 
 		}
 	}
 	?>
-	<script>
-		parent.loadskills();
-	</script>
+		<script>
+			parent.loadskills();
+		</script>
 
 
-	<?php
+		<?php
 }
 
 
@@ -81,12 +81,12 @@ if (isset($_REQUEST['addexploringaction']) && $_REQUEST['addexploringaction'] ==
 
 
 
-	<script>
-		parent.loadexploring();
-	</script>
+		<script>
+			parent.loadexploring();
+		</script>
 
 
-	<?php
+		<?php
 }
 
 
@@ -147,12 +147,12 @@ if (isset($_REQUEST['addlanguageaction']) && $_REQUEST['addlanguageaction'] == '
 
 
 
-	<script>
-		parent.loadlanguages();
-	</script>
+		<script>
+			parent.loadlanguages();
+		</script>
 
 
-	<?php
+		<?php
 }
 
 
@@ -194,12 +194,12 @@ if (isset($_REQUEST['addinterestaction']) && $_REQUEST['addinterestaction'] == '
 
 
 
-	<script>
-		parent.loadinterest();
-	</script>
+		<script>
+			parent.loadinterest();
+		</script>
 
 
-	<?php
+		<?php
 }
 
 
@@ -221,10 +221,10 @@ if ($_REQUEST['action'] == 'tagline' && trim($_REQUEST['taglineText']) != '') {
 
 	$resUpdate = updateDB(_USERS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
@@ -259,18 +259,18 @@ if (isset($_FILES['imagefile']) && $_FILES['imagefile']['name'] != '') {
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.reloadPage();
-		</script>
+				<script>
+					parent.reloadPage();
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 }
@@ -282,168 +282,168 @@ if (isset($_REQUEST['shareType']) && $_REQUEST['shareType'] != '' && $_REQUEST['
 
 	if (trim($_REQUEST['postText']) != '' || $_REQUEST['imgyes'] == 1) {
 		?>
-		<script>
-			parent.$('#commonloader').show();
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').show();
+				</script>
+				<?php
 
-		$linkcontentsubmit = '';
-		$linkcontentsubmit = preg_replace('/<br \/>/iU', '', $_REQUEST['linkcontentsubmit']);
-		if ($linkcontentsubmit != '') {
-			$postText = addslashes($_REQUEST['postText'] . '' . $linkcontentsubmit);
-		} else {
-			$postText = addslashes($_REQUEST['postText']);
-		}
+				$linkcontentsubmit = '';
+				$linkcontentsubmit = preg_replace('/<br \/>/iU', '', $_REQUEST['linkcontentsubmit']);
+				if ($linkcontentsubmit != '') {
+					$postText = addslashes($_REQUEST['postText'] . '' . $linkcontentsubmit);
+				} else {
+					$postText = addslashes($_REQUEST['postText']);
+				}
 
-		$tageduserid = str_replace("'", "", trim($_REQUEST['tageduserid']));
-		$tageduserid = rtrim($tageduserid, ",");
-
-		unset($insertFields);
-		unset($insertVals);
-		unset($whereFields);
-		unset($whereVals);
-
-		$insertFields[0] = "postType";
-		$insertFields[1] = "postText";
-		$insertFields[2] = "shareType";
-		$insertFields[3] = "dateAdded";
-		$insertFields[4] = "websiteshare";
-
-		$insertVals[0] = clean($_REQUEST['postType']);
-		$insertVals[1] = $postText;
-		$insertVals[2] = clean($_REQUEST['shareType']);
-		$insertVals[3] = time();
-		$insertVals[4] = trim($_REQUEST['websiteshare']);
-
-		$whereFields[0] = "id";
-		$whereFields[1] = "userId";
-
-		$whereVals[0] = clean($_REQUEST['postId']);
-		$whereVals[1] = $_SESSION['sessUserId'];
-
-		$resUpdate = updateDB(_SHAREANDUPDATES_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-		if ($resUpdate) {
-			unset($insertFields);
-			unset($insertVals);
-
-			$insertFields[0] = "userId";
-			$insertFields[1] = "postId";
-			$insertFields[2] = "postType";
-			$insertFields[3] = "shareType";
-			$insertFields[4] = "dateAdded";
-			$insertFields[5] = "status";
-
-			$insertVals[0] = $_SESSION["sessUserId"];
-			$insertVals[1] = clean($_REQUEST['postId']);
-			$insertVals[2] = clean($_REQUEST['postType']);
-			$insertVals[3] = clean($_REQUEST['shareType']);
-			$insertVals[4] = time();
-			if ($insertVals[3] == 1) {
-				$insertVals[5] = 0;
-			} else {
-				$insertVals[5] = 1;
-			}
-			$resUpdate = insertDB(_TIMELINE_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-		}
-
-
-		$sql_ins = "update " . _USERS_MASTER_TABLE_ . " set lastPost=" . clean($_REQUEST['postId']) . " ";
-		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-		if ($tageduserid != '') {
-
-			$expElementVal = explode(",", $tageduserid);
-			for ($elementCount = 0; $elementCount <= count($expElementVal) - 1; $elementCount++) {
-				$contactId = $expElementVal[$elementCount];
+				$tageduserid = str_replace("'", "", trim($_REQUEST['tageduserid']));
+				$tageduserid = rtrim($tageduserid, ",");
 
 				unset($insertFields);
 				unset($insertVals);
+				unset($whereFields);
+				unset($whereVals);
 
-				$insertFields[0] = "userId";
-				$insertFields[1] = "contactId";
-				$insertFields[2] = "postType";
-				$insertFields[3] = "postId";
-				$insertFields[4] = "notificationText";
-				;
-				$insertFields[5] = "dateAdded";
+				$insertFields[0] = "postType";
+				$insertFields[1] = "postText";
+				$insertFields[2] = "shareType";
+				$insertFields[3] = "dateAdded";
+				$insertFields[4] = "websiteshare";
 
-				$insertVals[0] = $contactId;
-				$insertVals[1] = $_SESSION["sessUserId"];
-				$insertVals[2] = 10;
-				$insertVals[3] = clean($_REQUEST['postId']);
-				$insertVals[4] = 'tag';
-				$insertVals[5] = time();
+				$insertVals[0] = clean($_REQUEST['postType']);
+				$insertVals[1] = $postText;
+				$insertVals[2] = clean($_REQUEST['shareType']);
+				$insertVals[3] = time();
+				$insertVals[4] = trim($_REQUEST['websiteshare']);
 
-				$resUpdate = insertDB(_NOTIFICATION_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+				$whereFields[0] = "id";
+				$whereFields[1] = "userId";
 
+				$whereVals[0] = clean($_REQUEST['postId']);
+				$whereVals[1] = $_SESSION['sessUserId'];
 
-			}
-		}
+				$resUpdate = updateDB(_SHAREANDUPDATES_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
-
-
-
-
-
-		$tagedcompanyid = str_replace("'", "", trim($_REQUEST['tagedcompanyid']));
-		$tagedcompanyid = rtrim($tagedcompanyid, ",");
-
-		if ($tagedcompanyid != '') {
-
-			$expElementVal = explode(",", $tagedcompanyid);
-			for ($elementCount = 0; $elementCount <= count($expElementVal) - 1; $elementCount++) {
-				$companyId = $expElementVal[$elementCount];
-
-				$sqlCompany = "select userId from " . _COMPANY_MASTER_TABLE_ . " where  id=" . $companyId . "  ";
-				$resCompany = getRecords(_COMPANY_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlCompany);
-				$rowCompanyUserId = mysqli_fetch_array($resCompany);
-
-				$sql = "SELECT notiTagingCompany from " . _USER_SETTINGS_MASTER_TABLE_ . " WHERE userId= " . $rowCompanyUserId["userId"] . " ";
-				$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
-				$getUserSettings = mysqli_fetch_array($getSql);
-
-				if ($getUserSettings["notiTagingCompany"] == 1) {
-
+				if ($resUpdate) {
 					unset($insertFields);
 					unset($insertVals);
 
 					$insertFields[0] = "userId";
-					$insertFields[1] = "contactId";
+					$insertFields[1] = "postId";
 					$insertFields[2] = "postType";
-					$insertFields[3] = "postId";
-					$insertFields[4] = "notificationText";
-					$insertFields[5] = "dateAdded";
-					$insertFields[6] = "companyId";
+					$insertFields[3] = "shareType";
+					$insertFields[4] = "dateAdded";
+					$insertFields[5] = "status";
 
-					$insertVals[0] = $rowCompanyUserId["userId"];
-					$insertVals[1] = $_SESSION["sessUserId"];
-					$insertVals[2] = 15;
-					$insertVals[3] = clean($_REQUEST['postId']);
-					$insertVals[4] = 'companytag';
-					$insertVals[5] = time();
-					$insertVals[6] = $companyId;
-
-					$resUpdate = insertDB(_NOTIFICATION_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+					$insertVals[0] = $_SESSION["sessUserId"];
+					$insertVals[1] = clean($_REQUEST['postId']);
+					$insertVals[2] = clean($_REQUEST['postType']);
+					$insertVals[3] = clean($_REQUEST['shareType']);
+					$insertVals[4] = time();
+					if ($insertVals[3] == 1) {
+						$insertVals[5] = 0;
+					} else {
+						$insertVals[5] = 1;
+					}
+					$resUpdate = insertDB(_TIMELINE_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 				}
 
-			}
-		}
+
+				$sql_ins = "update " . _USERS_MASTER_TABLE_ . " set lastPost=" . clean($_REQUEST['postId']) . " ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+				if ($tageduserid != '') {
+
+					$expElementVal = explode(",", $tageduserid);
+					for ($elementCount = 0; $elementCount <= count($expElementVal) - 1; $elementCount++) {
+						$contactId = $expElementVal[$elementCount];
+
+						unset($insertFields);
+						unset($insertVals);
+
+						$insertFields[0] = "userId";
+						$insertFields[1] = "contactId";
+						$insertFields[2] = "postType";
+						$insertFields[3] = "postId";
+						$insertFields[4] = "notificationText";
+						;
+						$insertFields[5] = "dateAdded";
+
+						$insertVals[0] = $contactId;
+						$insertVals[1] = $_SESSION["sessUserId"];
+						$insertVals[2] = 10;
+						$insertVals[3] = clean($_REQUEST['postId']);
+						$insertVals[4] = 'tag';
+						$insertVals[5] = time();
+
+						$resUpdate = insertDB(_NOTIFICATION_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+
+					}
+				}
 
 
 
-		?>
-		<script>
-			//parent.loadtimeline(1,0,20);
-			//parent.$('#postText').val('');
-			parent.reloadPage();
 
 
-			//parent.$('#uploadboximage').html('<div class="upload-img" style="position:relative;"><input name="imagefilehome" id="imagefilehome" type="file" onChange="$(\'#frmposthome\').submit();" style=" position:absolute; left:0px; top:0px; width:100%; height:100%;opacity: 0; filter: alpha(opacity=0); "><table width="40%"><tbody><tr><td> <i class="fa fa-cloud-upload" aria-hidden="true"></i></td><td align="left"> Upload Photo</td></tr></tbody></table></div>');
-			parent.$('#postpost').val(0);
 
-		</script>
-		<?php
+				$tagedcompanyid = str_replace("'", "", trim($_REQUEST['tagedcompanyid']));
+				$tagedcompanyid = rtrim($tagedcompanyid, ",");
+
+				if ($tagedcompanyid != '') {
+
+					$expElementVal = explode(",", $tagedcompanyid);
+					for ($elementCount = 0; $elementCount <= count($expElementVal) - 1; $elementCount++) {
+						$companyId = $expElementVal[$elementCount];
+
+						$sqlCompany = "select userId from " . _COMPANY_MASTER_TABLE_ . " where  id=" . $companyId . "  ";
+						$resCompany = getRecords(_COMPANY_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlCompany);
+						$rowCompanyUserId = mysqli_fetch_array($resCompany);
+
+						$sql = "SELECT notiTagingCompany from " . _USER_SETTINGS_MASTER_TABLE_ . " WHERE userId= " . $rowCompanyUserId["userId"] . " ";
+						$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
+						$getUserSettings = mysqli_fetch_array($getSql);
+
+						if ($getUserSettings["notiTagingCompany"] == 1) {
+
+							unset($insertFields);
+							unset($insertVals);
+
+							$insertFields[0] = "userId";
+							$insertFields[1] = "contactId";
+							$insertFields[2] = "postType";
+							$insertFields[3] = "postId";
+							$insertFields[4] = "notificationText";
+							$insertFields[5] = "dateAdded";
+							$insertFields[6] = "companyId";
+
+							$insertVals[0] = $rowCompanyUserId["userId"];
+							$insertVals[1] = $_SESSION["sessUserId"];
+							$insertVals[2] = 15;
+							$insertVals[3] = clean($_REQUEST['postId']);
+							$insertVals[4] = 'companytag';
+							$insertVals[5] = time();
+							$insertVals[6] = $companyId;
+
+							$resUpdate = insertDB(_NOTIFICATION_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+						}
+
+					}
+				}
+
+
+
+				?>
+				<script>
+					//parent.loadtimeline(1,0,20);
+					//parent.$('#postText').val('');
+					parent.reloadPage();
+
+
+					//parent.$('#uploadboximage').html('<div class="upload-img" style="position:relative;"><input name="imagefilehome" id="imagefilehome" type="file" onChange="$(\'#frmposthome\').submit();" style=" position:absolute; left:0px; top:0px; width:100%; height:100%;opacity: 0; filter: alpha(opacity=0); "><table width="40%"><tbody><tr><td> <i class="fa fa-cloud-upload" aria-hidden="true"></i></td><td align="left"> Upload Photo</td></tr></tbody></table></div>');
+					parent.$('#postpost').val(0);
+
+				</script>
+				<?php
 	}
 
 }
@@ -537,7 +537,7 @@ if ($_REQUEST['action'] == 'addcontact' && $_REQUEST['userid'] != '') {
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
 				  <div style="padding: 0px 0px 16px;text-align:center;">
 				   <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:234px">                        </a>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:234px">                        </a>
 				  </div>
                         <div style="color:#666666; font-size:12px; margin-bottom:10px;">You have a new notification</div>
                       <p align="center" style="margin:0 0 30px;padding:0;color:#484848; font-size:18px;">New friend request</p>
@@ -604,15 +604,15 @@ if ($_REQUEST['action'] == 'addcontact' && $_REQUEST['userid'] != '') {
 
 
 		?>
-		<script>
-			parent.$('#sendrequestbutton').removeAttr('href');
-			parent.$('#sendrequestbutton').removeAttr('target');
-			parent.$('#sendrequestbutton').text('Request Sent');
-			parent.$('#sendrequestbutton').css('background-color', '#b0d400');
-			parent.reloadPage();
-		</script>
+				<script>
+					parent.$('#sendrequestbutton').removeAttr('href');
+					parent.$('#sendrequestbutton').removeAttr('target');
+					parent.$('#sendrequestbutton').text('Request Sent');
+					parent.$('#sendrequestbutton').css('background-color', '#b0d400');
+					parent.reloadPage();
+				</script>
 
-		<?php
+				<?php
 	}
 
 }
@@ -663,18 +663,18 @@ if (isset($_FILES['imagefilehome']) && $_FILES['imagefilehome']['name'] != '' &&
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.$('#uploadboximage').load('share_photo_home.php?postId=<?php echo $_REQUEST['postId']; ?>');
-		</script>
+				<script>
+					parent.$('#uploadboximage').load('share_photo_home.php?postId=<?php echo $_REQUEST['postId']; ?>');
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 
@@ -728,19 +728,19 @@ if (isset($_FILES['imagefilehome']) && $_FILES['imagefilehome']['name'] != '' &&
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['articleId']; ?>');
-																																			/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
-		</script>
+				<script>
+					parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['articleId']; ?>');
+																																													/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 }
@@ -780,12 +780,12 @@ if ($_REQUEST['action'] == 'removepostimg' && $_REQUEST['postId'] != '') {
 
 
 		?>
-		<script>
-			parent.$('#alertpopup').hide();
-			parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['postId']; ?>');
-		</script>
+				<script>
+					parent.$('#alertpopup').hide();
+					parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['postId']; ?>');
+				</script>
 
-		<?php
+				<?php
 	}
 }
 
@@ -813,11 +813,11 @@ if ($_REQUEST['action'] == 'homeremovepostimg' && $_REQUEST['postId'] != '') {
 
 
 	?>
-	<script>
-		parent.$('#uploadboximage').load('share_photo_home.php?postId=<?php echo $_REQUEST['postId']; ?>');
-	</script>
+		<script>
+			parent.$('#uploadboximage').load('share_photo_home.php?postId=<?php echo $_REQUEST['postId']; ?>');
+		</script>
 
-	<?php
+		<?php
 
 }
 
@@ -856,13 +856,13 @@ if (isset($_REQUEST['dltid']) && $_REQUEST['dltid'] != '' && $_REQUEST['action']
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	}
 	?>
-	<script>
-		parent.$('#alertpopup').hide();
-		parent.$('#<?php echo $dltid; ?>').slideUp();
-	</script>
+		<script>
+			parent.$('#alertpopup').hide();
+			parent.$('#<?php echo $dltid; ?>').slideUp();
+		</script>
 
 
-	<?php
+		<?php
 
 
 
@@ -931,7 +931,7 @@ if (isset($_REQUEST['userIdcontact']) && $_REQUEST['userIdcontact'] != '' && $_R
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -994,10 +994,10 @@ if (isset($_REQUEST['userIdcontact']) && $_REQUEST['userIdcontact'] != '' && $_R
 	send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 	$_SESSION["s"] = 1;
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
@@ -1008,10 +1008,10 @@ if (isset($_REQUEST['userIdcontact']) && $_REQUEST['userIdcontact'] != '' && $_R
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	$_SESSION["d"] = 1;
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
@@ -1146,7 +1146,7 @@ if (isset($_REQUEST['postId']) && $_REQUEST['postId'] != '' && $_REQUEST['action
 					<tr>
 						<td align="center" valign="top" style="width:100%;padding:20px 0">
 							<a href="' . $fullurl . '" target="_blank" >
-								<img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+								<img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
 					</tr>
 					<tr>
 					  <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1223,10 +1223,10 @@ if (isset($_REQUEST['postId']) && $_REQUEST['postId'] != '' && $_REQUEST['action
 
 
 		?>
-		<!--<script>
+				<!--<script>
 parent.$('#likesmmbrdiv<?php echo decodeStr($_POST['postId']); ?><?php echo $_REQUEST["postType"]; ?>').load('<?php echo $fullurl; ?>loadlikeusers.php?postId=<?php echo decodeStr($_POST['postId']); ?>');
 </script>-->
-		<?php
+				<?php
 
 
 	}
@@ -1261,10 +1261,10 @@ parent.$('#likesmmbrdiv<?php echo decodeStr($_POST['postId']); ?><?php echo $_RE
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	}
 	?>
-	<script>
-		$('#post<?php echo $_REQUEST['postId']; ?><?php echo $_REQUEST['postType']; ?> span').text(<?php echo $totalpostlike; ?>);
-	</script>
-	<?php
+		<script>
+			$('#post<?php echo $_REQUEST['postId']; ?><?php echo $_REQUEST['postType']; ?> span').text(<?php echo $totalpostlike; ?>);
+		</script>
+		<?php
 }
 
 
@@ -1312,16 +1312,16 @@ if (isset($_REQUEST['dltid']) && $_REQUEST['dltid'] != '' && $_REQUEST['action']
 	}
 	if ($_REQUEST['removearticle'] == 1) {
 		?>
-		<script>
-			parent.$('#<?php echo $dltid; ?>').slideUp();
-			parent.$('#alertpopup').hide();
-		</script>
-		</script>
-	<?php } else { ?>
-		<script>
-			parent.reloadPage();
-		</script>
-		<?php
+				<script>
+					parent.$('#<?php echo $dltid; ?>').slideUp();
+					parent.$('#alertpopup').hide();
+				</script>
+				</script>
+		<?php } else { ?>
+				<script>
+					parent.reloadPage();
+				</script>
+				<?php
 	}
 
 
@@ -1389,10 +1389,10 @@ if (trim($_REQUEST['action']) == 'addnewgrp' && trim($_REQUEST['groupName']) != 
 
 	$_SESSION["s"] = 1;
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
@@ -1463,13 +1463,13 @@ if (isset($_REQUEST['grouppostpost']) && $_REQUEST['grouppostpost'] != '0' && $_
 	}
 
 	?>
-	<script>
-		parent.reloadPage();
+		<script>
+			parent.reloadPage();
 
-		parent.$('#postpost').val(0);
+			parent.$('#postpost').val(0);
 
-	</script>
-	<?php
+		</script>
+		<?php
 }
 
 
@@ -1518,13 +1518,13 @@ if (isset($_REQUEST['groupdltid']) && $_REQUEST['groupdltid'] != '' && $_REQUEST
 	$sql_ins = "DELETE FROM " . _LIKE_MASTER_TABLE_ . " WHERE  postId='" . $dltid . "' ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.$('#alertpopup').hide();
-		parent.$('#post<?php echo $dltid; ?>').slideUp();
-	</script>
+		<script>
+			parent.$('#alertpopup').hide();
+			parent.$('#post<?php echo $dltid; ?>').slideUp();
+		</script>
 
 
-	<?php
+		<?php
 
 
 
@@ -1563,11 +1563,11 @@ if (isset($_REQUEST['groupId']) && $_REQUEST['groupId'] != '' && $_REQUEST['acti
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
+		<script>
+			parent.reloadPage();
+		</script>
 
-	<?php
+		<?php
 
 
 
@@ -1656,7 +1656,7 @@ if (isset($_REQUEST['groupId']) && $_REQUEST['groupId'] != '' && $_REQUEST['acti
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1739,7 +1739,7 @@ if (isset($_REQUEST['groupId']) && $_REQUEST['groupId'] != '' && $_REQUEST['acti
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1795,11 +1795,11 @@ Best regards,<br />
 
 	}
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
+		<script>
+			parent.reloadPage();
+		</script>
 
-	<?php
+		<?php
 
 
 
@@ -1829,20 +1829,20 @@ if (isset($_REQUEST['joinedGroupId']) && $_REQUEST['joinedGroupId'] != '' && $_R
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	if ($_REQUEST['a'] == 1) { ?>
-		<script>
-			window.top.location.href = "groups.html?q=1";
-		</script>
-		<?php
+				<script>
+					window.top.location.href = "groups.html?q=1";
+				</script>
+				<?php
 	} else {
 
 		if ($_REQUEST['page'] == 1) { ?>
-			<script>
-				parent.reloadPage();
-			</script>
-		<?php } else { ?>
-			<script>
-				parent.reloadPage();
-			</script> <?php }
+						<script>
+							parent.reloadPage();
+						</script>
+				<?php } else { ?>
+						<script>
+							parent.reloadPage();
+						</script> <?php }
 	}
 }
 
@@ -1879,21 +1879,21 @@ if (isset($_REQUEST['joinedGroupId']) && $_REQUEST['joinedGroupId'] != '' && $_R
 
 
 	if ($_REQUEST['a'] == 1) { ?>
-		<script>
-			window.top.location.href = "my-groups.html?q=1";
-		</script>
-		<?php
+				<script>
+					window.top.location.href = "my-groups.html?q=1";
+				</script>
+				<?php
 	} else {
 
 		if ($_REQUEST['page'] == 1) { ?>
-			<script>
-				parent.reloadPage();
-			</script>
-		<?php } else { ?>
-			<script>
-				parent.reloadPage();
-			</script>
-			<?php
+						<script>
+							parent.reloadPage();
+						</script>
+				<?php } else { ?>
+						<script>
+							parent.reloadPage();
+						</script>
+						<?php
 		}
 	}
 
@@ -1957,41 +1957,41 @@ if ($_REQUEST['action'] == 'groupchat' && trim($_REQUEST['grouptext']) != '' && 
 
 
 
-		<script>
-			<?php if ($rowGroupchat['msgType'] == 'text') { ?>
-				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
-				$(".chats").animate({ scrollTop: $("#groupchatlist").outerHeight() }, 600);
+				<script>
+					<?php if ($rowGroupchat['msgType'] == 'text') { ?>
+							$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																															 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
+							$(".chats").animate({ scrollTop: $("#groupchatlist").outerHeight() }, 600);
 
-				<?php
+							<?php
 
-				$g = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id=" . decodeStr($_REQUEST["groupId"]) . " ";
-				$h = mysqli_query($conn, $g) or die(mysqli_error($conn));
-				$groupname = mysqli_fetch_array($h);
-
-
-
-				$ga = "select * from " . _GROUP_MEMBER_MASTER_TABLE_ . " where groupId='" . $groupname["id"] . "'  AND userStatus=0 and status=1 and userId!=" . $_SESSION["sessUserId"] . "";
-				$hb = mysqli_query($conn, $ga) or die(mysqli_error($conn));
-				while ($groupuser = mysqli_fetch_array($hb)) {
-
-					$token = '';
-					$sqlMsgToken = "";
-					$sqlMsgToken = "select token from " . _MOBILE_NOTIFICATION_TABLE_ . " where userId='" . $groupuser["userId"] . "' ORDER BY id desc ";
-					$resMsgToken = mysqli_query($conn, $sqlMsgToken);
-					$getLastToken = mysqli_fetch_array($resMsgToken);
-					$token = $getLastToken["token"];
+							$g = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id=" . decodeStr($_REQUEST["groupId"]) . " ";
+							$h = mysqli_query($conn, $g) or die(mysqli_error($conn));
+							$groupname = mysqli_fetch_array($h);
 
 
-					?>
-					$("#sendalert").load('app/firebase/Send.php?title=<?php echo str_replace(" ", "%20", $groupname["groupName"]) . ',' . $groupname["id"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>&groupId=<?php echo $groupname["id"]; ?>');
-					<?php
-				}
-				?>
-			</script>
 
-			<?php
+							$ga = "select * from " . _GROUP_MEMBER_MASTER_TABLE_ . " where groupId='" . $groupname["id"] . "'  AND userStatus=0 and status=1 and userId!=" . $_SESSION["sessUserId"] . "";
+							$hb = mysqli_query($conn, $ga) or die(mysqli_error($conn));
+							while ($groupuser = mysqli_fetch_array($hb)) {
 
-			}
+								$token = '';
+								$sqlMsgToken = "";
+								$sqlMsgToken = "select token from " . _MOBILE_NOTIFICATION_TABLE_ . " where userId='" . $groupuser["userId"] . "' ORDER BY id desc ";
+								$resMsgToken = mysqli_query($conn, $sqlMsgToken);
+								$getLastToken = mysqli_fetch_array($resMsgToken);
+								$token = $getLastToken["token"];
+
+
+								?>
+									$("#sendalert").load('app/firebase/Send.php?title=<?php echo str_replace(" ", "%20", $groupname["groupName"]) . ',' . $groupname["id"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>&groupId=<?php echo $groupname["id"]; ?>');
+									<?php
+							}
+							?>
+						</script>
+
+						<?php
+
+					}
 
 	}
 
@@ -2011,20 +2011,20 @@ if (isset($_REQUEST['dltGroupId']) && $_REQUEST['dltGroupId'] != '' && $_REQUEST
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	if ($_REQUEST['a'] == 1) { ?>
-		<script>
-			window.top.location.href = "group-request.html?g=<?php echo $_REQUEST['dltGroupId']; ?>&q=1";
-		</script>
-		<?php
+				<script>
+					window.top.location.href = "group-request.html?g=<?php echo $_REQUEST['dltGroupId']; ?>&q=1";
+				</script>
+				<?php
 	} else {
 
 		if ($_REQUEST['page'] == 1) { ?>
-			<script>
-				parent.reloadPage();
-			</script>
-		<?php } else { ?>
-			<script>
-				parent.reloadPage();
-			</script><?php }
+						<script>
+							parent.reloadPage();
+						</script>
+				<?php } else { ?>
+						<script>
+							parent.reloadPage();
+						</script><?php }
 
 	}
 
@@ -2046,21 +2046,21 @@ if (isset($_REQUEST['dltGroupId']) && $_REQUEST['dltGroupId'] != '' && $_REQUEST
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	if ($_REQUEST['a'] == 1) { ?>
-		<script>
-			window.top.location.href = "group-request.html?g=<?php echo $_REQUEST['dltGroupId']; ?>&q=1";
-		</script>
-		<?php
+				<script>
+					window.top.location.href = "group-request.html?g=<?php echo $_REQUEST['dltGroupId']; ?>&q=1";
+				</script>
+				<?php
 	} else {
 
 		if ($_REQUEST['page'] == 1) { ?>
-			<script>
-				parent.reloadPage();
-			</script>
-		<?php } else { ?>
-			<script>
-				parent.reloadPage();
-			</script>
-		<?php }
+						<script>
+							parent.reloadPage();
+						</script>
+				<?php } else { ?>
+						<script>
+							parent.reloadPage();
+						</script>
+				<?php }
 
 	}
 
@@ -2069,139 +2069,139 @@ if (isset($_REQUEST['dltGroupId']) && $_REQUEST['dltGroupId'] != '' && $_REQUEST
 if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' && $_REQUEST['action'] == 'sendinvitation') {
 
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$useremailaddress = trim($_REQUEST['txtuseremail1']);
-	$arrsEmails = explode(',', $useremailaddress);
-	foreach ($arrsEmails as $email) {
-		$email = trim($email);
-		if ($email != '') {
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		$useremailaddress = trim($_REQUEST['txtuseremail1']);
+		$arrsEmails = explode(',', $useremailaddress);
+		foreach ($arrsEmails as $email) {
+			$email = trim($email);
+			if ($email != '') {
 
-			if (strlen(trim(sanitizedboutput($email))) > 60) {
+				if (strlen(trim(sanitizedboutput($email))) > 60) {
 
 
-			}
+				}
 
-			if (isValidEmailFunc(trim($email)) == 'n') {
-				?>
-				<!--<script>
+				if (isValidEmailFunc(trim($email)) == 'n') {
+					?>
+								<!--<script>
 				parent.$('#commonloader').hide();
 				parent.showerrormsg('Error','Invalid "<?php echo $email; ?>" email address.','');
 			</script>-->
-				<?php
-				//exit();
-			} else {
-
-				/*$userEmailId=trim($email);
-				$sqlCheck="";
-				$sqlCheck=mysql_query("select email from "._USERS_MASTER_TABLE_." where email='".$userEmailId."' ");
-				if(mysql_num_rows($sqlCheck)>0)
-				{
-				?>
-				<!--<script>
-					parent.$('#commonloader').hide();
-					parent.showerrormsg('Error','This email address "<?php echo $userEmailId;?>" already registered with Konectt.','');
-				</script>-->
-				<?php
-				//exit();
-				}
-				else
-				{}	*/
-
-
-				$aa = "SELECT firstName,lastName,profilePhoto,userId from " . _USERS_MASTER_TABLE_ . " WHERE email='" . $email . "' ";
-				$res5 = mysqli_query($conn, $aa);
-				$getuser = mysqli_fetch_array($res5);
-
-				$firstName = $getuser['firstName'];
-				$lastName = $getuser['lastName'];
-				$profilePhoto = $getuser['profilePhoto'];
-				$shareduserId = $getuser['userId'];
-
-
-				if ($profilePhoto != '') {
-					$profilePhoto = $profilePhoto;
+								<?php
+					//exit();
 				} else {
-					$profilePhoto = 'user-placeholder.jpg';
-				}
 
-				$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-				$res52 = mysqli_query($conn, $aa2);
-				$getuser2 = mysqli_fetch_array($res52);
-
-				$firstName2 = $getuser2['firstName'];
-				$lastName2 = $getuser2['lastName'];
-				$profilePhoto2 = $getuser2['profilePhoto'];
-				$jobTitle = $getuser2["jobTitle"];
-				$companyName = $getuser2["companyName"];
-				$userurl = $getuser2["userurl"];
-
-				if ($profilePhoto2 != '') {
-					$profilePhoto2 = $profilePhoto2;
-				} else {
-					$profilePhoto2 = 'user-placeholder.jpg';
-				}
-
-
-
-				if (trim($_REQUEST["sharedoc"]) == 1) {
-					$postId = decodeStr($_REQUEST['postId']);
-
-					/*unset($selectFields);
-					unset($whereFields);
-					unset($whereVals);
-
-					$sqlCheck1="";
-					$sqlCheck1="select id from "._VAULT_SHARE_MASTER_." where userId='".$shareduserId."' and postId=".$postId." ";
-					$resCheck1=getRecords(_VAULT_SHARE_MASTER_,$selectFields,$whereFields,$whereVals,_Y_,$sqlCheck1);
-					if($resCheck1)
+					/*$userEmailId=trim($email);
+					$sqlCheck="";
+					$sqlCheck=mysql_query("select email from "._USERS_MASTER_TABLE_." where email='".$userEmailId."' ");
+					if(mysql_num_rows($sqlCheck)>0)
 					{
+					?>
+					<!--<script>
+						parent.$('#commonloader').hide();
+						parent.showerrormsg('Error','This email address "<?php echo $userEmailId;?>" already registered with Konectt.','');
+					</script>-->
+					<?php
+					//exit();
 					}
 					else
-					{}*/
+					{}	*/
+
+
+					$aa = "SELECT firstName,lastName,profilePhoto,userId from " . _USERS_MASTER_TABLE_ . " WHERE email='" . $email . "' ";
+					$res5 = mysqli_query($conn, $aa);
+					$getuser = mysqli_fetch_array($res5);
+
+					$firstName = $getuser['firstName'];
+					$lastName = $getuser['lastName'];
+					$profilePhoto = $getuser['profilePhoto'];
+					$shareduserId = $getuser['userId'];
+
+
+					if ($profilePhoto != '') {
+						$profilePhoto = $profilePhoto;
+					} else {
+						$profilePhoto = 'user-placeholder.jpg';
+					}
+
+					$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+					$res52 = mysqli_query($conn, $aa2);
+					$getuser2 = mysqli_fetch_array($res52);
+
+					$firstName2 = $getuser2['firstName'];
+					$lastName2 = $getuser2['lastName'];
+					$profilePhoto2 = $getuser2['profilePhoto'];
+					$jobTitle = $getuser2["jobTitle"];
+					$companyName = $getuser2["companyName"];
+					$userurl = $getuser2["userurl"];
+
+					if ($profilePhoto2 != '') {
+						$profilePhoto2 = $profilePhoto2;
+					} else {
+						$profilePhoto2 = 'user-placeholder.jpg';
+					}
 
 
 
-					$insertFields = [];
-					$insertVals = [];
-					$whereFields = [];
-					$whereVals = [];
+					if (trim($_REQUEST["sharedoc"]) == 1) {
+						$postId = decodeStr($_REQUEST['postId']);
 
-					$insertFields[0] = "dateAdded";
-					$insertFields[1] = "userId";
-					$insertFields[2] = "postId";
+						/*unset($selectFields);
+						unset($whereFields);
+						unset($whereVals);
 
-					$insertVals[0] = time();
-					$insertVals[1] = $shareduserId;
-					$insertVals[2] = $postId;
-
-					$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-
-					$dateAdded = time();
-
-					$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . $shareduserId . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
-					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-					/*For email templates*/
-					$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
-					$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
-					$rowvault = mysqli_fetch_array($resvault);
-					$name = $rowvault['name'];
-					$documentFileName = trim($rowvault["documentFile"]);
-
-					$sharefileSize = trim($rowvault["fileSize"]);
-
-					$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
+						$sqlCheck1="";
+						$sqlCheck1="select id from "._VAULT_SHARE_MASTER_." where userId='".$shareduserId."' and postId=".$postId." ";
+						$resCheck1=getRecords(_VAULT_SHARE_MASTER_,$selectFields,$whereFields,$whereVals,_Y_,$sqlCheck1);
+						if($resCheck1)
+						{
+						}
+						else
+						{}*/
 
 
 
-					$mailBodyContent = '';
-					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
+						$insertFields = [];
+						$insertVals = [];
+						$whereFields = [];
+						$whereVals = [];
+
+						$insertFields[0] = "dateAdded";
+						$insertFields[1] = "userId";
+						$insertFields[2] = "postId";
+
+						$insertVals[0] = time();
+						$insertVals[1] = $shareduserId;
+						$insertVals[2] = $postId;
+
+						$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+
+						$dateAdded = time();
+
+						$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . $shareduserId . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						/*For email templates*/
+						$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
+						$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
+						$rowvault = mysqli_fetch_array($resvault);
+						$name = $rowvault['name'];
+						$documentFileName = trim($rowvault["documentFile"]);
+
+						$sharefileSize = trim($rowvault["fileSize"]);
+
+						$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
+
+
+
+						$mailBodyContent = '';
+						$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
 	 <a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;">
-    <img src="' . $fullurl . 'images/logo.png" width="150px;">
+    <img src="' . $fullurl . 'images/ndimlogo.png" width="150px;">
     </a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
@@ -2232,30 +2232,30 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
 </div>';
 
 
-					$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
+						$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
 
-					$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
-					$headers .= "MIME-Version: 1.0\r\n";
-					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+						$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
+						$headers .= "MIME-Version: 1.0\r\n";
+						$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-					//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
-					send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
-
-
-					?>
-					<script>
-						parent.$('#commonloader').hide();
-						parent.closefuncommonpopupwin();
-						parent.showsusmsg('SUCCESS', 'Successfully shared.', '');// with selected emails
-					</script>
-					<?php
+						//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
+						send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 
 
-				} else {
-					$mailBodyContent = '';
-					if ($shareduserId == '') {
+						?>
+										<script>
+											parent.$('#commonloader').hide();
+											parent.closefuncommonpopupwin();
+											parent.showsusmsg('SUCCESS', 'Successfully shared.', '');// with selected emails
+										</script>
+										<?php
+
+
+					} else {
 						$mailBodyContent = '';
-						$mailBodyContent = '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
+						if ($shareduserId == '') {
+							$mailBodyContent = '';
+							$mailBodyContent = '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
     <tbody>
     <tr>
@@ -2265,7 +2265,7 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -2288,9 +2288,9 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
 
 
 </div>';
-					} else {
-						$mailBodyContent = '';
-						$mailBodyContent = '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
+						} else {
+							$mailBodyContent = '';
+							$mailBodyContent = '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
     <tbody>
     <tr>
@@ -2300,7 +2300,7 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -2334,35 +2334,35 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
 
 
 </div>';
+						}
+
+						//$subject="Invitation from ".$companNameTitle." website.";
+						$subject = "Invitation to Join ConnecWrk";
+
+						$sendername = ucfirst($firstName2) . ' ' . ucfirst($lastName2);
+						send_invitation_template_mail($sendername, $email, $subject, $mailBodyContent);
+						$_SESSION["s"] = 1;
+						?>
+										<script>
+											parent.$('#commonloader').hide();
+											parent.$('#txtuseremail1').val('');
+											window.top.location.href = "contacts.html?q=1";
+										</script>
+										<?php
 					}
 
-					//$subject="Invitation from ".$companNameTitle." website.";
-					$subject = "Invitation to Join ConnecWrk";
 
-					$sendername = ucfirst($firstName2) . ' ' . ucfirst($lastName2);
-					send_invitation_template_mail($sendername, $email, $subject, $mailBodyContent);
-					$_SESSION["s"] = 1;
-					?>
-					<script>
-						parent.$('#commonloader').hide();
-						parent.$('#txtuseremail1').val('');
-						window.top.location.href = "contacts.html?q=1";
-					</script>
-					<?php
 				}
 
 
 			}
 
-
 		}
-
-	}
-	?>
-	<script>
-		parent.$('#commonloader').hide();
-	</script>
-	<?php
+		?>
+		<script>
+			parent.$('#commonloader').hide();
+		</script>
+		<?php
 
 
 
@@ -2396,69 +2396,69 @@ if ($_REQUEST['action'] == 'uploadgroupimage' && $_REQUEST['groupId'] != '' && $
 	if ($fileExtention == '') {
 
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#sharepopup').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload file with extension only .jpg, .png, .gif, .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .text.', '');
-		</script>
-		<?php
-		exit();
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#sharepopup').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload file with extension only .jpg, .png, .gif, .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .text.', '');
+				</script>
+				<?php
+				exit();
 
 	}
 
 
 	?>
-	<script>
-		parent.showloading('sharepopinner');
-		parent.$('#sharepopup').show();
-	</script>
-	<?php
-	$groupId = decodeStr($_REQUEST['groupId']);
+		<script>
+			parent.showloading('sharepopinner');
+			parent.$('#sharepopup').show();
+		</script>
+		<?php
+		$groupId = decodeStr($_REQUEST['groupId']);
 
-	$timename = time();
-
-
-
-	$file_name = time() . basename($_FILES["myphotofile"]["name"]);
-	$file_name = preg_replace('!\s+!', '-', $file_name);
-	copy($_FILES['myphotofile']['tmp_name'], 'groupuploads/' . $file_name);
+		$timename = time();
 
 
-	$file_name_big = 'x_' . time() . basename($_FILES["myphotofile"]["name"]);
-	$file_name_big = preg_replace('!\s+!', '-', $file_name_big);
-	copy($_FILES['myphotofile']['tmp_name'], 'groupuploads/' . $file_name_big);
+
+		$file_name = time() . basename($_FILES["myphotofile"]["name"]);
+		$file_name = preg_replace('!\s+!', '-', $file_name);
+		copy($_FILES['myphotofile']['tmp_name'], 'groupuploads/' . $file_name);
 
 
-	$upimg = 'groupuploads/' . $file_name;
-	//image_fix_orientation($upimg);
+		$file_name_big = 'x_' . time() . basename($_FILES["myphotofile"]["name"]);
+		$file_name_big = preg_replace('!\s+!', '-', $file_name_big);
+		copy($_FILES['myphotofile']['tmp_name'], 'groupuploads/' . $file_name_big);
+
+
+		$upimg = 'groupuploads/' . $file_name;
+		//image_fix_orientation($upimg);
 //generate_image_thumbnail($upimg, $upimg,'200','200');
+	
 
 
 
 
+		unset($insertFields);
+		unset($insertVals);
 
-	unset($insertFields);
-	unset($insertVals);
+		$insertFields[0] = "userId";
+		$insertFields[1] = "groupId";
+		$insertFields[2] = "fileName";
+		$insertFields[3] = "fileType";
 
-	$insertFields[0] = "userId";
-	$insertFields[1] = "groupId";
-	$insertFields[2] = "fileName";
-	$insertFields[3] = "fileType";
+		$insertVals[0] = $_SESSION["sessUserId"];
+		$insertVals[1] = $groupId;
+		$insertVals[2] = $file_name;
+		$insertVals[3] = 'file';
 
-	$insertVals[0] = $_SESSION["sessUserId"];
-	$insertVals[1] = $groupId;
-	$insertVals[2] = $file_name;
-	$insertVals[3] = 'file';
+		$resInsert = insertDB(_GROUP_FILE_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
-	$resInsert = insertDB(_GROUP_FILE_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-	?>
-	<script>
-		parent.$('#sharepopup').show();
-		parent.$('#sharepopup h2').text('Upload file');
-		parent.$('#sharepopinner').load("<?php echo $fullurl; ?>sharepopupinner.php?fileId=<?php echo $resInsert; ?>&filename=<?php echo $showfile_name; ?>");
-	</script>
-	<?php
+		?>
+		<script>
+			parent.$('#sharepopup').show();
+			parent.$('#sharepopup h2').text('Upload file');
+			parent.$('#sharepopinner').load("<?php echo $fullurl; ?>sharepopupinner.php?fileId=<?php echo $resInsert; ?>&filename=<?php echo $showfile_name; ?>");
+		</script>
+		<?php
 
 }
 
@@ -2505,43 +2505,43 @@ if ($_REQUEST['action'] == 'uploadgroupfile' && $_REQUEST['groupgroupId'] != '' 
 		}
 
 		?>
-		<script>
-			parent.$('#sharepopinner').html('');
-			parent.$('#sharepopup').hide();
-			parent.$('#groupchatlist').load('groupchatlist.php?groupId=<?php echo $_REQUEST["groupgroupId"]; ?>');
+				<script>
+					parent.$('#sharepopinner').html('');
+					parent.$('#sharepopup').hide();
+					parent.$('#groupchatlist').load('groupchatlist.php?groupId=<?php echo $_REQUEST["groupgroupId"]; ?>');
 
 
 
 
 
-			<?php
+					<?php
 
-			$g = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id=" . $groupId . " ";
-			$h = mysqli_query($conn, $g) or die(mysqli_error($conn));
-			$groupname = mysqli_fetch_array($h);
-
-
-
-			$ga = "select * from " . _GROUP_MEMBER_MASTER_TABLE_ . " where groupId='" . $groupname["id"] . "'  AND userStatus=0 and status=1 and userId!=" . $_SESSION["sessUserId"] . "";
-			$hb = mysqli_query($conn, $ga) or die(mysqli_error($conn));
-			while ($groupuser = mysqli_fetch_array($hb)) {
-
-				$token = '';
-				$sqlMsgToken = "";
-				$sqlMsgToken = "select token from " . _MOBILE_NOTIFICATION_TABLE_ . " where userId='" . $groupuser["userId"] . "' ORDER BY id desc ";
-				$resMsgToken = mysqli_query($conn, $sqlMsgToken);
-				$getLastToken = mysqli_fetch_array($resMsgToken);
-				$token = $getLastToken["token"];
+					$g = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id=" . $groupId . " ";
+					$h = mysqli_query($conn, $g) or die(mysqli_error($conn));
+					$groupname = mysqli_fetch_array($h);
 
 
-				?>
-				parent.$("#sendalert").load('app/firebase/Send.php?title=<?php echo str_replace(" ", "%20", $groupname["groupName"]) . ',' . $groupname["id"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>&groupId=<?php echo $groupname["id"]; ?>');
+
+					$ga = "select * from " . _GROUP_MEMBER_MASTER_TABLE_ . " where groupId='" . $groupname["id"] . "'  AND userStatus=0 and status=1 and userId!=" . $_SESSION["sessUserId"] . "";
+					$hb = mysqli_query($conn, $ga) or die(mysqli_error($conn));
+					while ($groupuser = mysqli_fetch_array($hb)) {
+
+						$token = '';
+						$sqlMsgToken = "";
+						$sqlMsgToken = "select token from " . _MOBILE_NOTIFICATION_TABLE_ . " where userId='" . $groupuser["userId"] . "' ORDER BY id desc ";
+						$resMsgToken = mysqli_query($conn, $sqlMsgToken);
+						$getLastToken = mysqli_fetch_array($resMsgToken);
+						$token = $getLastToken["token"];
+
+
+						?>
+							parent.$("#sendalert").load('app/firebase/Send.php?title=<?php echo str_replace(" ", "%20", $groupname["groupName"]) . ',' . $groupname["id"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>&groupId=<?php echo $groupname["id"]; ?>');
+							<?php
+					}
+					?>
+
+				</script>
 				<?php
-			}
-			?>
-
-		</script>
-		<?php
 	}
 
 }
@@ -2613,11 +2613,11 @@ if ($_REQUEST['action'] == 'sendtouserinvitation' && trim($_REQUEST['txtuseremai
 
 			if (isValidEmailFunc(trim($email)) == 'n') {
 				?>
-				<script>
-					parent.showerrormsg('Error', 'Invalid "<?php echo $email; ?>" email address.', '');
-				</script>
-				<?php
-				exit();
+								<script>
+									parent.showerrormsg('Error', 'Invalid "<?php echo $email; ?>" email address.', '');
+								</script>
+								<?php
+								exit();
 			} else {
 
 				$userEmailId = trim($email);
@@ -2633,11 +2633,11 @@ if ($_REQUEST['action'] == 'sendtouserinvitation' && trim($_REQUEST['txtuseremai
 
 				if (mysqli_num_rows($sqlCheck) > 0) {
 					?>
-					<script>
-						parent.showerrormsg('Error', 'This email address "<?php echo $userEmailId; ?>" already registered with <?php echo $companNameTitle; ?>.', '');
-					</script>
-					<?php
-					exit();
+										<script>
+											parent.showerrormsg('Error', 'This email address "<?php echo $userEmailId; ?>" already registered with <?php echo $companNameTitle; ?>.', '');
+										</script>
+										<?php
+										exit();
 				} else {
 
 					$invitegroupname = trim($_REQUEST['invitegroupname']);
@@ -2646,7 +2646,7 @@ if ($_REQUEST['action'] == 'sendtouserinvitation' && trim($_REQUEST['txtuseremai
 					$mycontactid = trim($_REQUEST['mycontactid']);
 
 					$mailBodyContent = '';
-					$mailBodyContent = '<div style="margin:0 auto;padding:30px 0 40px;display:block;box-sizing:border-box; max-width: 600px;"><table style="width:100%;color:#434245" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="box-sizing:border-box"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td><img style="width:190px;height:30px;margin:0 0 15px 0;padding-right:30px;padding-left:30px" alt="" src="' . $fullurl . 'images/logo.png" height="38" width="38"><h1 style="font-size:30px;padding-right:30px;padding-left:30px">Join ' . $invitegroupname . ' on ' . $companNameTitle . '</h1><p style="font-size:17px;padding-right:30px;padding-left:30px">' . $myname . ' (' . $myemail . ') has invited you to join the ' . $companNameTitle . ' team <strong>' . $invitegroupname . '</strong>. Join now to start collaborating!</p><div style="padding-right:30px;padding-left:30px"><a href="' . $fullurl . 'invitation.html?groupId=' . $mygroupId . '&action=joingroup" style="min-width:234px;border:13px solid #1c267a;border-radius:4px;background-color:#1c267a;font-size:20px;color:#ffffff;display:inline-block;text-align:center;vertical-align:top;font-weight:900;text-decoration:none!important">Join Now</a></div><div style="padding-right:30px;padding-left:30px"><div style="padding:30px 0 22px;margin:0;padding-top:20px"></div></div></td></tr></tbody></table></td></tr></tbody></table></div>';
+					$mailBodyContent = '<div style="margin:0 auto;padding:30px 0 40px;display:block;box-sizing:border-box; max-width: 600px;"><table style="width:100%;color:#434245" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="box-sizing:border-box"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td><img style="width:190px;height:30px;margin:0 0 15px 0;padding-right:30px;padding-left:30px" alt="" src="' . $fullurl . 'images/ndimlogo.png" height="38" width="38"><h1 style="font-size:30px;padding-right:30px;padding-left:30px">Join ' . $invitegroupname . ' on ' . $companNameTitle . '</h1><p style="font-size:17px;padding-right:30px;padding-left:30px">' . $myname . ' (' . $myemail . ') has invited you to join the ' . $companNameTitle . ' team <strong>' . $invitegroupname . '</strong>. Join now to start collaborating!</p><div style="padding-right:30px;padding-left:30px"><a href="' . $fullurl . 'invitation.html?groupId=' . $mygroupId . '&action=joingroup" style="min-width:234px;border:13px solid #1c267a;border-radius:4px;background-color:#1c267a;font-size:20px;color:#ffffff;display:inline-block;text-align:center;vertical-align:top;font-weight:900;text-decoration:none!important">Join Now</a></div><div style="padding-right:30px;padding-left:30px"><div style="padding:30px 0 22px;margin:0;padding-top:20px"></div></div></td></tr></tbody></table></td></tr></tbody></table></div>';
 
 
 					$subject = $myname . " has invited you to join a " . $companNameTitle . " team";
@@ -2662,12 +2662,12 @@ if ($_REQUEST['action'] == 'sendtouserinvitation' && trim($_REQUEST['txtuseremai
 
 
 					?>
-					<script>
-						parent.$('#txtuseremail').val('');
-						parent.$('#showinvitediv').hide();
-						parent.$('#hideinvitediv').show();
-					</script>
-					<?php
+										<script>
+											parent.$('#txtuseremail').val('');
+											parent.$('#showinvitediv').hide();
+											parent.$('#hideinvitediv').show();
+										</script>
+										<?php
 
 				}
 
@@ -2705,17 +2705,17 @@ if (isset($_FILES['imagefileevent']) && $_FILES['imagefileevent']['name'] != '' 
 		$sql_ins = "insert into " . _EVENT_IMAGE_MASTER_TABLE_ . " set imageName='$file_name',eventId='$postId',dateAdded='$dateAdded'";
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 		?>
-		<script>
-			parent.$("#imagebx").load('upload_photo_event.php?eventId=<?php echo $_REQUEST['eventId']; ?>');
-		</script>
-		<?php
+				<script>
+					parent.$("#imagebx").load('upload_photo_event.php?eventId=<?php echo $_REQUEST['eventId']; ?>');
+				</script>
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 
@@ -2742,11 +2742,11 @@ if ($_REQUEST['action'] == 'deleventimgact' && $_REQUEST['deleventimgId'] != '' 
 
 
 	?>
-	<script>
-		parent.$("#imagebx").load('<?php echo $fullurl; ?>upload_photo_event.php?eventId=<?php echo decodeStr($_REQUEST['eventId']); ?>');
-	</script>
+		<script>
+			parent.$("#imagebx").load('<?php echo $fullurl; ?>upload_photo_event.php?eventId=<?php echo decodeStr($_REQUEST['eventId']); ?>');
+		</script>
 
-	<?php
+		<?php
 }
 
 
@@ -2775,17 +2775,17 @@ if ($_REQUEST['action'] == 'profilephoto' && $_FILES['eventprofilephoto']['name'
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.reloadPage();
-		</script>
-		<?php
+				<script>
+					parent.reloadPage();
+				</script>
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 }
@@ -2815,18 +2815,18 @@ if ($_REQUEST['action'] == 'profilephoto' && $_FILES['eventbannerphoto']['name']
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.reloadPage();
-		</script>
+				<script>
+					parent.reloadPage();
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 }
 
@@ -2884,7 +2884,7 @@ if (isset($_REQUEST['msgcontactId']) && $_REQUEST['msgcontactId'] != '' && $_REQ
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -2963,12 +2963,12 @@ if (isset($_REQUEST['msgcontactId']) && $_REQUEST['msgcontactId'] != '' && $_REQ
 
 	?>
 
-	<script>
+		<script>
 
-		//parent.$('#sendmsg').html('<div style="text-align:center; font-size:16px; padding-bottom:20px; font-waight:bold;">Message sent successfully.</div>');
-		parent.showsusmsg('SUCCESS', 'Your message sent successfully.', '');
-	</script>
-	<?php
+			//parent.$('#sendmsg').html('<div style="text-align:center; font-size:16px; padding-bottom:20px; font-waight:bold;">Message sent successfully.</div>');
+			parent.showsusmsg('SUCCESS', 'Your message sent successfully.', '');
+		</script>
+		<?php
 }
 
 
@@ -3013,18 +3013,18 @@ if (isset($_FILES['groupimagefilehome']) && $_FILES['groupimagefilehome']['name'
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.$('#uploadgroupboximage').load('<?php echo $fullurl; ?>loadgroupphoto.php');
-		</script>
+				<script>
+					parent.$('#uploadgroupboximage').load('<?php echo $fullurl; ?>loadgroupphoto.php');
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 
@@ -3051,11 +3051,11 @@ if ($_REQUEST['action'] == 'removegrouppostimg' && trim($_REQUEST['postId']) != 
 
 
 	?>
-	<script>
-		parent.$('#uploadgroupboximage').load('<?php echo $fullurl; ?>loadgroupphoto.php');
-	</script>
+		<script>
+			parent.$('#uploadgroupboximage').load('<?php echo $fullurl; ?>loadgroupphoto.php');
+		</script>
 
-	<?php
+		<?php
 
 }
 
@@ -3098,18 +3098,18 @@ if (isset($_FILES['companylogoimage']) && $_FILES['companylogoimage']['name'] !=
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.$('#imagebx').load('upload_company_logo.php?postId=<?php echo $_REQUEST['postId']; ?>');
-		</script>
+				<script>
+					parent.$('#imagebx').load('upload_company_logo.php?postId=<?php echo $_REQUEST['postId']; ?>');
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 
@@ -3128,10 +3128,10 @@ if ($_REQUEST['action'] == 'delcmplogo' && $_REQUEST['cmpdelId'] != '' && $_REQU
 	$sql_ins = "DELETE FROM " . _IMAGE_MASTER_TABLE_ . " WHERE id= " . $id . "  and postId=" . decodeStr($_REQUEST['postId']) . "  ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.$("#imagebx").load('<?php echo $fullurl; ?>upload_company_logo.php?postId=<?php echo decodeStr($_REQUEST['postId']); ?>');
-	</script>
-	<?php
+		<script>
+			parent.$("#imagebx").load('<?php echo $fullurl; ?>upload_company_logo.php?postId=<?php echo decodeStr($_REQUEST['postId']); ?>');
+		</script>
+		<?php
 }
 
 
@@ -3178,17 +3178,17 @@ if (isset($_REQUEST['cmntid']) && $_REQUEST['cmntid'] != '' && $_REQUEST['action
 		$totalpostcomment = mysqli_num_rows($res5);
 	}
 	?>
-	<script>
-		parent.$('#alertpopup').hide();
-		parent.$('#cmntid<?php echo $dltid; ?>').slideUp();
-		<?php
-		if ($postId != 0 && $postType != '') { ?>
-			parent.$('#commentdisplaybox<?php echo $postId; ?><?php echo $postType; ?> span').text('<?php echo $totalpostcomment; ?>');
+		<script>
+			parent.$('#alertpopup').hide();
+			parent.$('#cmntid<?php echo $dltid; ?>').slideUp();
 			<?php
-		}
-		?>
-	</script>
-	<?php
+			if ($postId != 0 && $postType != '') { ?>
+					parent.$('#commentdisplaybox<?php echo $postId; ?><?php echo $postType; ?> span').text('<?php echo $totalpostcomment; ?>');
+					<?php
+			}
+			?>
+		</script>
+		<?php
 }
 
 if (isset($_REQUEST['cmntrplid']) && $_REQUEST['cmntrplid'] != '' && $_REQUEST['action'] == 'dltreply') {
@@ -3197,11 +3197,11 @@ if (isset($_REQUEST['cmntrplid']) && $_REQUEST['cmntrplid'] != '' && $_REQUEST['
 	$sql_ins = "DELETE FROM " . _COMMENT_MASTER_TABLE_ . " WHERE  id='" . $dltid . "'  ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.$('#alertpopup').hide();
-		parent.$('#cmntrplid<?php echo $dltid; ?>').slideUp();
-	</script>
-	<?php
+		<script>
+			parent.$('#alertpopup').hide();
+			parent.$('#cmntrplid<?php echo $dltid; ?>').slideUp();
+		</script>
+		<?php
 }
 
 if ($_REQUEST['action'] == 'cmpprofilephoto' && $_FILES['companyprofilephoto']['name'] != '' && $_REQUEST['postId'] != '') {
@@ -3238,11 +3238,11 @@ if ($_REQUEST['action'] == 'cmpprofilephoto' && $_FILES['companyprofilephoto']['
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
+		<script>
+			parent.reloadPage();
+		</script>
 
-	<?php
+		<?php
 }
 
 if ($_REQUEST['action'] == 'cmpaboutcompany' && trim($_REQUEST['aboutCompany']) != '' && $_REQUEST['companyId'] != '') {
@@ -3263,11 +3263,11 @@ if ($_REQUEST['action'] == 'cmpaboutcompany' && trim($_REQUEST['aboutCompany']) 
 
 	$resUpdate = updateDB(_COMPANY_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
+		<script>
+			parent.reloadPage();
+		</script>
 
-	<?php
+		<?php
 }
 
 if ($_REQUEST['action'] == 'allpostview' && $_REQUEST['postId'] != '') {
@@ -3328,12 +3328,12 @@ if (isset($_REQUEST['cmntrplid']) && $_REQUEST['msguserid'] != '' && $_REQUEST['
 
 		?>
 
-		<script>
-			//parent.$('#sendmsg').html('<div style="text-align:center; font-size:16px; padding-bottom:20px; font-waight:bold;">Message sent successfully.</div>');
-			parent.showsusmsg('SUCCESS', 'Your message sent successfully.', '');
-		</script>
+				<script>
+					//parent.$('#sendmsg').html('<div style="text-align:center; font-size:16px; padding-bottom:20px; font-waight:bold;">Message sent successfully.</div>');
+					parent.showsusmsg('SUCCESS', 'Your message sent successfully.', '');
+				</script>
 
-		<?php
+				<?php
 
 	}
 
@@ -3377,12 +3377,12 @@ if (isset($_REQUEST['msguserid']) && $_REQUEST['msguserid'] != '' && $_REQUEST['
 
 		?>
 
-		<script>
-			//parent.$('#sendmsg').html('<div style="text-align:center; font-size:16px; padding-bottom:20px; font-waight:bold;">Profile Shared successfully.</div>');
-			parent.showsusmsg('SUCCESS', 'Profile shared successfully.', '');
-		</script>
+				<script>
+					//parent.$('#sendmsg').html('<div style="text-align:center; font-size:16px; padding-bottom:20px; font-waight:bold;">Profile Shared successfully.</div>');
+					parent.showsusmsg('SUCCESS', 'Profile shared successfully.', '');
+				</script>
 
-		<?php
+				<?php
 
 	}
 }
@@ -3399,10 +3399,10 @@ if (isset($_REQUEST['rmcontactid']) && $_REQUEST['rmcontactid'] != '' && $_REQUE
 
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (isset($_REQUEST['rmcontactid']) && $_REQUEST['rmcontactid'] != '' && $_REQUEST['action'] == 'blockcontact') {
@@ -3443,10 +3443,10 @@ if (isset($_REQUEST['rmcontactid']) && $_REQUEST['rmcontactid'] != '' && $_REQUE
 	}
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (isset($_REQUEST['rmcontactid']) && $_REQUEST['rmcontactid'] != '' && $_REQUEST['action'] == 'recommendations' && trim($_REQUEST['fullusername']) != '' && $_REQUEST['userurl'] != '') {
@@ -3467,12 +3467,12 @@ if (isset($_REQUEST['rmcontactid']) && $_REQUEST['rmcontactid'] != '' && $_REQUE
 
 
 	?>
-	<script>
-		parent.$('#rsuccess').show();
-		parent.$('#frmposthomerecommend').hide();
-		parent.showsusmsg('SUCCESS', 'Request has been sent successfully.', '');
-	</script>
-	<?php
+		<script>
+			parent.$('#rsuccess').show();
+			parent.$('#frmposthomerecommend').hide();
+			parent.showsusmsg('SUCCESS', 'Request has been sent successfully.', '');
+		</script>
+		<?php
 }
 
 
@@ -3496,199 +3496,140 @@ if (isset($_REQUEST['rmcontactid']) && $_REQUEST['rmcontactid'] != '' && $_REQUE
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.$('#rsuccess').show();
-		parent.$('#frmposthomerecommend').hide();
-		parent.showsusmsg('SUCCESS', 'Your recommendation has been submitted successfully.', '');
-	</script>
-	<?php
+		<script>
+			parent.$('#rsuccess').show();
+			parent.$('#frmposthomerecommend').hide();
+			parent.showsusmsg('SUCCESS', 'Your recommendation has been submitted successfully.', '');
+		</script>
+		<?php
 }
 
 if ($_REQUEST['action'] == 'saveprofessinalexp' && trim($_REQUEST['jobTitle']) != '' && trim($_REQUEST['jobLocation']) != '' && trim($_REQUEST['companyName']) != '' && $_REQUEST['industry'] != 0 && $_REQUEST['frommonth'] != 0 && $_REQUEST['fromyear'] != 0 && (($_REQUEST['tomonth'] != 0 && $_REQUEST['toyear'] != 0) || ($_REQUEST['currentPosition'] == 1))) {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	if (trim($_REQUEST['professionalid']) != '') {
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		if (trim($_REQUEST['professionalid']) != '') {
 
-		if ($_REQUEST['currentPosition'] == 1) {
+			if ($_REQUEST['currentPosition'] == 1) {
 
-			$sql_ins = "update " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " set currentPosition=0 where userId= " . $_SESSION["sessUserId"] . " ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+				$sql_ins = "update " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " set currentPosition=0 where userId= " . $_SESSION["sessUserId"] . " ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
-		}
-
-		unset($insertFields);
-		unset($insertVals);
-		unset($whereFields);
-		unset($whereVals);
-
-		$insertFields[0] = "userId";
-		$insertFields[1] = "jobTitle";
-		$insertFields[2] = "companyName";
-		$insertFields[3] = "employment";
-		$insertFields[4] = "industry";
-		$insertFields[5] = "currentPosition";
-		$insertFields[6] = "frommonth";
-		$insertFields[7] = "fromyear";
-		$insertFields[8] = "tomonth";
-		$insertFields[9] = "toyear";
-		$insertFields[10] = "discipline";
-		$insertFields[11] = "careerlevel";
-		$insertFields[12] = "positiondetail";
-		$insertFields[13] = "segment";
-		$insertFields[14] = "legalform";
-		$insertFields[15] = "employees";
-		$insertFields[16] = "companywebsite";
-		$insertFields[17] = "jobLocation";
-
-		$insertVals[0] = $_SESSION["sessUserId"];
-		$insertVals[1] = normalclean($_REQUEST['jobTitle']);
-		$insertVals[2] = normalclean($_REQUEST['companyName']);
-		$insertVals[3] = trim($_REQUEST['employment']);
-		$insertVals[4] = trim($_REQUEST['industry']);
-		$insertVals[5] = trim($_REQUEST['currentPosition']);
-		$insertVals[6] = trim($_REQUEST['frommonth']);
-		$insertVals[7] = trim($_REQUEST['fromyear']);
-		$insertVals[8] = trim($_REQUEST['tomonth']);
-		$insertVals[9] = trim($_REQUEST['toyear']);
-		$insertVals[10] = trim($_REQUEST['discipline']);
-		$insertVals[11] = trim($_REQUEST['careerlevel']);
-		$insertVals[12] = normalclean($_REQUEST['positiondetail']);
-		$insertVals[13] = trim($_REQUEST['segment']);
-		$insertVals[14] = trim($_REQUEST['legalform']);
-		$insertVals[15] = trim($_REQUEST['employees']);
-		$insertVals[16] = trim($_REQUEST['companywebsite']);
-		$insertVals[17] = trim($_REQUEST['jobLocation']);
-
-
-		$whereFields[0] = "id";
-		$whereFields[1] = "userId";
-
-		$whereVals[0] = decodeStr(trim($_REQUEST['professionalid']));
-		$whereVals[1] = $_SESSION['sessUserId'];
-
-		$resUpdate = updateDB(_PROFESSIONAL_EXPERIENCE_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-
-	} else {
-
-		if ($_REQUEST['currentPosition'] == 1) {
-
-			$sql_ins = "update " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " set currentPosition=0 where userId= " . $_SESSION["sessUserId"] . " ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-		}
-
-		unset($insertFields);
-		unset($insertVals);
-
-		$insertFields[0] = "userId";
-		$insertFields[1] = "jobTitle";
-		$insertFields[2] = "companyName";
-		$insertFields[3] = "employment";
-		$insertFields[4] = "industry";
-		$insertFields[5] = "dateAdded";
-		$insertFields[6] = "frommonth";
-		$insertFields[7] = "fromyear";
-		$insertFields[8] = "tomonth";
-		$insertFields[9] = "toyear";
-		$insertFields[10] = "currentPosition";
-		$insertFields[11] = "discipline";
-		$insertFields[12] = "careerlevel";
-		$insertFields[13] = "positiondetail";
-		$insertFields[14] = "segment";
-		$insertFields[15] = "legalform";
-		$insertFields[16] = "employees";
-		$insertFields[17] = "companywebsite";
-		$insertFields[18] = "jobLocation";
-
-		$insertVals[0] = $_SESSION["sessUserId"];
-		$insertVals[1] = normalclean($_REQUEST['jobTitle']);
-		$insertVals[2] = normalclean($_REQUEST['companyName']);
-		$insertVals[3] = trim($_REQUEST['employment']);
-		$insertVals[4] = trim($_REQUEST['industry']);
-		$insertVals[5] = time();
-		$insertVals[6] = trim($_REQUEST['frommonth']);
-		$insertVals[7] = trim($_REQUEST['fromyear']);
-		$insertVals[8] = trim($_REQUEST['tomonth']);
-		$insertVals[9] = trim($_REQUEST['toyear']);
-		$insertVals[10] = trim($_REQUEST['currentPosition']);
-		$insertVals[11] = trim($_REQUEST['discipline']);
-		$insertVals[12] = trim($_REQUEST['careerlevel']);
-		$insertVals[13] = normalclean($_REQUEST['positiondetail']);
-		$insertVals[14] = trim($_REQUEST['segment']);
-		$insertVals[15] = trim($_REQUEST['legalform']);
-		$insertVals[16] = trim($_REQUEST['employees']);
-		$insertVals[17] = trim($_REQUEST['companywebsite']);
-		$insertVals[18] = trim($_REQUEST['jobLocation']);
-
-		$resUpdate = insertDB(_PROFESSIONAL_EXPERIENCE_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-
-
-	}
-
-
-
-
-	$selectFields = [];
-	$whereFields = [];
-	$whereVals = [];
-
-	$sqlOptions = "";
-	$sqlOptions = "SELECT jobTitle,companyName FROM " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . " order by fromyear desc LIMIT 0,1 ";
-	$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
-	if ($resOptions) {
-		while ($rowOptions = mysqli_fetch_array($resOptions)) {
-
-
-			$userjobTitle = $rowOptions['jobTitle'];
-			$usercompanyName = $rowOptions['companyName'];
+			}
 
 			unset($insertFields);
 			unset($insertVals);
 			unset($whereFields);
 			unset($whereVals);
 
-			$insertFields[0] = "jobTitle";
-			$insertFields[1] = "companyName";
-			$insertFields[2] = "industryId";
+			$insertFields[0] = "userId";
+			$insertFields[1] = "jobTitle";
+			$insertFields[2] = "companyName";
+			$insertFields[3] = "employment";
+			$insertFields[4] = "industry";
+			$insertFields[5] = "currentPosition";
+			$insertFields[6] = "frommonth";
+			$insertFields[7] = "fromyear";
+			$insertFields[8] = "tomonth";
+			$insertFields[9] = "toyear";
+			$insertFields[10] = "discipline";
+			$insertFields[11] = "careerlevel";
+			$insertFields[12] = "positiondetail";
+			$insertFields[13] = "segment";
+			$insertFields[14] = "legalform";
+			$insertFields[15] = "employees";
+			$insertFields[16] = "companywebsite";
+			$insertFields[17] = "jobLocation";
 
-			$insertVals[0] = $userjobTitle;
-			$insertVals[1] = $usercompanyName;
-			$insertVals[2] = trim($_REQUEST['industry']);
+			$insertVals[0] = $_SESSION["sessUserId"];
+			$insertVals[1] = normalclean($_REQUEST['jobTitle']);
+			$insertVals[2] = normalclean($_REQUEST['companyName']);
+			$insertVals[3] = trim($_REQUEST['employment']);
+			$insertVals[4] = trim($_REQUEST['industry']);
+			$insertVals[5] = trim($_REQUEST['currentPosition']);
+			$insertVals[6] = trim($_REQUEST['frommonth']);
+			$insertVals[7] = trim($_REQUEST['fromyear']);
+			$insertVals[8] = trim($_REQUEST['tomonth']);
+			$insertVals[9] = trim($_REQUEST['toyear']);
+			$insertVals[10] = trim($_REQUEST['discipline']);
+			$insertVals[11] = trim($_REQUEST['careerlevel']);
+			$insertVals[12] = normalclean($_REQUEST['positiondetail']);
+			$insertVals[13] = trim($_REQUEST['segment']);
+			$insertVals[14] = trim($_REQUEST['legalform']);
+			$insertVals[15] = trim($_REQUEST['employees']);
+			$insertVals[16] = trim($_REQUEST['companywebsite']);
+			$insertVals[17] = trim($_REQUEST['jobLocation']);
 
-			$whereFields[0] = "userId";
 
-			$whereVals[0] = $_SESSION['sessUserId'];
+			$whereFields[0] = "id";
+			$whereFields[1] = "userId";
 
-			$resUpdate = updateDB(_USERS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, ''); // verified the user email address
+			$whereVals[0] = decodeStr(trim($_REQUEST['professionalid']));
+			$whereVals[1] = $_SESSION['sessUserId'];
 
-		}
-
-	}
+			$resUpdate = updateDB(_PROFESSIONAL_EXPERIENCE_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 
-	if (trim($_REQUEST['currentPosition']) == 1 && $_SESSION['jobupdate'] != 1) {
-
-		$a = "SELECT profilePhoto,firstName,lastName,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . "";
-		$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
-		$userres = mysqli_fetch_array($b);
-
-		if ($userres["profilePhoto"] != '') {
-			$userphoto = $userres["profilePhoto"];
 		} else {
-			$userphoto = 'user-placeholder.jpg';
-		}
-		$firstName = $userres["firstName"];
-		$lastName = $userres["lastName"];
-		$friendnameurl = $userres['userurl'];
 
-		$aa = "SELECT companyName from " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . " and currentPosition=1";
-		$bb = mysqli_query($conn, $aa) or die(mysqli_error($conn));
-		$companyuserres = mysqli_fetch_array($bb);
+			if ($_REQUEST['currentPosition'] == 1) {
+
+				$sql_ins = "update " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " set currentPosition=0 where userId= " . $_SESSION["sessUserId"] . " ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+			}
+
+			unset($insertFields);
+			unset($insertVals);
+
+			$insertFields[0] = "userId";
+			$insertFields[1] = "jobTitle";
+			$insertFields[2] = "companyName";
+			$insertFields[3] = "employment";
+			$insertFields[4] = "industry";
+			$insertFields[5] = "dateAdded";
+			$insertFields[6] = "frommonth";
+			$insertFields[7] = "fromyear";
+			$insertFields[8] = "tomonth";
+			$insertFields[9] = "toyear";
+			$insertFields[10] = "currentPosition";
+			$insertFields[11] = "discipline";
+			$insertFields[12] = "careerlevel";
+			$insertFields[13] = "positiondetail";
+			$insertFields[14] = "segment";
+			$insertFields[15] = "legalform";
+			$insertFields[16] = "employees";
+			$insertFields[17] = "companywebsite";
+			$insertFields[18] = "jobLocation";
+
+			$insertVals[0] = $_SESSION["sessUserId"];
+			$insertVals[1] = normalclean($_REQUEST['jobTitle']);
+			$insertVals[2] = normalclean($_REQUEST['companyName']);
+			$insertVals[3] = trim($_REQUEST['employment']);
+			$insertVals[4] = trim($_REQUEST['industry']);
+			$insertVals[5] = time();
+			$insertVals[6] = trim($_REQUEST['frommonth']);
+			$insertVals[7] = trim($_REQUEST['fromyear']);
+			$insertVals[8] = trim($_REQUEST['tomonth']);
+			$insertVals[9] = trim($_REQUEST['toyear']);
+			$insertVals[10] = trim($_REQUEST['currentPosition']);
+			$insertVals[11] = trim($_REQUEST['discipline']);
+			$insertVals[12] = trim($_REQUEST['careerlevel']);
+			$insertVals[13] = normalclean($_REQUEST['positiondetail']);
+			$insertVals[14] = trim($_REQUEST['segment']);
+			$insertVals[15] = trim($_REQUEST['legalform']);
+			$insertVals[16] = trim($_REQUEST['employees']);
+			$insertVals[17] = trim($_REQUEST['companywebsite']);
+			$insertVals[18] = trim($_REQUEST['jobLocation']);
+
+			$resUpdate = insertDB(_PROFESSIONAL_EXPERIENCE_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+
+
+		}
+
 
 
 
@@ -3696,37 +3637,96 @@ if ($_REQUEST['action'] == 'saveprofessinalexp' && trim($_REQUEST['jobTitle']) !
 		$whereFields = [];
 		$whereVals = [];
 
-
-		$sqlUser = "";
-		$sqlUser = "select * from " . _USERS_MASTER_TABLE_ . " where  activeYN='Y' and userId IN (select contactId from " . _CONTACT_MASTER_TABLE_ . " where userId=" . $_SESSION['sessUserId'] . "  and status=1)";
-		$resUser = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlUser);
-		if ($resUser) {
-			while ($rowUser = mysqli_fetch_array($resUser)) {
-
-				$email = $rowUser["email"];
-				$userId = $rowUser["userId"];
-				if ($rowUser["profilePhoto"] != '') {
-					$userphoto2 = $rowUser["profilePhoto"];
-				} else {
-					$userphoto2 = 'user-placeholder.jpg';
-				}
-
-				$firstName2 = $rowUser["firstName"];
-				$lastName2 = $rowUser["lastName"];
-
-				$sql = "SELECT emailContactNewPosition from " . _USER_SETTINGS_MASTER_TABLE_ . " WHERE userId= " . $userId . " ";
-				$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
-				$getUserSettings = mysqli_fetch_array($getSql);
-
-				if ($getUserSettings["emailContactNewPosition"] == 1) {
+		$sqlOptions = "";
+		$sqlOptions = "SELECT jobTitle,companyName FROM " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . " order by fromyear desc LIMIT 0,1 ";
+		$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
+		if ($resOptions) {
+			while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
 
-					$mailBodyContent = '';
-					$mailBodyContent = '<div style="background-color: #dff6ff; width: 100%; overflow: hidden;">
+				$userjobTitle = $rowOptions['jobTitle'];
+				$usercompanyName = $rowOptions['companyName'];
+
+				unset($insertFields);
+				unset($insertVals);
+				unset($whereFields);
+				unset($whereVals);
+
+				$insertFields[0] = "jobTitle";
+				$insertFields[1] = "companyName";
+				$insertFields[2] = "industryId";
+
+				$insertVals[0] = $userjobTitle;
+				$insertVals[1] = $usercompanyName;
+				$insertVals[2] = trim($_REQUEST['industry']);
+
+				$whereFields[0] = "userId";
+
+				$whereVals[0] = $_SESSION['sessUserId'];
+
+				$resUpdate = updateDB(_USERS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, ''); // verified the user email address
+	
+			}
+
+		}
+
+
+		if (trim($_REQUEST['currentPosition']) == 1 && $_SESSION['jobupdate'] != 1) {
+
+			$a = "SELECT profilePhoto,firstName,lastName,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . "";
+			$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
+			$userres = mysqli_fetch_array($b);
+
+			if ($userres["profilePhoto"] != '') {
+				$userphoto = $userres["profilePhoto"];
+			} else {
+				$userphoto = 'user-placeholder.jpg';
+			}
+			$firstName = $userres["firstName"];
+			$lastName = $userres["lastName"];
+			$friendnameurl = $userres['userurl'];
+
+			$aa = "SELECT companyName from " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . " and currentPosition=1";
+			$bb = mysqli_query($conn, $aa) or die(mysqli_error($conn));
+			$companyuserres = mysqli_fetch_array($bb);
+
+
+
+			$selectFields = [];
+			$whereFields = [];
+			$whereVals = [];
+
+
+			$sqlUser = "";
+			$sqlUser = "select * from " . _USERS_MASTER_TABLE_ . " where  activeYN='Y' and userId IN (select contactId from " . _CONTACT_MASTER_TABLE_ . " where userId=" . $_SESSION['sessUserId'] . "  and status=1)";
+			$resUser = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlUser);
+			if ($resUser) {
+				while ($rowUser = mysqli_fetch_array($resUser)) {
+
+					$email = $rowUser["email"];
+					$userId = $rowUser["userId"];
+					if ($rowUser["profilePhoto"] != '') {
+						$userphoto2 = $rowUser["profilePhoto"];
+					} else {
+						$userphoto2 = 'user-placeholder.jpg';
+					}
+
+					$firstName2 = $rowUser["firstName"];
+					$lastName2 = $rowUser["lastName"];
+
+					$sql = "SELECT emailContactNewPosition from " . _USER_SETTINGS_MASTER_TABLE_ . " WHERE userId= " . $userId . " ";
+					$getSql = mysqli_query($conn, $sql) or die(error_found(mysqli_error($conn)));
+					$getUserSettings = mysqli_fetch_array($getSql);
+
+					if ($getUserSettings["emailContactNewPosition"] == 1) {
+
+
+						$mailBodyContent = '';
+						$mailBodyContent = '<div style="background-color: #dff6ff; width: 100%; overflow: hidden;">
 	<div style="width: 600px; margin: auto; border-top: 4px solid #1a94c3; border-bottom: 4px solid #1a94c3; background-color: #fff; overflow: hidden; padding-top: 0px; box-sizing: border-box; font-family: arial; color: #4c4c4c; font-size: 14px; padding-bottom: 0;">
 		<div style="padding:0 20px;box-sizing: border-box;overflow: hidden;">
 		<a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;padding-left: 0;float: left;margin-bottom: 10px;">
-		<img src="' . $fullurl . 'images/logo.png" width="150px;">
+		<img src="' . $fullurl . 'images/ndimlogo.png" width="150px;">
 		</a>
 		<table width="150" style="float: right;" border="0;">
 			<tbody><tr>
@@ -3752,31 +3752,31 @@ if ($_REQUEST['action'] == 'saveprofessinalexp' && trim($_REQUEST['jobTitle']) !
 	</div>';
 
 
-					$subject = "It seems " . $firstName . " has a new job!";
+						$subject = "It seems " . $firstName . " has a new job!";
 
-					send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
+						send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
+
+					}
+
+					$sql_ins2 = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "',userId='" . $userId . "',postType=13,notificationText='changejob',dateAdded='" . time() . "'";
+					mysqli_query($conn, $sql_ins2) or die(mysqli_error($conn));
+
+					$_SESSION['jobupdate'] = 1;
 
 				}
 
-				$sql_ins2 = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "',userId='" . $userId . "',postType=13,notificationText='changejob',dateAdded='" . time() . "'";
-				mysqli_query($conn, $sql_ins2) or die(mysqli_error($conn));
-
-				$_SESSION['jobupdate'] = 1;
-
 			}
+
+
 
 		}
 
 
-
-	}
-
-
-	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		?>
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (isset($_REQUEST['id']) && $_REQUEST['id'] != '' && $_REQUEST['action'] == 'dltproexp') {
@@ -3823,98 +3823,98 @@ if (isset($_REQUEST['id']) && $_REQUEST['id'] != '' && $_REQUEST['action'] == 'd
 	}
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
 
 if ($_REQUEST['action'] == 'saveeducationalbg' && trim($_REQUEST['university']) != '' && trim($_REQUEST['fieldofstudy']) != '' && $_REQUEST['frommonth'] != 0 && $_REQUEST['fromyear'] != 0 && $_REQUEST['tomonth'] != 0 && $_REQUEST['toyear'] != 0) {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	if (trim($_REQUEST['educationalid']) != '') {
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		if (trim($_REQUEST['educationalid']) != '') {
 
 
-		unset($insertFields);
-		unset($insertVals);
-		unset($whereFields);
-		unset($whereVals);
+			unset($insertFields);
+			unset($insertVals);
+			unset($whereFields);
+			unset($whereVals);
 
-		$insertFields[0] = "userId";
-		$insertFields[1] = "university";
-		$insertFields[2] = "fieldofstudy";
-		$insertFields[3] = "degree";
-		$insertFields[4] = "toyear";
-		$insertFields[5] = "specialisedsubjects";
-		$insertFields[6] = "frommonth";
-		$insertFields[7] = "fromyear";
-		$insertFields[8] = "tomonth";
-		$insertFields[9] = "description";
+			$insertFields[0] = "userId";
+			$insertFields[1] = "university";
+			$insertFields[2] = "fieldofstudy";
+			$insertFields[3] = "degree";
+			$insertFields[4] = "toyear";
+			$insertFields[5] = "specialisedsubjects";
+			$insertFields[6] = "frommonth";
+			$insertFields[7] = "fromyear";
+			$insertFields[8] = "tomonth";
+			$insertFields[9] = "description";
 
-		$insertVals[0] = $_SESSION["sessUserId"];
-		$insertVals[1] = normalclean($_REQUEST['university']);
-		$insertVals[2] = normalclean($_REQUEST['fieldofstudy']);
-		$insertVals[3] = normalclean($_REQUEST['degree']);
-		$insertVals[4] = trim($_REQUEST['toyear']);
-		$insertVals[5] = normalclean($_REQUEST['specialisedsubjects']);
-		$insertVals[6] = trim($_REQUEST['frommonth']);
-		$insertVals[7] = trim($_REQUEST['fromyear']);
-		$insertVals[8] = trim($_REQUEST['tomonth']);
-		$insertVals[9] = normalclean($_REQUEST['description']);
-
-
-		$whereFields[0] = "id";
-		$whereFields[1] = "userId";
-
-		$whereVals[0] = decodeStr(trim($_REQUEST['educationalid']));
-		$whereVals[1] = $_SESSION['sessUserId'];
-
-		$resUpdate = updateDB(_EDUCATIONAL_BACKGROUND_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+			$insertVals[0] = $_SESSION["sessUserId"];
+			$insertVals[1] = normalclean($_REQUEST['university']);
+			$insertVals[2] = normalclean($_REQUEST['fieldofstudy']);
+			$insertVals[3] = normalclean($_REQUEST['degree']);
+			$insertVals[4] = trim($_REQUEST['toyear']);
+			$insertVals[5] = normalclean($_REQUEST['specialisedsubjects']);
+			$insertVals[6] = trim($_REQUEST['frommonth']);
+			$insertVals[7] = trim($_REQUEST['fromyear']);
+			$insertVals[8] = trim($_REQUEST['tomonth']);
+			$insertVals[9] = normalclean($_REQUEST['description']);
 
 
-	} else {
+			$whereFields[0] = "id";
+			$whereFields[1] = "userId";
+
+			$whereVals[0] = decodeStr(trim($_REQUEST['educationalid']));
+			$whereVals[1] = $_SESSION['sessUserId'];
+
+			$resUpdate = updateDB(_EDUCATIONAL_BACKGROUND_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 
-		unset($insertFields);
-		unset($insertVals);
+		} else {
 
-		$insertFields[0] = "userId";
-		$insertFields[1] = "university";
-		$insertFields[2] = "fieldofstudy";
-		$insertFields[3] = "degree";
-		$insertFields[4] = "toyear";
-		$insertFields[5] = "specialisedsubjects";
-		$insertFields[6] = "frommonth";
-		$insertFields[7] = "fromyear";
-		$insertFields[8] = "tomonth";
-		$insertFields[9] = "dateAdded";
-		$insertFields[10] = "description";
 
-		$insertVals[0] = $_SESSION["sessUserId"];
-		$insertVals[1] = normalclean($_REQUEST['university']);
-		$insertVals[2] = normalclean($_REQUEST['fieldofstudy']);
-		$insertVals[3] = normalclean($_REQUEST['degree']);
-		$insertVals[4] = trim($_REQUEST['toyear']);
-		$insertVals[5] = normalclean($_REQUEST['specialisedsubjects']);
-		$insertVals[6] = trim($_REQUEST['frommonth']);
-		$insertVals[7] = trim($_REQUEST['fromyear']);
-		$insertVals[8] = trim($_REQUEST['tomonth']);
-		$insertVals[9] = time();
-		$insertVals[10] = normalclean($_REQUEST['description']);
+			unset($insertFields);
+			unset($insertVals);
 
-		$resUpdate = insertDB(_EDUCATIONAL_BACKGROUND_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+			$insertFields[0] = "userId";
+			$insertFields[1] = "university";
+			$insertFields[2] = "fieldofstudy";
+			$insertFields[3] = "degree";
+			$insertFields[4] = "toyear";
+			$insertFields[5] = "specialisedsubjects";
+			$insertFields[6] = "frommonth";
+			$insertFields[7] = "fromyear";
+			$insertFields[8] = "tomonth";
+			$insertFields[9] = "dateAdded";
+			$insertFields[10] = "description";
 
-	}
-	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+			$insertVals[0] = $_SESSION["sessUserId"];
+			$insertVals[1] = normalclean($_REQUEST['university']);
+			$insertVals[2] = normalclean($_REQUEST['fieldofstudy']);
+			$insertVals[3] = normalclean($_REQUEST['degree']);
+			$insertVals[4] = trim($_REQUEST['toyear']);
+			$insertVals[5] = normalclean($_REQUEST['specialisedsubjects']);
+			$insertVals[6] = trim($_REQUEST['frommonth']);
+			$insertVals[7] = trim($_REQUEST['fromyear']);
+			$insertVals[8] = trim($_REQUEST['tomonth']);
+			$insertVals[9] = time();
+			$insertVals[10] = normalclean($_REQUEST['description']);
+
+			$resUpdate = insertDB(_EDUCATIONAL_BACKGROUND_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+		}
+		?>
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action'] == 'dlteducational') {
@@ -3925,10 +3925,10 @@ if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action']
 	$sql_ins = "DELETE FROM " . _EDUCATIONAL_BACKGROUND_TABLE_ . " WHERE id= " . $dltid . " and userId=" . $_SESSION['sessUserId'] . " ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action'] == 'recaprov') {
@@ -3939,10 +3939,10 @@ if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action']
 	$sql_ins = "update " . _USER_RECOMMENDATIONS_TABLE_ . " set status=1 where contactId= " . $_SESSION["sessUserId"] . " and id=" . $upid . " ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action'] == 'delrec') {
@@ -3953,10 +3953,10 @@ if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action']
 	$sql_ins = "DELETE FROM " . _USER_RECOMMENDATIONS_TABLE_ . " WHERE id= " . $dltid . " and contactId=" . $_SESSION['sessUserId'] . " ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (trim(isset($_REQUEST['gprid']) && $_REQUEST['gprid']) != '' && $_REQUEST['action'] == 'delgrp') {
@@ -3973,92 +3973,92 @@ if (trim(isset($_REQUEST['gprid']) && $_REQUEST['gprid']) != '' && $_REQUEST['ac
 		$getrows = mysqli_num_rows($resSql);
 		if ($getrows > 0) {
 			?>
-			<script>
-				parent.$('#errormsg').hide();
-			</script>
-			<?php
+						<script>
+							parent.$('#errormsg').hide();
+						</script>
+						<?php
 
-			$sql = "SELECT id,fileName FROM " . _GROUP_FILE_TABLE_ . " WHERE groupId= " . $dltid . "  ";
-			$resSql = mysqli_query($conn, $sql);
-			while ($rowGroup = mysqli_fetch_array($resSql)) {
+						$sql = "SELECT id,fileName FROM " . _GROUP_FILE_TABLE_ . " WHERE groupId= " . $dltid . "  ";
+						$resSql = mysqli_query($conn, $sql);
+						while ($rowGroup = mysqli_fetch_array($resSql)) {
 
-				$sql_ins11 = "DELETE FROM " . _GROUP_FILE_TABLE_ . " WHERE id= " . $rowGroup["id"] . "  ";
-				mysqli_query($conn, $sql_ins11) or die(mysqli_error($conn));
+							$sql_ins11 = "DELETE FROM " . _GROUP_FILE_TABLE_ . " WHERE id= " . $rowGroup["id"] . "  ";
+							mysqli_query($conn, $sql_ins11) or die(mysqli_error($conn));
 
-				if ($rowGroup["fileName"] != '') {
-					unlink("groupuploads/" . $rowGroup["fileName"]);
-					unlink("groupuploads/x_" . $rowGroup["fileName"]);
-				}
+							if ($rowGroup["fileName"] != '') {
+								unlink("groupuploads/" . $rowGroup["fileName"]);
+								unlink("groupuploads/x_" . $rowGroup["fileName"]);
+							}
 
-			}
-
-
-			$sqlChat = "SELECT id,fileName FROM " . _GROUP_CHAT_MASTER_TABLE_ . " WHERE groupId= " . $dltid . "  ";
-			$resSqlChat = mysqli_query($conn, $sqlChat);
-			while ($rowGroupChat = mysqli_fetch_array($resSqlChat)) {
-				$sql_ins11 = "DELETE FROM " . _GROUP_CHAT_MASTER_TABLE_ . " WHERE id= " . $rowGroupChat["id"] . "  ";
-				mysqli_query($conn, $sql_ins11) or die(mysqli_error($conn));
-
-				if ($rowGroupChat["fileName"] != '') {
-					unlink("groupuploads/" . $rowGroupChat["fileName"]);
-					unlink("groupuploads/x_" . $rowGroupChat["fileName"]);
-				}
-
-			}
-
-			$sql_ins111 = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE groupId= " . $dltid . " and postType=4   ";
-			mysqli_query($conn, $sql_ins111) or die(mysqli_error($conn));
-
-			$sql = "SELECT groupThumb from " . _GROUP_MASTER_TABLE_ . " WHERE id= " . $dltid . " ";
-			$resSql = mysqli_query($conn, $sql);
-			$getGroupdata = mysqli_fetch_array($resSql);
-
-			if ($getGroupdata["groupThumb"] != '') {
-				unlink("uploads/" . $getGroupdata["groupThumb"]);
-				unlink("uploads/x_" . $getGroupdata["groupThumb"]);
-			}
-
-			$sql_ins = "DELETE FROM " . _GROUP_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			$sql_ins = "DELETE FROM " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE groupId= " . $dltid . "  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			$sql_ins = "DELETE FROM " . _TIMELINE_MASTER_TABLE_ . " WHERE groupId= " . $dltid . " and postType=4  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						}
 
 
-			$sql_ins = "DELETE FROM " . _GROUP_POST_MASTER_TABLE_ . " WHERE groupId= " . $dltid . " and postType=4    ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						$sqlChat = "SELECT id,fileName FROM " . _GROUP_CHAT_MASTER_TABLE_ . " WHERE groupId= " . $dltid . "  ";
+						$resSqlChat = mysqli_query($conn, $sqlChat);
+						while ($rowGroupChat = mysqli_fetch_array($resSqlChat)) {
+							$sql_ins11 = "DELETE FROM " . _GROUP_CHAT_MASTER_TABLE_ . " WHERE id= " . $rowGroupChat["id"] . "  ";
+							mysqli_query($conn, $sql_ins11) or die(mysqli_error($conn));
+
+							if ($rowGroupChat["fileName"] != '') {
+								unlink("groupuploads/" . $rowGroupChat["fileName"]);
+								unlink("groupuploads/x_" . $rowGroupChat["fileName"]);
+							}
+
+						}
+
+						$sql_ins111 = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE groupId= " . $dltid . " and postType=4   ";
+						mysqli_query($conn, $sql_ins111) or die(mysqli_error($conn));
+
+						$sql = "SELECT groupThumb from " . _GROUP_MASTER_TABLE_ . " WHERE id= " . $dltid . " ";
+						$resSql = mysqli_query($conn, $sql);
+						$getGroupdata = mysqli_fetch_array($resSql);
+
+						if ($getGroupdata["groupThumb"] != '') {
+							unlink("uploads/" . $getGroupdata["groupThumb"]);
+							unlink("uploads/x_" . $getGroupdata["groupThumb"]);
+						}
+
+						$sql_ins = "DELETE FROM " . _GROUP_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						$sql_ins = "DELETE FROM " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE groupId= " . $dltid . "  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						$sql_ins = "DELETE FROM " . _TIMELINE_MASTER_TABLE_ . " WHERE groupId= " . $dltid . " and postType=4  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 
-			$sql_ins = "DELETE FROM " . _COMMENT_MASTER_TABLE_ . " WHERE postId= " . $dltid . " and postType=4  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						$sql_ins = "DELETE FROM " . _GROUP_POST_MASTER_TABLE_ . " WHERE groupId= " . $dltid . " and postType=4    ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
-			$sql_ins111 = "DELETE FROM " . _GROUP_GOT_MSG_TABLE_ . " WHERE groupId= " . $dltid . " ";
-			mysqli_query($conn, $sql_ins111) or die(mysqli_error($conn));
 
-			$_SESSION["d"] = 1;
-			?>
-			<script>
-				parent.reloadPage();
-			</script>
-			<?php
+						$sql_ins = "DELETE FROM " . _COMMENT_MASTER_TABLE_ . " WHERE postId= " . $dltid . " and postType=4  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						$sql_ins111 = "DELETE FROM " . _GROUP_GOT_MSG_TABLE_ . " WHERE groupId= " . $dltid . " ";
+						mysqli_query($conn, $sql_ins111) or die(mysqli_error($conn));
+
+						$_SESSION["d"] = 1;
+						?>
+						<script>
+							parent.reloadPage();
+						</script>
+						<?php
 		} else {
 			?>
-			<script>
-				parent.$('#errormsg').text('That password is incorrect. Try again.');
-				parent.$('#errormsg').css('color', '#FF0000');
-			</script>
-			<?php
+						<script>
+							parent.$('#errormsg').text('That password is incorrect. Try again.');
+							parent.$('#errormsg').css('color', '#FF0000');
+						</script>
+						<?php
 		}
 	} else {
 		?>
-		<script>
-			parent.$('#errormsg').text('Please enter your password');
-			parent.$('#errormsg').css('color', '#FF0000');
-		</script>
-		<?php
+				<script>
+					parent.$('#errormsg').text('Please enter your password');
+					parent.$('#errormsg').css('color', '#FF0000');
+				</script>
+				<?php
 	}
 
 
@@ -4066,80 +4066,80 @@ if (trim(isset($_REQUEST['gprid']) && $_REQUEST['gprid']) != '' && $_REQUEST['ac
 
 if ($_REQUEST['action'] == 'postandshare' && trim($_REQUEST['sharedata']) != '') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$sharepostText = addslashes($_REQUEST['sharepostText']);
-	$sharedata = addslashes($_REQUEST['sharedata']);
-	$oldpostId = decodeStr($_REQUEST['oldpostId']);
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		$sharepostText = addslashes($_REQUEST['sharepostText']);
+		$sharedata = addslashes($_REQUEST['sharedata']);
+		$oldpostId = decodeStr($_REQUEST['oldpostId']);
 
-	$postText = '<div class="post-cnt">' . $sharepostText . '</div>' . $sharedata;
+		$postText = '<div class="post-cnt">' . $sharepostText . '</div>' . $sharedata;
 
-	$insertFields = [];
-	$insertVals = [];
-	$whereFields = [];
-	$whereVals = [];
-
-	$insertFields[0] = "postType";
-	$insertFields[1] = "postText";
-	$insertFields[2] = "shareType";
-	$insertFields[3] = "dateAdded";
-	$insertFields[4] = "userId";
-	$insertFields[5] = "sharePost";
-
-	$insertVals[0] = clean($_REQUEST['sharePostType']);
-	$insertVals[1] = $postText;
-	$insertVals[2] = clean($_REQUEST['postshareType']);
-	$insertVals[3] = time();
-	$insertVals[4] = $_SESSION['sessUserId'];
-	$insertVals[5] = 1;
-
-	$resUpdate = insertDB(_SHAREANDUPDATES_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-	$postId = $resUpdate;
-	if ($resUpdate) {
 		$insertFields = [];
 		$insertVals = [];
+		$whereFields = [];
+		$whereVals = [];
 
-		$insertFields[0] = "userId";
-		$insertFields[1] = "postId";
-		$insertFields[2] = "postType";
-		$insertFields[3] = "shareType";
-		$insertFields[4] = "dateAdded";
+		$insertFields[0] = "postType";
+		$insertFields[1] = "postText";
+		$insertFields[2] = "shareType";
+		$insertFields[3] = "dateAdded";
+		$insertFields[4] = "userId";
+		$insertFields[5] = "sharePost";
 
-		$insertVals[0] = $_SESSION["sessUserId"];
-		$insertVals[1] = $postId;
-		$insertVals[2] = 2;
-		$insertVals[3] = clean($_REQUEST['postshareType']);
-		$insertVals[4] = time();
+		$insertVals[0] = clean($_REQUEST['sharePostType']);
+		$insertVals[1] = $postText;
+		$insertVals[2] = clean($_REQUEST['postshareType']);
+		$insertVals[3] = time();
+		$insertVals[4] = $_SESSION['sessUserId'];
+		$insertVals[5] = 1;
 
-		$resUpdate = insertDB(_TIMELINE_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+		$resUpdate = insertDB(_SHAREANDUPDATES_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+		$postId = $resUpdate;
+		if ($resUpdate) {
+			$insertFields = [];
+			$insertVals = [];
+
+			$insertFields[0] = "userId";
+			$insertFields[1] = "postId";
+			$insertFields[2] = "postType";
+			$insertFields[3] = "shareType";
+			$insertFields[4] = "dateAdded";
+
+			$insertVals[0] = $_SESSION["sessUserId"];
+			$insertVals[1] = $postId;
+			$insertVals[2] = 2;
+			$insertVals[3] = clean($_REQUEST['postshareType']);
+			$insertVals[4] = time();
+
+			$resUpdate = insertDB(_TIMELINE_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 
-		$sql_ins = "insert into " . _SHARE_MASTER_TABLE_ . " set userId='" . $_SESSION["sessUserId"] . "',postId='" . $oldpostId . "',postType='" . $_REQUEST["sharePostType"] . "',dateAdded='" . time() . "'";
+			$sql_ins = "insert into " . _SHARE_MASTER_TABLE_ . " set userId='" . $_SESSION["sessUserId"] . "',postId='" . $oldpostId . "',postType='" . $_REQUEST["sharePostType"] . "',dateAdded='" . time() . "'";
+			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+		}
+
+
+		$sql_ins = "update " . _USERS_MASTER_TABLE_ . " set lastPost=" . $postId . " ";
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
-	}
 
-
-	$sql_ins = "update " . _USERS_MASTER_TABLE_ . " set lastPost=" . $postId . " ";
-	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-
-	$aa666 = "SELECT * from " . _SHARE_MASTER_TABLE_ . " WHERE postId=" . $oldpostId . " and postType=" . $_REQUEST["sharePostType"] . "   ";
-	$res5666 = mysqli_query($conn, $aa666);
-	$totalpostsharecount = mysqli_num_rows($res5666);
-	$totalpostsharecount222 = $totalpostsharecount;
-	?>
-	<script>
-		parent.$('#shareboxouter').hide();
-		parent.$('#sharesuccess').show();
-		parent.$('#commonloader').hide();
-		parent.showsusmsg('SUCCESS', 'Post successfully shared', '');
-		parent.$('body').css('overflow', 'auto');
-		parent.$('#shareposts<?php echo $oldpostId; ?><?php echo $_REQUEST['sharePostType']; ?> span').text(<?php echo $totalpostsharecount222; ?>);
-	</script>
-	<?php
+		$aa666 = "SELECT * from " . _SHARE_MASTER_TABLE_ . " WHERE postId=" . $oldpostId . " and postType=" . $_REQUEST["sharePostType"] . "   ";
+		$res5666 = mysqli_query($conn, $aa666);
+		$totalpostsharecount = mysqli_num_rows($res5666);
+		$totalpostsharecount222 = $totalpostsharecount;
+		?>
+		<script>
+			parent.$('#shareboxouter').hide();
+			parent.$('#sharesuccess').show();
+			parent.$('#commonloader').hide();
+			parent.showsusmsg('SUCCESS', 'Post successfully shared', '');
+			parent.$('body').css('overflow', 'auto');
+			parent.$('#shareposts<?php echo $oldpostId; ?><?php echo $_REQUEST['sharePostType']; ?> span').text(<?php echo $totalpostsharecount222; ?>);
+		</script>
+		<?php
 }
 
 
@@ -4165,10 +4165,10 @@ if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action']
 		$_SESSION["d"] = 1;
 	}
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (isset($_REQUEST['pid']) && $_REQUEST['pid'] != '' && $_REQUEST['action'] == 'bookmark') {
@@ -4185,24 +4185,24 @@ if (isset($_REQUEST['pid']) && $_REQUEST['pid'] != '' && $_REQUEST['action'] == 
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			$('#bookmarktextdiv').text('Bookmark project');
+				<script>
+					$('#bookmarktextdiv').text('Bookmark project');
 
-			$('#bookmarktextdivouter').removeClass('bookmarked');
-			$('#bookmarklisting<?php echo $dltid; ?>').hide();
-			reloadPage();
-		</script>
-		<?php
+					$('#bookmarktextdivouter').removeClass('bookmarked');
+					$('#bookmarklisting<?php echo $dltid; ?>').hide();
+					reloadPage();
+				</script>
+				<?php
 	} else {
 		$sql_ins = "insert into " . _PROJECT_BOOKMARK_TABLE_ . " set userId='" . $_SESSION["sessUserId"] . "',projectId='" . $dltid . "',dateAdded='$dateAdded'";
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			$('#bookmarktextdiv').text('Remove bookmark');
-			$('#bookmarktextdivouter').addClass('bookmarked');
-		</script>
-		<?php
+				<script>
+					$('#bookmarktextdiv').text('Remove bookmark');
+					$('#bookmarktextdivouter').addClass('bookmarked');
+				</script>
+				<?php
 	}
 
 }
@@ -4214,11 +4214,11 @@ if ($_REQUEST['action'] == 'applyproject' && trim($_REQUEST['projid']) != '') {
 	$checkBookmarkp = mysqli_num_rows($res5p);
 	if ($checkBookmarkp > 0) {
 		?>
-		<script>
-			parent.$('#popupcontentproj').hide();
-			parent.$('#frmposthomerecommend').html("<div style='text-align:center; font-size:16px; padding-bottom:20px;'>You are already applied for this project.</div>");
-		</script>
-		<?php
+				<script>
+					parent.$('#popupcontentproj').hide();
+					parent.$('#frmposthomerecommend').html("<div style='text-align:center; font-size:16px; padding-bottom:20px;'>You are already applied for this project.</div>");
+				</script>
+				<?php
 	} else {
 		$sql_insp = "insert into " . _PROJECT_INTRESTED_TABLE_ . " set userId='" . $_SESSION["sessUserId"] . "',projectId='" . decodeStr($_REQUEST['projid']) . "',dateAdded='" . time() . "'";
 		mysqli_query($conn, $sql_insp) or die(mysqli_error($conn));
@@ -4296,7 +4296,7 @@ if ($_REQUEST['action'] == 'applyproject' && trim($_REQUEST['projid']) != '') {
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -4369,13 +4369,13 @@ if ($_REQUEST['action'] == 'applyproject' && trim($_REQUEST['projid']) != '') {
 		$_SESSION["smg8"] = 1;
 
 		?>
-		<script>
-			parent.reloadPage();
-			//parent.$('#popupcontentproj').hide();
-			//parent.$('#frmposthomerecommend').html("<div style='text-align:center; font-size:16px; padding-bottom:20px; color:#0fd020;'>The project owner has been informed that you're interested in their project.</div>");
+				<script>
+					parent.reloadPage();
+					//parent.$('#popupcontentproj').hide();
+					//parent.$('#frmposthomerecommend').html("<div style='text-align:center; font-size:16px; padding-bottom:20px; color:#0fd020;'>The project owner has been informed that you're interested in their project.</div>");
 
-		</script>
-		<?php
+				</script>
+				<?php
 	}
 }
 
@@ -4388,10 +4388,10 @@ if (isset($_REQUEST['pid']) && $_REQUEST['pid'] != '' && $_REQUEST['action'] == 
 	$sql_ins = "DELETE FROM " . _PROJECT_USER_MASTER_TABLE_ . " WHERE projectId= " . $dltid . " and userId='" . $_SESSION["sessUserId"] . "' ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		reloadPage();
-	</script>
-	<?php
+		<script>
+			reloadPage();
+		</script>
+		<?php
 }
 
 
@@ -4403,20 +4403,20 @@ if (isset($_REQUEST['tagid']) && $_REQUEST['tagid'] != '' && $_REQUEST['action']
 	$tagidcheck = mysqli_num_rows($resrusult);
 	if ($tagidcheck > 0) {
 		?>
-		<script>
-			$('#tagIdtrue').val('0');
-			$('#truevalue').hide();
-			$('#falsevalue').show();
-		</script>
-		<?php
+				<script>
+					$('#tagIdtrue').val('0');
+					$('#truevalue').hide();
+					$('#falsevalue').show();
+				</script>
+				<?php
 	} else {
 		?>
-		<script>
-			$('#tagIdtrue').val('1');
-			$('#truevalue').show();
-			$('#falsevalue').hide();
-		</script>
-		<?php
+				<script>
+					$('#tagIdtrue').val('1');
+					$('#truevalue').show();
+					$('#falsevalue').hide();
+				</script>
+				<?php
 	}
 
 }
@@ -4460,10 +4460,10 @@ if ($_REQUEST['action'] == 'addcmpupdates' && trim($_REQUEST['cmpid']) != '' && 
 
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action'] == 'delcmpupdate') {
@@ -4474,116 +4474,116 @@ if (trim(isset($_REQUEST['id']) && $_REQUEST['id']) != '' && $_REQUEST['action']
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
 if ($_REQUEST['action'] == 'postandsharewithmsg' && trim($_REQUEST['sharePostType']) != '') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	if (trim(isset($_REQUEST['sharedoc']) && $_REQUEST["sharedoc"]) == 1 && trim($_REQUEST["sharePostType"]) == 'sharedocs') {
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		if (trim(isset($_REQUEST['sharedoc']) && $_REQUEST["sharedoc"]) == 1 && trim($_REQUEST["sharePostType"]) == 'sharedocs') {
 
-		if (!empty($_REQUEST['check_list'])) {
+			if (!empty($_REQUEST['check_list'])) {
 
-			foreach ($_REQUEST['check_list'] as $ids) {
-
-
-				$aa = "SELECT firstName,lastName,profilePhoto,userId,email from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . decodeStr($ids) . "' ";
-				$res5 = mysqli_query($conn, $aa);
-				$getuser = mysqli_fetch_array($res5);
-
-				$firstName = $getuser['firstName'];
-				$lastName = $getuser['lastName'];
-				$profilePhoto = $getuser['profilePhoto'];
-				$shareduserId = $getuser['userId'];
-				$email = $getuser["email"];
+				foreach ($_REQUEST['check_list'] as $ids) {
 
 
-				if ($profilePhoto != '') {
-					$profilePhoto = $profilePhoto;
-				} else {
-					$profilePhoto = 'user-placeholder.jpg';
-				}
+					$aa = "SELECT firstName,lastName,profilePhoto,userId,email from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . decodeStr($ids) . "' ";
+					$res5 = mysqli_query($conn, $aa);
+					$getuser = mysqli_fetch_array($res5);
+
+					$firstName = $getuser['firstName'];
+					$lastName = $getuser['lastName'];
+					$profilePhoto = $getuser['profilePhoto'];
+					$shareduserId = $getuser['userId'];
+					$email = $getuser["email"];
 
 
-				$postId = decodeStr($_REQUEST['postId']);
-
-				/*unset($selectFields);
-				unset($whereFields);
-				unset($whereVals);
-
-				$sqlCheck1="";
-				$sqlCheck1="select id from "._VAULT_SHARE_MASTER_." where userId='".$shareduserId."' and postId=".$postId." ";
-				$resCheck1=getRecords(_VAULT_SHARE_MASTER_,$selectFields,$whereFields,$whereVals,_Y_,$sqlCheck1);
-				if($resCheck1)
-				{
-				}
-				else
-				{}*/
+					if ($profilePhoto != '') {
+						$profilePhoto = $profilePhoto;
+					} else {
+						$profilePhoto = 'user-placeholder.jpg';
+					}
 
 
+					$postId = decodeStr($_REQUEST['postId']);
 
-				$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-				$res52 = mysqli_query($conn, $aa2);
-				$getuser2 = mysqli_fetch_array($res52);
+					/*unset($selectFields);
+					unset($whereFields);
+					unset($whereVals);
 
-				$firstName2 = $getuser2['firstName'];
-				$lastName2 = $getuser2['lastName'];
-				$profilePhoto2 = $getuser2['profilePhoto'];
-				$jobTitle = $getuser2["jobTitle"];
-				$companyName = $getuser2["companyName"];
-				$userurl = $getuser2["userurl"];
-
-				if ($profilePhoto2 != '') {
-					$profilePhoto2 = $profilePhoto2;
-				} else {
-					$profilePhoto2 = 'user-placeholder.jpg';
-				}
-
-
-				$insertFields = [];
-				$insertVals = [];
-				$whereFields = [];
-				$whereVals = [];
-
-				$insertFields[0] = "dateAdded";
-				$insertFields[1] = "userId";
-				$insertFields[2] = "postId";
-
-				$insertVals[0] = time();
-				$insertVals[1] = $shareduserId;
-				$insertVals[2] = $postId;
-
-				$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-				$dateAdded = time();
-
-				$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . $shareduserId . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				/*For email templates*/
-				$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
-				$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
-				$rowvault = mysqli_fetch_array($resvault);
-				$name = $rowvault['name'];
-				$documentFileName = trim($rowvault["documentFile"]);
-
-				$sharefileSize = trim($rowvault["fileSize"]);
-
-				$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
+					$sqlCheck1="";
+					$sqlCheck1="select id from "._VAULT_SHARE_MASTER_." where userId='".$shareduserId."' and postId=".$postId." ";
+					$resCheck1=getRecords(_VAULT_SHARE_MASTER_,$selectFields,$whereFields,$whereVals,_Y_,$sqlCheck1);
+					if($resCheck1)
+					{
+					}
+					else
+					{}*/
 
 
 
-				$mailBodyContent = '';
-				$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
+					$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+					$res52 = mysqli_query($conn, $aa2);
+					$getuser2 = mysqli_fetch_array($res52);
+
+					$firstName2 = $getuser2['firstName'];
+					$lastName2 = $getuser2['lastName'];
+					$profilePhoto2 = $getuser2['profilePhoto'];
+					$jobTitle = $getuser2["jobTitle"];
+					$companyName = $getuser2["companyName"];
+					$userurl = $getuser2["userurl"];
+
+					if ($profilePhoto2 != '') {
+						$profilePhoto2 = $profilePhoto2;
+					} else {
+						$profilePhoto2 = 'user-placeholder.jpg';
+					}
+
+
+					$insertFields = [];
+					$insertVals = [];
+					$whereFields = [];
+					$whereVals = [];
+
+					$insertFields[0] = "dateAdded";
+					$insertFields[1] = "userId";
+					$insertFields[2] = "postId";
+
+					$insertVals[0] = time();
+					$insertVals[1] = $shareduserId;
+					$insertVals[2] = $postId;
+
+					$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+					$dateAdded = time();
+
+					$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . $shareduserId . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
+					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+					/*For email templates*/
+					$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
+					$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
+					$rowvault = mysqli_fetch_array($resvault);
+					$name = $rowvault['name'];
+					$documentFileName = trim($rowvault["documentFile"]);
+
+					$sharefileSize = trim($rowvault["fileSize"]);
+
+					$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
+
+
+
+					$mailBodyContent = '';
+					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
 	 <a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;">
-    <img src="' . $fullurl . 'images/logo.png" width="150px;">
+    <img src="' . $fullurl . 'images/ndimlogo.png" width="150px;">
     </a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
@@ -4614,174 +4614,174 @@ if ($_REQUEST['action'] == 'postandsharewithmsg' && trim($_REQUEST['sharePostTyp
 </div>';
 
 
-				$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
+					$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
 
-				send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
-
-
+					send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 
 
 
 
+
+
+				}
 			}
-		}
 
 
-	} else {
-
-
-		$sharePostType = trim($_REQUEST['sharePostType']);
-		$oldpostId = $_REQUEST['oldpostId'];
-
-
-		$sql_ins = "SELECT firstName,lastName FROM " . _USERS_MASTER_TABLE_ . " WHERE userId IN (select userId from " . _SHAREANDUPDATES_TABLE_ . " where id= " . decodeStr($oldpostId) . ")  ";
-		$getqueryName = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-		$getName = mysqli_fetch_array($getqueryName);
-
-		$sql_ins = "SELECT firstName,lastName FROM " . _USERS_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . "  ";
-		$getqueryName = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-		$mygetName = mysqli_fetch_array($getqueryName);
-
-		if ($sharePostType == 3) {
-			$txtmsg = $userurl = '<a href="' . $fullurl . 'view-article.html?postId=' . $oldpostId . '" target="_blank">' . $mygetName["firstName"] . ' ' . $mygetName["lastName"] . ' shared an article</a>';
 		} else {
-			$txtmsg = $userurl = '<a href="' . $fullurl . 'single-post.html?postId=' . $oldpostId . '&postType=' . $_REQUEST['sharePostType'] . '" target="_blank">' . $mygetName["firstName"] . ' ' . $mygetName["lastName"] . ' shared an update</a>';
-		}
-		$postShare = 'mobile_singlepost.php?postId=' . $oldpostId . '&postType=' . $_REQUEST['sharePostType'] . '';
-
-		if (!empty($_REQUEST['check_list'])) {
-
-			foreach ($_REQUEST['check_list'] as $check) {
 
 
-				$dateAdded = time();
-				$sql_ins = "insert into " . _CHAT_MASTER_TABLE_ . " set status=1,userId='" . $_SESSION["sessUserId"] . "',contactId='" . decodeStr($check) . "',chatBy='" . $_SESSION["sessUserId"] . "',dateAdded='$dateAdded',chatText= '" . $txtmsg . "',postShare= '" . $postShare . "'";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+			$sharePostType = trim($_REQUEST['sharePostType']);
+			$oldpostId = $_REQUEST['oldpostId'];
 
 
-				$sql_ins = "insert into " . _CHAT_MASTER_TABLE_ . " set status=0,userId='" . decodeStr($check) . "',contactId='" . $_SESSION["sessUserId"] . "',chatBy='" . $_SESSION["sessUserId"] . "',dateAdded='$dateAdded',chatText= '" . $txtmsg . "',postShare= '" . $postShare . "'";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+			$sql_ins = "SELECT firstName,lastName FROM " . _USERS_MASTER_TABLE_ . " WHERE userId IN (select userId from " . _SHAREANDUPDATES_TABLE_ . " where id= " . decodeStr($oldpostId) . ")  ";
+			$getqueryName = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+			$getName = mysqli_fetch_array($getqueryName);
 
+			$sql_ins = "SELECT firstName,lastName FROM " . _USERS_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . "  ";
+			$getqueryName = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+			$mygetName = mysqli_fetch_array($getqueryName);
 
-				$sql_ins = "insert into " . _SHARE_MASTER_TABLE_ . "
-	 set userId='" . $_SESSION["sessUserId"] . "',postId='" . decodeStr($oldpostId) . "',postType='" . $_REQUEST["sharePostType"] . "',dateAdded='" . time() . "'";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+			if ($sharePostType == 3) {
+				$txtmsg = $userurl = '<a href="' . $fullurl . 'view-article.html?postId=' . $oldpostId . '" target="_blank">' . $mygetName["firstName"] . ' ' . $mygetName["lastName"] . ' shared an article</a>';
+			} else {
+				$txtmsg = $userurl = '<a href="' . $fullurl . 'single-post.html?postId=' . $oldpostId . '&postType=' . $_REQUEST['sharePostType'] . '" target="_blank">' . $mygetName["firstName"] . ' ' . $mygetName["lastName"] . ' shared an update</a>';
 			}
+			$postShare = 'mobile_singlepost.php?postId=' . $oldpostId . '&postType=' . $_REQUEST['sharePostType'] . '';
+
+			if (!empty($_REQUEST['check_list'])) {
+
+				foreach ($_REQUEST['check_list'] as $check) {
+
+
+					$dateAdded = time();
+					$sql_ins = "insert into " . _CHAT_MASTER_TABLE_ . " set status=1,userId='" . $_SESSION["sessUserId"] . "',contactId='" . decodeStr($check) . "',chatBy='" . $_SESSION["sessUserId"] . "',dateAdded='$dateAdded',chatText= '" . $txtmsg . "',postShare= '" . $postShare . "'";
+					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+
+					$sql_ins = "insert into " . _CHAT_MASTER_TABLE_ . " set status=0,userId='" . decodeStr($check) . "',contactId='" . $_SESSION["sessUserId"] . "',chatBy='" . $_SESSION["sessUserId"] . "',dateAdded='$dateAdded',chatText= '" . $txtmsg . "',postShare= '" . $postShare . "'";
+					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+
+					$sql_ins = "insert into " . _SHARE_MASTER_TABLE_ . "
+	 set userId='" . $_SESSION["sessUserId"] . "',postId='" . decodeStr($oldpostId) . "',postType='" . $_REQUEST["sharePostType"] . "',dateAdded='" . time() . "'";
+					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+				}
+			}
+
+			$aa666 = "SELECT * from " . _SHARE_MASTER_TABLE_ . " WHERE postId=" . decodeStr($oldpostId) . " and postType=" . $_REQUEST["sharePostType"] . "   ";
+			$res5666 = mysqli_query($conn, $aa666);
+			$totalpostsharecount = mysqli_num_rows($res5666);
+			$totalpostsharecount222 = $totalpostsharecount;
+			?>
+				<script>
+					parent.$('#shareposts<?php echo decodeStr($oldpostId); ?><?php echo $_REQUEST['sharePostType']; ?> span').text(<?php echo $totalpostsharecount222; ?>);
+				</script>
+				<?php
 		}
 
-		$aa666 = "SELECT * from " . _SHARE_MASTER_TABLE_ . " WHERE postId=" . decodeStr($oldpostId) . " and postType=" . $_REQUEST["sharePostType"] . "   ";
-		$res5666 = mysqli_query($conn, $aa666);
-		$totalpostsharecount = mysqli_num_rows($res5666);
-		$totalpostsharecount222 = $totalpostsharecount;
 		?>
 		<script>
-			parent.$('#shareposts<?php echo decodeStr($oldpostId); ?><?php echo $_REQUEST['sharePostType']; ?> span').text(<?php echo $totalpostsharecount222; ?>);
+			parent.$('#shareboxouter').hide();
+			parent.$('#sharesuccess').show();
+			parent.$('#commonloader').hide();
+			parent.showsusmsg('SUCCESS', 'Successfully shared.', '');// with selected contacts
 		</script>
 		<?php
-	}
-
-	?>
-	<script>
-		parent.$('#shareboxouter').hide();
-		parent.$('#sharesuccess').show();
-		parent.$('#commonloader').hide();
-		parent.showsusmsg('SUCCESS', 'Successfully shared.', '');// with selected contacts
-	</script>
-	<?php
 }
 
 
 if (trim(isset($_REQUEST['cmpid']) && $_REQUEST['cmpid']) != '' && $_REQUEST['action'] == 'delcmp') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$dltid = decodeStr($_REQUEST['cmpid']);
-
-	$password = clean($_POST['delgrppassword']);
-
-
-	if (trim($password) != "") {
-		$pass = md5($password);
-		$sql = "SELECT userId from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' and password='" . $pass . "' ";
-		$resSql = mysqli_query($conn, $sql);
-		$getrows = mysqli_num_rows($resSql);
-		if ($getrows > 0) {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').hide();
-			</script>
-			<?php
-
-			$sql_ins = "DELETE FROM " . _SHAREANDUPDATES_TABLE_ . " WHERE userId= " . $dltid . " and postType=16  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE companyId= " . $dltid . " ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			if ($dltid != 0 && $dltid != '') {
-				$ap = "select imageName from " . _IMAGE_MASTER_TABLE_ . " WHERE  postId= " . $dltid . " and imageType=8 ";
-				$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
-				$rowLogoImg = mysqli_fetch_array($bp);
-
-				if ($rowLogoImg["imageName"] != '') {
-					unlink("uploads/" . $rowLogoImg["imageName"]);
-					unlink("uploads/x_" . $rowLogoImg["imageName"]);
-				}
-			}
-
-			$sql_ins = "DELETE FROM " . _IMAGE_MASTER_TABLE_ . " WHERE  postId= " . $dltid . " and imageType=8 ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			/*Edit by rashid 28/11/17*/
-			$aj = "select * from " . _JOBS_MASTER_TABLE_ . " WHERE companyId= " . $dltid . "";
-			$bj = mysqli_query($$conn, $aj) or die(mysqli_error($conn));
-			while ($rowJob = mysqli_fetch_array($bj)) {
-				$sql_ins = "DELETE FROM " . _JOB_INTRESTED_TABLE_ . " WHERE jobId= '" . $rowJob["id"] . "'  ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				$sql_ins = "DELETE FROM " . _JOB_USER_TABLE_ . " WHERE jobId= '" . $rowJob["id"] . "'   ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE postId= '" . $rowJob["id"] . "' and postType=155 ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			}
-
-			$sql_ins = "DELETE FROM " . _JOBS_MASTER_TABLE_ . " WHERE companyId= " . $dltid . "  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			/*end */
-
-			$sql_ins = "DELETE FROM " . _COMPANY_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			$sql_ins = "DELETE FROM " . _COMPANY_FOLLOWERS_TABLE_ . " WHERE companyId= " . $dltid . " ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			$_SESSION["d"] = 1;
-			?>
-			<script>
-				parent.reloadPage();
-			</script>
-			<?php
-		} else {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').text('That password is incorrect. Try again.');
-				parent.$('#errormsg').css('color', '#FF0000');
-			</script>
-			<?php
-		}
-	} else {
-		?>
 		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#errormsg').text('Please enter your password');
-			parent.$('#errormsg').css('color', '#FF0000');
+			parent.$('#commonloader').show();
 		</script>
 		<?php
-	}
+		$dltid = decodeStr($_REQUEST['cmpid']);
+
+		$password = clean($_POST['delgrppassword']);
+
+
+		if (trim($password) != "") {
+			$pass = md5($password);
+			$sql = "SELECT userId from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' and password='" . $pass . "' ";
+			$resSql = mysqli_query($conn, $sql);
+			$getrows = mysqli_num_rows($resSql);
+			if ($getrows > 0) {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').hide();
+						</script>
+						<?php
+
+						$sql_ins = "DELETE FROM " . _SHAREANDUPDATES_TABLE_ . " WHERE userId= " . $dltid . " and postType=16  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE companyId= " . $dltid . " ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						if ($dltid != 0 && $dltid != '') {
+							$ap = "select imageName from " . _IMAGE_MASTER_TABLE_ . " WHERE  postId= " . $dltid . " and imageType=8 ";
+							$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
+							$rowLogoImg = mysqli_fetch_array($bp);
+
+							if ($rowLogoImg["imageName"] != '') {
+								unlink("uploads/" . $rowLogoImg["imageName"]);
+								unlink("uploads/x_" . $rowLogoImg["imageName"]);
+							}
+						}
+
+						$sql_ins = "DELETE FROM " . _IMAGE_MASTER_TABLE_ . " WHERE  postId= " . $dltid . " and imageType=8 ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						/*Edit by rashid 28/11/17*/
+						$aj = "select * from " . _JOBS_MASTER_TABLE_ . " WHERE companyId= " . $dltid . "";
+						$bj = mysqli_query($$conn, $aj) or die(mysqli_error($conn));
+						while ($rowJob = mysqli_fetch_array($bj)) {
+							$sql_ins = "DELETE FROM " . _JOB_INTRESTED_TABLE_ . " WHERE jobId= '" . $rowJob["id"] . "'  ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+							$sql_ins = "DELETE FROM " . _JOB_USER_TABLE_ . " WHERE jobId= '" . $rowJob["id"] . "'   ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+							$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE postId= '" . $rowJob["id"] . "' and postType=155 ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						}
+
+						$sql_ins = "DELETE FROM " . _JOBS_MASTER_TABLE_ . " WHERE companyId= " . $dltid . "  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						/*end */
+
+						$sql_ins = "DELETE FROM " . _COMPANY_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						$sql_ins = "DELETE FROM " . _COMPANY_FOLLOWERS_TABLE_ . " WHERE companyId= " . $dltid . " ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+						$_SESSION["d"] = 1;
+						?>
+						<script>
+							parent.reloadPage();
+						</script>
+						<?php
+			} else {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').text('That password is incorrect. Try again.');
+							parent.$('#errormsg').css('color', '#FF0000');
+						</script>
+						<?php
+			}
+		} else {
+			?>
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#errormsg').text('Please enter your password');
+					parent.$('#errormsg').css('color', '#FF0000');
+				</script>
+				<?php
+		}
 
 
 }
@@ -4793,11 +4793,11 @@ if ($_REQUEST['action'] == 'hidepost' && $_REQUEST['hiddenpid'] != '') {
 	$resresult2 = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.$('#alertpopup').hide();
-		parent.$('#<?php echo $hiddenpid; ?>').slideUp();
-	</script>
-	<?php
+		<script>
+			parent.$('#alertpopup').hide();
+			parent.$('#<?php echo $hiddenpid; ?>').slideUp();
+		</script>
+		<?php
 }
 
 
@@ -4819,341 +4819,341 @@ if ($_REQUEST['action'] == 'reportpost' && trim($_REQUEST['hiddenpid']) != '' &&
 	}
 
 	?>
-	<script>
-		parent.closeshowsusmsg();
-		parent.$('#<?php echo $hiddenpid; ?>').slideUp();
-		parent.$('body').css('overflow', 'auto');
-	</script>
-	<?php
+		<script>
+			parent.closeshowsusmsg();
+			parent.$('#<?php echo $hiddenpid; ?>').slideUp();
+			parent.$('body').css('overflow', 'auto');
+		</script>
+		<?php
 }
 
 if ($_REQUEST['action'] == 'changepass' && $_REQUEST['oldpass'] != '' && trim($_REQUEST['newpass']) != '' && trim($_REQUEST['confirmpass']) != '') {
 	?>
-	<script>
-		parent.$('#errormsgpass').hide();
-	</script>
+		<script>
+			parent.$('#errormsgpass').hide();
+		</script>
 
-	<?php
-	$password = md5(addslashes(trim($_POST['oldpass'])));
-	$newpass = md5(addslashes(trim($_POST["newpass"])));
-	$confirmpass = md5(addslashes(trim($_POST["confirmpass"])));
+		<?php
+		$password = md5(addslashes(trim($_POST['oldpass'])));
+		$newpass = md5(addslashes(trim($_POST["newpass"])));
+		$confirmpass = md5(addslashes(trim($_POST["confirmpass"])));
 
 
-	if (strlen(trim($_POST["oldpass"])) > 5 && strlen(trim($_POST["newpass"])) > 5 && strlen(trim($_POST["confirmpass"])) > 5) {
-		if ($password != $userpasswordchanged) {
-			?>
-			<script>
-				parent.$('#errormsgpass').show();
-				parent.$('#errormsgpass').text('Old password dose not matched.');
-			</script>
-			<?php
-			exit();
+		if (strlen(trim($_POST["oldpass"])) > 5 && strlen(trim($_POST["newpass"])) > 5 && strlen(trim($_POST["confirmpass"])) > 5) {
+			if ($password != $userpasswordchanged) {
+				?>
+						<script>
+							parent.$('#errormsgpass').show();
+							parent.$('#errormsgpass').text('Old password dose not matched.');
+						</script>
+						<?php
+						exit();
+			}
 		}
-	}
 
-	if (strlen(trim($_POST["newpass"])) > 16) {
-		?>
-		<script>
-			parent.$('#errormsgpass').show();
-			parent.$('#errormsgpass').text('Please enter new password maximum 16 charachters');
-		</script>
-		<?php
-		exit();
-	}
-
-	if (strlen(trim($_POST["confirmpass"])) > 16) {
-		?>
-		<script>
-			parent.$('#errormsgpass').show();
-			parent.$('#errormsgpass').text('Please enter confirm password maximum 16 charachters');
-		</script>
-		<?php
-		exit();
-	}
-
-
-	if (strlen(trim($_POST["newpass"])) > 5 && strlen(trim($_POST["confirmpass"])) > 5) {
-		if ($newpass != $confirmpass) {
+		if (strlen(trim($_POST["newpass"])) > 16) {
 			?>
-
-			<script>
-				parent.$('#errormsgpass').show();
-				parent.$('#errormsgpass').text('New password dose not matched with confirm password.');
-			</script>
-
-			<?php
-			exit();
+				<script>
+					parent.$('#errormsgpass').show();
+					parent.$('#errormsgpass').text('Please enter new password maximum 16 charachters');
+				</script>
+				<?php
+				exit();
 		}
-	}
 
-	if (strlen(trim($_POST["newpass"])) <= 5) {
+		if (strlen(trim($_POST["confirmpass"])) > 16) {
+			?>
+				<script>
+					parent.$('#errormsgpass').show();
+					parent.$('#errormsgpass').text('Please enter confirm password maximum 16 charachters');
+				</script>
+				<?php
+				exit();
+		}
+
+
+		if (strlen(trim($_POST["newpass"])) > 5 && strlen(trim($_POST["confirmpass"])) > 5) {
+			if ($newpass != $confirmpass) {
+				?>
+
+						<script>
+							parent.$('#errormsgpass').show();
+							parent.$('#errormsgpass').text('New password dose not matched with confirm password.');
+						</script>
+
+						<?php
+						exit();
+			}
+		}
+
+		if (strlen(trim($_POST["newpass"])) <= 5) {
+			?>
+				<script>
+					parent.$('#errormsgpass').show();
+					parent.$('#errormsgpass').text('Please enter new password minimum 6 charachters');
+				</script>
+				<?php
+				exit();
+		}
+
+		if (strlen(trim($_POST["confirmpass"])) <= 5) {
+			?>
+				<script>
+					parent.$('#errormsgpass').show();
+					parent.$('#errormsgpass').text('Please enter confirm password minimum 6 charachters');
+				</script>
+				<?php
+				exit();
+		}
+
+
+
+
+		$sql_ins = "update " . _USERS_MASTER_TABLE_ . " SET password='" . $confirmpass . "' WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+		$one = mysqli_affected_rows($sql_ins);
+
+
 		?>
 		<script>
-			parent.$('#errormsgpass').show();
-			parent.$('#errormsgpass').text('Please enter new password minimum 6 charachters');
+			parent.$('#shareboxouter').hide();
+			parent.$('#sharesuccess').show();
+			parent.$('#commonloader').hide();
+			parent.showsusmsg('SUCCESS', 'Password changed successfully', '');
 		</script>
 		<?php
 		exit();
-	}
-
-	if (strlen(trim($_POST["confirmpass"])) <= 5) {
-		?>
-		<script>
-			parent.$('#errormsgpass').show();
-			parent.$('#errormsgpass').text('Please enter confirm password minimum 6 charachters');
-		</script>
-		<?php
-		exit();
-	}
-
-
-
-
-	$sql_ins = "update " . _USERS_MASTER_TABLE_ . " SET password='" . $confirmpass . "' WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-	$one = mysqli_affected_rows($sql_ins);
-
-
-	?>
-	<script>
-		parent.$('#shareboxouter').hide();
-		parent.$('#sharesuccess').show();
-		parent.$('#commonloader').hide();
-		parent.showsusmsg('SUCCESS', 'Password changed successfully', '');
-	</script>
-	<?php
-	exit();
 }
 
 if ($_REQUEST['action'] == 'personaldatasetting' && trim($_REQUEST['firstName']) != '' && trim($_REQUEST['lastName']) != '' && trim($_REQUEST['countryName']) != '' && trim($_REQUEST['cityName']) != '' && trim($_REQUEST['locationName']) != '' && trim($_REQUEST['day']) != '0' && trim($_REQUEST['month']) != '0' && trim($_REQUEST['year']) != '0' && trim($_REQUEST['timeZone']) != '' && trim($_REQUEST['gender']) != '') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$firstName = clean($_POST["firstName"]);
-	$lastName = clean($_POST["lastName"]);
-	$countryName = clean($_POST["countryName"]);
-	$cityName = clean($_POST["cityName"]);
-	$locationName = clean($_POST["locationName"]);
-	$day = trim($_POST["day"]);
-	$month = trim($_POST["month"]);
-	$year = trim($_POST["year"]);
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		$firstName = clean($_POST["firstName"]);
+		$lastName = clean($_POST["lastName"]);
+		$countryName = clean($_POST["countryName"]);
+		$cityName = clean($_POST["cityName"]);
+		$locationName = clean($_POST["locationName"]);
+		$day = trim($_POST["day"]);
+		$month = trim($_POST["month"]);
+		$year = trim($_POST["year"]);
 
-	$gender = trim($_POST["gender"]);
+		$gender = trim($_POST["gender"]);
 
-	$dob = $year . '-' . $month . '-' . $day;
+		$dob = $year . '-' . $month . '-' . $day;
 
-	$timeZone = trim($_POST["timeZone"]);
+		$timeZone = trim($_POST["timeZone"]);
 
-	$firstNameUrl = makeContentUrl($firstName);
-	$lastNameUrl = makeContentUrl($lastName);
+		$firstNameUrl = makeContentUrl($firstName);
+		$lastNameUrl = makeContentUrl($lastName);
 
-	$userurl = $firstNameUrl . '-' . $lastNameUrl;
-
-
-	$sql_ins = "update " . _USERS_MASTER_TABLE_ . " SET firstName='" . $firstName . "',lastName='" . $lastName . "',countryName='" . $countryName . "',cityName='" . $cityName . "',locationName='" . $locationName . "',dob='" . $dob . "',userurl='" . $userurl . "',timeZone='" . $timeZone . "',gender='" . $gender . "' WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+		$userurl = $firstNameUrl . '-' . $lastNameUrl;
 
 
+		$sql_ins = "update " . _USERS_MASTER_TABLE_ . " SET firstName='" . $firstName . "',lastName='" . $lastName . "',countryName='" . $countryName . "',cityName='" . $cityName . "',locationName='" . $locationName . "',dob='" . $dob . "',userurl='" . $userurl . "',timeZone='" . $timeZone . "',gender='" . $gender . "' WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 
-	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
-	exit();
+
+
+		?>
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
+		exit();
 }
 
 
 if ($_REQUEST['action'] == 'settings' && $_SESSION['sessUserId'] != 0 && $_SESSION['sessUserId'] != '') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$contactTabvisible = clean($_POST["contactTabvisible"]);
-	$activityTabVisible = clean($_POST["activityTabVisible"]);
-	$allowSearchEngines = clean($_POST["allowSearchEngines"]);
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		$contactTabvisible = clean($_POST["contactTabvisible"]);
+		$activityTabVisible = clean($_POST["activityTabVisible"]);
+		$allowSearchEngines = clean($_POST["allowSearchEngines"]);
 
-	$iWantRecieveMsg = clean($_POST["iWantRecieveMsg"]);
-	$postGroupSearchEngine = clean($_POST["postGroupSearchEngine"]);
+		$iWantRecieveMsg = clean($_POST["iWantRecieveMsg"]);
+		$postGroupSearchEngine = clean($_POST["postGroupSearchEngine"]);
 
-	$sendMeEmail = clean($_POST["sendMeEmail"]);
-	$emailCommentLike = clean($_POST["emailCommentLike"]);
-	$emailPostLike = clean($_POST["emailPostLike"]);
-	$newContactRequest = clean($_POST["newContactRequest"]);
-	$pendingContactRequest = clean($_POST["pendingContactRequest"]);
-	$emailFreelancerAccount = clean($_POST["emailFreelancerAccount"]);
-	$emailApplyProject = clean($_POST["emailApplyProject"]);
-	$emailContactNewPosition = clean($_POST["emailContactNewPosition"]);
+		$sendMeEmail = clean($_POST["sendMeEmail"]);
+		$emailCommentLike = clean($_POST["emailCommentLike"]);
+		$emailPostLike = clean($_POST["emailPostLike"]);
+		$newContactRequest = clean($_POST["newContactRequest"]);
+		$pendingContactRequest = clean($_POST["pendingContactRequest"]);
+		$emailFreelancerAccount = clean($_POST["emailFreelancerAccount"]);
+		$emailApplyProject = clean($_POST["emailApplyProject"]);
+		$emailContactNewPosition = clean($_POST["emailContactNewPosition"]);
 
-	$notiPostGroup = clean($_POST["notiPostGroup"]);
-	$notiJoiningGroup = clean($_POST["notiJoiningGroup"]);
-	$notiFollowCompany = clean($_POST["notiFollowCompany"]);
-	$notiTagingCompany = clean($_POST["notiTagingCompany"]);
-	$notiEventGuist = clean($_POST["notiEventGuist"]);
-	$contactListVisible = trim($_POST["contactListVisible"]);
-	$newOpportunities = trim($_POST["newOpportunities"]);
-	$allowFuturePostsComments = trim($_POST["allowFuturePostsComments"]);
-	$notiPostCommentsAllow = trim($_POST["notiPostCommentsAllow"]);
-	$notiPostLikesAllow = trim($_POST["notiPostLikesAllow"]);
-	$notiNewPositionEmployer = trim($_POST["notiNewPositionEmployer"]);
-	$notiMeetingRequest = trim($_POST["notiMeetingRequest"]);
-	$notiProjectApplied = trim($_POST["notiProjectApplied"]);
-	$notiJoinGroupRequestAllow = trim($_POST["notiJoinGroupRequestAllow"]);
-	$notiNewArticlesAllow = trim($_POST["notiNewArticlesAllow"]);
-	$userBirthdayAllow = trim($_POST["userBirthdayAllow"]);
-
-
-
-	unset($insertFields);
-	unset($insertVals);
-	unset($whereFields);
-	unset($whereVals);
-
-	$insertFields[0] = "contactTabvisible";
-	$insertFields[1] = "activityTabVisible";
-	$insertFields[2] = "allowSearchEngines";
-	$insertFields[3] = "iWantRecieveMsg";
-	$insertFields[4] = "postGroupSearchEngine";
-	$insertFields[5] = "sendMeEmail";
-	$insertFields[6] = "emailCommentLike";
-	$insertFields[7] = "emailPostLike";
-	$insertFields[8] = "newContactRequest";
-	$insertFields[9] = "pendingContactRequest";
-	$insertFields[10] = "emailFreelancerAccount";
-	$insertFields[11] = "emailApplyProject";
-	$insertFields[12] = "emailContactNewPosition";
-	$insertFields[13] = "notiPostGroup";
-	$insertFields[14] = "notiJoiningGroup";
-	$insertFields[15] = "notiFollowCompany";
-	$insertFields[16] = "notiTagingCompany";
-	$insertFields[17] = "notiEventGuist";
-	$insertFields[18] = "contactListVisible";
-	$insertFields[19] = "newOpportunities";
-	$insertFields[20] = "allowFuturePostsComments";
-	$insertFields[21] = "notiPostCommentsAllow";
-	$insertFields[22] = "notiPostLikesAllow";
-	$insertFields[23] = "notiNewPositionEmployer";
-	$insertFields[24] = "notiMeetingRequest";
-	$insertFields[25] = "notiProjectApplied";
-	$insertFields[26] = "notiJoinGroupRequestAllow";
-	$insertFields[27] = "notiNewArticlesAllow";
-	$insertFields[28] = "userBirthdayAllow";
-
-	$insertVals[0] = $contactTabvisible;
-	$insertVals[1] = $activityTabVisible;
-	$insertVals[2] = $allowSearchEngines;
-	$insertVals[3] = $iWantRecieveMsg;
-	$insertVals[4] = $postGroupSearchEngine;
-	$insertVals[5] = $sendMeEmail;
-	$insertVals[6] = $emailCommentLike;
-	$insertVals[7] = $emailPostLike;
-	$insertVals[8] = $newContactRequest;
-	$insertVals[9] = $pendingContactRequest;
-	$insertVals[10] = $emailFreelancerAccount;
-	$insertVals[11] = $emailApplyProject;
-	$insertVals[12] = $emailContactNewPosition;
-	$insertVals[13] = $notiPostGroup;
-	$insertVals[14] = $notiJoiningGroup;
-	$insertVals[15] = $notiFollowCompany;
-	$insertVals[16] = $notiTagingCompany;
-	$insertVals[17] = $notiEventGuist;
-	$insertVals[18] = $contactListVisible;
-	$insertVals[19] = $newOpportunities;
-	$insertVals[20] = $allowFuturePostsComments;
-	$insertVals[21] = $notiPostCommentsAllow;
-	$insertVals[22] = $notiPostLikesAllow;
-	$insertVals[23] = $notiNewPositionEmployer;
-	$insertVals[24] = $notiMeetingRequest;
-	$insertVals[25] = $notiProjectApplied;
-	$insertVals[26] = $notiJoinGroupRequestAllow;
-	$insertVals[27] = $notiNewArticlesAllow;
-	$insertVals[28] = $userBirthdayAllow;
-
-	$whereFields[0] = "userId";
-
-	$whereVals[0] = $_SESSION['sessUserId'];
-
-	$resUpdate = updateDB(_USER_SETTINGS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+		$notiPostGroup = clean($_POST["notiPostGroup"]);
+		$notiJoiningGroup = clean($_POST["notiJoiningGroup"]);
+		$notiFollowCompany = clean($_POST["notiFollowCompany"]);
+		$notiTagingCompany = clean($_POST["notiTagingCompany"]);
+		$notiEventGuist = clean($_POST["notiEventGuist"]);
+		$contactListVisible = trim($_POST["contactListVisible"]);
+		$newOpportunities = trim($_POST["newOpportunities"]);
+		$allowFuturePostsComments = trim($_POST["allowFuturePostsComments"]);
+		$notiPostCommentsAllow = trim($_POST["notiPostCommentsAllow"]);
+		$notiPostLikesAllow = trim($_POST["notiPostLikesAllow"]);
+		$notiNewPositionEmployer = trim($_POST["notiNewPositionEmployer"]);
+		$notiMeetingRequest = trim($_POST["notiMeetingRequest"]);
+		$notiProjectApplied = trim($_POST["notiProjectApplied"]);
+		$notiJoinGroupRequestAllow = trim($_POST["notiJoinGroupRequestAllow"]);
+		$notiNewArticlesAllow = trim($_POST["notiNewArticlesAllow"]);
+		$userBirthdayAllow = trim($_POST["userBirthdayAllow"]);
 
 
 
+		unset($insertFields);
+		unset($insertVals);
+		unset($whereFields);
+		unset($whereVals);
 
-	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
-	exit();
+		$insertFields[0] = "contactTabvisible";
+		$insertFields[1] = "activityTabVisible";
+		$insertFields[2] = "allowSearchEngines";
+		$insertFields[3] = "iWantRecieveMsg";
+		$insertFields[4] = "postGroupSearchEngine";
+		$insertFields[5] = "sendMeEmail";
+		$insertFields[6] = "emailCommentLike";
+		$insertFields[7] = "emailPostLike";
+		$insertFields[8] = "newContactRequest";
+		$insertFields[9] = "pendingContactRequest";
+		$insertFields[10] = "emailFreelancerAccount";
+		$insertFields[11] = "emailApplyProject";
+		$insertFields[12] = "emailContactNewPosition";
+		$insertFields[13] = "notiPostGroup";
+		$insertFields[14] = "notiJoiningGroup";
+		$insertFields[15] = "notiFollowCompany";
+		$insertFields[16] = "notiTagingCompany";
+		$insertFields[17] = "notiEventGuist";
+		$insertFields[18] = "contactListVisible";
+		$insertFields[19] = "newOpportunities";
+		$insertFields[20] = "allowFuturePostsComments";
+		$insertFields[21] = "notiPostCommentsAllow";
+		$insertFields[22] = "notiPostLikesAllow";
+		$insertFields[23] = "notiNewPositionEmployer";
+		$insertFields[24] = "notiMeetingRequest";
+		$insertFields[25] = "notiProjectApplied";
+		$insertFields[26] = "notiJoinGroupRequestAllow";
+		$insertFields[27] = "notiNewArticlesAllow";
+		$insertFields[28] = "userBirthdayAllow";
+
+		$insertVals[0] = $contactTabvisible;
+		$insertVals[1] = $activityTabVisible;
+		$insertVals[2] = $allowSearchEngines;
+		$insertVals[3] = $iWantRecieveMsg;
+		$insertVals[4] = $postGroupSearchEngine;
+		$insertVals[5] = $sendMeEmail;
+		$insertVals[6] = $emailCommentLike;
+		$insertVals[7] = $emailPostLike;
+		$insertVals[8] = $newContactRequest;
+		$insertVals[9] = $pendingContactRequest;
+		$insertVals[10] = $emailFreelancerAccount;
+		$insertVals[11] = $emailApplyProject;
+		$insertVals[12] = $emailContactNewPosition;
+		$insertVals[13] = $notiPostGroup;
+		$insertVals[14] = $notiJoiningGroup;
+		$insertVals[15] = $notiFollowCompany;
+		$insertVals[16] = $notiTagingCompany;
+		$insertVals[17] = $notiEventGuist;
+		$insertVals[18] = $contactListVisible;
+		$insertVals[19] = $newOpportunities;
+		$insertVals[20] = $allowFuturePostsComments;
+		$insertVals[21] = $notiPostCommentsAllow;
+		$insertVals[22] = $notiPostLikesAllow;
+		$insertVals[23] = $notiNewPositionEmployer;
+		$insertVals[24] = $notiMeetingRequest;
+		$insertVals[25] = $notiProjectApplied;
+		$insertVals[26] = $notiJoinGroupRequestAllow;
+		$insertVals[27] = $notiNewArticlesAllow;
+		$insertVals[28] = $userBirthdayAllow;
+
+		$whereFields[0] = "userId";
+
+		$whereVals[0] = $_SESSION['sessUserId'];
+
+		$resUpdate = updateDB(_USER_SETTINGS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+
+
+
+		?>
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
+		exit();
 }
 
 
 if (isset($_REQUEST['evntid']) && trim($_REQUEST['evntid']) != '' && $_REQUEST['action'] == 'delevnt') {
 
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$dltid = decodeStr($_REQUEST['evntid']);
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		$dltid = decodeStr($_REQUEST['evntid']);
 
 
-	if ($dltid != 0 && $dltid != '') {
+		if ($dltid != 0 && $dltid != '') {
 
-		$sql_inss1 = "SELECT id from " . _EVENT_MASTER_TABLE_ . " WHERE id= " . $dltid . " and userId='" . $_SESSION["sessUserId"] . "' ";
-		$resresults1 = mysqli_query($conn, $sql_inss1) or die(mysqli_error($conn));
+			$sql_inss1 = "SELECT id from " . _EVENT_MASTER_TABLE_ . " WHERE id= " . $dltid . " and userId='" . $_SESSION["sessUserId"] . "' ";
+			$resresults1 = mysqli_query($conn, $sql_inss1) or die(mysqli_error($conn));
 
-		$rowsTotal = mysqli_num_rows($resresults1);
+			$rowsTotal = mysqli_num_rows($resresults1);
 
-		if ($rowsTotal > 0) {
+			if ($rowsTotal > 0) {
 
 
-			$ap = "select id,imageName from " . _EVENT_IMAGE_MASTER_TABLE_ . " WHERE  eventId= " . $dltid . " ";
-			$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
-			while ($rowLogoImg = mysqli_fetch_array($bp)) {
+				$ap = "select id,imageName from " . _EVENT_IMAGE_MASTER_TABLE_ . " WHERE  eventId= " . $dltid . " ";
+				$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
+				while ($rowLogoImg = mysqli_fetch_array($bp)) {
 
-				if ($rowLogoImg["imageName"] != '') {
-					unlink("uploads/" . $rowLogoImg["imageName"]);
-					unlink("uploads/x_" . $rowLogoImg["imageName"]);
+					if ($rowLogoImg["imageName"] != '') {
+						unlink("uploads/" . $rowLogoImg["imageName"]);
+						unlink("uploads/x_" . $rowLogoImg["imageName"]);
+					}
+
+					$sql_ins = "DELETE FROM " . _EVENT_IMAGE_MASTER_TABLE_ . " WHERE  id= " . $rowLogoImg["id"] . " ";
+					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 				}
 
-				$sql_ins = "DELETE FROM " . _EVENT_IMAGE_MASTER_TABLE_ . " WHERE  id= " . $rowLogoImg["id"] . " ";
+				$sql_ins = "DELETE FROM " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE eventId= " . $dltid . " ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+				$sql_ins = "DELETE FROM " . _TIMELINE_MASTER_TABLE_ . " WHERE postId= " . $dltid . " and postType=5  ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+
+				$ape = "select eventThumb from " . _EVENT_MASTER_TABLE_ . " WHERE  id= " . $dltid . " ";
+				$bpe = mysqli_query($conn, $ape) or die(mysqli_error($conn));
+				$rowLogoImge = mysqli_fetch_array($bpe);
+
+				if ($rowLogoImge["eventThumb"] != '') {
+					unlink("uploads/" . $rowLogoImge["eventThumb"]);
+					unlink("uploads/x_" . $rowLogoImge["eventThumb"]);
+				}
+
+
+				$sql_ins = "DELETE FROM " . _EVENT_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
 				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 			}
 
-			$sql_ins = "DELETE FROM " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE eventId= " . $dltid . " ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			$sql_ins = "DELETE FROM " . _TIMELINE_MASTER_TABLE_ . " WHERE postId= " . $dltid . " and postType=5  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-
-			$ape = "select eventThumb from " . _EVENT_MASTER_TABLE_ . " WHERE  id= " . $dltid . " ";
-			$bpe = mysqli_query($conn, $ape) or die(mysqli_error($conn));
-			$rowLogoImge = mysqli_fetch_array($bpe);
-
-			if ($rowLogoImge["eventThumb"] != '') {
-				unlink("uploads/" . $rowLogoImge["eventThumb"]);
-				unlink("uploads/x_" . $rowLogoImge["eventThumb"]);
-			}
-
-
-			$sql_ins = "DELETE FROM " . _EVENT_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 		}
-
-	}
-	?>
-	<script>
-		parent.showerrormsg('SUCCESS', 'Event deleted successfully', '');
-		parent.$('#commonloader').hide();
-		parent.$('.popup-alert-cont').hide();
-		parent.$('#<?php echo $dltid; ?>').slideUp();
-	</script>
-	<?php
+		?>
+		<script>
+			parent.showerrormsg('SUCCESS', 'Event deleted successfully', '');
+			parent.$('#commonloader').hide();
+			parent.$('.popup-alert-cont').hide();
+			parent.$('#<?php echo $dltid; ?>').slideUp();
+		</script>
+		<?php
 
 }
 
@@ -5166,12 +5166,12 @@ if (isset($_REQUEST['dltNotiId']) && $_REQUEST['dltNotiId'] != '' && $_REQUEST['
 	$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE  id='" . $dltid . "' ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.$('#<?php echo $dltid; ?>').slideUp();
-	</script>
+		<script>
+			parent.$('#<?php echo $dltid; ?>').slideUp();
+		</script>
 
 
-	<?php
+		<?php
 
 
 
@@ -5201,10 +5201,10 @@ if (isset($_REQUEST['videocallcut']) && $_REQUEST['videocallcut'] == 1) {
 
 	$_SESSION['tok'] = 'noses';
 	?>
-	<script>
-		parent.$('#videocallinguserIcon').show();
-	</script>
-	<?php
+		<script>
+			parent.$('#videocallinguserIcon').show();
+		</script>
+		<?php
 
 }
 
@@ -5235,13 +5235,13 @@ if (isset($_REQUEST['getvideouserlive']) && $_REQUEST['getvideouserlive'] == '1'
 	if ($getuser2['id'] != '') {
 		?>
 
-		<?php if ($getuser2['callStatus'] == 1) { ?>
-			<script>
+				<?php if ($getuser2['callStatus'] == 1) { ?>
+						<script>
 
-				$('#callerphoto').hide();
-			</script>
-			<?php
-		}
+							$('#callerphoto').hide();
+						</script>
+						<?php
+				}
 
 
 	}
@@ -5285,18 +5285,18 @@ if ($_REQUEST['action'] == 'uploadsmbpics' && $_FILES['businesslogoimage']['name
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.$('#imagebx').load('<?php echo $fullurl; ?>upload_businesspage_logo.php?bpId=<?php echo $_REQUEST['bpId']; ?>&uid=<?php echo $_REQUEST['smbuid']; ?>');
-		</script>
+				<script>
+					parent.$('#imagebx').load('<?php echo $fullurl; ?>upload_businesspage_logo.php?bpId=<?php echo $_REQUEST['bpId']; ?>&uid=<?php echo $_REQUEST['smbuid']; ?>');
+				</script>
 
-		<?php
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 
@@ -5329,17 +5329,17 @@ if ($_REQUEST['action'] == 'uploadbpphoto' && $_FILES['businesspphoto']['name'] 
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 		?>
-		<script>
-			parent.reloadPage();
-		</script>
-		<?php
+				<script>
+					parent.reloadPage();
+				</script>
+				<?php
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload image file with extension only .jpg, .png, .gif.', '');
+				</script>
+				<?php
 	}
 
 }
@@ -5364,12 +5364,12 @@ if ($_REQUEST['action'] == 'delsmbpics' && $_REQUEST['delesmbimgId'] != '' && $_
 
 
 	?>
-	<script>
+		<script>
 
-		parent.$("#imagebx").load('<?php echo $fullurl; ?>upload_businesspage_logo.php?bpId=<?php echo decodeStr($_REQUEST['bpId']); ?>&uid=<?php echo $_REQUEST['smbuid']; ?>');
-	</script>
+			parent.$("#imagebx").load('<?php echo $fullurl; ?>upload_businesspage_logo.php?bpId=<?php echo decodeStr($_REQUEST['bpId']); ?>&uid=<?php echo $_REQUEST['smbuid']; ?>');
+		</script>
 
-	<?php
+		<?php
 }
 
 if ($_REQUEST['action'] == 'sendenquiry' && trim($_REQUEST['senderName']) != '' && trim($_REQUEST['senderPhoneNumber']) != '' && trim($_REQUEST['senderEmail']) != '' && trim($_REQUEST['receiverEmail']) != '') {
@@ -5413,86 +5413,86 @@ if ($_REQUEST['action'] == 'sendenquiry' && trim($_REQUEST['senderName']) != '' 
 	send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 
 	?>
-	<script>
-		parent.$('#shareboxouter').hide();
-		parent.$('#sharesuccess').show();
-		parent.$('#commonloader').hide();
-		parent.showsusmsg('SUCCESS', 'Enquiry sent successfully', '');
-	</script>
-	<?php
-	exit();
+		<script>
+			parent.$('#shareboxouter').hide();
+			parent.$('#sharesuccess').show();
+			parent.$('#commonloader').hide();
+			parent.showsusmsg('SUCCESS', 'Enquiry sent successfully', '');
+		</script>
+		<?php
+		exit();
 }
 
 if (trim(isset($_REQUEST['smbpid']) && $_REQUEST['smbpid']) != '' && $_REQUEST['action'] == 'delsmbp') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$dltid = decodeStr($_REQUEST['smbpid']);
-
-	$password = clean($_POST['delgrppassword']);
-
-
-	if (trim($password) != "") {
-		$pass = md5($password);
-		if ($pass != $userpasswordchanged) {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').text('That password is incorrect. Try again.');
-				parent.$('#errormsg').css('color', '#FF0000');
-			</script>
-			<?php
-		} else {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').hide();
-			</script>
-			<?php
-			$ap = "select id,imageName from " . _IMAGE_MASTER_TABLE_ . " WHERE  postId= " . $dltid . " and imageType=9  ";
-			$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
-			while ($rowLogoImg = mysqli_fetch_array($bp)) {
-
-				if ($rowLogoImg["imageName"] != '') {
-					unlink("uploads/" . $rowLogoImg["imageName"]);
-					unlink("uploads/x_" . $rowLogoImg["imageName"]);
-				}
-
-				$sql_ins = "DELETE FROM " . _IMAGE_MASTER_TABLE_ . " WHERE  id= " . $rowLogoImg["id"] . " ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			}
-
-
-			$ap = "select fileUploaded from " . _BUSINESS_MASTER_TABLE_ . " WHERE  id= " . $dltid . " ";
-			$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
-			$rowLogoImg = mysqli_fetch_array($bp);
-
-			if ($rowLogoImg["fileUploaded"] != '' && $rowLogoImg["fileUploaded"] != 'businessimg.png') {
-				unlink("uploads/" . $rowLogoImg["fileUploaded"]);
-				unlink("uploads/x_" . $rowLogoImg["fileUploaded"]);
-			}
-
-			$sql_ins = "DELETE FROM " . _BUSINESS_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			$_SESSION["d"] = 1;
-			?>
-			<script>
-				parent.reloadPage();
-			</script>
-			<?php
-
-		}
-	} else {
-		?>
 		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#errormsg').text('Please enter your password');
-			parent.$('#errormsg').css('color', '#FF0000');
+			parent.$('#commonloader').show();
 		</script>
 		<?php
-	}
+		$dltid = decodeStr($_REQUEST['smbpid']);
+
+		$password = clean($_POST['delgrppassword']);
+
+
+		if (trim($password) != "") {
+			$pass = md5($password);
+			if ($pass != $userpasswordchanged) {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').text('That password is incorrect. Try again.');
+							parent.$('#errormsg').css('color', '#FF0000');
+						</script>
+						<?php
+			} else {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').hide();
+						</script>
+						<?php
+						$ap = "select id,imageName from " . _IMAGE_MASTER_TABLE_ . " WHERE  postId= " . $dltid . " and imageType=9  ";
+						$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
+						while ($rowLogoImg = mysqli_fetch_array($bp)) {
+
+							if ($rowLogoImg["imageName"] != '') {
+								unlink("uploads/" . $rowLogoImg["imageName"]);
+								unlink("uploads/x_" . $rowLogoImg["imageName"]);
+							}
+
+							$sql_ins = "DELETE FROM " . _IMAGE_MASTER_TABLE_ . " WHERE  id= " . $rowLogoImg["id"] . " ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						}
+
+
+						$ap = "select fileUploaded from " . _BUSINESS_MASTER_TABLE_ . " WHERE  id= " . $dltid . " ";
+						$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
+						$rowLogoImg = mysqli_fetch_array($bp);
+
+						if ($rowLogoImg["fileUploaded"] != '' && $rowLogoImg["fileUploaded"] != 'businessimg.png') {
+							unlink("uploads/" . $rowLogoImg["fileUploaded"]);
+							unlink("uploads/x_" . $rowLogoImg["fileUploaded"]);
+						}
+
+						$sql_ins = "DELETE FROM " . _BUSINESS_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						$_SESSION["d"] = 1;
+						?>
+						<script>
+							parent.reloadPage();
+						</script>
+						<?php
+
+			}
+		} else {
+			?>
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#errormsg').text('Please enter your password');
+					parent.$('#errormsg').css('color', '#FF0000');
+				</script>
+				<?php
+		}
 
 }
 
@@ -5502,75 +5502,75 @@ if (trim(isset($_REQUEST['contactId']) && $_REQUEST['contactId']) != '' && $_REQ
 	$sql_ins = "UPDATE " . _CONTACT_MASTER_TABLE_ . " SET birthdayStatus=1 WHERE contactId= '" . decodeStr($_REQUEST['contactId']) . "' AND userId='" . $_SESSION["sessUserId"] . "' ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactId']); ?>').slideUp();
-	</script>
-	<?php
+		<script>
+			parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactId']); ?>').slideUp();
+		</script>
+		<?php
 
 
 }
 
 if (trim(isset($_REQUEST['tlntpid']) && $_REQUEST['tlntpid']) != '' && $_REQUEST['action'] == 'deltalentp') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$dltid = decodeStr($_REQUEST['tlntpid']);
-
-	$password = clean($_POST['delgrppassword']);
-
-
-	if (trim($password) != "") {
-		$pass = md5($password);
-		if ($pass != $userpasswordchanged) {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').text('That password is incorrect. Try again.');
-				parent.$('#errormsg').css('color', '#FF0000');
-			</script>
-			<?php
-		} else {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').hide();
-			</script>
-			<?php
-			$sql_ins = "select id FROM " . _TALENT_MASTER_TABLE_ . " WHERE id= " . $dltid . " and userId=" . $_SESSION["sessUserId"] . " ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			$s = mysqli_num_rows($sql);
-			if ($s > 0) {
-				$ap = "select talentProfilePhoto from " . _TALENT_MASTER_TABLE_ . " WHERE  id= " . $dltid . " ";
-				$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
-				$rowLogoImg = mysqli_fetch_array($bp);
-
-				if ($rowLogoImg["talentProfilePhoto"] != '' && $rowLogoImg["talentProfilePhoto"] != 'businessimg.png') {
-					unlink("uploads/" . $rowLogoImg["talentProfilePhoto"]);
-					unlink("uploads/x_" . $rowLogoImg["talentProfilePhoto"]);
-				}
-
-				$sql_ins = "DELETE FROM " . _TALENT_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-				$_SESSION["d"] = 1;
-			}
-			?>
-			<script>
-				parent.reloadPage();
-			</script>
-			<?php
-
-		}
-	} else {
-		?>
 		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#errormsg').text('Please enter your password');
-			parent.$('#errormsg').css('color', '#FF0000');
+			parent.$('#commonloader').show();
 		</script>
 		<?php
-	}
+		$dltid = decodeStr($_REQUEST['tlntpid']);
+
+		$password = clean($_POST['delgrppassword']);
+
+
+		if (trim($password) != "") {
+			$pass = md5($password);
+			if ($pass != $userpasswordchanged) {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').text('That password is incorrect. Try again.');
+							parent.$('#errormsg').css('color', '#FF0000');
+						</script>
+						<?php
+			} else {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').hide();
+						</script>
+						<?php
+						$sql_ins = "select id FROM " . _TALENT_MASTER_TABLE_ . " WHERE id= " . $dltid . " and userId=" . $_SESSION["sessUserId"] . " ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						$s = mysqli_num_rows($sql);
+						if ($s > 0) {
+							$ap = "select talentProfilePhoto from " . _TALENT_MASTER_TABLE_ . " WHERE  id= " . $dltid . " ";
+							$bp = mysqli_query($conn, $ap) or die(mysqli_error($conn));
+							$rowLogoImg = mysqli_fetch_array($bp);
+
+							if ($rowLogoImg["talentProfilePhoto"] != '' && $rowLogoImg["talentProfilePhoto"] != 'businessimg.png') {
+								unlink("uploads/" . $rowLogoImg["talentProfilePhoto"]);
+								unlink("uploads/x_" . $rowLogoImg["talentProfilePhoto"]);
+							}
+
+							$sql_ins = "DELETE FROM " . _TALENT_MASTER_TABLE_ . " WHERE id= " . $dltid . "  ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+							$_SESSION["d"] = 1;
+						}
+						?>
+						<script>
+							parent.reloadPage();
+						</script>
+						<?php
+
+			}
+		} else {
+			?>
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#errormsg').text('Please enter your password');
+					parent.$('#errormsg').css('color', '#FF0000');
+				</script>
+				<?php
+		}
 
 }
 
@@ -5618,14 +5618,14 @@ if ($_REQUEST['action'] == 'sendtalentenquiry' && trim($_REQUEST['senderName']) 
 	send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 
 	?>
-	<script>
-		parent.$('#shareboxouter').hide();
-		parent.$('#sharesuccess').show();
-		parent.$('#commonloader').hide();
-		parent.showsusmsg('SUCCESS', 'Enquiry sent successfully', '');
-	</script>
-	<?php
-	exit();
+		<script>
+			parent.$('#shareboxouter').hide();
+			parent.$('#sharesuccess').show();
+			parent.$('#commonloader').hide();
+			parent.showsusmsg('SUCCESS', 'Enquiry sent successfully', '');
+		</script>
+		<?php
+		exit();
 }
 
 
@@ -5644,10 +5644,10 @@ if (isset($_REQUEST['talentVideoTitle']) && $_REQUEST['talentVideoTitle'] != '' 
 		$sql_ins = "UPDATE " . _TALENT_VIDEO_TABLE_ . " SET talentVideoTitle='" . $talentVideoTitle . "',talentVideoURL='" . $talentVideoURL . "' WHERE userId=" . $_SESSION["sessUserId"] . " AND id='" . decodeStr($_REQUEST['talentVidId']) . "' ";
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 		?>
-		<script>
-			parent.showsusmsg('SUCCESS', 'Successfully Updated.', '');
-		</script>
-		<?php
+				<script>
+					parent.showsusmsg('SUCCESS', 'Successfully Updated.', '');
+				</script>
+				<?php
 	} else {
 
 		$sql_ins = "insert into " . _TALENT_VIDEO_TABLE_ . " SET talentVideoTitle='" . $talentVideoTitle . "',talentVideoURL='" . $talentVideoURL . "',talentId='" . $talentId . "',userId='" . $_SESSION["sessUserId"] . "',dateAdded='" . $dateAdded . "' ";
@@ -5655,11 +5655,11 @@ if (isset($_REQUEST['talentVideoTitle']) && $_REQUEST['talentVideoTitle'] != '' 
 	}
 
 	?>
-	<script>
-		parent.showtabdata('2');
-		parent.closefuncommonpopupwin();
-	</script>
-	<?php
+		<script>
+			parent.showtabdata('2');
+			parent.closefuncommonpopupwin();
+		</script>
+		<?php
 
 
 }
@@ -5673,11 +5673,11 @@ if (isset($_REQUEST['talentVideopostId']) && $_REQUEST['talentVideopostId'] != '
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.showtabdata('2');
-	</script>
+		<script>
+			parent.showtabdata('2');
+		</script>
 
-	<?php
+		<?php
 
 }
 
@@ -5696,11 +5696,11 @@ if (isset($_REQUEST['testimonialsDetails']) && $_REQUEST['testimonialsDetails'] 
 	$sql_ins = "insert into " . _TALENT_TESTIMONIALS_TABLE_ . " SET testimonialsName='" . $testimonialsName . "',testimonialsDetails='" . $testimonialsDetails . "',talentId='" . $talentId . "',userId='" . $_SESSION["sessUserId"] . "',dateAdded='" . $dateAdded . "' ";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	?>
-	<script>
-		parent.showtabdata('3');
-		parent.closefuncommonpopupwin();
-	</script>
-	<?php
+		<script>
+			parent.showtabdata('3');
+			parent.closefuncommonpopupwin();
+		</script>
+		<?php
 
 
 }
@@ -5715,11 +5715,11 @@ if (isset($_REQUEST['talentTestimonialspostId']) && $_REQUEST['talentTestimonial
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
 	?>
-	<script>
-		parent.showtabdata('3');
-	</script>
+		<script>
+			parent.showtabdata('3');
+		</script>
 
-	<?php
+		<?php
 
 }
 
@@ -5755,11 +5755,11 @@ if (isset($_REQUEST['profileph']) && $_REQUEST['profileph'] != '' && $_REQUEST['
 
 
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
+		<script>
+			parent.reloadPage();
+		</script>
 
-	<?php
+		<?php
 
 }
 
@@ -5771,11 +5771,11 @@ if ($_REQUEST['action'] == 'applyjob' && trim($_REQUEST['jobid']) != '') {
 	$checkBookmarkp = mysqli_num_rows($res5p);
 	if ($checkBookmarkp > 0) {
 		?>
-		<script>
-			parent.$('#popupcontentproj').hide();
-			parent.$('#frmposthomerecommend').html("<div style='text-align:center; font-size:16px; padding-bottom:20px;'>You are already applied for this job.</div>");
-		</script>
-		<?php
+				<script>
+					parent.$('#popupcontentproj').hide();
+					parent.$('#frmposthomerecommend').html("<div style='text-align:center; font-size:16px; padding-bottom:20px;'>You are already applied for this job.</div>");
+				</script>
+				<?php
 	} else {
 		$sql_insp = "insert into " . _JOB_INTRESTED_TABLE_ . " set userId='" . $_SESSION["sessUserId"] . "',jobId='" . decodeStr($_REQUEST['jobid']) . "',dateAdded='" . time() . "'";
 		mysqli_query($conn, $sql_insp) or die(mysqli_error($conn));
@@ -5850,7 +5850,7 @@ if ($_REQUEST['action'] == 'applyjob' && trim($_REQUEST['jobid']) != '') {
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -5922,78 +5922,78 @@ if ($_REQUEST['action'] == 'applyjob' && trim($_REQUEST['jobid']) != '') {
 		$_SESSION["smg8"] = 1;
 
 		?>
-		<script>
-			parent.reloadPage();
+				<script>
+					parent.reloadPage();
 
-		</script>
-		<?php
+				</script>
+				<?php
 	}
 }
 
 
 if (trim(isset($_REQUEST['jobid']) && $_REQUEST['jobid']) != '' && $_REQUEST['action'] == 'deljob') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$dltid = decodeStr($_REQUEST['jobid']);
-
-	$password = clean($_POST['delgrppassword']);
-
-
-	if (trim($password) != "") {
-		$pass = md5($password);
-		if ($pass != $userpasswordchanged) {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').text('That password is incorrect. Try again.');
-				parent.$('#errormsg').css('color', '#FF0000');
-			</script>
-			<?php
-		} else {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').hide();
-			</script>
-			<?php
-			$sql_ins = "select id FROM " . _JOBS_MASTER_TABLE_ . " WHERE id=" . $dltid . " and userId=" . $_SESSION["sessUserId"] . " ";
-			$sql = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			$s = mysqli_num_rows($sql);
-			if ($s > 0) {
-
-				$sql_ins = "DELETE FROM " . _JOB_INTRESTED_TABLE_ . " WHERE jobId=" . $dltid . "  ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				$sql_ins = "DELETE FROM " . _JOB_USER_TABLE_ . " WHERE jobId=" . $dltid . "  ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE postId=" . $dltid . " and postType=155 ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				$sql_ins = "DELETE FROM " . _JOBS_MASTER_TABLE_ . " WHERE id=" . $dltid . "  ";
-				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-				$_SESSION["d"] = 1;
-			}
-			?>
-			<script>
-				parent.reloadPage();
-			</script>
-			<?php
-
-		}
-	} else {
-		?>
 		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#errormsg').text('Please enter your password');
-			parent.$('#errormsg').css('color', '#FF0000');
+			parent.$('#commonloader').show();
 		</script>
 		<?php
-	}
+		$dltid = decodeStr($_REQUEST['jobid']);
+
+		$password = clean($_POST['delgrppassword']);
+
+
+		if (trim($password) != "") {
+			$pass = md5($password);
+			if ($pass != $userpasswordchanged) {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').text('That password is incorrect. Try again.');
+							parent.$('#errormsg').css('color', '#FF0000');
+						</script>
+						<?php
+			} else {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').hide();
+						</script>
+						<?php
+						$sql_ins = "select id FROM " . _JOBS_MASTER_TABLE_ . " WHERE id=" . $dltid . " and userId=" . $_SESSION["sessUserId"] . " ";
+						$sql = mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						$s = mysqli_num_rows($sql);
+						if ($s > 0) {
+
+							$sql_ins = "DELETE FROM " . _JOB_INTRESTED_TABLE_ . " WHERE jobId=" . $dltid . "  ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+							$sql_ins = "DELETE FROM " . _JOB_USER_TABLE_ . " WHERE jobId=" . $dltid . "  ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+							$sql_ins = "DELETE FROM " . _NOTIFICATION_MASTER_TABLE_ . " WHERE postId=" . $dltid . " and postType=155 ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+							$sql_ins = "DELETE FROM " . _JOBS_MASTER_TABLE_ . " WHERE id=" . $dltid . "  ";
+							mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+							$_SESSION["d"] = 1;
+						}
+						?>
+						<script>
+							parent.reloadPage();
+						</script>
+						<?php
+
+			}
+		} else {
+			?>
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#errormsg').text('Please enter your password');
+					parent.$('#errormsg').css('color', '#FF0000');
+				</script>
+				<?php
+		}
 
 }
 
@@ -6026,13 +6026,13 @@ if (
 
 	if ($fileExtention == '') {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#sharepopup').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload file with extension only .jpg, .png, .gif, .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .text.', '');
-		</script>
-		<?php
-		exit();
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#sharepopup').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload file with extension only .jpg, .png, .gif, .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .text.', '');
+				</script>
+				<?php
+				exit();
 	}
 
 	// Ensure uploads directory exists
@@ -6051,12 +6051,12 @@ if (
 		copy($uploadPath, $thumbPath); // thumbnail copy
 	} else {
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.showerrormsg('Error', 'File upload failed.', '');
-		</script>
-		<?php
-		exit();
+				<script>
+					parent.$('#commonloader').hide();
+					parent.showerrormsg('Error', 'File upload failed.', '');
+				</script>
+				<?php
+				exit();
 	}
 
 	$upimg = 'uploads/' . $file_name;
@@ -6078,10 +6078,10 @@ if (
 	if (!empty($_REQUEST['shb']) && trim($_REQUEST['shb']) == 1) {
 		mysqli_query($conn, "UPDATE " . _CONTACT_MASTER_TABLE_ . " SET birthdayStatus=1 WHERE contactId='" . decodeStr($_REQUEST['contactchatuserid']) . "' AND userId='" . $_SESSION["sessUserId"] . "'") or die(mysqli_error($conn));
 		?>
-		<script>
-			parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactchatuserid']); ?>').slideUp();
-		</script>
-		<?php
+				<script>
+					parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactchatuserid']); ?>').slideUp();
+				</script>
+				<?php
 	}
 
 	$token = '';
@@ -6093,33 +6093,33 @@ if (
 	}
 
 	?>
-	<div id="sendalert" style="display:none;"></div>
-	<div id="sendalert" style="display:none;"></div>
+		<div id="sendalert" style="display:none;"></div>
+		<div id="sendalert" style="display:none;"></div>
 
-	<script>
-		header('Content-Type: application/json');
-	echo json_encode([
-			'status' => 'success',
-			'type' => $fileExtention,
-			'file_url' => $fullurl. 'uploads/'.$file_name,
-			'thumb_url' => $fullurl. 'uploads/x_'.$file_name,
-			'filename' => $file_name
-		]);
-		exit;
+		<script>
+			header('Content-Type: application/json');
+						echo json_encode([
+				'status' => 'success',
+				'type' => $fileExtention,
+				'file_url' => $fullurl. 'uploads/'.$file_name,
+				'thumb_url' => $fullurl. 'uploads/x_'.$file_name,
+				'filename' => $file_name
+			]);
+			exit;
 
-		$token = isset($token) ? urlencode($token) : '';
+			$token = isset($token) ? urlencode($token) : '';
 
-		parent.$('#commonloader').hide();
-		<?php if ($_REQUEST["loadmsgp"] == 1) { ?>
-			parent.$('#loadchatusermsg').load('<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=<?php echo urlencode($_REQUEST["contactchatuserid"]); ?>');
-		<?php } else { ?>
-			parent.$('#loadchatusermsg').load('<?php echo $fullurl; ?>load_message.php?userId2=<?php echo urlencode($_REQUEST["contactchatuserid"]); ?>');
-		<?php } ?>
+			parent.$('#commonloader').hide();
+			<?php if ($_REQUEST["loadmsgp"] == 1) { ?>
+					parent.$('#loadchatusermsg').load('<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=<?php echo urlencode($_REQUEST["contactchatuserid"]); ?>');
+			<?php } else { ?>
+					parent.$('#loadchatusermsg').load('<?php echo $fullurl; ?>load_message.php?userId2=<?php echo urlencode($_REQUEST["contactchatuserid"]); ?>');
+			<?php } ?>
 
-		$("#sendalert").load('app/firebase/Send.php?title=<?php echo urlencode($notititle . ',' . $_SESSION["sessUserId"]); ?>&message=<?php echo urlencode($notimessage); ?>&token=<?php echo urlencode($token); ?>');
-	</script>
+			$("#sendalert").load('app/firebase/Send.php?title=<?php echo urlencode($notititle . ',' . $_SESSION["sessUserId"]); ?>&message=<?php echo urlencode($notimessage); ?>&token=<?php echo urlencode($token); ?>');
+		</script>
 
-	<?php
+		<?php
 }
 
 
@@ -6178,21 +6178,21 @@ if ($_REQUEST['action'] == 'uploaddocuments' && $_FILES['uploaddocumentsfile']['
 		$resUpdate = insertDB(_VAULT_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 		?>
-		<script>
-			parent.loadpendingfile();
-			parent.$('#commonloader').hide();
-			parent.$('#sharepopup').hide();
-		</script>
-		<?php
+				<script>
+					parent.loadpendingfile();
+					parent.$('#commonloader').hide();
+					parent.$('#sharepopup').hide();
+				</script>
+				<?php
 	} else {
 
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#sharepopup').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload file with extension only .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx', '');
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#sharepopup').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload file with extension only .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx', '');
+				</script>
+				<?php
 
 	}
 
@@ -6201,53 +6201,53 @@ if ($_REQUEST['action'] == 'uploaddocuments' && $_FILES['uploaddocumentsfile']['
 if (isset($_POST['action']) && $_POST['action'] == 'updatedocuments' && trim($_POST["name"]) != '' && trim($_POST["longDescription"]) != '' && trim($_POST["catIds"]) != '' && trim($_POST["fileId"]) != '') {
 
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	unset($insertFields);
-	unset($insertVals);
-	unset($whereFields);
-	unset($whereVals);
-
-
-	$insertFields[0] = "name";
-	$insertFields[1] = "longDescription";
-	$insertFields[2] = "documentKeyword";
-	$insertFields[3] = "catIds";
-	$insertFields[4] = "privacy";
-
-	$insertVals[0] = clean($_POST["name"]);
-	$insertVals[1] = clean($_POST["longDescription"]);
-	$insertVals[2] = addslashes($_POST["documentKeyword"]);
-	$insertVals[3] = clean($_POST["catIds"]);
-	$insertVals[4] = clean($_POST["privacy"]);
-
-	$whereFields[0] = "userId";
-	$whereFields[1] = "id";
-
-	$whereVals[0] = $_SESSION['sessUserId'];
-	$whereVals[1] = trim($_POST["fileId"]);
-
-	$resUpdate = updateDB(_VAULT_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-	?>
-	<script>
+		<script>
+			parent.$('#commonloader').show();
+		</script>
 		<?php
-		if (trim($_POST["p"]) == 1) {
+		unset($insertFields);
+		unset($insertVals);
+		unset($whereFields);
+		unset($whereVals);
 
-			?>
-			//parent.showsusmsg('SUCCESS','Document details updated successfully','');
-			parent.window.location.href = '<?php echo $fullurl; ?>my-vault.html';
-			<?php
-		}
+
+		$insertFields[0] = "name";
+		$insertFields[1] = "longDescription";
+		$insertFields[2] = "documentKeyword";
+		$insertFields[3] = "catIds";
+		$insertFields[4] = "privacy";
+
+		$insertVals[0] = clean($_POST["name"]);
+		$insertVals[1] = clean($_POST["longDescription"]);
+		$insertVals[2] = addslashes($_POST["documentKeyword"]);
+		$insertVals[3] = clean($_POST["catIds"]);
+		$insertVals[4] = clean($_POST["privacy"]);
+
+		$whereFields[0] = "userId";
+		$whereFields[1] = "id";
+
+		$whereVals[0] = $_SESSION['sessUserId'];
+		$whereVals[1] = trim($_POST["fileId"]);
+
+		$resUpdate = updateDB(_VAULT_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
 		?>
+		<script>
+			<?php
+			if (trim($_POST["p"]) == 1) {
 
-		parent.loadpendingfile();
-		parent.$('#commonloader').hide();
-		parent.$('#sharepopup').hide();
-	</script>
-	<?php
+				?>
+					//parent.showsusmsg('SUCCESS','Document details updated successfully','');
+					parent.window.location.href = '<?php echo $fullurl; ?>my-vault.html';
+					<?php
+			}
+			?>
+
+			parent.loadpendingfile();
+			parent.$('#commonloader').hide();
+			parent.$('#sharepopup').hide();
+		</script>
+		<?php
 
 }
 
@@ -6255,40 +6255,40 @@ if (isset($_POST['action']) && $_POST['action'] == 'updatedocuments' && trim($_P
 if ($_REQUEST['action'] == 'deldocument' && $_REQUEST['documentId'] != '') {
 
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$dltid = decodeStr($_REQUEST['documentId']);
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
+		$dltid = decodeStr($_REQUEST['documentId']);
 
 
-	if ($dltid != 0 && $dltid != '') {
+		if ($dltid != 0 && $dltid != '') {
 
 
 
-		$ape = "select documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE  id= " . $dltid . " and userId='" . $_SESSION["sessUserId"] . "' ";
-		$bpe = mysqli_query($conn, $ape) or die(mysqli_error($conn));
-		$rowLogoImge = mysqli_fetch_array($bpe);
+			$ape = "select documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE  id= " . $dltid . " and userId='" . $_SESSION["sessUserId"] . "' ";
+			$bpe = mysqli_query($conn, $ape) or die(mysqli_error($conn));
+			$rowLogoImge = mysqli_fetch_array($bpe);
 
-		if ($rowLogoImge["documentFile"] != '') {
-			unlink("uploads/" . $rowLogoImge["documentFile"]);
-			unlink("uploads/" . $rowLogoImge["documentFile"] . '.jpg');
+			if ($rowLogoImge["documentFile"] != '') {
+				unlink("uploads/" . $rowLogoImge["documentFile"]);
+				unlink("uploads/" . $rowLogoImge["documentFile"] . '.jpg');
 
-			$sql_ins = "DELETE FROM " . _VAULT_MASTER_TABLE_ . " WHERE id= " . $dltid . "  and userId='" . $_SESSION["sessUserId"] . "' ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+				$sql_ins = "DELETE FROM " . _VAULT_MASTER_TABLE_ . " WHERE id= " . $dltid . "  and userId='" . $_SESSION["sessUserId"] . "' ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+			}
 
 		}
-
-	}
-	?>
-	<script>
-		parent.loadpendingfile();
-		parent.showerrormsg('SUCCESS', 'Document deleted successfully', '');
-		parent.$('#commonloader').hide();
-		parent.$('.popup-alert-cont').hide();
-		parent.$('#<?php echo $dltid; ?>').slideUp();
-	</script>
-	<?php
+		?>
+		<script>
+			parent.loadpendingfile();
+			parent.showerrormsg('SUCCESS', 'Document deleted successfully', '');
+			parent.$('#commonloader').hide();
+			parent.$('.popup-alert-cont').hide();
+			parent.$('#<?php echo $dltid; ?>').slideUp();
+		</script>
+		<?php
 
 
 
@@ -6390,37 +6390,37 @@ if (trim($_REQUEST['action']) == 'saveadcontent' && trim($_REQUEST['adcategory']
 
 
 	?>
-	<script>
-		parent.window.location.href = '<?php echo $fullurl; ?>myads.html';
-	</script>
-	<?php
+		<script>
+			parent.window.location.href = '<?php echo $fullurl; ?>myads.html';
+		</script>
+		<?php
 
 }
 
 
 if (isset($_REQUEST['groupId']) && $_REQUEST['groupId'] != '' && $_REQUEST['action'] == 'leavepublicgrp') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
+		<script>
+			parent.$('#commonloader').show();
+		</script>
+		<?php
 
 
-	$sql_ins = "DELETE FROM " . _GROUP_MEMBER_MASTER_TABLE_ . " where  userId=" . $_SESSION["sessUserId"] . " and groupId=" . decodeStr($_REQUEST['groupId']) . " ";
-	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+		$sql_ins = "DELETE FROM " . _GROUP_MEMBER_MASTER_TABLE_ . " where  userId=" . $_SESSION["sessUserId"] . " and groupId=" . decodeStr($_REQUEST['groupId']) . " ";
+		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
-	/*$myvar='<div style="color:#b5b5b5;">'.$myname.' has left this group</div>';
-	$dateAdded=time();
-	$sql_ins="insert into "._GROUP_CHAT_MASTER_TABLE_." set status=1,userId='".$_SESSION["sessUserId"]."',chatBy='".$_SESSION["sessUserId"]."',dateAdded='$dateAdded',chatText= '".$myvar."',groupId='".decodeStr($_REQUEST["groupId"])."',msgType='text'";
-	mysql_query($sql_ins) or die(mysql_error());*/
-	$_SESSION["d"] = 2;
-	?>
-	<script>
-		parent.$('#alertpopup').hide();
-		parent.$('#commonloader').hide();
-		parent.window.location.href = '<?php echo $fullurl; ?>my-groups.html';
-	</script>
-	<?php
+		/*$myvar='<div style="color:#b5b5b5;">'.$myname.' has left this group</div>';
+		$dateAdded=time();
+		$sql_ins="insert into "._GROUP_CHAT_MASTER_TABLE_." set status=1,userId='".$_SESSION["sessUserId"]."',chatBy='".$_SESSION["sessUserId"]."',dateAdded='$dateAdded',chatText= '".$myvar."',groupId='".decodeStr($_REQUEST["groupId"])."',msgType='text'";
+		mysql_query($sql_ins) or die(mysql_error());*/
+		$_SESSION["d"] = 2;
+		?>
+		<script>
+			parent.$('#alertpopup').hide();
+			parent.$('#commonloader').hide();
+			parent.window.location.href = '<?php echo $fullurl; ?>my-groups.html';
+		</script>
+		<?php
 }
 
 if (trim(isset($_REQUEST['chatId']) && $_REQUEST['chatId']) != '' && $_REQUEST['action'] == 'meetingstatus' && $_REQUEST['userid'] != '' && $_REQUEST['status'] != '') {
@@ -6481,63 +6481,63 @@ if (isset($_REQUEST['contactId']) && $_REQUEST['contactId'] != '' && $_SESSION['
 	$getLastToken = mysqli_fetch_array($resMsgToken);
 	$token = $getLastToken["token"];
 	?>
-	<div id="sendalert" style="display:none;"></div>
-	<script>
-		$text = trim((string)($_REQUEST['something'] ?? ''));
+		<div id="sendalert" style="display:none;"></div>
+		<script>
+			$text = trim((string)($_REQUEST['something'] ?? ''));
 
-		parent.closefuncommonpopupwin();
-		parent.$('#loadchatusermsg').load("<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=<?php echo encodeStr($_REQUEST['contactId']); ?>");
-		$("#sendalert").load('app/firebase/Send.php?title=<?php echo $notititle . ',' . $_SESSION["sessUserId"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>');
-	</script>
+			parent.closefuncommonpopupwin();
+			parent.$('#loadchatusermsg').load("<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=<?php echo encodeStr($_REQUEST['contactId']); ?>");
+			$("#sendalert").load('app/firebase/Send.php?title=<?php echo $notititle . ',' . $_SESSION["sessUserId"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>');
+		</script>
 
-	<?php
+		<?php
 }
 
 if (trim(isset($_REQUEST['userId']) && $_REQUEST['userId']) != '' && $_REQUEST['action'] == 'closeuseraccount') {
 	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$userId = $_REQUEST['userId'];
-	$password = clean($_POST['delgrppassword']);
-
-	if (trim($password) != "") {
-		$pass = md5($password);
-		if ($pass != $userpasswordchanged) {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').text('That password is incorrect. Try again.');
-				parent.$('#errormsg').css('color', '#FF0000');
-			</script>
-			<?php
-		} else {
-			?>
-			<script>
-				parent.$('#commonloader').hide();
-				parent.$('#errormsg').hide();
-			</script>
-			<?php
-
-			$sql_ins = "update " . _USERS_MASTER_TABLE_ . " SET userAccountCloseStatus=1 WHERE userId='" . $_SESSION["sessUserId"] . "' ";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-			?>
-			<script>
-				window.top.location.href = "<?php echo $fullurl; ?>logout.html?_c=1";
-			</script>
-			<?php
-
-		}
-	} else {
-		?>
 		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#errormsg').text('Please enter your password');
-			parent.$('#errormsg').css('color', '#FF0000');
+			parent.$('#commonloader').show();
 		</script>
 		<?php
-	}
+		$userId = $_REQUEST['userId'];
+		$password = clean($_POST['delgrppassword']);
+
+		if (trim($password) != "") {
+			$pass = md5($password);
+			if ($pass != $userpasswordchanged) {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').text('That password is incorrect. Try again.');
+							parent.$('#errormsg').css('color', '#FF0000');
+						</script>
+						<?php
+			} else {
+				?>
+						<script>
+							parent.$('#commonloader').hide();
+							parent.$('#errormsg').hide();
+						</script>
+						<?php
+
+						$sql_ins = "update " . _USERS_MASTER_TABLE_ . " SET userAccountCloseStatus=1 WHERE userId='" . $_SESSION["sessUserId"] . "' ";
+						mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+						?>
+						<script>
+							window.top.location.href = "<?php echo $fullurl; ?>logout.html?_c=1";
+						</script>
+						<?php
+
+			}
+		} else {
+			?>
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#errormsg').text('Please enter your password');
+					parent.$('#errormsg').css('color', '#FF0000');
+				</script>
+				<?php
+		}
 
 }
 
@@ -6557,118 +6557,118 @@ if (isset($_REQUEST['shareType']) && $_REQUEST['shareType'] != '' && $_REQUEST['
 
 	if (trim($_REQUEST['postText']) != '' || $_REQUEST['imgyes'] == 1) {
 		?>
-		<script>
-			parent.$('#commonloader').show();
-		</script>
-		<?php
+				<script>
+					parent.$('#commonloader').show();
+				</script>
+				<?php
 
-		$linkcontentsubmit = '';
-		$linkcontentsubmit = preg_replace('/<br \/>/iU', '', $_REQUEST['linkcontentsubmit']);
-		if ($linkcontentsubmit != '') {
-			$postText = addslashes($_REQUEST['postText'] . '' . $linkcontentsubmit);
-		} else {
-			$postText = addslashes($_REQUEST['postText']);
-		}
+				$linkcontentsubmit = '';
+				$linkcontentsubmit = preg_replace('/<br \/>/iU', '', $_REQUEST['linkcontentsubmit']);
+				if ($linkcontentsubmit != '') {
+					$postText = addslashes($_REQUEST['postText'] . '' . $linkcontentsubmit);
+				} else {
+					$postText = addslashes($_REQUEST['postText']);
+				}
 
-		$tageduserid = str_replace("'", "", trim($_REQUEST['tageduserid']));
-		$tageduserid = rtrim($tageduserid, ",");
-
-
-
-		unset($insertFields);
-		unset($insertVals);
-		unset($whereFields);
-		unset($whereVals);
-
-		$insertFields[0] = "postType";
-		$insertFields[1] = "postText";
-		$insertFields[2] = "shareType";
-		$insertFields[3] = "dateAdded";
-		$insertFields[4] = "websiteshare";
-		$insertFields[5] = "webshare";
-		$insertFields[6] = "webshareurl";
-
-		$insertVals[0] = clean($_REQUEST['postType']);
-		$insertVals[1] = $postText;
-		$insertVals[2] = clean($_REQUEST['shareType']);
-		$insertVals[3] = time();
-		$insertVals[4] = trim($_REQUEST['websiteshare']);
-		$insertVals[5] = 1;
-		$insertVals[6] = addslashes($_REQUEST['postText']);
-
-		$whereFields[0] = "id";
-		$whereFields[1] = "userId";
-
-		$whereVals[0] = clean($_REQUEST['postId']);
-		$whereVals[1] = $_SESSION['sessUserId'];
-
-		$resUpdate = updateDB(_SHAREANDUPDATES_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-		if ($resUpdate) {
-			unset($insertFields);
-			unset($insertVals);
-
-			$insertFields[0] = "userId";
-			$insertFields[1] = "postId";
-			$insertFields[2] = "postType";
-			$insertFields[3] = "shareType";
-			$insertFields[4] = "dateAdded";
-
-			$insertVals[0] = $_SESSION["sessUserId"];
-			$insertVals[1] = clean($_REQUEST['postId']);
-			$insertVals[2] = clean($_REQUEST['postType']);
-			$insertVals[3] = clean($_REQUEST['shareType']);
-			$insertVals[4] = time();
-
-			$resUpdate = insertDB(_TIMELINE_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-		}
+				$tageduserid = str_replace("'", "", trim($_REQUEST['tageduserid']));
+				$tageduserid = rtrim($tageduserid, ",");
 
 
-		$sql_ins = "update " . _USERS_MASTER_TABLE_ . " set lastPost=" . clean($_REQUEST['postId']) . " ";
-		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-		if ($tageduserid != '') {
-
-			$expElementVal = explode(",", $tageduserid);
-			for ($elementCount = 0; $elementCount <= count($expElementVal) - 1; $elementCount++) {
-				$contactId = $expElementVal[$elementCount];
 
 				unset($insertFields);
 				unset($insertVals);
+				unset($whereFields);
+				unset($whereVals);
 
-				$insertFields[0] = "userId";
-				$insertFields[1] = "contactId";
-				$insertFields[2] = "postType";
-				$insertFields[3] = "postId";
-				$insertFields[4] = "notificationText";
-				;
-				$insertFields[5] = "dateAdded";
+				$insertFields[0] = "postType";
+				$insertFields[1] = "postText";
+				$insertFields[2] = "shareType";
+				$insertFields[3] = "dateAdded";
+				$insertFields[4] = "websiteshare";
+				$insertFields[5] = "webshare";
+				$insertFields[6] = "webshareurl";
 
-				$insertVals[0] = $contactId;
-				$insertVals[1] = $_SESSION["sessUserId"];
-				$insertVals[2] = 119;
-				$insertVals[3] = clean($_REQUEST['postId']);
-				$insertVals[4] = 'webps';//Web post share
-				$insertVals[5] = time();
+				$insertVals[0] = clean($_REQUEST['postType']);
+				$insertVals[1] = $postText;
+				$insertVals[2] = clean($_REQUEST['shareType']);
+				$insertVals[3] = time();
+				$insertVals[4] = trim($_REQUEST['websiteshare']);
+				$insertVals[5] = 1;
+				$insertVals[6] = addslashes($_REQUEST['postText']);
 
-				//$resUpdate=insertDB(_NOTIFICATION_MASTER_TABLE_,$insertFields,$insertVals,$whereFields,$whereVals,_N_,'');
+				$whereFields[0] = "id";
+				$whereFields[1] = "userId";
+
+				$whereVals[0] = clean($_REQUEST['postId']);
+				$whereVals[1] = $_SESSION['sessUserId'];
+
+				$resUpdate = updateDB(_SHAREANDUPDATES_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+				if ($resUpdate) {
+					unset($insertFields);
+					unset($insertVals);
+
+					$insertFields[0] = "userId";
+					$insertFields[1] = "postId";
+					$insertFields[2] = "postType";
+					$insertFields[3] = "shareType";
+					$insertFields[4] = "dateAdded";
+
+					$insertVals[0] = $_SESSION["sessUserId"];
+					$insertVals[1] = clean($_REQUEST['postId']);
+					$insertVals[2] = clean($_REQUEST['postType']);
+					$insertVals[3] = clean($_REQUEST['shareType']);
+					$insertVals[4] = time();
+
+					$resUpdate = insertDB(_TIMELINE_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+				}
 
 
-			}
-		}
+				$sql_ins = "update " . _USERS_MASTER_TABLE_ . " set lastPost=" . clean($_REQUEST['postId']) . " ";
+				mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+				if ($tageduserid != '') {
+
+					$expElementVal = explode(",", $tageduserid);
+					for ($elementCount = 0; $elementCount <= count($expElementVal) - 1; $elementCount++) {
+						$contactId = $expElementVal[$elementCount];
+
+						unset($insertFields);
+						unset($insertVals);
+
+						$insertFields[0] = "userId";
+						$insertFields[1] = "contactId";
+						$insertFields[2] = "postType";
+						$insertFields[3] = "postId";
+						$insertFields[4] = "notificationText";
+						;
+						$insertFields[5] = "dateAdded";
+
+						$insertVals[0] = $contactId;
+						$insertVals[1] = $_SESSION["sessUserId"];
+						$insertVals[2] = 119;
+						$insertVals[3] = clean($_REQUEST['postId']);
+						$insertVals[4] = 'webps';//Web post share
+						$insertVals[5] = time();
+
+						//$resUpdate=insertDB(_NOTIFICATION_MASTER_TABLE_,$insertFields,$insertVals,$whereFields,$whereVals,_N_,'');
+		
+
+					}
+				}
 
 
-		?>
-		<script>
+				?>
+				<script>
 
-			parent.$('#postpost').val(0);
-			parent.$('#mainpage').hide();
-			parent.$('#msg').show();
-			parent.$('#webpageredirect').val(1);
-			parent.opentimeline('Great! You have successfully shared the update.');
-		</script>
-		<?php
+					parent.$('#postpost').val(0);
+					parent.$('#mainpage').hide();
+					parent.$('#msg').show();
+					parent.$('#webpageredirect').val(1);
+					parent.opentimeline('Great! You have successfully shared the update.');
+				</script>
+				<?php
 	}
 
 }
@@ -6702,14 +6702,14 @@ if ($_REQUEST['action'] == 'addmentor' && $_REQUEST['studentid'] != '') {
 	$resUpdate = insertDB(_STUDENT_REQUEST_MENTOR_FRND_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 	?>
-	<script>
-		parent.$('#sendrequesttomentor').removeAttr('href');
-		parent.$('#sendrequesttomentor').removeAttr('target');
-		parent.$('#sendrequesttomentor').text('Request Sent');
-		parent.$('#sendrequesttomentor').css('background-color', '#b0d400');
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.$('#sendrequesttomentor').removeAttr('href');
+			parent.$('#sendrequesttomentor').removeAttr('target');
+			parent.$('#sendrequesttomentor').text('Request Sent');
+			parent.$('#sendrequesttomentor').css('background-color', '#b0d400');
+			parent.reloadPage();
+		</script>
+		<?php
 }
 if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['studentIdcontact'] != '' && $_REQUEST['action'] == 'declinest') {
 	$studentId = decodeStr($_REQUEST['studentIdcontact']);
@@ -6741,10 +6741,10 @@ if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['studentIdcontact'] != '' 
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	$_SESSION["d"] = 1;
 	?>
-	<script>
-		parent.reloadPage();
-	</script>
-	<?php
+		<script>
+			parent.reloadPage();
+		</script>
+		<?php
 }
 
 
@@ -6774,13 +6774,13 @@ if (isset($_REQUEST['stmtchatuserid']) && $_REQUEST['stmtchatuserid'] != '' && $
 	if ($fileExtention == '') {
 
 		?>
-		<script>
-			parent.$('#commonloader').hide();
-			parent.$('#sharepopup').hide();
-			parent.showerrormsg('Error', 'Oops! Please upload file with extension only .jpg, .png, .gif, .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .text.', '');
-		</script>
-		<?php
-		exit();
+				<script>
+					parent.$('#commonloader').hide();
+					parent.$('#sharepopup').hide();
+					parent.showerrormsg('Error', 'Oops! Please upload file with extension only .jpg, .png, .gif, .pdf, .doc, .docx, .ppt, .pptx, .xls, .xlsx, .text.', '');
+				</script>
+				<?php
+				exit();
 
 	}
 
@@ -6827,10 +6827,10 @@ if (isset($_REQUEST['stmtchatuserid']) && $_REQUEST['stmtchatuserid'] != '' && $
 		$sql_ins = "UPDATE " . _CONTACT_MASTER_TABLE_ . " SET birthdayStatus=1 WHERE contactId= '" . decodeStr($_REQUEST['stmtchatuserid']) . "' AND userId='" . $_SESSION["sessUserId"] . "' ";
 		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 		?>
-		<script>
-			parent.$('#saybirthday<?php echo decodeStr($_REQUEST['stmtchatuserid']); ?>').slideUp();
-		</script>
-		<?php
+				<script>
+					parent.$('#saybirthday<?php echo decodeStr($_REQUEST['stmtchatuserid']); ?>').slideUp();
+				</script>
+				<?php
 	}
 
 	$token = '';
@@ -6841,21 +6841,21 @@ if (isset($_REQUEST['stmtchatuserid']) && $_REQUEST['stmtchatuserid'] != '' && $
 	$token = $getLastToken["token"];
 
 	?>
-	<div id="sendalert" style="display:none;"></div>
-	<script>
+		<div id="sendalert" style="display:none;"></div>
+		<script>
 
-		parent.$('#commonloader').hide();
+			parent.$('#commonloader').hide();
+			<?php
+			if ($_REQUEST["loadmsgp"] == 1) { ?>
+					parent.$('#loadstmtchat').load('<?php echo $fullurl; ?>load_chat_user_msg.php?stmtId=<?php echo ($_REQUEST["stmtchatuserid"]); ?>');
+			<?php } else { ?>
+					parent.$('#loadstmtchat').load('<?php echo $fullurl; ?>load_stmtchat.php?stmtId=<?php echo ($_REQUEST["stmtchatuserid"]); ?>');
+			<?php } ?>
+
+			$("#sendalert").load('app/firebase/Send.php?title=<?php echo $notititle . ',' . $_SESSION["sessUserId"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>');
+		</script>
+
 		<?php
-		if ($_REQUEST["loadmsgp"] == 1) { ?>
-			parent.$('#loadstmtchat').load('<?php echo $fullurl; ?>load_chat_user_msg.php?stmtId=<?php echo ($_REQUEST["stmtchatuserid"]); ?>');
-		<?php } else { ?>
-			parent.$('#loadstmtchat').load('<?php echo $fullurl; ?>load_stmtchat.php?stmtId=<?php echo ($_REQUEST["stmtchatuserid"]); ?>');
-		<?php } ?>
-
-		$("#sendalert").load('app/firebase/Send.php?title=<?php echo $notititle . ',' . $_SESSION["sessUserId"]; ?>&message=<?php echo $notimessage; ?>&token=<?php echo $token; ?>');
-	</script>
-
-	<?php
 
 
 }

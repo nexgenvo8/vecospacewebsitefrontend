@@ -348,7 +348,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 	<div id="wrapper">
 		<header class="container">
 			<div class="logo logo_marg"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png" style="margin-top: 10px;"></a></div>
+						src="<?php echo $fullurl; ?>images/ndimlogo.png" style="margin-top: 10px;"></a></div>
 			<div class="header_right">
 
 				<form class="login-form loginForm1" name="kUserLogin" id="kUserLogin2" method="post">

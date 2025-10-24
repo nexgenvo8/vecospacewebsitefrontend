@@ -43,7 +43,7 @@ if (isPost()) {
 	<div id="wrapper">
 		<header>
 			<div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+						src="<?php echo $fullurl; ?>images/ndimlogo.png"></a></div>
 		</header>
 		<div class="banner">
 			<div class="container">
@@ -54,7 +54,7 @@ if (isPost()) {
 						<div id="stepsdetail1" style="text-align:center;">
 							<div class="half-input">
 								<?php if ($errMsg != '') { ?>
-									<div style="margin-bottom:10px; color:#FF0000;"><?php echo $errMsg; ?></div><?php } ?>
+										<div style="margin-bottom:10px; color:#FF0000;"><?php echo $errMsg; ?></div><?php } ?>
 							</div>
 
 							<input type="hidden" name="txtAction" id="txtAction" value="reopen">

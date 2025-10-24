@@ -179,7 +179,7 @@ if ($r != 2) {
 	<div id="wrapper">
 		<header>
 			<div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+						src="<?php echo $fullurl; ?>images/ndimlogo.png"></a></div>
 		</header>
 		<div class="banner">
 			<div class="container">
@@ -203,57 +203,57 @@ if ($r != 2) {
 						<?php if ($r != 2) {
 							if ($r != 1) { ?>
 
-								<div id="stepsdetail1">
+										<div id="stepsdetail1">
 
-									<div class="half-input">
-										<?php if (trim($errMsg) != '') { ?>
-											<div id="emsgdiv" class="<?php echo isset($className) ? $className : ''; ?>"
-												style="display:block; margin-top:10px; margin-bottom:10px;">
-												<?php echo $errMsg; ?>
+											<div class="half-input">
+												<?php if (trim($errMsg) != '') { ?>
+														<div id="emsgdiv" class="<?php echo isset($className) ? $className : ''; ?>"
+															style="display:block; margin-top:10px; margin-bottom:10px;">
+															<?php echo $errMsg; ?>
+														</div>
+												<?php } ?>
+
+												<input type="password" class="input validate" name="newpassword" id="newpassword"
+													maxlength="16" placeholder="Enter new Password"
+													value="<?php echo htmlspecialchars($newpassword); ?>"
+													onKeyUp="hideerrordiv(this.id);">
+												<input type="password" class="input validate" name="confirmpassword"
+													id="confirmpassword" maxlength="16" placeholder="Enter confirm Password"
+													value="<?php echo htmlspecialchars($confirmpassword); ?>"
+													onKeyUp="hideerrordiv(this.id);">
 											</div>
-										<?php } ?>
 
-										<input type="password" class="input validate" name="newpassword" id="newpassword"
-											maxlength="16" placeholder="Enter new Password"
-											value="<?php echo htmlspecialchars($newpassword); ?>"
-											onKeyUp="hideerrordiv(this.id);">
-										<input type="password" class="input validate" name="confirmpassword"
-											id="confirmpassword" maxlength="16" placeholder="Enter confirm Password"
-											value="<?php echo htmlspecialchars($confirmpassword); ?>"
-											onKeyUp="hideerrordiv(this.id);">
-									</div>
+											<input type="hidden" name="restpassword" id="restpassword" value="1">
+											<input type="hidden" name="textemail" id="textemail"
+												value="<?php echo isset($strEmail) ? $strEmail : ''; ?>">
+											<button type="button" onClick="formValidation('frmkonectt');subsrchfrm();"
+												class="continue-process-btn">Reset</button>
 
-									<input type="hidden" name="restpassword" id="restpassword" value="1">
-									<input type="hidden" name="textemail" id="textemail"
-										value="<?php echo isset($strEmail) ? $strEmail : ''; ?>">
-									<button type="button" onClick="formValidation('frmkonectt');subsrchfrm();"
-										class="continue-process-btn">Reset</button>
+										</div>
 
-								</div>
-
-							<?php }
+								<?php }
 						} ?>
 
 						<?php if ($r == 1) { ?>
-							<div style="text-align:center;">
-								<strong>Your Password updated successfully.</strong><br><br><br>
-								<a href="<?php echo isset($fullurl) ? $fullurl : '#'; ?>">
-									<button style="background-color:#e0e0e0; float:none; color:#333; margin:0px;"
-										type="button" class="continue-process-btn">Login</button>
-								</a>
-							</div>
+								<div style="text-align:center;">
+									<strong>Your Password updated successfully.</strong><br><br><br>
+									<a href="<?php echo isset($fullurl) ? $fullurl : '#'; ?>">
+										<button style="background-color:#e0e0e0; float:none; color:#333; margin:0px;"
+											type="button" class="continue-process-btn">Login</button>
+									</a>
+								</div>
 						<?php } ?>
 
 						<?php if ($r == 2) { ?>
-							<div style="text-align:center;">
-								<strong>That link isn't working.</strong><br><br>
-								Password reset links expire after 30 minutes if unused.<br><br>
-								If your link isn't working for any reason,<br>
-								you can <a
-									href="<?php echo isset($fullurl) ? $fullurl . 'forgot-password.html' : '#'; ?>">request
-									a new one.</a>
-								<br>
-							</div>
+								<div style="text-align:center;">
+									<strong>That link isn't working.</strong><br><br>
+									Password reset links expire after 30 minutes if unused.<br><br>
+									If your link isn't working for any reason,<br>
+									you can <a
+										href="<?php echo isset($fullurl) ? $fullurl . 'forgot-password.html' : '#'; ?>">request
+										a new one.</a>
+									<br>
+								</div>
 						<?php } ?>
 
 					</form>

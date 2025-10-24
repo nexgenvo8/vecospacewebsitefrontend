@@ -142,7 +142,7 @@ if (
 						<tr>
 							<td align="center" valign="top" style="width:100%;padding:20px 0">
 								<a href="' . $fullurl . '" target="_blank" >
-									<img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+									<img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
 						</tr>
 						<tr>
 						  <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -219,35 +219,35 @@ if (
 
 	?>
 
-	<?php if ($_REQUEST['pageType'] == 'article') { ?>
-		<script>
-			//parent.reloadPage();
-		</script>
+		<?php if ($_REQUEST['pageType'] == 'article') { ?>
+				<script>
+					//parent.reloadPage();
+				</script>
 
-	<?php } ?>
-
-
-	<?php if ($_REQUEST['pageType'] == 'timeline') { ?>
-		<script>
+		<?php } ?>
 
 
-			parent.$('.commentrowboxclass').val('');
-			parent.$('#postcomment<?php echo decodeStr($_REQUEST['postId']); ?><?php echo $_REQUEST["postType"]; ?>').load('<?php echo $fullurl; ?>post-comment.php?postId=<?php echo decodeStr($_REQUEST['postId']); ?>&postType=<?php echo $_REQUEST["postType"]; ?>&parentId=<?php echo $_REQUEST["parentId"]; ?>&limit=<?php echo $_REQUEST["limit"]; ?>');
-		</script>
-
-	<?php } ?>
-
-	<?php if ($_REQUEST['pageType'] == 'grouptimeline') { ?>
-		<script>
+		<?php if ($_REQUEST['pageType'] == 'timeline') { ?>
+				<script>
 
 
-			parent.$('.commentrowboxclass').val('');
-			parent.$('#postcomment<?php echo decodeStr($_REQUEST['postId']); ?><?php echo $_REQUEST["postType"]; ?>').load('<?php echo $fullurl; ?>post-comment.php?postId=<?php echo decodeStr($_REQUEST['postId']); ?>&postType=<?php echo $_REQUEST["postType"]; ?>&parentId=<?php echo $_REQUEST["parentId"]; ?>&limit=<?php echo $_REQUEST["limit"]; ?>');
-		</script>
+					parent.$('.commentrowboxclass').val('');
+					parent.$('#postcomment<?php echo decodeStr($_REQUEST['postId']); ?><?php echo $_REQUEST["postType"]; ?>').load('<?php echo $fullurl; ?>post-comment.php?postId=<?php echo decodeStr($_REQUEST['postId']); ?>&postType=<?php echo $_REQUEST["postType"]; ?>&parentId=<?php echo $_REQUEST["parentId"]; ?>&limit=<?php echo $_REQUEST["limit"]; ?>');
+				</script>
 
-	<?php } ?>
+		<?php } ?>
 
-	<?php
+		<?php if ($_REQUEST['pageType'] == 'grouptimeline') { ?>
+				<script>
+
+
+					parent.$('.commentrowboxclass').val('');
+					parent.$('#postcomment<?php echo decodeStr($_REQUEST['postId']); ?><?php echo $_REQUEST["postType"]; ?>').load('<?php echo $fullurl; ?>post-comment.php?postId=<?php echo decodeStr($_REQUEST['postId']); ?>&postType=<?php echo $_REQUEST["postType"]; ?>&parentId=<?php echo $_REQUEST["parentId"]; ?>&limit=<?php echo $_REQUEST["limit"]; ?>');
+				</script>
+
+		<?php } ?>
+
+		<?php
 
 }
 
@@ -258,242 +258,242 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 	$totalpostcomment = mysqli_num_rows($res5);
 
 	?>
-	<?php if (isset($_REQUEST['limit']) && $totalpostcomment > 5 && $_REQUEST['limit'] == 5) { ?>
+		<?php if (isset($_REQUEST['limit']) && $totalpostcomment > 5 && $_REQUEST['limit'] == 5) { ?>
 
-		<div style="padding:0px; font-size:13px;">
+				<div style="padding:0px; font-size:13px;">
 
-			<?php if ($_REQUEST['postType'] == 3) { ?>
-				<a style="text-align:center; font-size:14px; color:#32a8d7; border-bottom:1px solid #ececed;"
-					href="<?php echo $fullurl; ?>view-article.html?postId=<?php echo encodeStr($_REQUEST['postId']); ?>">more
-					comments</a>
-			<?php } ?>
+					<?php if ($_REQUEST['postType'] == 3) { ?>
+							<a style="text-align:center; font-size:14px; color:#32a8d7; border-bottom:1px solid #ececed;"
+								href="<?php echo $fullurl; ?>view-article.html?postId=<?php echo encodeStr($_REQUEST['postId']); ?>">more
+								comments</a>
+					<?php } ?>
 
-			<?php if ($_REQUEST['postType'] == 2 || $_REQUEST['postType'] == 1) { ?>
-				<a style="text-align:center; font-size:14px; color:#32a8d7; border-bottom:1px solid #ececed;"
-					href="<?php echo $fullurl; ?>single-post.html?postId=<?php echo encodeStr($_REQUEST['postId']); ?>&postType=<?php echo $_REQUEST['postType']; ?>">more
-					comment</a>
-			<?php } ?>
+					<?php if ($_REQUEST['postType'] == 2 || $_REQUEST['postType'] == 1) { ?>
+							<a style="text-align:center; font-size:14px; color:#32a8d7; border-bottom:1px solid #ececed;"
+								href="<?php echo $fullurl; ?>single-post.html?postId=<?php echo encodeStr($_REQUEST['postId']); ?>&postType=<?php echo $_REQUEST['postType']; ?>">more
+								comment</a>
+					<?php } ?>
 
-			<?php if ($_REQUEST['postType'] == 4) { ?>
-				<a style="text-align:center; font-size:14px; color:#32a8d7; border-bottom:1px solid #ececed;"
-					href="<?php echo $fullurl; ?>single-group-post.html?postId=<?php echo encodeStr($_REQUEST['postId']); ?>">view
-					<?php echo $totalpostcomment - 5; ?> more comment</a>
-			<?php } ?>
-
-
-
-		</div>
-
-	<?php } ?>
-
-	<?php
-
-	if (isset($_REQUEST['limit']) && $_REQUEST['limit'] == 5) {
-		$limit = '5';
-
-		if ($totalpostcomment > 5) {
-			$startlmit = $totalpostcomment - 5;
-		} else {
-			$startlmit = 0;
-		}
-
-
-	} else {
-		$startlmit = 0;
-		$limit = '5000';
-	}
-	$insertFields = [];
-	$selectFields = [];
-	$whereFields = [];
-	$whereVals = [];
-	$a = "";
-
-	$a = "SELECT * FROM " . _COMMENT_MASTER_TABLE_ . " WHERE postId=" . (int) $_REQUEST['postId'] .
-		" AND commentText != '' AND postType=" . (int) $_REQUEST['postType'] .
-		" AND parentId=0 ORDER BY id DESC LIMIT " . (int) $startlmit . "," . (int) $limit;
-
-	$b = getRecords(_COMMENT_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $a);
-
-	if (!$b) {
-		die("" . mysqli_error($conn));
-	}
-
-	while ($comment = mysqli_fetch_array($b)) {
-		if (!isset($comment["userId"]) || empty($comment["userId"])) {
-			continue;
-		}
-
-		$userId = (int) $comment["userId"];
-		$a2 = "SELECT * FROM userMaster WHERE userId = {$userId}";
-		$b2 = mysqli_query($conn, $a2);
-
-		if (!$b2) {
-
-		}
-
-		$userres2 = mysqli_fetch_array($b2);
-
-
-
-		if ($userres2["profilePhoto"] != '') {
-			$userphoto = $userres2["profilePhoto"];
-		} else {
-			$userphoto = 'user-placeholder.jpg';
-		}
-
-		$parentuserid = '';
-
-		$a235 = "SELECT userId from " . _SHAREANDUPDATES_TABLE_ . " WHERE id=" . $_REQUEST['postId'] . "";
-		$b235 = mysqli_query($conn, $a235) or die(mysqli_error($conn));
-		$postuserres2 = mysqli_fetch_array($b235);
-
-		?>
-		<li id="cmntid<?php echo $comment['id']; ?>">
-			<div class="comment">
-				<div class="comment-head">
-					<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2['userId']); ?>/<?php echo $userres2['userurl']; ?>.html"
-						class="cmnt-img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $userphoto; ?>"></a>
-
-					<div class="comment-nm-sec">
-						<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2['userId']); ?>/<?php echo $userres2['userurl']; ?>.html"
-							class="cmnt-nm"><?php echo stripslashes($userres2['firstName'] . ' ' . $userres2['lastName']); ?></a>
-
-						<div class="timeand-rply">
-							<?php echo makedatetime($comment["dateAdded"]); ?> - <a
-								onclick="$('#replycomment<?php echo $comment['id']; ?>').show();$('#commentboxreply<?php echo $_REQUEST['postId']; ?><?php echo $comment['id']; ?>').focus();">Reply</a>
-						</div>
-					</div>
-				</div>
-
-				<div class="cmmnt-text">
-					<?php echo strip_tags(stripslashes(trim($comment["commentText"]))); ?>
-				</div><?php //echo $userres2['userId'].'==='.$postuserres2['userId']; ?>
-				<?php if ($userres2['userId'] == $_SESSION["sessUserId"] || $postuserres2['userId'] == $_SESSION["sessUserId"]) { ?>
-					<a class="close"
-						onClick="$('#commonpopupwinouter').hide();alertpopupmain('<?php echo encodeStr($comment['id']); ?>','dltcmnt');"><i
-							title="Remove" class="fa fa-times" aria-hidden="true"></i></a>
-				<?php } ?>
-			</div>
-
-
-			<div style="margin-top:10px; display:none;" id="replycomment<?php echo $comment['id']; ?>" class="replycmntclass">
-				<div class="write-cmnt-pic"> <img
-						src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($myprofilePhoto)); ?>"> </div>
-				<div class="cmnt-inpt" style="width:100%;">
-
-					<input type="text" class="commentrowboxclass"
-						id="commentboxreply<?php echo $_REQUEST['postId']; ?><?php echo $comment['id']; ?>" name="commentbox"
-						placeholder="Type your reply" maxlength="250" autocomplete="off">
-
-					<button type="button"
-						onclick="postcmnt('<?php echo $_REQUEST['postId']; ?>','<?php echo $_REQUEST['postType']; ?>','<?php echo encodeStr($postuserres2['userId']); ?>','<?php echo encodeStr($comment['userId']); ?>','<?php echo $comment['id']; ?>','<?php echo $comment['id']; ?>');"><i
-							class="fa fa-paper-plane" aria-hidden="true"></i></button>
-
+					<?php if ($_REQUEST['postType'] == 4) { ?>
+							<a style="text-align:center; font-size:14px; color:#32a8d7; border-bottom:1px solid #ececed;"
+								href="<?php echo $fullurl; ?>single-group-post.html?postId=<?php echo encodeStr($_REQUEST['postId']); ?>">view
+								<?php echo $totalpostcomment - 5; ?> more comment</a>
+					<?php } ?>
 
 
 
 				</div>
-			</div>
 
-			<script>
-				$("#commentboxreply<?php echo $_REQUEST['postId']; ?><?php echo $comment['id']; ?>").keypress(function (event) {
-					if (event.which == 13) {
-						postcmnt('<?php echo $_REQUEST['postId']; ?>', '<?php echo $_REQUEST['postType']; ?>', '<?php echo encodeStr($postuserres2['userId']); ?>', '<?php echo encodeStr($comment["userId"]); ?>', '<?php echo $comment['id']; ?>', '<?php echo $comment['id']; ?>');
-					}
-				});
-			</script>
-			<?php
-			$selectFields = [];
-			$whereFields = [];
-			$whereVals = [];
-			$ab = "";
-			$postId = isset($_REQUEST['postId']) ? intval($_REQUEST['postId']) : 0;
-			$postType = isset($_REQUEST['postType']) ? intval($_REQUEST['postType']) : 0;
-			$parentId = isset($comment['id']) ? intval($comment['id']) : 0;
+		<?php } ?>
 
-			$postId = intval($_REQUEST['postId'] ?? 0);
-			$postType = intval($_REQUEST['postType'] ?? 0);
-			$parentId = intval($comment['id'] ?? 0);
+		<?php
 
-			$query = "SELECT * FROM commentMaster WHERE postId = $postId AND commentText != '' AND postType = $postType AND parentId = $parentId";
-			$result = mysqli_query($conn, $query);
+		if (isset($_REQUEST['limit']) && $_REQUEST['limit'] == 5) {
+			$limit = '5';
 
-			if (!$result) {
-				die("Query failed: " . mysqli_error($conn));
+			if ($totalpostcomment > 5) {
+				$startlmit = $totalpostcomment - 5;
+			} else {
+				$startlmit = 0;
 			}
 
-			while ($comment2 = mysqli_fetch_array($result)) {
-				$a2 = "SELECT * from userMaster WHERE userId= " . $comment2["userId"] . "";
-				$b2 = mysqli_query($conn, $a2) or die(mysqli_error($conn));
-				$userres23 = mysqli_fetch_array($b2);
 
-				if ($userres23["profilePhoto"] != '') {
-					$userphoto3 = $userres23["profilePhoto"];
-				} else {
-					$userphoto3 = 'user-placeholder.jpg';
-				}
+		} else {
+			$startlmit = 0;
+			$limit = '5000';
+		}
+		$insertFields = [];
+		$selectFields = [];
+		$whereFields = [];
+		$whereVals = [];
+		$a = "";
+
+		$a = "SELECT * FROM " . _COMMENT_MASTER_TABLE_ . " WHERE postId=" . (int) $_REQUEST['postId'] .
+			" AND commentText != '' AND postType=" . (int) $_REQUEST['postType'] .
+			" AND parentId=0 ORDER BY id DESC LIMIT " . (int) $startlmit . "," . (int) $limit;
+
+		$b = getRecords(_COMMENT_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $a);
+
+		if (!$b) {
+			die("" . mysqli_error($conn));
+		}
+
+		while ($comment = mysqli_fetch_array($b)) {
+			if (!isset($comment["userId"]) || empty($comment["userId"])) {
+				continue;
+			}
+
+			$userId = (int) $comment["userId"];
+			$a2 = "SELECT * FROM userMaster WHERE userId = {$userId}";
+			$b2 = mysqli_query($conn, $a2);
+
+			if (!$b2) {
+
+			}
+
+			$userres2 = mysqli_fetch_array($b2);
 
 
 
-				// HTML for replies here...
-	
-				?>
+			if ($userres2["profilePhoto"] != '') {
+				$userphoto = $userres2["profilePhoto"];
+			} else {
+				$userphoto = 'user-placeholder.jpg';
+			}
 
+			$parentuserid = '';
 
+			$a235 = "SELECT userId from " . _SHAREANDUPDATES_TABLE_ . " WHERE id=" . $_REQUEST['postId'] . "";
+			$b235 = mysqli_query($conn, $a235) or die(mysqli_error($conn));
+			$postuserres2 = mysqli_fetch_array($b235);
 
-				<div class="comment replycommentclass" id="cmntrplid<?php echo $comment2['id']; ?>">
-					<div class="comment-head">
-						<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres23['userId']); ?>/<?php echo $userres23['userurl']; ?>.html"
-							class="cmnt-img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $userphoto3; ?>"></a>
+			?>
+				<li id="cmntid<?php echo $comment['id']; ?>">
+					<div class="comment">
+						<div class="comment-head">
+							<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2['userId']); ?>/<?php echo $userres2['userurl']; ?>.html"
+								class="cmnt-img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $userphoto; ?>"></a>
 
-						<div class="comment-nm-sec">
-							<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres23['userId']); ?>/<?php echo $userres23['userurl']; ?>.html"
-								class="cmnt-nm"><?php echo stripslashes($userres23['firstName'] . ' ' . $userres23['lastName']); ?></a>
+							<div class="comment-nm-sec">
+								<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2['userId']); ?>/<?php echo $userres2['userurl']; ?>.html"
+									class="cmnt-nm"><?php echo stripslashes($userres2['firstName'] . ' ' . $userres2['lastName']); ?></a>
 
-
-
-							<div class="timeand-rply">
-								<?php
-								echo (isset($comment2["dateAdded"]) && !empty($comment2["dateAdded"]))
-									? makedatetime($comment2["dateAdded"])
-									: "";
-								?>
+								<div class="timeand-rply">
+									<?php echo makedatetime($comment["dateAdded"]); ?> - <a
+										onclick="$('#replycomment<?php echo $comment['id']; ?>').show();$('#commentboxreply<?php echo $_REQUEST['postId']; ?><?php echo $comment['id']; ?>').focus();">Reply</a>
+								</div>
 							</div>
+						</div>
+
+						<div class="cmmnt-text">
+							<?php echo strip_tags(stripslashes(trim($comment["commentText"]))); ?>
+						</div><?php //echo $userres2['userId'].'==='.$postuserres2['userId']; ?>
+						<?php if ($userres2['userId'] == $_SESSION["sessUserId"] || $postuserres2['userId'] == $_SESSION["sessUserId"]) { ?>
+								<a class="close"
+									onClick="$('#commonpopupwinouter').hide();alertpopupmain('<?php echo encodeStr($comment['id']); ?>','dltcmnt');"><i
+										title="Remove" class="fa fa-times" aria-hidden="true"></i></a>
+						<?php } ?>
+					</div>
+
+
+					<div style="margin-top:10px; display:none;" id="replycomment<?php echo $comment['id']; ?>" class="replycmntclass">
+						<div class="write-cmnt-pic"> <img
+								src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($myprofilePhoto)); ?>"> </div>
+						<div class="cmnt-inpt" style="width:100%;">
+
+							<input type="text" class="commentrowboxclass"
+								id="commentboxreply<?php echo $_REQUEST['postId']; ?><?php echo $comment['id']; ?>" name="commentbox"
+								placeholder="Type your reply" maxlength="250" autocomplete="off">
+
+							<button type="button"
+								onclick="postcmnt('<?php echo $_REQUEST['postId']; ?>','<?php echo $_REQUEST['postType']; ?>','<?php echo encodeStr($postuserres2['userId']); ?>','<?php echo encodeStr($comment['userId']); ?>','<?php echo $comment['id']; ?>','<?php echo $comment['id']; ?>');"><i
+									class="fa fa-paper-plane" aria-hidden="true"></i></button>
 
 
 
 
 						</div>
 					</div>
-					<div class="cmmnt-text">
-						<?php
-						echo (isset($comment2["commentText"]) && !empty($comment2["commentText"]))
-							? strip_tags(stripslashes(trim((string) $comment2["commentText"])))
-							: "";
+
+					<script>
+						$("#commentboxreply<?php echo $_REQUEST['postId']; ?><?php echo $comment['id']; ?>").keypress(function (event) {
+							if (event.which == 13) {
+								postcmnt('<?php echo $_REQUEST['postId']; ?>', '<?php echo $_REQUEST['postType']; ?>', '<?php echo encodeStr($postuserres2['userId']); ?>', '<?php echo encodeStr($comment["userId"]); ?>', '<?php echo $comment['id']; ?>', '<?php echo $comment['id']; ?>');
+							}
+						});
+					</script>
+					<?php
+					$selectFields = [];
+					$whereFields = [];
+					$whereVals = [];
+					$ab = "";
+					$postId = isset($_REQUEST['postId']) ? intval($_REQUEST['postId']) : 0;
+					$postType = isset($_REQUEST['postType']) ? intval($_REQUEST['postType']) : 0;
+					$parentId = isset($comment['id']) ? intval($comment['id']) : 0;
+
+					$postId = intval($_REQUEST['postId'] ?? 0);
+					$postType = intval($_REQUEST['postType'] ?? 0);
+					$parentId = intval($comment['id'] ?? 0);
+
+					$query = "SELECT * FROM commentMaster WHERE postId = $postId AND commentText != '' AND postType = $postType AND parentId = $parentId";
+					$result = mysqli_query($conn, $query);
+
+					if (!$result) {
+						die("Query failed: " . mysqli_error($conn));
+					}
+
+					while ($comment2 = mysqli_fetch_array($result)) {
+						$a2 = "SELECT * from userMaster WHERE userId= " . $comment2["userId"] . "";
+						$b2 = mysqli_query($conn, $a2) or die(mysqli_error($conn));
+						$userres23 = mysqli_fetch_array($b2);
+
+						if ($userres23["profilePhoto"] != '') {
+							$userphoto3 = $userres23["profilePhoto"];
+						} else {
+							$userphoto3 = 'user-placeholder.jpg';
+						}
+
+
+
+						// HTML for replies here...
+			
 						?>
-					</div>
 
 
 
-					<?php if ($userres23['userId'] == $_SESSION["sessUserId"] || $postuserres2['userId'] == $_SESSION["sessUserId"]) { ?>
-						<a class="close"
-							onClick="$('#commonpopupwinouter').hide();alertpopupmain('<?php echo encodeStr($comment2['id']); ?>','dltreply');"><i
-								title="Remove" class="fa fa-times" aria-hidden="true"></i></a>
+							<div class="comment replycommentclass" id="cmntrplid<?php echo $comment2['id']; ?>">
+								<div class="comment-head">
+									<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres23['userId']); ?>/<?php echo $userres23['userurl']; ?>.html"
+										class="cmnt-img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $userphoto3; ?>"></a>
+
+									<div class="comment-nm-sec">
+										<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres23['userId']); ?>/<?php echo $userres23['userurl']; ?>.html"
+											class="cmnt-nm"><?php echo stripslashes($userres23['firstName'] . ' ' . $userres23['lastName']); ?></a>
+
+
+
+										<div class="timeand-rply">
+											<?php
+											echo (isset($comment2["dateAdded"]) && !empty($comment2["dateAdded"]))
+												? makedatetime($comment2["dateAdded"])
+												: "";
+											?>
+										</div>
+
+
+
+
+									</div>
+								</div>
+								<div class="cmmnt-text">
+									<?php
+									echo (isset($comment2["commentText"]) && !empty($comment2["commentText"]))
+										? strip_tags(stripslashes(trim((string) $comment2["commentText"])))
+										: "";
+									?>
+								</div>
+
+
+
+								<?php if ($userres23['userId'] == $_SESSION["sessUserId"] || $postuserres2['userId'] == $_SESSION["sessUserId"]) { ?>
+										<a class="close"
+											onClick="$('#commonpopupwinouter').hide();alertpopupmain('<?php echo encodeStr($comment2['id']); ?>','dltreply');"><i
+												title="Remove" class="fa fa-times" aria-hidden="true"></i></a>
+								<?php } ?>
+							</div>
+
 					<?php } ?>
-				</div>
-
-			<?php } ?>
 
 
 
 
 
-		</li>
+				</li>
 
-	<?php } ?>
+		<?php } ?>
 
 
-	<script>$('#commentdisplaybox<?php echo $_REQUEST['postId']; ?><?php echo $_REQUEST["postType"]; ?> span').text('<?php echo $totalpostcomment; ?>');</script>
-	<?php
+		<script>$('#commentdisplaybox<?php echo $_REQUEST['postId']; ?><?php echo $_REQUEST["postType"]; ?> span').text('<?php echo $totalpostcomment; ?>');</script>
+		<?php
 } // end while
 ?>

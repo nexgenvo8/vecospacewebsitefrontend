@@ -29,18 +29,18 @@ $post_result = mysqli_fetch_array($re2);
   <div class="aboutheader">
     <div class="container">
       <div class="logo">
-        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/logo.png"
+        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/ndimlogo.png"
             style="width: 275px;" /></a>
       </div>
       <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
-        <div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
-          <a href="javascript:void(0);">
-            <span class="usr_img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
-          </a>
-          <ul class="setting_menu" style="display: none;">
-            <li><a href="<?php echo $fullurl; ?>"><i class="fa fa-cog" aria-hidden="true"></i> Go to timeline</a></li>
-          </ul>
-        </div>
+          <div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
+            <a href="javascript:void(0);">
+              <span class="usr_img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
+            </a>
+            <ul class="setting_menu" style="display: none;">
+              <li><a href="<?php echo $fullurl; ?>"><i class="fa fa-cog" aria-hidden="true"></i> Go to timeline</a></li>
+            </ul>
+          </div>
       <?php } ?>
     </div>
   </div>
@@ -61,15 +61,15 @@ $post_result = mysqli_fetch_array($re2);
             $result = mysqli_query($conn, $query1);
             ?>
             <?php while ($res_post = mysqli_fetch_array($result)) { ?>
-              <div class="accordion-section">
-                <a class="accordion-section-title"
-                  href="#<?php echo stripslashes($res_post['id']); ?>"><?php echo stripslashes($res_post['title']); ?>
-                  <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-minus" aria-hidden="true"></i>
-                </a>
-                <div id="<?php echo stripslashes($res_post['id']); ?>" class="accordion-section-content">
-                  <p><?php echo stripslashes($res_post['description']); ?></p>
-                </div>
-              </div><?php } ?>
+                <div class="accordion-section">
+                  <a class="accordion-section-title"
+                    href="#<?php echo stripslashes($res_post['id']); ?>"><?php echo stripslashes($res_post['title']); ?>
+                    <i class="fa fa-plus" aria-hidden="true"></i><i class="fa fa-minus" aria-hidden="true"></i>
+                  </a>
+                  <div id="<?php echo stripslashes($res_post['id']); ?>" class="accordion-section-content">
+                    <p><?php echo stripslashes($res_post['description']); ?></p>
+                  </div>
+                </div><?php } ?>
           </div>
         </div>
       </div>

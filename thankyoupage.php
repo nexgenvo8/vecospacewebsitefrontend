@@ -82,7 +82,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
   <div id="wrapper">
     <header>
       <div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-            src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+            src="<?php echo $fullurl; ?>images/ndimlogo.png"></a></div>
     </header>
     <div class="banner">
       <div class="container">
@@ -99,8 +99,8 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 
               <br>
               <?php if (isset($_GET['s']) && $_GET['s'] == 1) { ?>
-                <div style="color:green;">Mail sent successfully</div>
-                <br>
+                  <div style="color:green;">Mail sent successfully</div>
+                  <br>
               <?php } ?>
               <a href="<?php echo $fullurl; ?>thankyou.html?resendemail=1"><button
                   style="background-color:#e0e0e0; float:none; color:#333; margin-right:0px;" type="button"
