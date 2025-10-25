@@ -31,9 +31,9 @@ function openConn()
 // $withouthttpsurl = 'https://jmi.vecospace.com/';
 // $domainname = 'vecospace.com';
 
-$fullurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
-$withoutwwwurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
-$withouthttpsurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
+$fullurl = 'http://localhost/alumnivecospace/vecospacewebsitefrontend/';
+$withoutwwwurl = 'http://localhost/alumnivecospace/vecospacewebsitefrontend/';
+$withouthttpsurl = 'http://localhost/alumnivecospace/vecospacewebsitefrontend/';
 $domainname = 'vecospace.com';
 
 $actual_sitelink1 = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];

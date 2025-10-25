@@ -1,4 +1,4 @@
-var fullurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
+var fullurl = 'http://localhost/alumnivecospace/vecospacewebsitefrontend/';
 
 function loadpages(id, page) {
     $('#' + id).load(page);

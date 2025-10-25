@@ -112,7 +112,7 @@ $interestedpro = mysqli_num_rows($res5p5);
 
 
 	<meta property="og:title" content="<?php echo stripslashes($rowDetails['jobTitle']); ?>" />
-	<meta property="og:image" content="<?php echo $fullurl; ?>images/logo.jpg" />
+	<meta property="og:image" content="<?php echo $fullurl; ?>images/alumni-alumni-logo.png" />
 	<meta property="og:site_name" content="<?php echo $fullurl; ?>" />
 	<meta property="og:description"
 		content="<?php echo substr(stripslashes(strip_tags($rowDetails['jobDetails'])), 0, 250); ?>" />

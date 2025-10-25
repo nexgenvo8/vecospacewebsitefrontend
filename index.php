@@ -131,7 +131,7 @@ if (isPost()) {
 					// ---- Send Email ----
 					$strEmail = base64_encode(base64_encode(base64_encode(base64_encode($email))));
 
-					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . 'timeline.html" style="border:0px;"><img src="' . $fullurl . 'images/logo.jpg" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
+					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . 'timeline.html" style="border:0px;"><img src="' . $fullurl . 'images/alumni-alumni-logo.png" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
 <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
 <table style="width:100%;background-color: #e8e8e8;">
 <tbody><tr>
@@ -348,7 +348,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 	<div id="wrapper">
 		<header class="container">
 			<div class="logo logo_marg"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png" style="margin-top: 10px;"></a></div>
+						src="<?php echo $fullurl; ?>images/alumni-logo.png" style="margin-top: 10px;"></a></div>
 			<div class="header_right">
 
 				<form class="login-form loginForm1" name="kUserLogin" id="kUserLogin2" method="post">
@@ -384,13 +384,13 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 		</header>
 		<div class="banner2">
 			<div class="banner">
-				<div class="mobile-overlay-container">
+				<!-- <div class="mobile-overlay-container">
 					<div class="mobile-message">
 						<div style="font-size:16px; font-weight:500;">An Initiative By</div>
 						<div style="font-size:18px; font-weight:700;">UNIVERSITY PLACEMENT CELL</div>
 						<div style="font-size:20px; font-weight:500;">Jamia Millia Islamia</div>
 					</div>
-				</div>
+				</div> -->
 
 				<div class="bannerblkbg"></div>
 				<div class="container">
@@ -547,7 +547,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 				<div class="footer-left2"><strong>
 						<div>
 							<div style="font-weight:normal;">
-								<div style="float:left;">© 2023&nbsp;Jamia Millia Islamia VECOSPACE &nbsp;|
+								<div style="float:left;">© 2023&nbsp;Jamia Alumni Affairs VECOSPACE &nbsp;|
 									&nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
 								<div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png"
 											style="width:50px;"></a></div>

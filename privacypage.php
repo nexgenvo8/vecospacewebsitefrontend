@@ -28,7 +28,7 @@ $privacypage = 1;
   <div class="aboutheader">
     <div class="container">
       <div class="logo">
-        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/logo.png"
+        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/alumni-logo.png"
             style="width: 275px;" /></a>
       </div>
       <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>

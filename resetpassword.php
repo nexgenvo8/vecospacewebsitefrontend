@@ -106,7 +106,7 @@ if ($r != 2) {
 					$mailBodyContent = '';
 					$mailBodyContent = '
 				<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
-	<a href="' . $fullurl . 'timeline.html"><img src="' . $fullurl . 'images/logo.jpg" width="150"></a>
+	<a href="' . $fullurl . 'timeline.html"><img src="' . $fullurl . 'images/alumni-alumni-logo.png" width="150"></a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
   <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
@@ -179,7 +179,7 @@ if ($r != 2) {
 	<div id="wrapper">
 		<header>
 			<div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+						src="<?php echo $fullurl; ?>images/alumni-logo.png"></a></div>
 		</header>
 		<div class="banner">
 			<div class="container">

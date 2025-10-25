@@ -8,7 +8,7 @@ if (isset($_SESSION['registerEmail']) && isset($_SESSION['resendemail']) && $_SE
   $strEmail = base64_encode(base64_encode(base64_encode(base64_encode($email))));
   $mailBodyContent = '';
 
-  $mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . 'timeline.html" style="border:0px;"><img src="' . $fullurl . 'images/logo.jpg" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
+  $mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . 'timeline.html" style="border:0px;"><img src="' . $fullurl . 'images/alumni-alumni-logo.png" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
 <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
 <table style="width:100%;background-color: #e8e8e8;">
 <tbody><tr>
@@ -82,7 +82,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
   <div id="wrapper">
     <header>
       <div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-            src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+            src="<?php echo $fullurl; ?>images/alumni-logo.png"></a></div>
     </header>
     <div class="banner">
       <div class="container">

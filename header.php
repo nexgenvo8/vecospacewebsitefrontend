@@ -6,7 +6,7 @@ if ($userAccountCloseStatus == 1) {
 
 ?>
 <?php
-$fullurl = "http://localhost/jmiwebsite/vecospacewebsitefrontend/";
+$fullurl = "http://localhost/alumnivecospace/vecospacewebsitefrontend/";
 ?>
 
 <script>
@@ -58,7 +58,7 @@ $fullurl = "http://localhost/jmiwebsite/vecospacewebsitefrontend/";
     <div class="hdr_cont container after-login" style=" min-height:50px;">
         <div class="logo">
             <a href="<?php echo $fullurl; ?>timeline.html" class="hiden-xs"><img
-                    src="<?php echo $fullurl; ?>images/logo.png" style="margin-top: 10px; "></a>
+                    src="<?php echo $fullurl; ?>images/alumni-logo.png" style="margin-top: 10px; "></a>
             <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
                 <div class="hamburger-menu">
                     <div class="bar"></div>

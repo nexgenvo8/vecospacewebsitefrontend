@@ -537,7 +537,7 @@ if ($_REQUEST['action'] == 'addcontact' && $_REQUEST['userid'] != '') {
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
 				  <div style="padding: 0px 0px 16px;text-align:center;">
 				   <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:234px">                        </a>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:234px">                        </a>
 				  </div>
                         <div style="color:#666666; font-size:12px; margin-bottom:10px;">You have a new notification</div>
                       <p align="center" style="margin:0 0 30px;padding:0;color:#484848; font-size:18px;">New friend request</p>
@@ -730,7 +730,7 @@ if (isset($_FILES['imagefilehome']) && $_FILES['imagefilehome']['name'] != '' &&
 		?>
 		<script>
 			parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['articleId']; ?>');
-																																			/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
+																																							/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
 		</script>
 
 		<?php
@@ -931,7 +931,7 @@ if (isset($_REQUEST['userIdcontact']) && $_REQUEST['userIdcontact'] != '' && $_R
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1146,7 +1146,7 @@ if (isset($_REQUEST['postId']) && $_REQUEST['postId'] != '' && $_REQUEST['action
 					<tr>
 						<td align="center" valign="top" style="width:100%;padding:20px 0">
 							<a href="' . $fullurl . '" target="_blank" >
-								<img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+								<img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
 					</tr>
 					<tr>
 					  <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1656,7 +1656,7 @@ if (isset($_REQUEST['groupId']) && $_REQUEST['groupId'] != '' && $_REQUEST['acti
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1739,7 +1739,7 @@ if (isset($_REQUEST['groupId']) && $_REQUEST['groupId'] != '' && $_REQUEST['acti
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -1959,7 +1959,7 @@ if ($_REQUEST['action'] == 'groupchat' && trim($_REQUEST['grouptext']) != '' && 
 
 		<script>
 			<?php if ($rowGroupchat['msgType'] == 'text') { ?>
-				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
+				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																						 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
 				$(".chats").animate({ scrollTop: $("#groupchatlist").outerHeight() }, 600);
 
 				<?php
@@ -2201,7 +2201,7 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
 					$mailBodyContent = '';
 					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
 	 <a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;">
-    <img src="' . $fullurl . 'images/logo.png" width="150px;">
+    <img src="' . $fullurl . 'images/alumni-logo.png" width="150px;">
     </a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
@@ -2265,7 +2265,7 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -2300,7 +2300,7 @@ if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' 
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -2646,7 +2646,7 @@ if ($_REQUEST['action'] == 'sendtouserinvitation' && trim($_REQUEST['txtuseremai
 					$mycontactid = trim($_REQUEST['mycontactid']);
 
 					$mailBodyContent = '';
-					$mailBodyContent = '<div style="margin:0 auto;padding:30px 0 40px;display:block;box-sizing:border-box; max-width: 600px;"><table style="width:100%;color:#434245" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="box-sizing:border-box"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td><img style="width:190px;height:30px;margin:0 0 15px 0;padding-right:30px;padding-left:30px" alt="" src="' . $fullurl . 'images/logo.png" height="38" width="38"><h1 style="font-size:30px;padding-right:30px;padding-left:30px">Join ' . $invitegroupname . ' on ' . $companNameTitle . '</h1><p style="font-size:17px;padding-right:30px;padding-left:30px">' . $myname . ' (' . $myemail . ') has invited you to join the ' . $companNameTitle . ' team <strong>' . $invitegroupname . '</strong>. Join now to start collaborating!</p><div style="padding-right:30px;padding-left:30px"><a href="' . $fullurl . 'invitation.html?groupId=' . $mygroupId . '&action=joingroup" style="min-width:234px;border:13px solid #1c267a;border-radius:4px;background-color:#1c267a;font-size:20px;color:#ffffff;display:inline-block;text-align:center;vertical-align:top;font-weight:900;text-decoration:none!important">Join Now</a></div><div style="padding-right:30px;padding-left:30px"><div style="padding:30px 0 22px;margin:0;padding-top:20px"></div></div></td></tr></tbody></table></td></tr></tbody></table></div>';
+					$mailBodyContent = '<div style="margin:0 auto;padding:30px 0 40px;display:block;box-sizing:border-box; max-width: 600px;"><table style="width:100%;color:#434245" cellspacing="0" cellpadding="0" border="0"><tbody><tr><td style="box-sizing:border-box"><table cellspacing="0" cellpadding="0" border="0"><tbody><tr><td><img style="width:190px;height:30px;margin:0 0 15px 0;padding-right:30px;padding-left:30px" alt="" src="' . $fullurl . 'images/alumni-logo.png" height="38" width="38"><h1 style="font-size:30px;padding-right:30px;padding-left:30px">Join ' . $invitegroupname . ' on ' . $companNameTitle . '</h1><p style="font-size:17px;padding-right:30px;padding-left:30px">' . $myname . ' (' . $myemail . ') has invited you to join the ' . $companNameTitle . ' team <strong>' . $invitegroupname . '</strong>. Join now to start collaborating!</p><div style="padding-right:30px;padding-left:30px"><a href="' . $fullurl . 'invitation.html?groupId=' . $mygroupId . '&action=joingroup" style="min-width:234px;border:13px solid #1c267a;border-radius:4px;background-color:#1c267a;font-size:20px;color:#ffffff;display:inline-block;text-align:center;vertical-align:top;font-weight:900;text-decoration:none!important">Join Now</a></div><div style="padding-right:30px;padding-left:30px"><div style="padding:30px 0 22px;margin:0;padding-top:20px"></div></div></td></tr></tbody></table></td></tr></tbody></table></div>';
 
 
 					$subject = $myname . " has invited you to join a " . $companNameTitle . " team";
@@ -2884,7 +2884,7 @@ if (isset($_REQUEST['msgcontactId']) && $_REQUEST['msgcontactId'] != '' && $_REQ
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -3726,7 +3726,7 @@ if ($_REQUEST['action'] == 'saveprofessinalexp' && trim($_REQUEST['jobTitle']) !
 	<div style="width: 600px; margin: auto; border-top: 4px solid #1a94c3; border-bottom: 4px solid #1a94c3; background-color: #fff; overflow: hidden; padding-top: 0px; box-sizing: border-box; font-family: arial; color: #4c4c4c; font-size: 14px; padding-bottom: 0;">
 		<div style="padding:0 20px;box-sizing: border-box;overflow: hidden;">
 		<a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;padding-left: 0;float: left;margin-bottom: 10px;">
-		<img src="' . $fullurl . 'images/logo.png" width="150px;">
+		<img src="' . $fullurl . 'images/alumni-logo.png" width="150px;">
 		</a>
 		<table width="150" style="float: right;" border="0;">
 			<tbody><tr>
@@ -4296,7 +4296,7 @@ if ($_REQUEST['action'] == 'applyproject' && trim($_REQUEST['projid']) != '') {
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -4583,7 +4583,7 @@ if ($_REQUEST['action'] == 'postandsharewithmsg' && trim($_REQUEST['sharePostTyp
 				$mailBodyContent = '';
 				$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
 	 <a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;">
-    <img src="' . $fullurl . 'images/logo.png" width="150px;">
+    <img src="' . $fullurl . 'images/alumni-logo.png" width="150px;">
     </a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
@@ -5850,7 +5850,7 @@ if ($_REQUEST['action'] == 'applyjob' && trim($_REQUEST['jobid']) != '') {
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/alumni-logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
@@ -6098,7 +6098,7 @@ if (
 
 	<script>
 		header('Content-Type: application/json');
-	echo json_encode([
+			echo json_encode([
 			'status' => 'success',
 			'type' => $fileExtention,
 			'file_url' => $fullurl. 'uploads/'.$file_name,

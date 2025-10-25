@@ -105,10 +105,10 @@ RewriteRule ^privacy.html$ privacypage.php  [NC,L]
 RewriteRule ^about.html$ aboutpage.php  [NC,L]
 RewriteRule ^thankyou.html$ thankyoupage.php  [NC,L]
 
-RewriteRule ^registration-form.html$ alumni-registration-form.php  [NC,L]
+
 
 RewriteRule ^konectt-live.html$ videocallpage.php  [NC,L]
-
+RewriteRule ^alumni-registration-form.html$ alumni-registration.php  [NC,L]
 
 RewriteRule ^smb-categories.html$ businesslist.php  [NC,L]
 RewriteRule ^all-sme-blogs.html$ allsmeblogslist.php  [NC,L]
@@ -136,6 +136,7 @@ RewriteRule ^load_stmtchat.html$ load_studentmentorchat.php  [NC,L]
 RewriteRule ^view-document.html$ redirectviewvault.php [L]
 RewriteRule ^myads.html$ myads.php [L]
 RewriteRule ^redirecturl.html$ redirecturl.php [L]
+RewriteRule ^alumni-pvc.html$ alumni-pvc.php [L]
 
 RewriteRule ^downloads.html$ redirectviewvaultdocs.php [L]
 
