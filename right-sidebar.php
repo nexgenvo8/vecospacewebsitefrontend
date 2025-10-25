@@ -322,7 +322,7 @@ if ($jcarousellite != 1) { ?>
 					<li><a href="<?php echo $fullurl; ?>about.html" target="_blank">About</a></li>
 					<li><a href="<?php echo $fullurl; ?>faq.html" target="_blank">FAQ's</a></li>
 				</ul>
-				<p> &copy; <?php echo date("Y"); ?>&nbsp;Jamia Millia Islamia VECOSPACE</p>
+				<p> &copy; <?php echo date("Y"); ?>&nbsp;NDIM VECOSPACE</p>
 				<div class="pwrddebox">
 					<div style="float:left"><span style="color: #9f9f9f;">Powered by &nbsp;&nbsp;&nbsp;</span></div>
 					<div style="float:left"> <a href="http://deboxglobal.com/"><img

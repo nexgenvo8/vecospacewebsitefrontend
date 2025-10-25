@@ -384,13 +384,13 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 		</header>
 		<div class="banner2">
 			<div class="banner">
-				<div class="mobile-overlay-container">
+				<!-- <div class="mobile-overlay-container">
 					<div class="mobile-message">
 						<div style="font-size:16px; font-weight:500;">An Initiative By</div>
 						<div style="font-size:18px; font-weight:700;">UNIVERSITY PLACEMENT CELL</div>
 						<div style="font-size:20px; font-weight:500;">Jamia Millia Islamia</div>
 					</div>
-				</div>
+				</div> -->
 
 				<div class="bannerblkbg"></div>
 				<div class="container">
@@ -547,7 +547,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 				<div class="footer-left2"><strong>
 						<div>
 							<div style="font-weight:normal;">
-								<div style="float:left;">© 2023&nbsp;Jamia Millia Islamia VECOSPACE &nbsp;|
+								<div style="float:left;">© 2023&nbsp;NDIM VECOSPACE &nbsp;|
 									&nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
 								<div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png"
 											style="width:50px;"></a></div>

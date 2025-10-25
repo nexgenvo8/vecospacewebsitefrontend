@@ -866,12 +866,19 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
 <?php } else { ?>
 
 
+  <style>
+    .hide-mob-footer .container {
+      width: 90%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+  </style>
   <footer class="hide-mob-footer">
     <div class="container">
       <div class="footer-left"><strong>
           <div>
             <div style="font-weight:normal;">
-              <div style="float:left;">&copy; <?php echo date("Y"); ?>&nbsp;Jamia Millia Islamia VECOSPACE &nbsp;|
+              <div style="float:left;">&copy; <?php echo date("Y"); ?>&nbsp;NDIM VECOSPACE &nbsp;|
                 &nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
               <div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png" style="width:50px;"></a></div>
             </div>
@@ -1019,10 +1026,10 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
   <?php
   if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
     ?>
-                      /*var sessionsss = setInterval(function () {
-                      //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
+                                        /*var sessionsss = setInterval(function () {
+                                        //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
 
-                      }, 5000);*/
+                                        }, 5000);*/
 
   <?php } ?>
 </script>
