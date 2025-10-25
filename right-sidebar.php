@@ -312,8 +312,6 @@ if ($jcarousellite != 1) { ?>
 	</div>
 
 	<div id="trend">
-
-
 		<?php if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
 			<div class="right-fttr">
 				<ul class="fttr-list">
@@ -331,7 +329,6 @@ if ($jcarousellite != 1) { ?>
 			</div>
 		<?php } ?>
 	</div>
-
 </div>
 
 <script type="text/javascript">

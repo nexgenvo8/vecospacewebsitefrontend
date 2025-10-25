@@ -200,6 +200,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 	if (trim($action) == 'login') {
 		$username = isset($_POST['txtUsername']) ? clean($_POST['txtUsername'], $conn) : "";
 		$passwordl = isset($_POST['txtPassword']) ? clean($_POST['txtPassword'], $conn) : "";
+		$userstype = isset($_POST['userstype']) ? intval($_POST['userstype']) : 0;
 
 		if (trim($passwordl) == "") {
 			$errMsgl = "Please enter password";
@@ -223,6 +224,26 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 			if ($res && mysqli_num_rows($res) > 0) {
 				$row = mysqli_fetch_assoc($res);
 
+				// ✅ Check if user is Alumni (userstype = 3)
+				if ($row['userstype'] != 3) {
+					echo "
+				<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+				<script>
+				document.addEventListener('DOMContentLoaded', function() {
+					Swal.fire({
+						icon: 'error',
+						title: 'Access Denied',
+						text: 'Only Alumni users are allowed to login.',
+						confirmButtonColor: '#d33',
+						confirmButtonText: 'OK'
+					}).then(() => {
+						window.location.href = 'index.php';
+					});
+				});
+				</script>
+				";
+					exit();
+				}
 
 
 				// Step 2 — Verify password
@@ -272,6 +293,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 	<link rel="shortcut icon" href="favion.ico" type="image/x-icon">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link rel="icon" href="<?php echo $fullurl; ?>favion.ico" type="image/x-icon">
+
 	<link rel="stylesheet" type="text/css"
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="js/jquery.min.js"></script>
@@ -366,6 +388,8 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 					<button type="button" onClick="formValidation('kUserLogin2');" tabindex="1"
 						style="margin-top:12px;">Log in</button>
 					<input type="hidden" name="txtAction" id="txtAction" value="login">
+					<!-- hidden userstype -->
+					<input type="hidden" name="userstype" id="userstype" value="3">
 
 				</form>
 				<script>

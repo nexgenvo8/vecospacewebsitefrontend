@@ -1,9 +1,13 @@
 <?php
+
 include_once('inc.php');
 $_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 include_once('config/session-check.inc.php'); // check user login session
 $pageIndex = 22;
 $search = '';
+$startpage = $_REQUEST['startpage'] ?? '';
+$endpage = $_REQUEST['endpage'] ?? '';
+$pageid = $_REQUEST['pageid'] ?? '';
 if (isset($_REQUEST['searchcontacts']) && $_REQUEST['searchcontacts'] != '') {
 	$search = clean($_REQUEST['searchcontacts']);
 }
@@ -227,6 +231,228 @@ if ($search == '') {
 							</ul>
 						</div>
 						<div class="contct-list-cont">
+							<form method="get" name="frmsearchcontacts" id="frmsearchcontacts">
+								<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+
+									<!-- Course Name -->
+									<div class="srchfcontct" style="flex: 0 0 45%; box-sizing: border-box;">
+										<span>Course Name</span>
+										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
+											<select name="courseName" id="courseName" class="validate" style="
+												width: 100%;
+												padding: 8px 10px;
+												font-size: 14px;
+												border: 1px solid #ccc;
+												border-radius: 4px;
+												outline: none;
+												background-color: #fff;
+												box-sizing: border-box;
+											">
+												<option selected>Course</option>
+												<?php
+												$selectFields = [];
+												$whereFields = [];
+												$whereVals = [];
+
+												$sqlOptions = "";
+												$sqlOptions = "SELECT * FROM " . _COURSE_MASTER_TABLE_ . "  WHERE status=1 order by course_name";
+												$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
+												if ($resOptions) {
+													while ($rowOptions = mysqli_fetch_array($resOptions)) {
+
+														?>
+														<option value="<?php echo trim($rowOptions['course_name']); ?>">
+															<?php echo trim($rowOptions['course_name']); ?>
+														</option>
+														<?php
+													}
+												}
+												?>
+											</select>
+											<button type="button" style="
+												padding: 8px 16px;
+												border: none;
+												border-radius: 4px;
+												background-color: #20741f;
+												color: #fff;
+												cursor: pointer;
+											">Search</button>
+										</div>
+									</div>
+
+									<!-- Department Name -->
+									<div class="srchfcontct" style="flex: 0 0 45%; box-sizing: border-box;">
+										<span>Department Name</span>
+										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
+											<select name="departmentName" id="departmentName" class="validate" style="
+											width: 100%;
+											padding: 8px 10px;
+											font-size: 14px;
+											border: 1px solid #ccc;
+											border-radius: 4px;
+											outline: none;
+											background-color: #fff;
+											box-sizing: border-box;
+										">
+												<option selected>Department</option>
+												<?php
+												$selectFields = [];
+												$whereFields = [];
+												$whereVals = [];
+
+												$sqlOptions = "";
+												$sqlOptions = "SELECT * FROM " . _DEPARTMENT_MASTER_TABLE_ . " WHERE status=1  order by department_name";
+												$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
+												if ($resOptions) {
+													while ($rowOptions = mysqli_fetch_array($resOptions)) {
+
+														?>
+														<option value="<?php echo trim($rowOptions['department_name']); ?>">
+															<?php echo trim($rowOptions['department_name']); ?>
+														</option>
+														<?php
+													}
+												}
+												?>
+											</select>
+											<button type="button" style="
+											padding: 8px 16px;
+											border: none;
+											border-radius: 4px;
+											background-color: #20741f;
+											color: #fff;
+											cursor: pointer;
+										">Search</button>
+										</div>
+									</div>
+
+									<!-- Passing Year -->
+									<div class="srchfcontct" style="flex: 0 0 45%; box-sizing: border-box;">
+										<span>Passing Year</span>
+										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
+											<select name="passingYear" id="passingYear" class="validate" style="
+												width: 100%;
+												padding: 8px 10px;
+												font-size: 14px;
+												border: 1px solid #ccc;
+												border-radius: 4px;
+												outline: none;
+												background-color: #fff;
+												box-sizing: border-box;
+											">
+												<option selected>Passing Year</option>
+												<option value="2023">2023</option>
+												<option value="2024">2024</option>
+												<option value="2024">2025</option>
+												<?php
+												$currentdate = date("Y", strtotime('+1 years'));
+												$end = date('Y-m-d', strtotime('+5 years'));
+												while ($currentdate <= $end) {
+													?>
+													<option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
+														   echo 'selected';
+													   } ?>> <?php echo $currentdate;
+														$currentdate++; ?></option>
+													<?php
+												}
+												?>
+											</select>
+											<button type="button" style="
+											padding: 8px 16px;
+											border: none;
+											border-radius: 4px;
+											background-color: #20741f;
+											color: #fff;
+											cursor: pointer;
+										">Search</button>
+										</div>
+									</div>
+
+									<!-- User Type -->
+									<div class="srchfcontct" style="flex: 0 0 45%; box-sizing: border-box;">
+										<span>User Type</span>
+										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
+											<select name="userType" id="userType" class="validate" style="
+											width: 100%;
+											padding: 8px 10px;
+											font-size: 14px;
+											border: 1px solid #ccc;
+											border-radius: 4px;
+											outline: none;
+											background-color: #fff;
+											box-sizing: border-box;
+										">
+												<option value="1">Student</option>
+												<option value="2">Faculty</option>
+												<option value="3">Alumni</option>
+												<option value="4">Industry Professional</option>
+											</select>
+											<button type="button" style="
+												padding: 8px 16px;
+												border: none;
+												border-radius: 4px;
+												background-color: #20741f;
+												color: #fff;
+												cursor: pointer;
+											">Search</button>
+										</div>
+									</div>
+									<!-- Industry Name -->
+									<!-- Industry Name (Left-aligned) -->
+									<div class="srchfcontct"
+										style="flex: 0 0 45%; box-sizing: border-box; margin-bottom: 10px;">
+										<span>Industry Name</span>
+										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
+											<select name="industryId" id="industryId" class="validate" style="
+											width: 100%;
+											padding: 8px 10px;
+											font-size: 14px;
+											border: 1px solid #ccc;
+											border-radius: 4px;
+											outline: none;
+											background-color: #fff;
+											box-sizing: border-box;
+										">
+												<option value="0">Industry</option>
+												<?php
+												$selectFields = [];
+												$whereFields = [];
+												$whereVals = [];
+
+												$sqlOptions = "SELECT id, optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='industry'";
+												$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
+												if ($resOptions) {
+													while ($rowOptions = mysqli_fetch_array($resOptions)) {
+														$strSelected = ($industryId == $rowOptions['id']) ? 'selected="selected"' : '';
+														?>
+														<option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
+															<?php echo trim($rowOptions['optionName']); ?>
+														</option>
+														<?php
+													}
+												}
+												?>
+											</select>
+											<button type="button" style="
+												padding: 8px 16px;
+												border: none;
+												border-radius: 4px;
+												background-color: #20741f;
+												color: #fff;
+												cursor: pointer;
+											">
+												Search
+											</button>
+										</div>
+									</div>
+
+
+
+								</div>
+							</form>
+
+
+
 							<?php if (isset($_POST['searchkeywords']) && $_GET['searchkeywords'] != '') {
 
 								$strWhereContacts .= "";
@@ -240,77 +466,140 @@ if ($search == '') {
 								<h2>People you may know</h2>
 							<?php } ?>
 
+							<?php
+							$startpage = $_REQUEST['startpage'] ?? 0; // Default start at 0
+							$limit = $_REQUEST['endpage'] ?? 10; // Default 10 records per page
+							
+							$strWhere = '';
+
+							if (isset($_POST['r']) && $_REQUEST['r'] == 1) {
+								$strWhere .= " and dateAdded between " . strtotime(date('Y-m-d', strtotime("-30 days"))) . " and " . strtotime(date('Y-m-d')) . " ";
+							}
+
+							if ($search != '') {
+								$strWhere .= " and contactId IN(select userId from " . _USERS_MASTER_TABLE_ . " where activeYN='Y' and userId!=106 and (firstName like '%" . $search . "%' OR lastName like '%" . $search . "%' OR email like '%" . $search . "%' ) ) ";
+							}
+
+							$n = 0;
+							$selectFields = [];
+							$whereFields = [];
+							$whereVals = [];
+
+							// Count total records for pagination
+							$sqlCount = "SELECT COUNT(*) as total FROM " . _USERS_MASTER_TABLE_ . " 
+    WHERE activeYN='Y' 
+    AND userId!=106 
+    AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
+    AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
+    AND companyName!='' 
+    AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere;
+							$resCount = mysqli_query($conn, $sqlCount) or die(mysqli_error($conn));
+							$rowCount = mysqli_fetch_assoc($resCount);
+							$totalRecords = $rowCount['total'];
+
+							// Main query with LIMIT for pagination
+							$sqlLogin = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " 
+    WHERE activeYN='Y' 
+    AND userId!=106 
+    AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
+    AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
+    AND companyName!='' 
+    AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere . " 
+    ORDER BY userId DESC 
+    LIMIT " . intval($startpage) . ", " . intval($limit);
+
+							$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
+							?>
+
 							<ul class="cntct-list">
 								<?php
-								$strWhere = '';
-
-								if (isset($_POST['r']) && $_REQUEST['r'] == 1) {
-									$strWhere .= " and dateAdded between " . strtotime(date('Y-m-d', strtotime("-30 days"))) . " and " . strtotime(date('Y-m-d')) . " ";
-								}
-
-								if ($search != '') {
-									$strWhere .= " and contactId IN(select userId from " . _USERS_MASTER_TABLE_ . " where activeYN='Y' and userId!=106 and (firstName like '%" . $search . "%' OR lastName like '%" . $search . "%' OR email like '%" . $search . "%' ) ) ";
-								}
-
-								$n = 0;
-								$selectFields = [];
-								$whereFields = [];
-								$whereVals = [];
-
-								$sqlLogin = "";
-								$sqlLogin = "select * from " . _USERS_MASTER_TABLE_ . " where activeYN='Y' and userId!=106 and userId not  in (select contactId from " . _CONTACT_MASTER_TABLE_ . " where userId=" . $_SESSION["sessUserId"] . ") and userId not in (select userId from " . _CONTACT_MASTER_TABLE_ . " where contactId=" . $_SESSION["sessUserId"] . ")  and companyName!='' and userId!='" . $_SESSION['sessUserId'] . "' " . $strWhereContacts . "  order by userId desc";
-								$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
 								if ($resLogin) {
 									while ($rowLogin = mysqli_fetch_array($resLogin)) {
-
-										$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowLogin["userId"] . "";
+										$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowLogin["userId"];
 										$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
 										$userres = mysqli_fetch_array($b);
 
 										$friendnameurl = $userres['userurl'];
-										if ($userres["profilePhoto"] != '') {
-											$userphoto = $userres["profilePhoto"];
-										} else {
-											$userphoto = 'user-placeholder.jpg';
-										}
-
-										$mycountryName = $userres["countryName"];
-										$mystateName = $userres["cityName"];
-										$mylocationName = $userres["locationName"];
+										$userphoto = ($userres["profilePhoto"] != '') ? $userres["profilePhoto"] : 'user-placeholder.jpg';
 										?>
 										<li>
 											<div class="request-contct">
-												<div class="rimg"> <a
+												<div class="rimg">
+													<a
 														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html">
 														<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
 															style="border:<?php echo profileborder($userres['userstype']); ?>">
-													</a></div>
+													</a>
+												</div>
 												<div class="reqst-rdtail">
 													<div class="middl-nm">
-														<div class="left"> <a
-																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																class="nm"><?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
-																<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]);//stripslashes(trim($userres["lastName"])); ?></a>
+														<div class="left">
+															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																class="nm">
+																<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
+																<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]); ?>
+															</a>
 															<span class="comp"><?php echo $userres['jobTitle']; ?> at
 																<?php echo $userres['companyName']; ?></span>
 														</div>
 														<div class="btns">
 															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																class="msg-btn"><i class="fa fa-plus" aria-hidden="true"></i>
-																Add as contact</a>
+																class="msg-btn">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add as contact
+															</a>
 														</div>
 													</div>
 												</div>
 											</div>
 										</li>
 										<?php
-
 										$n++;
 									}
-
 								}
 								?>
 							</ul>
+
+
+
+							<?php
+							$limit = 10; // records per page
+							$startpage = isset($_GET['startpage']) ? intval($_GET['startpage']) : 0;
+
+							// Total records count
+							$totalRecordsQuery = "SELECT COUNT(*) as total FROM " . _USERS_MASTER_TABLE_;
+							$totalResult = mysqli_query($conn, $totalRecordsQuery);
+							$totalRow = mysqli_fetch_assoc($totalResult);
+							$totalRecords = $totalRow['total'];
+
+							// Current page
+							$currentPage = floor($startpage / $limit) + 1;
+
+							// Total pages
+							$totalPages = ceil($totalRecords / $limit);
+
+							echo '<div class="pagination-buttons">';
+
+							// Previous button
+							if ($currentPage > 1) {
+								$prevStart = ($currentPage - 2) * $limit;
+								echo '<a href="?startpage=' . $prevStart . '" class="prev-btn">&laquo; Previous</a>';
+							} else {
+								echo '<button class="prev-btn" disabled>&laquo; Previous</button>';
+							}
+
+							// Next button
+							if ($currentPage < $totalPages) {
+								$nextStart = $currentPage * $limit;
+								echo '<a href="?startpage=' . $nextStart . '" class="next-btn">Next &raquo;</a>';
+							} else {
+								echo '<button class="next-btn" disabled>Next &raquo;</button>';
+							}
+
+							echo '</div>';
+							?>
+
+
+
 							<?php if ($n == 0) { ?>
 								<div style="padding:30px; text-align:center;">
 									<div style="text-align:center; margin-bottom:20px;">No Contacts.</div>
@@ -327,6 +616,41 @@ if ($search == '') {
 				</div>
 			</div>
 		</div>
+		<style>
+			<style>.pagination-buttons {
+				display: flex;
+				justify-content: center;
+				/* center horizontally */
+				gap: 10px;
+				/* space between buttons */
+				margin: 20px 0;
+				/* spacing from content */
+			}
+
+			.pagination-buttons a,
+			.pagination-buttons button {
+				padding: 8px 16px;
+				background-color: green;
+				color: white;
+				text-decoration: none;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-weight: bold;
+				transition: background 0.3s;
+			}
+
+			.pagination-buttons a:hover {
+				background-color: green;
+			}
+
+			.pagination-buttons button[disabled] {
+				background-color: #cccccc;
+				cursor: not-allowed;
+			}
+		</style>
+
+		</style>
 		<?php include('footer.php'); ?>
 
 		<script>
