@@ -1106,10 +1106,10 @@ if (file_exists($userfilename)) {
 		function reloadPage() {
 			location.reload(true);
 		}
-		<?php if ($_REQUEST['r'] == 'recommend') { ?>
+		<?php if (isset($_REQUEST['r']) && $_REQUEST['r'] == 'recommend') { ?>
 			funcommonpopupwin('550px', 'auto', '<?php echo $fullurl; ?>common_popup_inner.php?id=<?php echo trim($_GET['id']); ?>&name=<?php echo $myfirstName; ?>&type=recommendeduser', '');
 		<?php } ?>
-		<?php if ($_REQUEST['r'] == 'congratulate') { ?>
+		<?php if (isset($_REQUEST['r']) && $_REQUEST['r'] == 'congratulate') { ?>
 			funcommonpopupwin('520px', 'auto', '<?php echo $fullurl; ?>common_popup_inner.php?type=sendmsgtocontact&id=<?php echo $_GET['id']; ?>&m=1', 'Send a Message');
 		<?php } ?>
 	</script>

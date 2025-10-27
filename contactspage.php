@@ -629,27 +629,29 @@ if ($strSearchPassingYear != '' && $strSearchPassingYear != 'Passing Year') {
 							// Build query string for filters (excluding startpage)
 							$queryString = "courseName={$courseName}&departmentName={$departmentName}&userType={$userType}&passingYear={$passingYear}";
 
-							// ✅ Use same filters in COUNT query
 							$totalRecordsQuery = "
-    SELECT COUNT(*) as total 
-    FROM " . _USERS_MASTER_TABLE_ . "
-    WHERE activeYN='Y' 
-    AND userId!=106
-    AND userId NOT IN (
-        SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " 
-        WHERE userId=" . intval($_SESSION["sessUserId"]) . "
-    )
-    AND userId NOT IN (
-        SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " 
-        WHERE contactId=" . intval($_SESSION["sessUserId"]) . "
-    )
-    AND companyName!=''
-    AND userId!='" . intval($_SESSION['sessUserId']) . "'
-    " . $strWhereCourse . "
-    " . $strWhereDepartment . "
-    " . $strWhereUserType . "
-    " . $strWherePassingYear . "
+	SELECT COUNT(*) as total
+	FROM " . _USERS_MASTER_TABLE_ . "
+	WHERE activeYN = 'Y'
+	AND userId != 106
+	AND userId NOT IN (
+		SELECT contactId
+		FROM " . _CONTACT_MASTER_TABLE_ . "
+		WHERE userId = " . intval($_SESSION['sessUserId']) . "
+	)
+	AND userId NOT IN (
+		SELECT userId
+		FROM " . _CONTACT_MASTER_TABLE_ . "
+		WHERE contactId = " . intval($_SESSION['sessUserId']) . "
+	)
+	AND companyName != ''
+	AND userId != " . intval($_SESSION['sessUserId']) . "
+	" . $strWhereCourse . "
+	" . $strWhereDepartment . "
+	" . $strWhereUserType . "
+	" . $strWherePassingYear . "
 ";
+
 
 							$totalResult = mysqli_query($conn, $totalRecordsQuery);
 							$totalRow = mysqli_fetch_assoc($totalResult);

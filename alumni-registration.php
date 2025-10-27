@@ -606,10 +606,13 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-6 col-md-4" style="margin-bottom: 10px;">
-                                <select class="form-select" name="userstype" id="userstype"
-                                    onChange="selectusertypemain(this.value);" disabled>
-                                    <option value="3" selected>Alumni</option>
-                                </select>
+                                <!-- Visible Input (shows Alumni) -->
+                                <input type="text" class="form-control" id="userstype_display" value="Alumni"
+                                    placeholder="User Type" readonly onclick="selectusertypemain(3);">
+
+                                <!-- Hidden Input (actual value submitted) -->
+                                <input type="hidden" name="userstype" id="userstype" value="3">
+
 
                                 <script>
                                     $(document).ready(function () {
