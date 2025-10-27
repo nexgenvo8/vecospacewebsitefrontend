@@ -18,6 +18,42 @@ if ($search == '') {
 	}
 }
 
+
+$strWhereCourse = "";
+$strWhereDepartment = "";
+$strWhereUserType = "";
+$strWherePassingYear = "";
+
+// Clean the inputs to prevent injection
+$strSearchCourse = isset($_GET["courseName"]) ? clean($_GET["courseName"]) : '';
+$strSearchDepartment = isset($_GET["departmentName"]) ? clean($_GET["departmentName"]) : '';
+$strSearchUserType = isset($_GET["userType"]) ? clean($_GET["userType"]) : '';
+$strSearchPassingYear = isset($_GET["passingYear"]) ? clean($_GET["passingYear"]) : '';
+
+
+// Course filter
+if ($strSearchCourse != '' && $strSearchCourse != 'Course') {
+	$strWhereCourse = " AND coursename LIKE '%" . $strSearchCourse . "%' ";
+}
+
+// Department filter
+if ($strSearchDepartment != '' && $strSearchDepartment != 'Department') {
+	$strWhereDepartment = " AND departmentName LIKE '%" . $strSearchDepartment . "%' ";
+}
+
+// User Type filter
+if ($strSearchUserType != '' && $strSearchUserType != '0' && $strSearchUserType != 'User Type') {
+	$strWhereUserType = " AND userstype = '" . $strSearchUserType . "' ";
+}
+
+// Passing Year filter
+if ($strSearchPassingYear != '' && $strSearchPassingYear != 'Passing Year') {
+	$strWherePassingYear = " AND passingyear = '" . $strSearchPassingYear . "' ";
+}
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,25 +89,25 @@ if ($search == '') {
 							<?php if (isset($_POST['s']) && $_SESSION["s"] == 1) {
 								if ($_REQUEST['q'] == 1) { ?>
 									<div style="padding: 10px;
-	background-color: #d7f5bb;
-	margin-bottom: 9px;
-	border-radius: 5px;
-	text-align: center;
-	font-weight: bold;
-	border: 1px solid #ccecad;">Invitation has been sent.</div>
+								background-color: #d7f5bb;
+								margin-bottom: 9px;
+								border-radius: 5px;
+								text-align: center;
+								font-weight: bold;
+								border: 1px solid #ccecad;">Invitation has been sent.</div>
 								<?php }
 								$_SESSION["s"] = '';
 							} ?>
 
 							<?php if (isset($_POST['q']) && $_REQUEST['q'] == 2) { ?>
 								<div style="padding: 10px;
-	background-color: #fff3f3;
-	margin-bottom: 9px;
-	border-radius: 5px;
-	text-align: center;
-	font-weight: bold;
-	border: 1px solid #ffdfdf;
-	color: #de5454;">This email already registered with <?php echo $companNameTitle; ?>.</div>
+							background-color: #fff3f3;
+							margin-bottom: 9px;
+							border-radius: 5px;
+							text-align: center;
+							font-weight: bold;
+							border: 1px solid #ffdfdf;
+							color: #de5454;">This email already registered with <?php echo $companNameTitle; ?>.</div>
 							<?php } ?>
 							<form method="get" name="frmsearchcontacts" id="frmsearchcontacts">
 								<div class="srchfcontct">
@@ -181,6 +217,10 @@ if ($search == '') {
 
 
 										?>
+										<?php
+
+
+										?>
 
 										<li>
 											<div class="request-contct">
@@ -230,8 +270,9 @@ if ($search == '') {
 								<?php } ?>
 							</ul>
 						</div>
+
 						<div class="contct-list-cont">
-							<form method="get" name="frmsearchcontacts" id="frmsearchcontacts">
+							<form method="GET" action="contacts.html" name="frmsearchcontacts" id="frmsearchcontacts">
 								<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
 
 									<!-- Course Name -->
@@ -254,6 +295,7 @@ if ($search == '') {
 												$whereFields = [];
 												$whereVals = [];
 
+
 												$sqlOptions = "";
 												$sqlOptions = "SELECT * FROM " . _COURSE_MASTER_TABLE_ . "  WHERE status=1 order by course_name";
 												$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
@@ -269,7 +311,7 @@ if ($search == '') {
 												}
 												?>
 											</select>
-											<button type="button" style="
+											<button type="submit" style="
 												padding: 8px 16px;
 												border: none;
 												border-radius: 4px;
@@ -315,7 +357,7 @@ if ($search == '') {
 												}
 												?>
 											</select>
-											<button type="button" style="
+											<button type="submit" style="
 											padding: 8px 16px;
 											border: none;
 											border-radius: 4px;
@@ -357,7 +399,7 @@ if ($search == '') {
 												}
 												?>
 											</select>
-											<button type="button" style="
+											<button type="submit" style="
 											padding: 8px 16px;
 											border: none;
 											border-radius: 4px;
@@ -387,7 +429,7 @@ if ($search == '') {
 												<option value="3">Alumni</option>
 												<option value="4">Industry Professional</option>
 											</select>
-											<button type="button" style="
+											<button type="submit" style="
 												padding: 8px 16px;
 												border: none;
 												border-radius: 4px;
@@ -399,7 +441,7 @@ if ($search == '') {
 									</div>
 									<!-- Industry Name -->
 									<!-- Industry Name (Left-aligned) -->
-									<div class="srchfcontct"
+									<!-- <div class="srchfcontct"
 										style="flex: 0 0 45%; box-sizing: border-box; margin-bottom: 10px;">
 										<span>Industry Name</span>
 										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
@@ -433,7 +475,7 @@ if ($search == '') {
 												}
 												?>
 											</select>
-											<button type="button" style="
+											<button type="submit" style="
 												padding: 8px 16px;
 												border: none;
 												border-radius: 4px;
@@ -444,7 +486,7 @@ if ($search == '') {
 												Search
 											</button>
 										</div>
-									</div>
+									</div> -->
 
 
 
@@ -453,7 +495,7 @@ if ($search == '') {
 
 
 
-							<?php if (isset($_POST['searchkeywords']) && $_GET['searchkeywords'] != '') {
+							<?php if (isset($_Get['searchkeywords']) && $_GET['searchkeywords'] != '') {
 
 								$strWhereContacts .= "";
 								$strWhereContacts .= " and  (firstName like '%" . $_GET['searchkeywords'] . "%' OR lastName like '%" . $_GET['searchkeywords'] . "%' OR email like '%" . $_GET['searchkeywords'] . "%' ) ";
@@ -487,26 +529,39 @@ if ($search == '') {
 
 							// Count total records for pagination
 							$sqlCount = "SELECT COUNT(*) as total FROM " . _USERS_MASTER_TABLE_ . " 
-    WHERE activeYN='Y' 
-    AND userId!=106 
-    AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
-    AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
-    AND companyName!='' 
-    AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere;
+							WHERE activeYN='Y' 
+							AND userId!=106 
+							AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
+							AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
+							AND companyName!='' 
+							AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere;
 							$resCount = mysqli_query($conn, $sqlCount) or die(mysqli_error($conn));
 							$rowCount = mysqli_fetch_assoc($resCount);
 							$totalRecords = $rowCount['total'];
 
 							// Main query with LIMIT for pagination
-							$sqlLogin = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " 
-    WHERE activeYN='Y' 
-    AND userId!=106 
-    AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
-    AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
-    AND companyName!='' 
-    AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere . " 
-    ORDER BY userId DESC 
-    LIMIT " . intval($startpage) . ", " . intval($limit);
+							$sqlLogin = "
+								SELECT * FROM " . _USERS_MASTER_TABLE_ . "
+								WHERE activeYN='Y' 
+								AND userId!=106 
+								AND userId NOT IN (
+									SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " 
+									WHERE userId=" . intval($_SESSION["sessUserId"]) . "
+								)
+								AND userId NOT IN (
+									SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " 
+									WHERE contactId=" . intval($_SESSION["sessUserId"]) . "
+								)
+								AND companyName!=''
+								AND userId!='" . intval($_SESSION['sessUserId']) . "'
+								" . $strWhereCourse . "
+								" . $strWhereDepartment . "
+								" . $strWhereUserType . "
+								" . $strWherePassingYear . "
+								ORDER BY userId DESC
+								LIMIT " . intval($startpage) . ", " . intval($limit) . "
+							";
+
 
 							$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
 							?>
@@ -565,38 +620,108 @@ if ($search == '') {
 							$limit = 10; // records per page
 							$startpage = isset($_GET['startpage']) ? intval($_GET['startpage']) : 0;
 
-							// Total records count
-							$totalRecordsQuery = "SELECT COUNT(*) as total FROM " . _USERS_MASTER_TABLE_;
+							// Preserve filters in pagination URLs
+							$courseName = isset($_GET['courseName']) ? urlencode($_GET['courseName']) : '';
+							$departmentName = isset($_GET['departmentName']) ? urlencode($_GET['departmentName']) : '';
+							$userType = isset($_GET['userType']) ? urlencode($_GET['userType']) : '';
+							$passingYear = isset($_GET['passingYear']) ? urlencode($_GET['passingYear']) : '';
+
+							// Build query string for filters (excluding startpage)
+							$queryString = "courseName={$courseName}&departmentName={$departmentName}&userType={$userType}&passingYear={$passingYear}";
+
+							// ✅ Use same filters in COUNT query
+							$totalRecordsQuery = "
+    SELECT COUNT(*) as total 
+    FROM " . _USERS_MASTER_TABLE_ . "
+    WHERE activeYN='Y' 
+    AND userId!=106
+    AND userId NOT IN (
+        SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " 
+        WHERE userId=" . intval($_SESSION["sessUserId"]) . "
+    )
+    AND userId NOT IN (
+        SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " 
+        WHERE contactId=" . intval($_SESSION["sessUserId"]) . "
+    )
+    AND companyName!=''
+    AND userId!='" . intval($_SESSION['sessUserId']) . "'
+    " . $strWhereCourse . "
+    " . $strWhereDepartment . "
+    " . $strWhereUserType . "
+    " . $strWherePassingYear . "
+";
+
 							$totalResult = mysqli_query($conn, $totalRecordsQuery);
 							$totalRow = mysqli_fetch_assoc($totalResult);
 							$totalRecords = $totalRow['total'];
 
-							// Current page
+							// Calculate pages
 							$currentPage = floor($startpage / $limit) + 1;
-
-							// Total pages
 							$totalPages = ceil($totalRecords / $limit);
 
+							// Pagination UI
+							echo '<div class="pagination-wrapper">';
 							echo '<div class="pagination-buttons">';
 
-							// Previous button
+							// Previous
 							if ($currentPage > 1) {
 								$prevStart = ($currentPage - 2) * $limit;
-								echo '<a href="?startpage=' . $prevStart . '" class="prev-btn">&laquo; Previous</a>';
+								echo '<a href="?' . $queryString . '&startpage=' . $prevStart . '" class="prev-btn">&laquo; Previous</a>';
 							} else {
 								echo '<button class="prev-btn" disabled>&laquo; Previous</button>';
 							}
 
-							// Next button
+							// Page numbers
+							echo '<div class="page-numbers">';
+							$visiblePages = 3;
+							$start = max(1, $currentPage - 1);
+							$end = min($totalPages, $start + $visiblePages - 1);
+
+							if ($end - $start + 1 < $visiblePages) {
+								$start = max(1, $end - $visiblePages + 1);
+							}
+
+							if ($start > 1) {
+								echo '<a href="?' . $queryString . '&startpage=0" class="page-number">1</a>';
+								if ($start > 2)
+									echo '<span class="dots">...</span>';
+							}
+
+							for ($i = $start; $i <= $end; $i++) {
+								$pageStart = ($i - 1) * $limit;
+								if ($i == $currentPage) {
+									echo '<span class="page-number active">' . $i . '</span>';
+								} else {
+									echo '<a href="?' . $queryString . '&startpage=' . $pageStart . '" class="page-number">' . $i . '</a>';
+								}
+							}
+
+							if ($end < $totalPages) {
+								if ($end < $totalPages - 1)
+									echo '<span class="dots">...</span>';
+								$lastStart = ($totalPages - 1) * $limit;
+								echo '<a href="?' . $queryString . '&startpage=' . $lastStart . '" class="page-number">' . $totalPages . '</a>';
+							}
+
+							echo '</div>';
+
+							// Next
 							if ($currentPage < $totalPages) {
 								$nextStart = $currentPage * $limit;
-								echo '<a href="?startpage=' . $nextStart . '" class="next-btn">Next &raquo;</a>';
+								echo '<a href="?' . $queryString . '&startpage=' . $nextStart . '" class="next-btn">Next &raquo;</a>';
 							} else {
 								echo '<button class="next-btn" disabled>Next &raquo;</button>';
 							}
 
 							echo '</div>';
+							echo '</div>';
 							?>
+
+
+
+
+
+
 
 
 
@@ -616,41 +741,57 @@ if ($search == '') {
 				</div>
 			</div>
 		</div>
+
+
 		<style>
-			<style>.pagination-buttons {
-				display: flex;
-				justify-content: center;
-				/* center horizontally */
-				gap: 10px;
-				/* space between buttons */
-				margin: 20px 0;
-				/* spacing from content */
+			.pagination-wrapper {
+				text-align: center;
+				margin-top: 20px;
+			}
+
+			.pagination-buttons {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
 			}
 
 			.pagination-buttons a,
-			.pagination-buttons button {
-				padding: 8px 16px;
-				background-color: green;
-				color: white;
+			.pagination-buttons button,
+			.page-number {
+				padding: 6px 12px;
+				border: 1px solid #ccc;
+				background: #20741f;
+				color: #e2d5d5ff;
 				text-decoration: none;
-				border: none;
 				border-radius: 5px;
-				cursor: pointer;
-				font-weight: bold;
-				transition: background 0.3s;
+				transition: all 0.2s ease;
 			}
 
 			.pagination-buttons a:hover {
-				background-color: green;
+				background: #20741f;
+				color: #fff;
 			}
 
-			.pagination-buttons button[disabled] {
-				background-color: #cccccc;
-				cursor: not-allowed;
+			.page-number.active {
+				background: #20741f;
+				color: #fff;
+				border-color: #20741f;
+				font-weight: bold;
+			}
+
+			.page-numbers {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+			}
+
+			.dots {
+				padding: 6px 10px;
+				color: #888;
 			}
 		</style>
 
-		</style>
+
 		<?php include('footer.php'); ?>
 
 		<script>
