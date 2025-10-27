@@ -299,7 +299,7 @@ if (file_exists($userfilename)) {
 									if ($aabb['id'] == '') { ?>
 
 										<?php
-										if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
+										if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
 											if ($blockeduser > 0) {
 												?>
 												<a class="btn grey addas-contct"

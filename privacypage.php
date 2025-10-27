@@ -31,7 +31,7 @@ $privacypage = 1;
         <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/ndimlogo.png"
             style="width: 275px;" /></a>
       </div>
-      <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
+      <?php if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
           <div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
             <a href="javascript:void(0);">
               <span class="usr_img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
