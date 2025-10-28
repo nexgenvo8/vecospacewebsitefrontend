@@ -610,7 +610,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                 <input type="text" class="form-control" id="userstype_display" value="Alumni"
                                     placeholder="User Type" readonly onclick="selectusertypemain(3);">
 
-                                <!-- Hidden Input (actual value submitted) -->
+                                <!-- Hidden Input (actual value submitted) 
+                                 -->
                                 <input type="hidden" name="userstype" id="userstype" value="3">
 
 

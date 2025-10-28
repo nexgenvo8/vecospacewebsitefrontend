@@ -398,14 +398,14 @@
 							<span class="tltp">Notice Board</span></a>
 					</li>
 					<?php
-					if ($sessuserstype == '1') {
+					if ($sessuserstype == '3') {
 						?>
 
 						<li>
 							<a href="<?php echo $fullurl; ?>job-fair.html"
 								class="<?php if ($pageIndex == 50) { ?>active<?php } ?> ripple">
 								<i class="micon"><i class="fa fa-address-card" aria-hidden="true"></i></i>
-								<span class="tltp">Placement Registration</span></a>
+								<span class="tltp">Alumni Affairs Registration</span></a>
 						</li>
 						<?php
 					}

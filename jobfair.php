@@ -7,9 +7,8 @@ ini_set('post_max_size', '25M');
 $pageIndex = 50;
 //print_r($_POST);
 
-
 if (
-    !empty($_POST['studentId']) &&
+    !empty($_POST['EnrollmentNo']) &&
     !empty($_POST['mobile']) &&
     (!empty($_POST['action']) && trim($_POST['action']) == 'addcompany')
 ) {
@@ -37,17 +36,23 @@ if (
         exit;
     }
 
-    $studentId   = trim($_POST['studentId']);
-    $mobile      = trim($_POST['mobile']);
-    $semester    = trim($_POST['semester']);
-    $photoIdType = trim($_POST['photoIdType']);
-    $jobTerms    = trim($_POST['jobTerms']);
-    $prefix      = 'UPC' . date('y') . date('m'); // e.g. UPC2509
-    $timename    = time();
+    // ---------- POST FIELDS ----------
+    $EnrollmentNo   = trim($_POST['EnrollmentNo']);
+    $mobile         = trim($_POST['mobile']);
+    $photoIdType    = trim($_POST['photoIdType']);
+    $jobTerms       = trim($_POST['jobTerms']);
+    $profession     = trim($_POST['profession']);
+    $jobTitle       = trim($_POST['jobTitle']);
+    $companyName    = trim($_POST['companyName']);
+    $industryId     = trim($_POST['industryId']);
+    $linkedIn       = trim($_POST['linkedIn']);
+    $CompanyWebsite = trim($_POST['CompanyWebsite']);
+    $prefix         = 'UPC' . date('y') . date('m'); // e.g. UPC2509
+    $timename       = time();
 
-    // ---------- File Upload Helper with error messages ----------
+    // ---------- File Upload Helper ----------
     function uploadFile($field, $timename, $maxSize = 5242880) {
-        if (isset($_FILES[$field]) && $_FILES[$field]['error'] !== 4) { // file chosen
+        if (isset($_FILES[$field]) && $_FILES[$field]['error'] !== 4) {
             $errorCode = $_FILES[$field]['error'];
 
             if ($errorCode !== 0) {
@@ -58,38 +63,34 @@ if (
             $fileName = $_FILES[$field]['name'];
             $fileSize = $_FILES[$field]['size'];
 
-            // Validate size
             if ($fileSize > $maxSize) {
                 return "File too large! Max size is 5MB.";
             }
 
-            // Validate image (Google Drive, PDFs, etc. will fail)
             $check = @getimagesize($fileTmp);
             if ($check === false) {
                 return "Invalid file source! Please upload only images from Gallery or Camera, not Google Drive.";
             }
 
-            // Validate extension
             $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
             $allowedExt = ['jpg', 'jpeg', 'png'];
             if (!in_array($ext, $allowedExt)) {
                 return "Invalid file type! Only JPG and PNG are allowed.";
             }
 
-            // Save
             $filename    = $timename . "_" . preg_replace('!\s+!', '-', $fileName);
             $destination = "uploads/" . $filename;
 
             if (move_uploaded_file($fileTmp, $destination)) {
-                return $filename; // ✅ success
+                return $filename;
             } else {
                 return "Failed to save uploaded file. Please try again.";
             }
         }
-        return ''; // no file uploaded
+        return '';
     }
 
-    // ---------- Upload files ----------
+    // ---------- Upload Files ----------
     $errorMsg = "";
 
     $university_file_name = uploadFile('universityIdAttchment', $timename);
@@ -107,7 +108,12 @@ if (
         $errorMsg = $profile_photo;
     }
 
-    // If error → alert and stop
+    // ✅ NEW FIELD: Membership Image Upload
+    $membership_image = uploadFile('membershipImage', $timename);
+    if ($membership_image && !file_exists("uploads/" . $membership_image)) {
+        $errorMsg = $membership_image;
+    }
+
     if ($errorMsg !== "") {
         echo "<script>alert('❌ $errorMsg'); window.history.back();</script>";
         exit;
@@ -130,25 +136,34 @@ if (
 
     // ---------- Build Update Query ----------
     $setParts = array(
-        "studentId = '" . mysqli_real_escape_string($conn, $studentId) . "'",
+        "EnrollmentNo = '" . mysqli_real_escape_string($conn, $EnrollmentNo) . "'",
         "mobile = '" . mysqli_real_escape_string($conn, $mobile) . "'",
-        "semester = '" . mysqli_real_escape_string($conn, $semester) . "'",
         "photoIdType = '" . mysqli_real_escape_string($conn, $photoIdType) . "'",
-        "registrationNo = '" .mysqli_real_escape_string($conn, $registrationNo) . "'",
-        "jobTerms = '" . mysqli_real_escape_string($conn, $jobTerms) . "'"
+        "registrationNo = '" . mysqli_real_escape_string($conn, $registrationNo) . "'",
+        "jobTerms = '" . mysqli_real_escape_string($conn, $jobTerms) . "'",
+        "profession = '" . mysqli_real_escape_string($conn, $profession) . "'",
+        "jobTitle = '" . mysqli_real_escape_string($conn, $jobTitle) . "'",
+        "companyName = '" . mysqli_real_escape_string($conn, $companyName) . "'",
+        "industryId = '" . mysqli_real_escape_string($conn, $industryId) . "'",
+        "linkedIn = '" . mysqli_real_escape_string($conn, $linkedIn) . "'",
+        "CompanyWebsite = '" . mysqli_real_escape_string($conn, $CompanyWebsite) . "'"
     );
 
     if (!empty($university_file_name)) {
-        $setParts[] = "universityIdAttchment = '" . mysqli_real_escape_string($conn,$university_file_name) . "'";
+        $setParts[] = "universityIdAttchment = '" . mysqli_real_escape_string($conn, $university_file_name) . "'";
     }
     if (!empty($photo_id_name)) {
-        $setParts[] = "studentphotoId = '" . mysqli_real_escape_string($conn,$photo_id_name) . "'";
+        $setParts[] = "studentphotoId = '" . mysqli_real_escape_string($conn, $photo_id_name) . "'";
     }
     if (!empty($profile_photo)) {
-        $setParts[] = "profilePhoto = '" . mysqli_real_escape_string($conn,$profile_photo) . "'";
+        $setParts[] = "profilePhoto = '" . mysqli_real_escape_string($conn, $profile_photo) . "'";
+    }
+    if (!empty($membership_image)) {
+        $setParts[] = "MembershipImage = '" . mysqli_real_escape_string($conn, $membership_image) . "'";
     }
 
     $sql_ins = "UPDATE userMaster SET " . implode(", ", $setParts) . " WHERE userId = '$userId'";
+    
     mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 
     $_SESSION["s"] = 1;
@@ -161,6 +176,7 @@ if (
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -342,7 +358,7 @@ if (
                                         ?>
                                     </select>
                                 </div>
-                                <div class="form-grp fifty pd-right">
+                                <!-- <div class="form-grp fifty pd-right">
                                     <label>Semester<span class="reqstar">*</span></label>
                                     <select class="form-select" name="semester" id="semester" required >
                                         <option option="">Select Semester</option>
@@ -355,7 +371,7 @@ if (
                                         <option option="7">7</option>
                                         <option option="8">8</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="form-grp fifty pd-right">
                                     <label>Year of Passing<span class="reqstar">*</span></label>
                                     <select class="form-select" name="passingyear" id="passingyear" required>
@@ -395,6 +411,34 @@ if (
                                         <option option="Other" <?php if($mygender=="Other"){ echo "selected"; } ?>>Other</option>
                                     </select>
                                 </div>
+                                
+                                <!-- Industry ID -->
+                               <div class="form-grp fifty pd-right">
+                                    <label>Industry<span class="reqstar">*</span></label>
+                                    <select class="form-select" name="industryId" id="industryId" required>
+                                        <option value="">Select Industry</option>
+                                        <?php
+                                        $selectFields = [];
+                                        $whereFields = [];
+                                        $whereVals = [];
+
+                                        $sqlOptions = "SELECT id, optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='industry'";
+                                        $resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
+
+                                        if ($resOptions) {
+                                            while ($rowOptions = mysqli_fetch_array($resOptions)) {
+                                                $strSelected = ($industryId == $rowOptions['id']) ? 'selected="selected"' : '';
+                                                ?>
+                                                <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
+                                                    <?php echo trim($rowOptions['optionName']); ?>
+                                                </option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
                                 </div>
                                 <div class="form-grp hundred pd-right">
                                     <label>Upload Your University ID<span class="reqstar">*</span></label>
@@ -402,9 +446,10 @@ if (
                                     <input type="file" accept="image/*" name="universityIdAttchment" id="universityIdAttach" value="" class="validate mt-2" style="height: 36px;" required>
                                 </div>
                                 <div class="form-grp fifty pd-right">
-                                    <label>Student Id<span class="reqstar">*</span></label>
-                                    <input type="text" name="studentId" id="studentId" value="<?php echo $mystudentId; ?>" class="validate" maxlength="100" required />
+                                    <label>Enrolment/Roll No.<span class="reqstar">*</span></label>
+                                    <input type="text" name="EnrollmentNo" id="EnrollmentNo" value="" class="validate" maxlength="100" placeholder="Enrolment Number" required />
                                 </div>
+                                
                                 <div class="form-grp fifty pd-right">
                                     <label>Photo ID Type<span class="reqstar">*</span></label>
                                     <select class="form-select" name="photoIdType" id="photoIdType" required>
@@ -434,6 +479,58 @@ if (
                                     <input type="file" accept="image/*"  name="studentphotoId" id="studentphotoId" value="" class="validate" style="height: 36px;" required>
                                 </div>
                                 
+
+                                
+
+                                <!-- Profession (Select Field) -->
+                                <div class="form-grp fifty pd-right">
+                                    <label>Profession<span class="reqstar">*</span></label>
+                                    <select name="profession" id="profession" class="validate" required>
+                                        <option value="">-- Select Profession --</option>
+                                        <option value="1">Business</option>
+                                        <option value="2">Job</option>
+                                        <option value="3">Homemaker</option>
+                                        <option value="4">Not Working</option>
+                                    </select>
+                                </div>
+
+                                <!-- Job Title -->
+                                <div class="form-grp fifty pd-right">
+                                    <label>Job Title<span class="reqstar">*</span></label>
+                                    <input type="text" name="jobTitle" id="jobTitle" value="<?php echo $myjobTitle ?? ''; ?>" class="validate" maxlength="100" placeholder="Job Title" required />
+                                </div>
+
+                                <div class="form-grp hundred pd-right">
+                                    <label>Upload Membership Fee Reciept<span class="reqstar">*</span></label><br>
+                                    <h3 style="font-size: 18px;">Bank Details: </h3>
+                                    <span class="mb-2" style="font-size: 18px;">AC Name: Jamia Alumni And Donor Endowment Found</span><br>
+                                    <span class="mb-2" style="font-size: 18px;">Bank Name : State Bank Of India</span><br>
+                                    <span class="mb-2" style="font-size: 18px;">AC No: 41324220286</span><br>
+                                    <span class="" style="font-size: 18px;">IFSC CODE: SBIN0006069</span>
+                                    <h3>Note: Membership Fee -Rs 1000 for 3 Years & Rs 5000 For Lifetime Membership</h3>
+                                    <input type="file" accept="image/*" name="membershipImage" id="membershipImage" value="" class="validate" style="height: 36px;margin-top: 8px;" required>
+                                </div>
+
+                                <!-- Company Name -->
+                                <div class="form-grp fifty pd-right">
+                                    <label>Company Name<span class="reqstar">*</span></label>
+                                    <input type="text" name="companyName" id="companyName" value="<?php echo $mycompanyName ?? ''; ?>" class="validate" maxlength="100" placeholder="Company Name" required />
+                                </div>
+
+
+                                <!-- LinkedIn Profile -->
+                                <div class="form-grp fifty pd-right">
+                                    <label>LinkedIn Profile</label>
+                                    <input type="url" name="linkedIn" id="linkedIn" value="<?php echo $mylinkedIn ?? ''; ?>" class="validate" maxlength="255" placeholder="LinkedIn Profile URL" />
+                                </div>
+
+                                <!-- Company Website -->
+                                <div class="form-grp fifty pd-right">
+                                    <label>Company Website</label>
+                                    <input type="url" name="CompanyWebsite" id="CompanyWebsite" value="<?php echo $myCompanyWebsite ?? ''; ?>" class="validate" maxlength="255" placeholder="Company Website URL" />
+                                </div>
+
+
                                 <!-- Terms & Conditions Checkbox -->
                                 <label style="margin-top:10px;" class="trms">
                                 <input required type="checkbox" name="jobTerms" id="jobTerms" class="validate" value="1" autocomplete="off">

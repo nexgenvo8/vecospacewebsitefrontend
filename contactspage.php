@@ -410,35 +410,7 @@ if ($strSearchPassingYear != '' && $strSearchPassingYear != 'Passing Year') {
 										</div>
 									</div>
 
-									<!-- User Type -->
-									<div class="srchfcontct" style="flex: 0 0 45%; box-sizing: border-box;">
-										<span>User Type</span>
-										<div class="srch-field" style="display: flex; align-items: center; gap: 10px;">
-											<select name="userType" id="userType" class="validate" style="
-											width: 100%;
-											padding: 8px 10px;
-											font-size: 14px;
-											border: 1px solid #ccc;
-											border-radius: 4px;
-											outline: none;
-											background-color: #fff;
-											box-sizing: border-box;
-										">
-												<option value="1">Student</option>
-												<option value="2">Faculty</option>
-												<option value="3">Alumni</option>
-												<option value="4">Industry Professional</option>
-											</select>
-											<button type="submit" style="
-												padding: 8px 16px;
-												border: none;
-												border-radius: 4px;
-												background-color: #20741f;
-												color: #fff;
-												cursor: pointer;
-											">Search</button>
-										</div>
-									</div>
+
 									<!-- Industry Name -->
 									<!-- Industry Name (Left-aligned) -->
 									<!-- <div class="srchfcontct"
@@ -529,38 +501,41 @@ if ($strSearchPassingYear != '' && $strSearchPassingYear != 'Passing Year') {
 
 							// Count total records for pagination
 							$sqlCount = "SELECT COUNT(*) as total FROM " . _USERS_MASTER_TABLE_ . " 
-							WHERE activeYN='Y' 
-							AND userId!=106 
-							AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
-							AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
-							AND companyName!='' 
-							AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere;
+WHERE activeYN='Y' 
+AND userId!=106 
+AND userstype = 3 
+AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ")
+AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ")
+AND companyName!='' 
+AND userId!='" . $_SESSION['sessUserId'] . "' " . $strWhere;
+
 							$resCount = mysqli_query($conn, $sqlCount) or die(mysqli_error($conn));
 							$rowCount = mysqli_fetch_assoc($resCount);
 							$totalRecords = $rowCount['total'];
 
 							// Main query with LIMIT for pagination
 							$sqlLogin = "
-								SELECT * FROM " . _USERS_MASTER_TABLE_ . "
-								WHERE activeYN='Y' 
-								AND userId!=106 
-								AND userId NOT IN (
-									SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " 
-									WHERE userId=" . intval($_SESSION["sessUserId"]) . "
-								)
-								AND userId NOT IN (
-									SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " 
-									WHERE contactId=" . intval($_SESSION["sessUserId"]) . "
-								)
-								AND companyName!=''
-								AND userId!='" . intval($_SESSION['sessUserId']) . "'
-								" . $strWhereCourse . "
-								" . $strWhereDepartment . "
-								" . $strWhereUserType . "
-								" . $strWherePassingYear . "
-								ORDER BY userId DESC
-								LIMIT " . intval($startpage) . ", " . intval($limit) . "
-							";
+	SELECT * FROM " . _USERS_MASTER_TABLE_ . "
+	WHERE activeYN='Y' 
+	AND userId!=106 
+	AND userstype = 3
+	AND userId NOT IN (
+		SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " 
+		WHERE userId=" . intval($_SESSION["sessUserId"]) . "
+	)
+	AND userId NOT IN (
+		SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " 
+		WHERE contactId=" . intval($_SESSION["sessUserId"]) . "
+	)
+	AND companyName!=''
+	AND userId!='" . intval($_SESSION['sessUserId']) . "'
+	" . $strWhereCourse . "
+	" . $strWhereDepartment . "
+	" . $strWhereUserType . "
+	" . $strWherePassingYear . "
+	ORDER BY userId DESC
+	LIMIT " . intval($startpage) . ", " . intval($limit) . "
+";
 
 
 							$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
@@ -634,6 +609,7 @@ if ($strSearchPassingYear != '' && $strSearchPassingYear != 'Passing Year') {
 	FROM " . _USERS_MASTER_TABLE_ . "
 	WHERE activeYN = 'Y'
 	AND userId != 106
+	AND userstype = 3 
 	AND userId NOT IN (
 		SELECT contactId
 		FROM " . _CONTACT_MASTER_TABLE_ . "

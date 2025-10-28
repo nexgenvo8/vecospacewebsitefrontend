@@ -14,12 +14,19 @@
 			$b2 = mysqli_query($conn, $a2) or die(mysqli_error($conn));
 			$userres2 = mysqli_fetch_array($b2);
 
-			$friendnameurl2 = $userres2['userurl'];
-			if ($userres2["profilePhoto"] != '') {
-				$userphoto2 = $userres2["profilePhoto"];
+			if (!empty($userres2) && is_array($userres2)) {
+				$friendnameurl2 = !empty($userres2['userurl']) ? $userres2['userurl'] : '';
+
+				if (!empty($userres2["profilePhoto"])) {
+					$userphoto2 = $userres2["profilePhoto"];
+				} else {
+					$userphoto2 = 'user-placeholder.jpg';
+				}
 			} else {
+				$friendnameurl2 = '';
 				$userphoto2 = 'user-placeholder.jpg';
 			}
+
 			?>
 				<li><a style="cursor:pointer;" title="<?php $names = $names . ', ' . $userres2["firstName"];
 				echo $userres2["firstName"]; ?> <?php echo $userres2["lastName"]; ?>"

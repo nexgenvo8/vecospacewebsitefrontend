@@ -10,12 +10,38 @@ $getPostType = $_REQUEST['postType'] ?? '';
 $activitPostType = $_REQUEST['activitPostType'] ?? '';
 $postWhere = "";
 
-$postWhere = "select * from " . _TIMELINE_MASTER_TABLE_ . " where " . $postWhere . " (userId IN(SELECT contactId FROM " . _CONTACT_MASTER_TABLE_
-	. " WHERE  userId='" . $_SESSION['sessUserId'] . "' and status=1 and shareType=2) OR  shareType=1) and status=1 and userId!=106  and adType=0 and postId!=0 order by dateAdded desc limit " . $startpage . "," . $endpage . " ";
+$postWhere = "select * from " . _TIMELINE_MASTER_TABLE_ . " 
+where " . $postWhere . " 
+(userId IN (
+    SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " 
+    WHERE userId='" . $_SESSION['sessUserId'] . "' 
+    and status=1 and shareType=2
+) 
+OR shareType=1)
+and status=1 
+and userId!=106 
+and adType=0 
+and postId!=0 
+and userId IN (
+    SELECT userId FROM " . _USERS_MASTER_TABLE_ . " WHERE userstype=3
+)
+order by dateAdded desc 
+limit " . $startpage . "," . $endpage;
+
 
 if ($getPostId != '' && $getPostType != '') {
-	$postWhere = "select * from " . _TIMELINE_MASTER_TABLE_ . " where postId=" . decodeStr($getPostId) . " and postType=" . $getPostType . " and userId!=106 and adType=0  order by dateAdded desc limit " . $startpage . "," . $endpage . " ";
+	$postWhere = "select * from " . _TIMELINE_MASTER_TABLE_ . " 
+    where postId=" . decodeStr($getPostId) . " 
+    and postType=" . $getPostType . " 
+    and userId!=106 
+    and adType=0  
+    and userId IN (
+        SELECT userId FROM " . _USERS_MASTER_TABLE_ . " WHERE userstype=3
+    )
+    order by dateAdded desc 
+    limit " . $startpage . "," . $endpage;
 }
+
 
 if ($activitPostType != '') {
 	$wherepostActivityType = '';
