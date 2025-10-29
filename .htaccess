@@ -108,7 +108,7 @@ RewriteRule ^alumni-pvcypage.html$ alumni-pvcy.php  [NC,L]
 RewriteRule ^registration-form.html$ alumni-registration-form.php  [NC,L]
 
 RewriteRule ^konectt-live.html$ videocallpage.php  [NC,L]
-
+RewriteRule ^ndim-pvcypage.html$ ndim-pvcy.php  [NC,L]
 
 RewriteRule ^smb-categories.html$ businesslist.php  [NC,L]
 RewriteRule ^all-sme-blogs.html$ allsmeblogslist.php  [NC,L]

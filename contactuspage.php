@@ -219,21 +219,21 @@ $('#logintabledata4').hide();
 	<div class="aboutheader">
 		<div class="container">
 			<div class="logo">
-				<a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/ndimlogo.png"
-						style="width: 275px;" /></a>
+				<a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img
+						src="images/ndimlogo.png" style="width: 275px;" /></a>
 			</div>
-			<?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
-					<div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
-						<a href="javascript:void(0);">
-							<span class="usr_img"><img
-									src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
-						</a>
-						<ul class="setting_menu" style="display: none;">
-							<li><a href="<?php echo $fullurl; ?>"><i class="fa fa-cog" aria-hidden="true"></i> Go to
-									timeline</a>
-							</li>
-						</ul>
-					</div>
+			<?php if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
+				<div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
+					<a href="javascript:void(0);">
+						<span class="usr_img"><img
+								src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
+					</a>
+					<ul class="setting_menu" style="display: none;">
+						<li><a href="<?php echo $fullurl; ?>"><i class="fa fa-cog" aria-hidden="true"></i> Go to
+								timeline</a>
+						</li>
+					</ul>
+				</div>
 			<?php } ?>
 		</div>
 	</div>
@@ -256,21 +256,21 @@ $('#logintabledata4').hide();
 
 
 						<?php if ($isSubmitted == 'n') { ?>
-								<div style="margin-bottom:30px;font-size: 15px;text-align: left;">
-									Thank you for reaching out. If you have any queries, please fill the details in the fields
-									below and we shall get back with an answer soon.
-									You can also write to us on <a href="mailto:info@vecospace.com">info@vecospace.com</a>
-								</div>
+							<div style="margin-bottom:30px;font-size: 15px;text-align: left;">
+								Thank you for reaching out. If you have any queries, please fill the details in the fields
+								below and we shall get back with an answer soon.
+								You can also write to us on <a href="mailto:info@vecospace.com">info@vecospace.com</a>
+							</div>
 						<?php } ?>
 
 						<?php
 						$errMsg = $errMsg ?? ''; // Ensure $errMsg is defined
 						
 						if (!empty($errMsg)) { ?>
-								<div style="<?php if ($isSubmitted == 'n') { ?>margin-bottom:30px; font-size: 15px;text-align: left;<?php } else { ?>margin-bottom: 30px; font-size: 15px; min-height: 150px; padding-top: 15px; text-align: center; color: #4a4a4a !important;<?php } ?>"
-									class="<?php echo $className; ?>">
-									<?php echo $errMsg; ?>
-								</div>
+							<div style="<?php if ($isSubmitted == 'n') { ?>margin-bottom:30px; font-size: 15px;text-align: left;<?php } else { ?>margin-bottom: 30px; font-size: 15px; min-height: 150px; padding-top: 15px; text-align: center; color: #4a4a4a !important;<?php } ?>"
+								class="<?php echo $className; ?>">
+								<?php echo $errMsg; ?>
+							</div>
 						<?php } ?>
 
 
@@ -281,26 +281,26 @@ $('#logintabledata4').hide();
 						?>
 
 						<?php if ($isSubmitted == 'n') { ?>
-								<input type="text" name="contactName" id="contactName"
-									value="<?php echo stripslashes($contactName); ?>" placeholder="Name" maxlength="60"
-									onKeyUp="hideerrordiv(this.id);" class="validate">
+							<input type="text" name="contactName" id="contactName"
+								value="<?php echo stripslashes($contactName); ?>" placeholder="Name" maxlength="60"
+								onKeyUp="hideerrordiv(this.id);" class="validate">
 
-								<input type="email" name="email" id="email" value="<?php echo stripslashes($email); ?>"
-									placeholder="Email address" maxlength="60" onKeyUp="hideerrordiv(this.id);"
-									class="validate">
+							<input type="email" name="email" id="email" value="<?php echo stripslashes($email); ?>"
+								placeholder="Email address" maxlength="60" onKeyUp="hideerrordiv(this.id);"
+								class="validate">
 
-								<textarea rows="4" name="message" id="message" placeholder="Kindly describe your query"
-									style="height: 100px; width: 100%; padding: 10px; margin-bottom: 20px;" maxlength="2000"
-									class="validate"
-									onKeyUp="hideerrordiv(this.id);"><?php echo stripslashes($message); ?></textarea>
+							<textarea rows="4" name="message" id="message" placeholder="Kindly describe your query"
+								style="height: 100px; width: 100%; padding: 10px; margin-bottom: 20px;" maxlength="2000"
+								class="validate"
+								onKeyUp="hideerrordiv(this.id);"><?php echo stripslashes($message); ?></textarea>
 
-								<div class="txtfld_labl" style="margin-bottom: 20px;">Are you Human?</div>
-								<span class="erorfldcls" id="recaptcha_response_field"></span>
-								<div class="g-recaptcha" data-callback="recaptchaCallback"
-									data-sitekey="<?php echo _RECAPTCHA_SITE_KEY_; ?>" style="margin-bottom: 20px;"></div>
+							<div class="txtfld_labl" style="margin-bottom: 20px;">Are you Human?</div>
+							<span class="erorfldcls" id="recaptcha_response_field"></span>
+							<div class="g-recaptcha" data-callback="recaptchaCallback"
+								data-sitekey="<?php echo _RECAPTCHA_SITE_KEY_; ?>" style="margin-bottom: 20px;"></div>
 
-								<button type="button" onClick="formValidation('contactusfrm');">Submit</button>
-								<input type="hidden" name="txtAction" id="txtAction" value="<?php echo $action; ?>">
+							<button type="button" onClick="formValidation('contactusfrm');">Submit</button>
+							<input type="hidden" name="txtAction" id="txtAction" value="<?php echo $action; ?>">
 						<?php } ?>
 
 					</form>

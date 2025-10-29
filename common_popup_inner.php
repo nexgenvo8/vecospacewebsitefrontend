@@ -18,8 +18,6 @@ $type = clean($_REQUEST['type']);
 				onclick="$('.crt-grp-popup').hide();$('#groupName').val('');$('#groupDetails').val('');">No</a>
 		</div>
 	</div>
-
-
 <?php } ?>
 
 <?php if ($type == 'sendmsgtocontact') { ?>

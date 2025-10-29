@@ -4828,7 +4828,7 @@ if ($_REQUEST['action'] == 'reportpost' && trim($_REQUEST['hiddenpid']) != '' &&
 		<?php
 }
 
-if ($_REQUEST['action'] == 'changepass' && $_REQUEST['oldpass'] != '' && trim($_REQUEST['newpass']) != '' && trim($_REQUEST['confirmpass']) != '') {
+if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'changepass' && $_REQUEST['oldpass'] != '' && trim($_REQUEST['newpass']) != '' && trim($_REQUEST['confirmpass']) != '') {
 	?>
 		<script>
 			parent.$('#errormsgpass').hide();

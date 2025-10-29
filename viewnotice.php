@@ -20,7 +20,6 @@ if ($articletext['id'] == '') {
 }
 
 
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -95,16 +94,6 @@ if ($articletext['id'] == '') {
 
                 <p><?php echo stripslashes($articletext['details']); ?></p>
               </div>
-
-
-
-
-
-
-
-
-
-
 
             </div>
 
