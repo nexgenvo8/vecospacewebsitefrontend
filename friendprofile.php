@@ -1014,7 +1014,6 @@ if (file_exists($userfilename)) {
 									$selectFields = [];
 									$whereFields = [];
 									$whereVals = [];
-
 									$sqlUserRec = "";
 									$sqlUserRec = "SELECT * FROM " . _USER_RECOMMENDATIONS_TABLE_ . " WHERE contactId=" . $useruserId . " and status=1 order by dateAdded desc ";
 									$resUserRec = getRecords(_USER_RECOMMENDATIONS_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlUserRec);
@@ -1069,11 +1068,9 @@ if (file_exists($userfilename)) {
 												</div>
 												<?php
 											}
-
 											?>
 										</li>
 										<?php
-
 									}
 									?>
 								</ul>
