@@ -157,7 +157,7 @@ if (isPost()) {
     color: #676767;
 "><div style="display:block; font-size:18px; margin-bottom:10px;">Hello ' . $firstName . '</div>
 
-Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#1db055;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
+Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#0074CB;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
 </div>
 <table width="100%" height="90" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="
     background-color: #f7f7f7;
@@ -326,7 +326,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 		.mobile-message {
 			display: none;
 			/* Hidden by default */
-			color: #20741f;
+			color: #0074CB;
 			background-color: #ffff;
 			padding: 10px 20px;
 			font-size: 14px;
@@ -348,7 +348,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 	<div id="wrapper">
 		<header class="container">
 			<div class="logo logo_marg"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png" style="margin-top: 10px;"></a></div>
+						src="<?php echo $fullurl; ?>images/sgtlogo.png" style="margin-top: 10px;"></a></div>
 			<div class="header_right">
 
 				<form class="login-form loginForm1" name="kUserLogin" id="kUserLogin2" method="post">
@@ -388,7 +388,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 					<div class="mobile-message">
 						<div style="font-size:16px; font-weight:500;">An Initiative By</div>
 						<div style="font-size:18px; font-weight:700;">UNIVERSITY PLACEMENT CELL</div>
-						<div style="font-size:20px; font-weight:500;">Jamia Millia Islamia</div>
+						<div style="font-size:20px; font-weight:500;">SGT</div>
 					</div>
 				</div>
 
@@ -547,7 +547,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 				<div class="footer-left2"><strong>
 						<div>
 							<div style="font-weight:normal;">
-								<div style="float:left;">© 2023&nbsp;Jamia Millia Islamia VECOSPACE &nbsp;|
+								<div style="float:left;">© 2023&nbsp;SGT VECOSPACE &nbsp;|
 									&nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
 								<div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png"
 											style="width:50px;"></a></div>

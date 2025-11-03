@@ -101,14 +101,14 @@ RewriteRule ^page-not-found.html$ pagenotfound.php  [NC,L]
 RewriteRule ^search-companies.html$ searchcompanies.php  [NC,L]
 RewriteRule ^confirm-registration.html$ confirm.php  [NC,L]
 RewriteRule ^terms.html$ termspage.php  [NC,L]
-RewriteRule ^privacy.html$ privacypage.php  [NC,L]
+
 RewriteRule ^about.html$ aboutpage.php  [NC,L]
 RewriteRule ^thankyou.html$ thankyoupage.php  [NC,L]
 
-RewriteRule ^registration-form.html$ alumni-registration-form.php  [NC,L]
+RewriteRule ^registration-form.html$ registrationform.php  [NC,L]
 
 RewriteRule ^konectt-live.html$ videocallpage.php  [NC,L]
-
+RewriteRule ^sgt-pvcypage.html$ sgt_pvc.php  [NC,L]
 
 RewriteRule ^smb-categories.html$ businesslist.php  [NC,L]
 RewriteRule ^all-sme-blogs.html$ allsmeblogslist.php  [NC,L]

@@ -83,7 +83,7 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphotot)); ?>">
 						</div>
 						<div class="userchatboxmain_name"
-							style="font-size: 16px; font-weight: 600;color: #00a652;    text-align: left;margin-left: 70px ">
+							style="font-size: 16px; font-weight: 600;color: #0074CB;    text-align: left;margin-left: 70px ">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["firstName"]); ?>
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["lastName"]); ?>
 						</div>
@@ -112,9 +112,10 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphotot)); ?>">
 						</div>
 						<div class="userchatboxmain_name"
-							style="font-size: 16px; font-weight: 600;color: #00a652;    text-align: left;margin-left: 70px;">
+							style="font-size: 16px; font-weight: 600;color: #0074CB;    text-align: left;margin-left: 70px;">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["firstName"]); ?>
-							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["lastName"]); ?></div>
+							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["lastName"]); ?>
+						</div>
 						<div class="userchatboxmain_text" style="margin-left: 70px;">
 							<div class="chatmsg" id="meeting<?php echo $row['id']; ?>"><?php echo nl2br(showsmily($row["chatText"])); ?>
 							</div>
@@ -122,7 +123,7 @@ if ($totalMsqlRow > 0) {
 							<div class="userchatboxmain_time" id="usermsgid<?php echo $row['id']; ?>">
 								<?php if ($row['readDate'] != 0) {
 									echo date("h:i A", $row['readDate']);
-								} else { ?>					<?php echo date("h:i A"); ?>				<?php } ?>
+								} else { ?> 					<?php echo date("h:i A"); ?> 				<?php } ?>
 							</div>
 						</div>
 					</div>
@@ -146,9 +147,10 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>">
 						</div>
 						<div class="userchatboxmain_name_me"
-							style="font-size: 16px; font-weight: 600;color: #00a652;     text-align: right;    margin-right: 70px;">
+							style="font-size: 16px; font-weight: 600;color: #0074CB;     text-align: right;    margin-right: 70px;">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["firstName"]); ?>
-							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["lastName"]); ?></div>
+							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["lastName"]); ?>
+						</div>
 						<div style="margin-right: 70px;"
 							class="userchatboxmain_text_me bg123none chatmsg12 chatmsg<?php if (strpos($row["chatText"], 'iframe') !== false) { ?> iframehave<?php } ?>"
 							<?php if ($img == 1) { ?>style=" padding:0px !important;" <?php } ?>>
@@ -163,7 +165,7 @@ if ($totalMsqlRow > 0) {
 							<div class="userchatboxmain_time_me" id="usermsgid<?php echo $row['id']; ?>">
 								<?php if ($row['readDate'] != 0) {
 									echo date("h:i A", $row['readDate']);
-								} else { ?>					<?php echo date("h:i A"); ?>				<?php } ?>
+								} else { ?> 					<?php echo date("h:i A"); ?> 				<?php } ?>
 							</div>
 						</div>
 					</div>
@@ -183,16 +185,17 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>">
 						</div>
 						<div class="userchatboxmain_name_me"
-							style="font-size: 16px; font-weight: 600;color: #00a652;    text-align: left;margin-left: 70px;">
+							style="font-size: 16px; font-weight: 600;color: #0074CB;    text-align: left;margin-left: 70px;">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["firstName"]); ?>
-							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["lastName"]); ?></div>
+							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["lastName"]); ?>
+						</div>
 						<div class="userchatboxmain_text_me" style="margin-left: 70px;">
 							<div class="chatmsg" id="meeting<?php echo $row['id']; ?>"><?php echo nl2br(showsmily($row["chatText"])); ?>
 							</div>
 							<div class="userchatboxmain_time_me" id="usermsgid<?php echo $row['id']; ?>">
 								<?php if ($row['readDate'] != 0) {
 									echo date("h:i A", $row['readDate']);
-								} else { ?>					<?php echo date("h:i A"); ?>				<?php } ?>
+								} else { ?> 					<?php echo date("h:i A"); ?> 				<?php } ?>
 							</div>
 						</div>
 					</div>

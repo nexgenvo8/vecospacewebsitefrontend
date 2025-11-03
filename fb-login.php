@@ -110,9 +110,9 @@ exit();*/
 			$resUpdate = insertDB(_USER_SETTINGS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 
-			$selectFields =[];
-			$whereFields =[];
-			$whereVals=[];
+			$selectFields = [];
+			$whereFields = [];
+			$whereVals = [];
 			$sqlQuery = "";
 			$sqlQuery = "Select firstName,lastName,email,userId,activeYN,userurl,timeZone from " . _USERS_MASTER_TABLE_ . " where email='" . $email . "'  ";
 			$res = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlQuery);
@@ -137,7 +137,7 @@ exit();*/
 						$mailBodyContent = '<div style="background-color: #dff6ff;width: 100%;overflow: hidden;">
 	<div style="width:600px;margin: auto; border-top: 4px solid #1a94c3; border-bottom: 4px solid #1a94c3;background-color: #fff;overflow: hidden;padding: 30px;padding-top: 0px; box-sizing: border-box;font-family: arial;color: #4c4c4c;font-size: 14px;">
 		<a href="' . $fullurl . '" target="_blank" style="display: block;padding: 10px;padding-left: 0;">
-		<img src="' . $fullurl . 'images/logo.png" width="150px;">
+		<img src="' . $fullurl . 'images/sgtlogo.png" width="150px;">
 		</a>
 		
 		<div style="width: 100%;height: 100%;left:0;top: 0;padding: 1px;box-sizing: border-box;">

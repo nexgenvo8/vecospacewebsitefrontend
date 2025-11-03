@@ -79,7 +79,7 @@ if ($groupUserId != '' && $_REQUEST['groupId'] != '') {
 		padding: 30px; padding-top: 0px; box-sizing: border-box; font-family: arial;
 		color: #4c4c4c; font-size: 14px; padding-bottom: 0;">
 			<a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;padding-left: 0;float: left;margin-bottom: 30px;">
-			<img src="' . $fullurl . 'images/logo.png" width="150px;">
+			<img src="' . $fullurl . 'images/sgtlogo.png" width="150px;">
 			</a>
 			<table width="100%" border="0" style="border-bottom: solid 2px #e7e7e7;">
 		<tbody><tr>

@@ -317,12 +317,12 @@ if ($jcarousellite != 1) { ?>
 		<?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
 			<div class="right-fttr">
 				<ul class="fttr-list">
-					<li><a href="<?php echo $fullurl; ?>privacy.html" target="_blank">Privacy</a></li>
+					<li><a href="<?php echo $fullurl; ?>sgt-pvcypage.html" target="_blank">Privacy</a></li>
 					<li><a href="<?php echo $fullurl; ?>terms.html" target="_blank">Terms</a></li>
 					<li><a href="<?php echo $fullurl; ?>about.html" target="_blank">About</a></li>
 					<li><a href="<?php echo $fullurl; ?>faq.html" target="_blank">FAQ's</a></li>
 				</ul>
-				<p> &copy; <?php echo date("Y"); ?>&nbsp;Jamia Millia Islamia VECOSPACE</p>
+				<p> &copy; <?php echo date("Y"); ?>&nbsp;SGT VECOSPACE</p>
 				<div class="pwrddebox">
 					<div style="float:left"><span style="color: #9f9f9f;">Powered by &nbsp;&nbsp;&nbsp;</span></div>
 					<div style="float:left"> <a href="http://deboxglobal.com/"><img

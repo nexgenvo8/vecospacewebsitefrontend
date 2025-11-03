@@ -34,7 +34,7 @@ if (isset($_SESSION['registerEmail']) && isset($_SESSION['resendemail']) && $_SE
     color: #676767;
 "><div style="display:block; font-size:18px; margin-bottom:10px;">Hello,</div>
 
-Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#1db055;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
+Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#0074CB;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
 </div>
 <table width="100%" height="90" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="
     background-color: #f7f7f7;
@@ -82,7 +82,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
   <div id="wrapper">
     <header>
       <div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-            src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+            src="<?php echo $fullurl; ?>images/sgtlogo.png"></a></div>
     </header>
     <div class="banner">
       <div class="container">

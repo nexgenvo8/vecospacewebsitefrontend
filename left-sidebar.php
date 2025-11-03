@@ -353,7 +353,7 @@
 			<li>
 				<a href="<?php echo $fullurl; ?>projects.html"
 					class="<?php if ($pageIndex == 11) { ?>active<?php } ?> ripple">
-					<i class="micon" style="background-color: #1db055;"><i class="fa fa-globe"
+					<i class="micon" style="background-color: #0074CB;"><i class="fa fa-globe"
 							aria-hidden="true"></i></i>
 					<span class="tltp">Internships & Projects</span></a>
 			</li>
@@ -361,7 +361,7 @@
 			<li>
 				<a href="<?php echo $fullurl; ?>jobs.html"
 					class="<?php if ($pageIndex == 14) { ?>active<?php } ?> ripple">
-					<i class="micon" style="background-color: #1db055;"><i class="fa fa-briefcase"
+					<i class="micon" style="background-color: #0074CB;"><i class="fa fa-briefcase"
 							aria-hidden="true"></i></i>
 					<span class="tltp">Job Opportunities</span></a>
 			</li>

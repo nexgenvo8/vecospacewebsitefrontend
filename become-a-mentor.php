@@ -6,7 +6,7 @@ include_once('config/session-check.inc.php'); // check user login session
 $pageIndex = 27;
 
 
-if ($_REQUEST['numberofMentees'] != 0 && $_REQUEST['numberofMentees'] != '') {
+if (isset($_REQUEST['numberofMentees']) && $_REQUEST['numberofMentees'] != 0 && $_REQUEST['numberofMentees'] != '') {
 
 
 	$insertFields = [];
@@ -24,7 +24,7 @@ if ($_REQUEST['numberofMentees'] != 0 && $_REQUEST['numberofMentees'] != '') {
 
 }
 
-if ($_REQUEST['studentIdcontact'] != '' && $_REQUEST['action'] == 'actrequest') {
+if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['studentIdcontact'] != '' && $_REQUEST['action'] == 'actrequest') {
 
 	$dateAdded = time();
 	$studentIdcontact = decodeStr($_REQUEST['studentIdcontact']);
@@ -37,7 +37,7 @@ if ($_REQUEST['studentIdcontact'] != '' && $_REQUEST['action'] == 'actrequest') 
 	header('Location: become-a-mentor.html');
 }
 
-if (trim($_REQUEST['removeresion']) != '') {
+if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['removeresion']) {
 
 	$studentId = $_REQUEST['id'];
 	$status = $_REQUEST['status'];
@@ -129,7 +129,8 @@ if (trim($_REQUEST['removeresion']) != '') {
 													for ($i = 1; $i <= 5; $i++) { ?>
 														<option value="<?php echo $i; ?>" <?php if ($rowLogin2['numberofMentees'] == $i) {
 															   echo 'selected';
-														   } ?>			<?php if ($i < $rowLogin2['numberofMentees']) ?>>
+														   } ?>
+															<?php if ($i < $rowLogin2['numberofMentees']) ?>>
 															<?php echo $i; ?>
 														</option>
 														<?php
@@ -200,7 +201,7 @@ if (trim($_REQUEST['removeresion']) != '') {
 							<div class="menteesearchdiv">
 								<form name="mentorsrchFrm" id="mentorsrchFrm">
 									<input type="text" name="mentorSearch" id="mentorSearch"
-										value="<?php echo $_GET['mentorSearch']; ?>" maxlength="60"
+										value="<?php echo $_GET['mentorSearch'] ?? ''; ?>" maxlength="60"
 										placeholder="Enter name or email address" autocomplete="off"
 										onkeyup="mentorSearch()">
 									<button type="button" class="serachwithmenteebtn"

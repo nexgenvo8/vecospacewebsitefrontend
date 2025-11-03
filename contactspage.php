@@ -227,97 +227,148 @@ if ($search == '') {
 							</ul>
 						</div>
 						<div class="contct-list-cont">
-							<?php if (isset($_POST['searchkeywords']) && $_GET['searchkeywords'] != '') {
-
-								$strWhereContacts .= "";
-								$strWhereContacts .= " and  (firstName like '%" . $_GET['searchkeywords'] . "%' OR lastName like '%" . $_GET['searchkeywords'] . "%' OR email like '%" . $_GET['searchkeywords'] . "%' ) ";
-								?>
-
-								<?php
+							<?php
+							// 🔸 Search Condition
+							if (isset($_GET['searchkeywords']) && $_GET['searchkeywords'] != '') {
+								$strWhereContacts = " AND (firstName LIKE '%" . mysqli_real_escape_string($conn, $_GET['searchkeywords']) . "%' 
+            OR lastName LIKE '%" . mysqli_real_escape_string($conn, $_GET['searchkeywords']) . "%' 
+            OR email LIKE '%" . mysqli_real_escape_string($conn, $_GET['searchkeywords']) . "%')";
 							} else {
 								$strWhereContacts = "";
-								?>
-								<h2>People you may know</h2>
-							<?php } ?>
+								echo '<h2>People you may know</h2>';
+							}
+
+							// 🔸 Pagination Setup
+							$limit = 10; // Records per page
+							$startpage = isset($_GET['startpage']) ? intval($_GET['startpage']) : 0;
+							$offset = $startpage * $limit;
+
+							// 🔸 Total Record Count
+							$totalRecordsQuery = "
+        SELECT COUNT(*) as total
+        FROM " . _USERS_MASTER_TABLE_ . "
+        WHERE activeYN = 'Y'
+        AND userId != 106
+        AND userId NOT IN (
+            SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId = " . intval($_SESSION['sessUserId']) . "
+        )
+        AND userId NOT IN (
+            SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId = " . intval($_SESSION['sessUserId']) . "
+        )
+        AND companyName != ''
+        AND userId != " . intval($_SESSION['sessUserId']) . "
+        $strWhereContacts
+    ";
+							$totalResult = mysqli_query($conn, $totalRecordsQuery);
+							$totalRow = mysqli_fetch_assoc($totalResult);
+							$totalRecords = $totalRow['total'];
+							$totalPages = ceil($totalRecords / $limit);
+							?>
 
 							<ul class="cntct-list">
 								<?php
-								$strWhere = '';
+								$sqlLogin = "
+            SELECT * FROM " . _USERS_MASTER_TABLE_ . "
+            WHERE activeYN='Y'
+            AND userId!=106
+            AND userId NOT IN (
+                SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . intval($_SESSION['sessUserId']) . "
+            )
+            AND userId NOT IN (
+                SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . intval($_SESSION['sessUserId']) . "
+            )
+            AND companyName!=''
+            AND userId!='" . intval($_SESSION['sessUserId']) . "'
+            $strWhereContacts
+            ORDER BY userId DESC
+            LIMIT $limit OFFSET $offset
+        ";
 
-								if (isset($_POST['r']) && $_REQUEST['r'] == 1) {
-									$strWhere .= " and dateAdded between " . strtotime(date('Y-m-d', strtotime("-30 days"))) . " and " . strtotime(date('Y-m-d')) . " ";
-								}
-
-								if ($search != '') {
-									$strWhere .= " and contactId IN(select userId from " . _USERS_MASTER_TABLE_ . " where activeYN='Y' and userId!=106 and (firstName like '%" . $search . "%' OR lastName like '%" . $search . "%' OR email like '%" . $search . "%' ) ) ";
-								}
-
+								$resLogin = mysqli_query($conn, $sqlLogin);
 								$n = 0;
-								$selectFields = [];
-								$whereFields = [];
-								$whereVals = [];
 
-								$sqlLogin = "";
-								$sqlLogin = "select * from " . _USERS_MASTER_TABLE_ . " where activeYN='Y' and userId!=106 and userId not  in (select contactId from " . _CONTACT_MASTER_TABLE_ . " where userId=" . $_SESSION["sessUserId"] . ") and userId not in (select userId from " . _CONTACT_MASTER_TABLE_ . " where contactId=" . $_SESSION["sessUserId"] . ")  and companyName!='' and userId!='" . $_SESSION['sessUserId'] . "' " . $strWhereContacts . "  order by userId desc";
-								$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
-								if ($resLogin) {
+								if ($resLogin && mysqli_num_rows($resLogin) > 0) {
 									while ($rowLogin = mysqli_fetch_array($resLogin)) {
-
-										$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowLogin["userId"] . "";
-										$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
-										$userres = mysqli_fetch_array($b);
-
-										$friendnameurl = $userres['userurl'];
-										if ($userres["profilePhoto"] != '') {
-											$userphoto = $userres["profilePhoto"];
-										} else {
-											$userphoto = 'user-placeholder.jpg';
-										}
-
-										$mycountryName = $userres["countryName"];
-										$mystateName = $userres["cityName"];
-										$mylocationName = $userres["locationName"];
+										$userphoto = $rowLogin["profilePhoto"] != '' ? $rowLogin["profilePhoto"] : 'user-placeholder.jpg';
+										$friendnameurl = $rowLogin['userurl'];
 										?>
 										<li>
 											<div class="request-contct">
-												<div class="rimg"> <a
-														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html">
+												<div class="rimg">
+													<a
+														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowLogin['userId']); ?>/<?php echo $friendnameurl; ?>.html">
 														<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
-															style="border:<?php echo profileborder($userres['userstype']); ?>">
-													</a></div>
+															style="border:<?php echo profileborder($rowLogin['userstype']); ?>">
+													</a>
+												</div>
 												<div class="reqst-rdtail">
 													<div class="middl-nm">
-														<div class="left"> <a
-																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																class="nm"><?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
-																<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]);//stripslashes(trim($userres["lastName"])); ?></a>
-															<span class="comp"><?php echo $userres['jobTitle']; ?> at
-																<?php echo $userres['companyName']; ?></span>
+														<div class="left">
+															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowLogin['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																class="nm">
+																<?php echo htmlspecialchars($rowLogin["firstName"]); ?>
+																<?php echo htmlspecialchars($rowLogin["lastName"]); ?>
+															</a>
+															<span class="comp"><?php echo $rowLogin['jobTitle']; ?> at
+																<?php echo $rowLogin['companyName']; ?></span>
 														</div>
 														<div class="btns">
-															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																class="msg-btn"><i class="fa fa-plus" aria-hidden="true"></i>
-																Add as contact</a>
+															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowLogin['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																class="msg-btn">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add as contact
+															</a>
 														</div>
 													</div>
 												</div>
 											</div>
 										</li>
 										<?php
-
 										$n++;
 									}
-
+								} else {
+									echo '<div style="padding:30px; text-align:center;">No Contacts.</div>';
 								}
 								?>
 							</ul>
-							<?php if ($n == 0) { ?>
-								<div style="padding:30px; text-align:center;">
-									<div style="text-align:center; margin-bottom:20px;">No Contacts.</div>
-									<!--<a href="add-contacts.html" class="add_contacts">Add Contacts</a></div>-->
-								<?php } ?>
-							</div>
+
+							<!-- 🔸 Pagination Section -->
+							<?php if ($totalPages > 1) { ?>
+								<div class="pagination-wrapper" style="text-align:center; margin-top:20px;">
+									<div class="pagination-container">
+										<?php if ($startpage > 0) { ?>
+											<a href="?startpage=<?php echo $startpage - 1; ?>"
+												class="pagination-btn">Previous</a>
+										<?php } ?>
+
+										<?php
+										$lastPage = $totalPages - 1;
+
+										// Show first 3 pages
+										for ($i = 0; $i < min(3, $totalPages); $i++) {
+											$active = ($i == $startpage) ? 'active' : '';
+											echo "<a href='?startpage=$i' class='pagination-number $active'>" . ($i + 1) . "</a>";
+										}
+
+										// If current page is beyond first 3
+										if ($startpage >= 3 && $startpage < $lastPage - 1) {
+											echo "<a href='?startpage=$startpage' class='pagination-number active'>" . ($startpage + 1) . "</a>";
+										}
+
+										// Show last page if total > 3
+										if ($totalPages > 3) {
+											echo "<span class='pagination-dots'>...</span>";
+											echo "<a href='?startpage=$lastPage' class='pagination-number " . (($startpage == $lastPage) ? 'active' : '') . "'>" . ($lastPage + 1) . "</a>";
+										}
+										?>
+
+										<?php if ($startpage < $totalPages - 1) { ?>
+											<a href="?startpage=<?php echo $startpage + 1; ?>" class="pagination-btn">Next</a>
+										<?php } ?>
+									</div>
+								</div>
+							<?php } ?>
 						</div>
+
 
 
 
@@ -327,6 +378,59 @@ if ($search == '') {
 				</div>
 			</div>
 		</div>
+		<style>
+			.pagination-container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				gap: 6px;
+				margin: 30px auto 40px;
+				flex-wrap: wrap;
+				background: #f9f9f9;
+				padding: 10px 20px;
+				border-radius: 10px;
+				box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+				width: fit-content;
+			}
+
+			.pagination-info {
+				font-weight: 600;
+				color: #333;
+				margin-right: 10px;
+			}
+
+			.pagination-btn,
+			.pagination-number {
+				display: inline-block;
+				background: #fff;
+				color: #007bff;
+				border: 1px solid #0074CB;
+				padding: 6px 12px;
+				border-radius: 6px;
+				text-decoration: none;
+				font-weight: 500;
+				transition: all 0.3s;
+			}
+
+			.pagination-btn:hover,
+			.pagination-number:hover {
+				background: #0074CB;
+				color: #fff;
+			}
+
+			.pagination-number.active {
+				background: #0074CB;
+				color: #fff;
+				border-color: #0074CB;
+				pointer-events: none;
+			}
+
+			.pagination-dots {
+				padding: 6px 10px;
+				color: #666;
+				font-weight: bold;
+			}
+		</style>
 		<?php include('footer.php'); ?>
 
 		<script>

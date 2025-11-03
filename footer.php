@@ -87,7 +87,7 @@ $TokenRequest = isset($TokenRequest) ? $TokenRequest : '';
 
 
 <div id="successmessage-outer" style="display: none;" class="warningmessage">
-  <div id="successmessage" style="background-color: #058105 !important;">
+  <div id="successmessage" style="background-color: #0074CB !important;">
     <div class="msgimg">
       <i class="fa fa-check" aria-hidden="true"></i>
     </div>
@@ -97,7 +97,7 @@ $TokenRequest = isset($TokenRequest) ? $TokenRequest : '';
     <div class="mtxt">
 
     </div>
-    <div class="donebtn" onclick="closeserrormsg();" style="background-color: #48c748 !important;">
+    <div class="donebtn" onclick="closeserrormsg();" style="background-color: #0074CB !important;">
       OK
     </div>
   </div>
@@ -111,7 +111,7 @@ $TokenRequest = isset($TokenRequest) ? $TokenRequest : '';
 <div class="foottr">
   <p style="
     text-align: center;
-    color: green;
+    color: #0074CB;
     font-weight: 500;
     padding: 0px;
     margin: 5px;
@@ -883,7 +883,7 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
       </div>
       <div class="footer-menu" style="margin-top:9px;">
         <ul class="foooter-list">
-          <li><a href="<?php echo $fullurl; ?>privacy.html">Privacy</a></li>
+          <li><a href="<?php echo $fullurl; ?>sgt-pvcypage.html">Privacy</a></li>
           <li><a href="<?php echo $fullurl; ?>terms.html">Terms</a></li>
           <li><a href="<?php echo $fullurl; ?>about.html">About</a></li>
           <li><a href="<?php echo $fullurl; ?>contact-us.html">Contact Us</a></li>
@@ -1019,10 +1019,10 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
   <?php
   if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
     ?>
-                      /*var sessionsss = setInterval(function () {
-                      //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
+                              /*var sessionsss = setInterval(function () {
+                              //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
 
-                      }, 5000);*/
+                              }, 5000);*/
 
   <?php } ?>
 </script>

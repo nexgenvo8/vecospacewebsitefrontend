@@ -82,7 +82,6 @@ if (
 
 		$sqlCmnsts = "";
 		$sqlCmnsts = "select dateAdded from " . _COMMENT_MASTER_TABLE_ . " where userId='" . $_SESSION['sessUserId'] . "'  order by id desc limit 1,1";
-		echo $sqlCmnsts;
 		$resCmnsts = mysqli_query($conn, $sqlCmnsts);
 		$getCmnsts = mysqli_fetch_array($resCmnsts);
 		$getDateAddedCmnts = $getCmnsts["dateAdded"];
@@ -131,7 +130,7 @@ if (
 						}
 
 
-						$mailBodyContent .= '';
+						$mailBodyContent = '';
 						$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 		<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
 			<tbody>
@@ -142,7 +141,7 @@ if (
 						<tr>
 							<td align="center" valign="top" style="width:100%;padding:20px 0">
 								<a href="' . $fullurl . '" target="_blank" >
-									<img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+									<img src="' . $fullurl . 'images/ndimlogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
 						</tr>
 						<tr>
 						  <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">

@@ -213,7 +213,7 @@ if (isPost()) {
             $mailBodyContent = '';
 
             $mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . 'timeline.html" style="border:0px;">
-		<img src="' . $fullurl . 'images/logo.png" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:scroll; padding:30px 0px;text-align:center;">
+		<img src="' . $fullurl . 'images/sgtlogo.png" width="217" style="border:0px;"></a></div><div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:scroll; padding:30px 0px;text-align:center;">
 <div style="margin:auto; width:100%; background-color:#FFFFFF; text-align:left;">
 <table style="width:100%;background-color: #e8e8e8;">
 <tbody><tr>
@@ -248,7 +248,7 @@ if (isPost()) {
 <!-- Button -->
 <div style="text-align:left; margin-top:20px; margin-bottom:30px;">
   <a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;">
-    <input name="" type="button" style="background-color:#1db055; cursor:pointer; padding:12px 30px; outline:0px; border:0px; border-radius:3px; color:#FFFFFF; font-size:16px;" value="Confirm e-mail address">
+    <input name="" type="button" style="background-color:#0074CB; cursor:pointer; padding:12px 30px; outline:0px; border:0px; border-radius:3px; color:#FFFFFF; font-size:16px;" value="Confirm e-mail address">
   </a>
 </div>
 
@@ -465,7 +465,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
     <div id="wrapper">
         <header class="container">
             <div class="logo logo_marg"><a href="<?php echo $fullurl; ?>"><img
-                        src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+                        src="<?php echo $fullurl; ?>images/sgtlogo.png"></a></div>
             <div class="header_right" style="display:none;">
                 <form class="login-form" name="kUserLogin" id="kUserLogin" method="post" style="display:none1;">
                     <div class="login-inputs">
