@@ -188,7 +188,7 @@ if (count($result) > 0) {
                 <tr>
                     <td align="center" valign="top" style="width:100%;padding:20px 0">
                         <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/logo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
+                            <img src="' . $fullurl . 'images/sdglogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
                 </tr>
                 <tr>
                   <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">

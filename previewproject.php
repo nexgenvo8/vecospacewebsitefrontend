@@ -158,7 +158,7 @@ $btnname = 'Preview';
 	</script>
 	<style type="text/css">
 		ul.prjct-list li a.frlcr {
-			color: #1db055;
+			color: #860E66;
 			background-color: inherit;
 		}
 
@@ -167,7 +167,7 @@ $btnname = 'Preview';
 		}
 
 		ul.prjct-list li a.frlcr i.fa {
-			background-color: #1db055;
+			background-color: #860E66;
 		}
 
 		ul.prjct-list li a.active:hover i.fa {

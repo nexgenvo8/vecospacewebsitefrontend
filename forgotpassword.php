@@ -53,7 +53,7 @@ if (isPost()) {
 				$mailBodyContent = '';
 
 				$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
-	<a href="' . $fullurl . 'timeline.html"><img src="' . $fullurl . 'images/logo.jpg" width="150"></a>
+	<a href="' . $fullurl . 'timeline.html"><img src="' . $fullurl . 'images/sdglogo.jpg" width="150"></a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
   <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
@@ -67,7 +67,7 @@ if (isPost()) {
         </div>
         <div style="color: #696969; margin-bottom: 22px; font-size: 15px; line-height: 20px;text-align: center; border-bottom: solid 1px #e7e7e7; padding-bottom: 10px; border-top: solid 1px #e7e7e7; padding-top: 10px;"><p>If you really have, please click on the below link to create a new one</p>
           <div style="width: 100%;text-align: center;overflow: hidden;">
-          <a href="' . $fullurl . 'reset-password.html?_j=' . $strEmail . '" target="_blank"  style="float: none; display: inline-block; padding: 8px 13px; background-color: #20741f; text-decoration: none; color: #fff; margin-left: 0; margin-top: 10px;">Create a new password</a>
+          <a href="' . $fullurl . 'reset-password.html?_j=' . $strEmail . '" target="_blank"  style="float: none; display: inline-block; padding: 8px 13px; background-color: #860E66; text-decoration: none; color: #fff; margin-left: 0; margin-top: 10px;">Create a new password</a>
         </div>
         
         </div>
@@ -131,13 +131,13 @@ if (isPost()) {
 	<div id="wrapper">
 		<header>
 			<div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+						src="<?php echo $fullurl; ?>images/sdglogo.png"></a></div>
 		</header>
 		<div class="banner">
 			<div class="container">
 				<div class="second-step" <?php if (isset($_GET['send']) && $_GET['send'] == 1) { ?>style="width:500px;"
 					<?php } ?>>
-					<h2 style="text-align:center; color:#20741f;">Forgot Password</h2>
+					<h2 style="text-align:center; color:#860E66;">Forgot Password</h2>
 					<form name="frmkonectt" id="frmkonectt" class="personal-data" method="post">
 
 						<?php if (!isset($_GET['send']) || $_GET['send'] != 1) { ?>
@@ -213,11 +213,12 @@ if (isPost()) {
 			position: fixed;
 			left: 0;
 			top: 0;
-			background: #016402;
-			background: -moz-linear-gradient(top, #1b8cb8 0%, #6dc8e7 100%);
-			background: -webkit-linear-gradient(top, #036503 0%, #529152 100%);
-			background: linear-gradient(to bottom, #0a680a 0%, #629b62 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#20741f', endColorstr='#6dc8e7', GradientType=0);
+			background: #860E66;
+			background: -moz-linear-gradient(top, #860E66 0%, #005fa3 100%);
+			background: -webkit-linear-gradient(top, #860E66 0%, #005fa3 100%);
+			background: linear-gradient(to bottom, #860E66 0%, #005fa3 100%);
+
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#860E66', endColorstr='#6dc8e7', GradientType=0);
 		}
 	</style>
 </body>

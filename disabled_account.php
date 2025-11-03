@@ -43,7 +43,7 @@ if (isPost()) {
 	<div id="wrapper">
 		<header>
 			<div class="logo login-pros"><a href="<?php echo $fullurl; ?>"><img
-						src="<?php echo $fullurl; ?>images/logo.png"></a></div>
+						src="<?php echo $fullurl; ?>images/sdglogo.png"></a></div>
 		</header>
 		<div class="banner">
 			<div class="container">

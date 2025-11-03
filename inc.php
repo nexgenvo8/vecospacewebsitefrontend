@@ -31,9 +31,9 @@ function openConn()
 // $withouthttpsurl = 'https://jmi.vecospace.com/';
 // $domainname = 'vecospace.com';
 
-$fullurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
-$withoutwwwurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
-$withouthttpsurl = 'http://localhost/jmiwebsite/vecospacewebsitefrontend/';
+$fullurl = 'http://localhost/sdgvecospace/vecospacewebsitefrontend/';
+$withoutwwwurl = 'http://localhost/sdgvecospace/vecospacewebsitefrontend/';
+$withouthttpsurl = 'http://localhost/sdgvecospace/vecospacewebsitefrontend/';
 $domainname = 'vecospace.com';
 
 $actual_sitelink1 = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
@@ -47,8 +47,8 @@ function error_found($id)
 	exit();
 }
 
-$companyname = 'Welcome to Jamia Millia Islamia VECOSPACE';
-$companNameTitle = 'Jamia Millia Islamia VECOSPACE';
+$companyname = 'Welcome to SGT VECOSPACE';
+$companNameTitle = 'SGT VECOSPACE';
 
 // ✅ fixed session check (your OR condition was always true)
 if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0 && is_numeric($_SESSION["sessUserId"])) {

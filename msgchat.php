@@ -60,7 +60,7 @@ if ($chatuser["profilePhoto"] != '') {
 	</div>
 </div>
 
-<div class="chats" id="loadchatusermsg" style="height:410px; padding-bottom:10px; border-bottom:2px solid #00a652;">
+<div class="chats" id="loadchatusermsg" style="height:410px; padding-bottom:10px; border-bottom:2px solid #860E66;">
 </div>
 
 <div class="chat_fttr">
@@ -113,13 +113,13 @@ if ($chatuser["profilePhoto"] != '') {
 				<div class="send-sec">
 					<span id="sendpressenter">Press Enter to Send</span>
 					<button class="send" id="sendbuttonchat" onclick="clicktosendchat();"
-						style="display:none; background-color:#00a652;">
+						style="display:none; background-color:#860E66;">
 						Send
 					</button>
 
 					<div class="click-btn">
 						<a id="sendclick">
-							<i style="color:#00a652;" class="fa fa-ellipsis-h" aria-hidden="true"
+							<i style="color:#860E66;" class="fa fa-ellipsis-h" aria-hidden="true"
 								onclick="$('#selectbuttons').toggle();" id="openpressenter"></i>
 						</a>
 

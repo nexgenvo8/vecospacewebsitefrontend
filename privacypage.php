@@ -28,10 +28,10 @@ $privacypage = 1;
   <div class="aboutheader">
     <div class="container">
       <div class="logo">
-        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/logo.png"
+        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/sdglogo.png"
             style="width: 275px;" /></a>
       </div>
-      <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
+      <?php if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
         <div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
           <a href="javascript:void(0);">
             <span class="usr_img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
