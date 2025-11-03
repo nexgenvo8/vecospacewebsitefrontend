@@ -271,7 +271,7 @@ if (
                                 Cell, Jamia Millia Islamia)</p>
                              <p style="color:red;">⚠ Please upload document from Camera or Gallery only, not from Google Drive.</p>
                             <?php if(!empty($registrationNo)){ ?>   
-                            <p style="color:green;"><b>You are registered with UPC No#: <?php echo $registrationNo; ?></b></p>
+                            <p style="color:#FF0000;"><b>You are registered with UPC No#: <?php echo $registrationNo; ?></b></p>
                             <?php } ?>
                             
                             <form name="frmcreatecompany" id="frmcreatecompany"  method="post" enctype="multipart/form-data" action="">

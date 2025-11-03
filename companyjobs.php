@@ -192,7 +192,7 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 													$selectFields = [];
 													$whereFields = [];
 													$whereVals = [];
-													$levelId = '';
+													$rowCompany = isset($rowCompany) ? $rowCompany : [];
 													$sqlOptions1 = "";
 													$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
 													$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);

@@ -199,9 +199,6 @@ $fullurl = "http://localhost/ndimvecospace/vecospacewebsitefrontend/";
                             }
                             bodyClass = true;
                         });
-
-
-
                     </script>
 
                     <div class="toggle hiden-xs" onclick="$('.setting_menu').show();">

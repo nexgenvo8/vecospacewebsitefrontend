@@ -2840,7 +2840,7 @@ span.minimiz {
     background-color: #f6f7f9;
 }
 .upload-img div i.fa {
-    color: #1db055;margin-right: 5px;
+    color: #FF0000;margin-right: 5px;
 }
 button.post-btn {
 	background-color: #1a94c3;
@@ -2892,7 +2892,7 @@ color: #464646;
 	padding-left: 30px;
 }
 .share_with button {
-	background-color: #1db055;
+	background-color: #FF0000;
 	border: 0;
 	padding: 5px 16px;
 	color: #fff;
@@ -2900,7 +2900,7 @@ color: #464646;
 	float: right;
 }
 form.edit-layer .share_with button {
-    background-color: #1db055;    
+    background-color: #FF0000;    
     padding: 0 16px;
     color: #fff;margin-top: 1.5px;
     line-height: 25px;
@@ -4956,7 +4956,7 @@ div#msgchat .send-sec ul.send-list:after {
 }
 .grp_banner.compnybnr{background-image: url(../images/smbconnectbanner.jpg);}
 .postjobbtn2 {
-	background-color: #1db055;
+	background-color: #FF0000;
 	padding: 12px 36px;
 	display: inline-block;
 	border-radius: 2px;
@@ -4979,7 +4979,7 @@ ul#notice-list .rquest-middle {
 	width: 100%;
 }   
 .grp-reqsteccpt {
-    color: #1db055;
+    color: #FF0000;
     text-align: center;
 }
 .trnding-group h2 {
@@ -5289,7 +5289,7 @@ ul.prjct-list li a i.fa {
 	color: #fff;
 	border-radius: 50%;
 }
-ul.prjct-list li a.active i.fa{background-color: #1db055;}
+ul.prjct-list li a.active i.fa{background-color: #FF0000;}
 ul.prjct-list li a span {
 	display: block;
 	text-align: center;
@@ -5444,7 +5444,7 @@ span.edit i{cursor: pointer;}
 .green-btn{   
  	padding: 10px 25px !important;
     border: 0px;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;border-radius: 2px;
     font-weight: 600;
     cursor: pointer;
@@ -5550,7 +5550,7 @@ ul.prview-desc li.one:after {
     content: '';
     right: 0;
     bottom: 0;
-    border-right: solid #1db055 204px;
+    border-right: solid #FF0000 204px;
     border-top: solid 69px transparent;
     border-left: solid 10px transparent;
     z-index: -1;
@@ -5718,7 +5718,7 @@ ul.skill-list li {
 .prview-right a.apply-btn {
 	display: block;
 	padding: 10px 15px;
-	background-color: #1db055;
+	background-color: #FF0000;
 	margin-bottom: 10px;
 	color: #fff;border-radius: 2px;
 	font-size: 16px;
@@ -5859,7 +5859,7 @@ ul.print-right li a i.fa {
 	color: #fff;
 	margin: 0 !important;font-size: 15px;	
     margin-top: -15px !important;
-    background-color: #1db055;
+    background-color: #FF0000;
 }
 .reslt {
 	background-color: #fff;
@@ -6040,7 +6040,7 @@ ul#notice-list li .rquest-box .dropdwn ul.remove-list {
 .wlcome p {font-size: 14px; }
 .aplied{   
 	padding: 5px 10px;
-	background-color: #1db055;
+	background-color: #FF0000;
 	margin-bottom: 20px;
 	border: 1px #2ab55f solid;
 	border-radius: 2px;
@@ -6069,7 +6069,7 @@ ul.frlncer-list {
 .hding a.rgstr-btn {
     display: inline-block;
     float: right;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 8px 13px;
     text-transform: capitalize;
     color: #fff;
@@ -6169,7 +6169,7 @@ ul.frlncer-list {
 	display: block;
 	width: 138px;
 	margin: auto;
-	background-color: #1db055;
+	background-color: #FF0000;
 	padding: 3px;
 	margin-top: 10px;
 	border-radius: 25px;
@@ -6245,7 +6245,7 @@ ul.frlncer-list {
     margin: 0;padding: 10px
 }
 .freelancerbuttons a:nth-child(2) {
-    background-color: #1db055;
+    background-color: #FF0000;
     margin-left: 5px;
     margin-right: 0;
 }
@@ -6879,7 +6879,7 @@ float: none;
 .usr-info-btn a.btn{
 	float: left;
 	text-transform: capitalize;
-	padding: 7px 20px;background-color: #1db055;
+	padding: 7px 20px;background-color: #FF0000;
 	margin: 0 !important;
 }
 a.pndng-btn {
@@ -7652,7 +7652,7 @@ ul.project-list li {
     width: 90px;
     text-align: center;
     font-size: 26px;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 19px 0;
     border-radius: 2px 0 0 2px;
     color: #fff;
@@ -8789,7 +8789,7 @@ ul.cntr_tab li.evnt-crt-btn a {
     border-radius: 2px;
 }
 ul.cntr_tab li.evnt-crt-btn.smbcls a {
-    background-color: #1db055;
+    background-color: #FF0000;
 }
 ul.cntr_tab li.evnt-crt-btn a.active:after{display: none;}
 .evnt-bnnr h1 {
@@ -9375,7 +9375,7 @@ ul.upld-img-list.logo li {
 }
 .pst-evnt-btns button {
     margin: auto;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border: 0;
     padding: 7px 25px;
@@ -9703,7 +9703,7 @@ ul.news-list li:last-child {
 a.writ-btn {
     float: right;
     padding: 5px 18px;
-    color: #fff;background-color: #1db055;
+    color: #fff;background-color: #FF0000;
     text-decoration: none;
     font-size: 15px;
     border-radius: 2px;
@@ -10230,7 +10230,7 @@ ul.employers-list.recomend li .employers .comp-mddl {
 .crt-employr .btn {
     font-size: 15px;
     text-decoration:none;
-    background-color: #1db055;
+    background-color: #FF0000;
 }
 .artcle.comp-profile .hm_right_sec .crt-employr {
     padding-right: 0;
@@ -11374,13 +11374,13 @@ ol.work-prjct-list li i.fa {
     text-align: center;
     line-height: 50px;
     margin: auto;
-    background-color: #1db055;
+    background-color: #FF0000;
     border-radius: 50%;
     color: #fff;
     margin-bottom: 20px;
 }
 ol.work-prjct-list li strong {
-    color: #1db055;
+    color: #FF0000;
 }
 
 .continuebutton {
@@ -12152,7 +12152,7 @@ a.ordr-btn {
     width: 100%;
     margin: auto;
     text-align: center;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 10px 30px;
     color: #fff;
     font-size: 18px;
@@ -12267,7 +12267,7 @@ ul.bsdtail-author-info li span {
 }
 .bnnr-cap .getstart {
     padding: 10px 20px;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     font-size: 18px;
     display: inline-block;
@@ -12377,7 +12377,7 @@ ul.bnfit-list li p {margin-top: 5px; font-size: 17px;}
     display: block;
     padding: 7px 25px;
     float: right;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border: 0;
     border-radius: 2px;
@@ -13373,7 +13373,7 @@ ul.compny-joblist li {
     transform: translateY(-50%);
     border-radius: 2px;
     color: #fff;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 10px 20px;
     font-size: 16px;
 }
@@ -13431,7 +13431,7 @@ ul.compny-joblist li {
     display: block;
     padding: 7px 25px;
     float: right;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border: 0; 
     cursor: pointer;
@@ -13897,7 +13897,7 @@ ul.nav_list li a.ripple {
     width: 100%;
 }
 .uploded-wrap .privacy-tag {
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 3px 10px;
     font-size: 12px;
     color: #fff;
@@ -15880,7 +15880,7 @@ ul.cntr_tab li {
 	line-height: 36px;
 	padding: 0 15px;
 }
-ul.prview-desc li.one:after {border-right: solid #1db055 134px;
+ul.prview-desc li.one:after {border-right: solid #FF0000 134px;
 border-top: solid 59px transparent;}
 ul.prview-desc li.three:after {border-right: solid #6e6e6e 134px;
 border-top: solid 59px transparent;}

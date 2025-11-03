@@ -415,7 +415,7 @@ header#header .logo {
 
 .login-form button {
     padding: 8px 18px;
-    border: solid 1px #016401;
+    border: solid 1px #FF0000;
     border-radius: 0px;
     background-color: #FF0000;
     font-weight: 600;
@@ -4060,7 +4060,7 @@ ul.cntr_tab {
     padding: 0;
     float: left;
     border-radius: 2px;
-    background-color: #1db055;
+    background-color: #FF0000;
     list-style: none;
     position: relative;
 }
@@ -4120,7 +4120,7 @@ select:focus {
 
 .meet-right .tag {
     padding: 1px 0px;
-    background-color: #1db055;
+    background-color: #FF0000;
     display: block;
     margin-top: 0;
     color: #fff;
@@ -4187,12 +4187,12 @@ select:focus {
 }
 
 .ruatending ul li a.yes {
-    border-color: #1db055;
-    color: #1db055 !important;
+    border-color: #FF0000;
+    color: #FF0000 !important;
 }
 
 .ruatending ul li a.yes.active {
-    background-color: #1db055 !important;
+    background-color: #FF0000 !important;
     color: #fff !important;
 }
 
@@ -4571,7 +4571,7 @@ span.minimiz {
 }
 
 .upload-img div i.fa {
-    color: #1db055;
+    color: #FF0000;
     margin-right: 5px;
 }
 
@@ -4638,7 +4638,7 @@ ul.upld-img-list.upload li:last-child {
 }
 
 .share_with button {
-    background-color: #1db055;
+    background-color: #FF0000;
     border: 0;
     padding: 5px 16px;
     color: #fff;
@@ -7370,7 +7370,7 @@ div#msgchat .send-sec ul.send-list:after {
 }
 
 .postjobbtn2 {
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 6px 13px;
     display: inline-block;
     border-radius: 2px;
@@ -7386,7 +7386,7 @@ div#msgchat .send-sec ul.send-list:after {
     height: 25px;
     line-height: 25px;
     background-color: #fff;
-    color: #38b055;
+    color: #FF0000;
     border-radius: 50%;
     font-size: 15px;
 }
@@ -7411,7 +7411,7 @@ ul#notice-list .rquest-middle {
 }
 
 .grp-reqsteccpt {
-    color: #1db055;
+    color: #FF0000;
     text-align: center;
 }
 
@@ -7799,7 +7799,7 @@ ul.prjct-list li a i.fa {
 }
 
 ul.prjct-list li a.active i.fa {
-    background-color: #1db055;
+    background-color: #FF0000;
 }
 
 ul.prjct-list li a span {
@@ -8013,7 +8013,7 @@ span.edit i {
 .green-btn {
     padding: 10px 25px !important;
     border: 0px;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border-radius: 2px;
     font-weight: 600;
@@ -8137,7 +8137,7 @@ ul.prview-desc li.one:after {
     content: '';
     right: 0;
     bottom: 0;
-    border-right: solid #1db055 204px;
+    border-right: solid #FF0000 204px;
     border-top: solid 69px transparent;
     border-left: solid 10px transparent;
     z-index: -1;
@@ -8347,7 +8347,7 @@ ul.skill-list li {
 .prview-right a.apply-btn {
     display: block;
     padding: 10px 15px;
-    background-color: #1db055;
+    background-color: #FF0000;
     margin-bottom: 10px;
     color: #fff;
     border-radius: 2px;
@@ -8521,7 +8521,7 @@ ul.print-right li a i.fa {
     padding: 6px 15px;
     margin: 0 !important;
     font-size: 15px;
-    background-color: #1db055;
+    background-color: #FF0000;
 }
 
 .reslt {
@@ -8780,7 +8780,7 @@ ul#notice-list li .rquest-box .dropdwn ul.remove-list {
 
 .aplied {
     padding: 5px 10px;
-    background-color: #1db055;
+    background-color: #FF0000;
     margin-bottom: 20px;
     border: 1px #2ab55f solid;
     border-radius: 2px;
@@ -8814,7 +8814,7 @@ ul.frlncer-list {
 .hding a.rgstr-btn {
     display: inline-block;
     float: right;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 8px 13px;
     text-transform: capitalize;
     color: #fff;
@@ -9032,7 +9032,7 @@ ul.frlncer-list {
 }
 
 .freelancerbuttons a:nth-child(2) {
-    background-color: #1db055;
+    background-color: #FF0000;
     margin-left: 5px;
     margin-right: 0;
 }
@@ -9402,11 +9402,11 @@ a.joingrp-btn {
 }
 
 a.view-btn:after {
-    border-top: solid 7px #38b055 !important;
+    border-top: solid 7px #FF0000 !important;
 }
 
 a.view-btn:before {
-    background-color: #38b055 !important;
+    background-color: #FF0000 !important;
 }
 
 .grupbuttons a:hover:after {
@@ -9459,7 +9459,7 @@ a.view-btn:after {
 }
 
 .grupbuttons a.view-btn {
-    background-color: #1db055;
+    background-color: #FF0000;
     position: relative;
 }
 
@@ -9825,7 +9825,7 @@ ul.grp-mmbr_list li a img {
     position: relative;
     margin-bottom: 12px;
     background-color: #fff;
-    border-bottom: 2px solid #1db055;
+    border-bottom: 2px solid #FF0000;
 }
 
 .usr-dtail .imag {
@@ -10065,7 +10065,7 @@ ul.frnd-usractivity-button li span {
 }
 
 ul.frnd-usractivity-button li.activty {
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 5px 0;
     border-radius: 3px 0 0 3px;
     padding-top: 6px;
@@ -10078,7 +10078,7 @@ ul.frnd-usractivity-button li.contcts {
 }
 
 ul.frnd-usractivity-button li.contcts a {
-    color: #008432;
+    color: #FF0000;
 }
 
 ul.frnd-usractivity-button li.prfl-complete {
@@ -10169,7 +10169,7 @@ ul.frnd-usractivity-button li.prfl-complete {
     float: left;
     text-transform: capitalize;
     padding: 7px 20px;
-    background-color: #1db055;
+    background-color: #FF0000;
     margin: 0 !important;
 }
 
@@ -10798,7 +10798,7 @@ ul.more-list li.help {
 .online {
     width: 13px;
     height: 13px;
-    background-color: #38b055;
+    background-color: #FF0000;
     border-radius: 50%;
     position: absolute;
     right: 10px;
@@ -10953,7 +10953,7 @@ ul.more-list li.help {
     -webkit-text-stroke: 8px #fff;
     text-stroke: 8px #fff;
     margin-bottom: 0;
-    color: #1db055;
+    color: #FF0000;
 }
 
 .second-step.thankyou-confirm {
@@ -11300,7 +11300,7 @@ ul.project-list li {
     width: 90px;
     text-align: center;
     font-size: 26px;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 19px 0;
     border-radius: 2px 0 0 2px;
     color: #fff;
@@ -11748,7 +11748,7 @@ a.create-grpbtn i.fa {
 
 .suces span {
     font-size: 28px;
-    color: green;
+    color: #FF0000;
     margin-bottom: 20px;
     display: block;
 }
@@ -12756,7 +12756,7 @@ ul.grp-chat-list li.type4.me {
 }
 
 
-/*ul.grp-chat-list li.type3 .chat-txt{background-color: #38b055 !important;}
+/*ul.grp-chat-list li.type3 .chat-txt{background-color: #FF0000 !important;}
 ul.grp-chat-list li.type4 .chat-txt{background-color: #607d8b !important;}*/
 
 .file-box {
@@ -13563,7 +13563,7 @@ ul.upld-img-list.logo li {
 }
 .pst-evnt-btns button {
     margin: auto;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border: 0;
     padding: 7px 25px;
@@ -13938,7 +13938,7 @@ a.writ-btn {
     float: right;
     padding: 5px 18px;
     color: #fff;
-    background-color: #1db055;
+    background-color: #FF0000;
     text-decoration: none;
     font-size: 15px;
     border-radius: 2px;
@@ -14525,7 +14525,7 @@ ul.employers-list.recomend li .employers .comp-mddl {
 .crt-employr .btn {
     font-size: 15px;
     text-decoration: none;
-    background-color: #1db055;
+    background-color: #FF0000;
 }
 .artcle.comp-profile .hm_right_sec .crt-employr {
     padding-right: 0;
@@ -15829,13 +15829,13 @@ ol.work-prjct-list li i.fa {
     text-align: center;
     line-height: 50px;
     margin: auto;
-    background-color: #1db055;
+    background-color: #FF0000;
     border-radius: 50%;
     color: #fff;
     margin-bottom: 20px;
 }
 ol.work-prjct-list li strong {
-    color: #1db055;
+    color: #FF0000;
 }
 .continuebutton {
     float: left;
@@ -16669,7 +16669,7 @@ a.ordr-btn {
     width: 100%;
     margin: auto;
     text-align: center;
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 10px 30px;
     color: #fff;
     font-size: 18px;
@@ -16803,7 +16803,7 @@ ul.bsdtail-author-info li span {
 }
 .bnnr-cap .getstart {
     padding: 10px 20px;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     font-size: 18px;
     display: inline-block;
@@ -16952,7 +16952,7 @@ ul.bnfit-list li p {
     display: block;
     padding: 7px 25px;
     float: right;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border: 0;
     border-radius: 2px;
@@ -18302,7 +18302,7 @@ ul.compny-joblist li {
     display: block;
     padding: 7px 25px;
     float: right;
-    background-color: #1db055;
+    background-color: #FF0000;
     color: #fff;
     border: 0;
     cursor: pointer;
@@ -18866,7 +18866,7 @@ ul.nav_list li a.ripple {
     width: 100%;
 }
 .uploded-wrap .privacy-tag {
-    background-color: #1db055;
+    background-color: #FF0000;
     padding: 3px 10px;
     font-size: 12px;
     color: #fff;
@@ -19159,7 +19159,7 @@ button.uploded-sbmitbtn {
     float: right;
 }
 .srchanything {
-    color: #1db055;
+    color: #FF0000;
     font-weight: 600;
     font-size: 17px;
 }
@@ -20169,7 +20169,7 @@ ul.newarticle-list {
     background-color: rgba(255, 255, 255, 0.92);
     width: 95%;
     left: 10px;
-    border-left: 5px solid #38b055;
+    border-left: 5px solid #FF0000;
     padding: 10px;
     margin-right: 10px;
     height: 80px;
@@ -22746,7 +22746,7 @@ ul.newarticle-list li {
     }
     
     ul.prview-desc li.one:after {
-        border-right: solid #1db055 134px;
+        border-right: solid #FF0000 134px;
         border-top: solid 59px transparent;
     }
     
@@ -24992,7 +24992,7 @@ ul.newarticle-list li {
     margin-top: 8px;
     text-align: cener;
     text-align: center;
-    color: green;
+    color: #FF0000;
     font-weight: bold;
 }
 .removeactionbtn {

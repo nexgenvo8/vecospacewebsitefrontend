@@ -48,8 +48,8 @@ function error_found($id)
 	exit();
 }
 
-$companyname = 'Welcome to Jamia Millia Islamia VECOSPACE';
-$companNameTitle = 'Jamia Millia Islamia VECOSPACE';
+$companyname = 'Welcome to NDIM VECOSPACE';
+$companNameTitle = 'NDIM VECOSPACE';
 
 // ✅ fixed session check (your OR condition was always true)
 if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0 && is_numeric($_SESSION["sessUserId"])) {

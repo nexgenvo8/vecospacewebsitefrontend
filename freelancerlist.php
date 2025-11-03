@@ -50,11 +50,11 @@ $totalcheckFrelnce = is_object($rescheckFrelnce) ? mysqli_num_rows($rescheckFrel
   <script src="<?php echo $fullurl; ?>js/main.js"></script>
   <style type="text/css">
     ul.prjct-list li a.active {
-      color: #1db055;
+      color: #FF0000;
     }
 
     ul.prjct-list li a.active i.fa {
-      background-color: #1db055;
+      background-color: #FF0000;
     }
 
     ul.prjct-list li a.active:hover i.fa {

@@ -111,7 +111,7 @@ $TokenRequest = isset($TokenRequest) ? $TokenRequest : '';
 <div class="foottr">
   <p style="
     text-align: center;
-    color: green;
+    color: #FF0000;
     font-weight: 500;
     padding: 0px;
     margin: 5px;
@@ -1026,10 +1026,10 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
   <?php
   if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
     ?>
-                                          /*var sessionsss = setInterval(function () {
-                                          //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
+                                              /*var sessionsss = setInterval(function () {
+                                              //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
 
-                                          }, 5000);*/
+                                              }, 5000);*/
 
   <?php } ?>
 </script>

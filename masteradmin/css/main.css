@@ -40,7 +40,7 @@ border-image: initial;
 }
 
 .bluebutton{    margin: auto;
-    background-color: #1db055;
+    background-color: #FF0000;
     color:#fff !important;
     border: 0;
     padding: 7px 25px;
@@ -175,7 +175,7 @@ h3 {
     border: 0px;
     margin-right: 5px; outline:0px;}
 
-.greenbtn{    background-color: #1db055;
+.greenbtn{    background-color: #FF0000;
     padding: 0 16px;
     color: #fff;
     line-height: 25px;

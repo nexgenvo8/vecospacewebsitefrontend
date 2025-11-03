@@ -50,11 +50,11 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 
 	<style type="text/css">
 		ul.prjct-list li a.active {
-			color: #1db055;
+			color: #FF0000;
 		}
 
 		ul.prjct-list li a.active i.fa {
-			background-color: #1db055;
+			background-color: #FF0000;
 		}
 
 		ul.prjct-list li a.active:hover i.fa {
@@ -107,21 +107,28 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 								</div>
 								<div class="offerd-sec">
 									<span class="ttl">Service Offered</span>
-									<h3><?php
-									$whereFields = [];
-									$selectFields = [];     // Empty because we are passing raw SQL
-									$whereVals = [];
-									$sqlOptions1 = "";
-									$sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' and id='" . $serviceOffered . "' ";
-									$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-									$totalpost1 = mysqli_num_rows($resOptions1);
-									if ($totalpost1) {
-										while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-											echo trim($rowOptions1['optionName']);
+									<h3>
+										<?php
+										$whereFields = [];
+										$selectFields = []; // Empty because we are passing raw SQL
+										$whereVals = [];
+										$sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' and id='" . $serviceOffered . "' ";
+
+										$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+
+										// ✅ Safe check to avoid mysqli_num_rows() on bool (false)
+										if ($resOptions1 && mysqli_num_rows($resOptions1) > 0) {
+											while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
+												echo trim($rowOptions1['optionName']);
+											}
+										} else {
+											// Optional fallback if no record or query failed
+											// echo "N/A";
 										}
-									}
-									?></h3>
+										?>
+									</h3>
 								</div>
+
 								<div class="frlncr-tagline">
 									<?php echo $professionalTitle; ?>
 								</div>
@@ -179,21 +186,28 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 											</div>
 											<div class="srvc-offer">
 												<span>Service offered</span>
-												<h3><?php
-												$whereFields = [];
-												$selectFields = [];     // Empty because we are passing raw SQL
-												$whereVals = [];
-												$sqlOptions1 = "";
-												$sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' and id='" . $getResults["serviceOffered"] . "' ";
-												$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-												$totalpost1 = mysqli_num_rows($resOptions1);
-												if ($totalpost1) {
-													while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-														echo trim($rowOptions1['optionName']);
+												<h3>
+													<?php
+													$whereFields = [];
+													$selectFields = []; // Empty because we are passing raw SQL
+													$whereVals = [];
+													$sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' and id='" . $getResults["serviceOffered"] . "' ";
+
+													$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+
+													// ✅ Prevent fatal error if query failed
+													if ($resOptions1 && mysqli_num_rows($resOptions1) > 0) {
+														while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
+															echo trim($rowOptions1['optionName']);
+														}
+													} else {
+														// optional: show nothing or fallback text
+														// echo "N/A";
 													}
-												}
-												?></h3>
+													?>
+												</h3>
 											</div>
+
 											<div class="srvc-offer">
 												<span>Work Experience</span>
 												<h3><?php echo $getResults['experienceLevel']; ?></h3>

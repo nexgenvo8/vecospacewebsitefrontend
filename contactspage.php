@@ -443,7 +443,7 @@ $offset = $startpage * $limit;
 				display: inline-block;
 				background: #fff;
 				color: #007bff;
-				border: 1px solid #20741f;
+				border: 1px solid #FF0000;
 				padding: 6px 12px;
 				border-radius: 6px;
 				text-decoration: none;
@@ -453,12 +453,12 @@ $offset = $startpage * $limit;
 
 			.pagination-btn:hover,
 			.pagination-number:hover {
-				background: #20741f;
+				background: #FF0000;
 				color: #fff;
 			}
 
 			.pagination-number.active {
-				background: #20741f;
+				background: #FF0000;
 				color: #fff;
 				border-color: #20741f;
 				pointer-events: none;
@@ -484,13 +484,13 @@ $offset = $startpage * $limit;
 
 		<script>
 			<?php
-			if ($_SESSION["s"] == 1) {
+			if (isset($_SESSION['s']) && $_SESSION["s"] == 1) {
 				?>
 				showsusmsg('SUCCESS', 'Request accepted', '');
 				<?php
 				$_SESSION["s"] = '';
 			}
-			if ($_SESSION["d"] == 1) {
+			if (isset($_SESSION['d']) && $_SESSION["d"] == 1) {
 				?>
 				showerrormsg('SUCCESS', 'Request declined', '');
 				<?php
@@ -499,7 +499,6 @@ $offset = $startpage * $limit;
 
 			?>
 		</script>
-
 </body>
 
 </html>

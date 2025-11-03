@@ -280,9 +280,9 @@ function removeconnectionfun(id)
 <?php } ?>
 
 <?php if ($type == 'recommendations' && $_REQUEST['id'] != '') {
-	$selectFields =[];
-	$whereFields =[];
-	$whereVals =[];
+	$selectFields = [];
+	$whereFields = [];
+	$whereVals = [];
 
 	$sqlLogin = "";
 	$sqlLogin = "select jobTitle,companyName,firstName,lastName,userurl from " . _USERS_MASTER_TABLE_ . " where userId='" . decodeStr($_GET['id']) . "' ";
@@ -323,7 +323,8 @@ function removeconnectionfun(id)
 
 		<div id="selectposition">
 			<div style="font-size:14px; text-align:left; margin-bottom:10px;"> How do you know
-				<?php echo $_REQUEST["name"]; ?>?</div>
+				<?php echo $_REQUEST["name"]; ?>?
+			</div>
 			<div style="font-size:14px; text-align:left; margin-bottom:10px;">
 				<select name="requesterRelationship" id="requesterRelationship"
 					style="padding:8px; border:1px solid #ccc; width:100%; box-sizing:border-box;" onchange="sonextbtn();">
@@ -331,7 +332,8 @@ function removeconnectionfun(id)
 
 					<option value="RECOMMENDER_MANAGED_RECOMMENDEE"><?php echo $_REQUEST["name"]; ?> managed you directly
 					</option>
-					<option value="RECOMMENDER_REPORTED_TO_RECOMMENDEE"><?php echo $_REQUEST["name"]; ?> reported directly to
+					<option value="RECOMMENDER_REPORTED_TO_RECOMMENDEE"><?php echo $_REQUEST["name"]; ?> reported directly
+						to
 						you</option>
 					<option value="RECOMMENDER_SENIOR_THAN_RECOMMENDEE"><?php echo $_REQUEST["name"]; ?> was senior to you
 						but didn't manage directly</option>
@@ -344,7 +346,8 @@ function removeconnectionfun(id)
 					<option value="WORKED_IN_DIFFERENT_COMPANIES"><?php echo $_REQUEST["name"]; ?> worked with you but at
 						different companies</option>
 					<option value="RECOMMENDEE_IS_CLIENT_OF_RECOMMENDER">You were a client of
-						<?php echo $_REQUEST["name"]; ?>'s</option>
+						<?php echo $_REQUEST["name"]; ?>'s
+					</option>
 					<option value="RECOMMENDER_IS_CLIENT_OF_RECOMMENDEE"><?php echo $_REQUEST["name"]; ?> was a client of
 						yours</option>
 					<option value="RECOMMENDER_TAUGHT_RECOMMENDEE"><?php echo $_REQUEST["name"]; ?> taught or mentored you
@@ -358,9 +361,9 @@ function removeconnectionfun(id)
 				<select name="position" id="position"
 					style="padding:8px; border:1px solid #ccc; width:100%; box-sizing:border-box;" onchange="sonextbtn();">
 					<?php
-					$selectFields =[];
-					$whereFields =[];
-					$whereVals =[];
+					$selectFields = [];
+					$whereFields = [];
+					$whereVals = [];
 
 					$sqlOptions = "";
 					$sqlOptions = "SELECT * FROM " . _PROFESSIONAL_EXPERIENCE_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . " order by fromyear desc ";
@@ -383,7 +386,7 @@ function removeconnectionfun(id)
 					} else {
 						?>
 						<option value="">Please add at least one professional experience to request a recommendation</option>
-					<?php
+						<?php
 					}
 					?>
 				</select>
@@ -440,9 +443,9 @@ function removeconnectionfun(id)
 <?php } ?>
 
 <?php if ($type == 'recommendeduser' && $_REQUEST['id'] != '') {
-	$selectFields =[];
-	$whereFields =[];
-	$whereVals =[];
+	$selectFields = [];
+	$whereFields = [];
+	$whereVals = [];
 
 	$sqlLogin = "";
 	$sqlLogin = "select jobTitle,companyName,firstName,lastName,userurl from " . _USERS_MASTER_TABLE_ . " where userId='" . decodeStr($_GET['id']) . "' ";
@@ -485,7 +488,8 @@ function removeconnectionfun(id)
 
 		<div id="selectposition">
 			<div style="font-size:14px; text-align:left; margin-bottom:10px;"> How do you know
-				<?php echo $_REQUEST["name"]; ?>?</div>
+				<?php echo $_REQUEST["name"]; ?>?
+			</div>
 			<div style="font-size:14px; text-align:left; margin-bottom:10px;"><select name="requesterRelationship"
 					id="requesterRelationship"
 					style="padding:8px; border:1px solid #ccc; width:100%; box-sizing:border-box;" onchange="sonextbtn();">
@@ -494,7 +498,8 @@ function removeconnectionfun(id)
 					<option value="RECOMMENDER_MANAGED_RECOMMENDEE">You managed <?php echo $_REQUEST["name"]; ?> directly
 					</option>
 					<option value="RECOMMENDER_REPORTED_TO_RECOMMENDEE">You reported directly to
-						<?php echo $_REQUEST["name"]; ?></option>
+						<?php echo $_REQUEST["name"]; ?>
+					</option>
 					<option value="RECOMMENDER_SENIOR_THAN_RECOMMENDEE">You were senior to <?php echo $_REQUEST["name"]; ?>
 					</option>
 					<option value="RECOMMENDEE_SENIOR_THAN_RECOMMENDER"><?php echo $_REQUEST["name"]; ?> was senior to you
@@ -508,7 +513,8 @@ function removeconnectionfun(id)
 					<option value="RECOMMENDEE_IS_CLIENT_OF_RECOMMENDER"><?php echo $_REQUEST["name"]; ?> was a client of
 						yours</option>
 					<option value="RECOMMENDER_IS_CLIENT_OF_RECOMMENDEE">You were a client of
-						<?php echo $_REQUEST["name"]; ?>'s</option>
+						<?php echo $_REQUEST["name"]; ?>'s
+					</option>
 					<option value="RECOMMENDER_TAUGHT_RECOMMENDEE">You taught <?php echo $_REQUEST["name"]; ?></option>
 					<option value="RECOMMENDER_ADVISED_RECOMMENDEE">You mentored <?php echo $_REQUEST["name"]; ?></option>
 					<option value="RECOMMENDER_STUDIED_WITH_RECOMMENDEE">You and <?php echo $_REQUEST["name"]; ?> studied
@@ -519,7 +525,8 @@ function removeconnectionfun(id)
 					<option value="">Select <?php echo $_REQUEST["name"]; ?>'s position at the time</option>
 
 					<option value="<?php echo $jobTitle; ?> at <?php echo $companyName; ?>"><?php echo $jobTitle; ?> at
-						<?php echo $companyName; ?></option>
+						<?php echo $companyName; ?>
+					</option>
 
 				</select></div>
 		</div>
@@ -528,7 +535,8 @@ function removeconnectionfun(id)
 
 		<div id="pmsg" style="display:none;">
 			<div style="font-size:14px; text-align:left; margin-bottom:10px;">The recommendation will appear on
-				<?php echo $_REQUEST["name"]; ?>'s profile.</div>
+				<?php echo $_REQUEST["name"]; ?>'s profile.
+			</div>
 			<div style="padding:10px 0px; border-bottom:1px solid #ccc;">
 				<textarea name="pmessage" id="pmessage"
 					style="width:100%; padding:8px; border:1px solid #ccc; box-sizing:border-box; height:150px;"
@@ -1520,15 +1528,15 @@ function removeconnectionfun(id)
 							<textarea name="projectdescription" rows="3" id="projectdescription" maxlength="1000"
 								style="height:250px;" class="validate" onKeyUp="hideerrordiv(this.id);">Hello <?php echo $myfirstName1; ?>
 
-																																	I'm interested in your "<?php echo stripslashes($rowProjects['projectTitle']); ?>" (<?php echo $fullurl; ?>preview-project.html?projId=<?php echo $_REQUEST['id']; ?>) project. 
+																																			I'm interested in your "<?php echo stripslashes($rowProjects['projectTitle']); ?>" (<?php echo $fullurl; ?>preview-project.html?projId=<?php echo $_REQUEST['id']; ?>) project. 
 
-																																	Please feel free to check out my <?php echo $companNameTitle; ?> profile to see whether you think we could work together:
-																																	<?php echo $fullurl; ?>profile/<?php echo encodeStr($_SESSION['sessUserId']); ?>/<?php echo $userurl; ?>.html
+																																			Please feel free to check out my <?php echo $companNameTitle; ?> profile to see whether you think we could work together:
+																																			<?php echo $fullurl; ?>profile/<?php echo encodeStr($_SESSION['sessUserId']); ?>/<?php echo $userurl; ?>.html
 
-																																	If you'd like to contact me, just reply to this message.
+																																			If you'd like to contact me, just reply to this message.
 
-																																	Kind regards,
-																																	<?php echo $myname; ?></textarea>
+																																			Kind regards,
+																																			<?php echo $myname; ?></textarea>
 						</td>
 					</tr>
 				</table>
@@ -2831,18 +2839,18 @@ if ($type == 'addtalentvideo') {
 
 							<textarea name="projectdescription" rows="3" id="projectdescription" maxlength="1000"
 								style="height:250px;" class="validate" onKeyUp="hideerrordiv(this.id);">
-																			Hello <?php echo $myfirstName1; ?>
+																					Hello <?php echo $myfirstName1; ?>
 
-																			I'm interested in your "<?php echo stripslashes($rowProjects['jobTitle']); ?>" (<?php echo $fullurl; ?>view-job.html?id=<?php echo $_REQUEST['id']; ?>) Job. 
+																					I'm interested in your "<?php echo stripslashes($rowProjects['jobTitle']); ?>" (<?php echo $fullurl; ?>view-job.html?id=<?php echo $_REQUEST['id']; ?>) Job. 
 
-																			Please feel free to check out my <?php echo $companNameTitle; ?> profile to see whether you think we could work together:
-																			<?php echo $fullurl; ?>profile/<?php echo encodeStr($_SESSION['sessUserId']); ?>/<?php echo $userurl; ?>.html
+																					Please feel free to check out my <?php echo $companNameTitle; ?> profile to see whether you think we could work together:
+																					<?php echo $fullurl; ?>profile/<?php echo encodeStr($_SESSION['sessUserId']); ?>/<?php echo $userurl; ?>.html
 
-																			If you'd like to contact me, just reply to this message.
+																					If you'd like to contact me, just reply to this message.
 
-																			Kind regards,
-																			<?php echo $myname; ?>
-																			</textarea>
+																					Kind regards,
+																					<?php echo $myname; ?>
+																					</textarea>
 
 						</td>
 					</tr>
@@ -3263,10 +3271,10 @@ function vaultsendrequest(id)
 ?>
 
 <?php if ($type == 'invitepeople') {
-
+	$yahooUrL = '';
 	// for Yahoo
-	require_once('yahapi/globals.php');
-	require_once('yahapi/oauth_helper.php');
+	require_once(__DIR__ . '/yahapi/globals.php');
+	require_once(__DIR__ . '/yahapi/oauth_helper.php');
 	$callback = $fullurl . "yahapi/yahoo_callback.php";
 	// Get the request token using HTTP GET and HMAC-SHA1 signature 
 	$retarr = get_request_token(OAUTH_CONSUMER_KEY, OAUTH_CONSUMER_SECRET, $callback, false, true, true);

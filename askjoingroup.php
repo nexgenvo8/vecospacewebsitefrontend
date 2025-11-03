@@ -165,7 +165,7 @@ $grouppostId = $rowResults["id"];
 												onClick="$('#commonloader').show();">Join group</a> <?php } ?>
 
 										<?php if ($mygroupid1 == 0 && $mygroupid == 1) { ?><a class="konectt-btn"
-												style="background-color:#18ad06;">Request sent</a> <?php } ?>
+												style="background-color:#FF0000;">Request sent</a> <?php } ?>
 									</div>
 								</div>
 							</div>

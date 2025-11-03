@@ -53,7 +53,7 @@ if (isPost()) {
 				$mailBodyContent = '';
 
 				$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
-	<a href="' . $fullurl . 'timeline.html"><img src="' . $fullurl . 'images/logo.jpg" width="150"></a>
+	<a href="' . $fullurl . 'timeline.html"><img src="' . $fullurl . 'images/ndimlogo.png" width="150"></a>
 </div>
 <div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
   <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
@@ -137,52 +137,52 @@ if (isPost()) {
 			<div class="container">
 				<div class="second-step" <?php if (isset($_GET['send']) && $_GET['send'] == 1) { ?>style="width:500px;"
 					<?php } ?>>
-					<h2 style="text-align:center; color:#20741f;">Forgot Password</h2>
+					<h2 style="text-align:center; color:#FF0000;">Forgot Password</h2>
 					<form name="frmkonectt" id="frmkonectt" class="personal-data" method="post">
 
 						<?php if (!isset($_GET['send']) || $_GET['send'] != 1) { ?>
-								<div id="stepsdetail1" style="text-align: center;">
-									<div class="half-input">
-										<?php if (!empty($errMsg)) { ?>
-												<div style="margin-bottom:10px; color:#FF0000;"><?php echo htmlspecialchars($errMsg); ?>
-												</div>
-										<?php } ?>
-										<input type="email" class="input validate" name="email" id="email"
-											value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
-											placeholder="Enter email address" maxlength="60" onKeyUp="hideerrordiv(this.id);">
-									</div>
-
-									<input type="hidden" name="txtAction" id="txtAction"
-										value="<?php echo isset($action) ? htmlspecialchars($action) : ''; ?>">
-									<button type="button" onClick="formValidation('frmkonectt');"
-										class="continue-process-btn">Send
-									</button>
-									<a href="<?php echo $fullurl; ?>">
-										<button style="background-color:#e0e0e0; color:#333; margin-right:10px;" type="button"
-											class="continue-process-btn">Cancel
-										</button>
-									</a>
+							<div id="stepsdetail1" style="text-align: center;">
+								<div class="half-input">
+									<?php if (!empty($errMsg)) { ?>
+										<div style="margin-bottom:10px; color:#FF0000;"><?php echo htmlspecialchars($errMsg); ?>
+										</div>
+									<?php } ?>
+									<input type="email" class="input validate" name="email" id="email"
+										value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>"
+										placeholder="Enter email address" maxlength="60" onKeyUp="hideerrordiv(this.id);">
 								</div>
+
+								<input type="hidden" name="txtAction" id="txtAction"
+									value="<?php echo isset($action) ? htmlspecialchars($action) : ''; ?>">
+								<button type="button" onClick="formValidation('frmkonectt');"
+									class="continue-process-btn">Send
+								</button>
+								<a href="<?php echo $fullurl; ?>">
+									<button style="background-color:#e0e0e0; color:#333; margin-right:10px;" type="button"
+										class="continue-process-btn">Cancel
+									</button>
+								</a>
+							</div>
 
 						<?php } else { ?>
-								<div style="text-align:center;">
-									<strong>Please check your messages.</strong><br>
-									Please check your inbox as we've sent an e-mail to the e-mail address you linked to your
-									<?php echo isset($companNameTitle) ? htmlspecialchars($companNameTitle) : ''; ?> profile.
-									When you click on the link in the e-mail, you'll be
-									automatically forwarded to a page explaining how to create your new password.&nbsp;<br>
-									<br>
-									<strong>Haven't received an e-mail yet?</strong>&nbsp;<br>
-									Please check your spam folder and make sure our e-mail hasn't ended up there. If don't
-									receive our e-mail within 2 hours.<br>
-									<br>
+							<div style="text-align:center;">
+								<strong>Please check your messages.</strong><br>
+								Please check your inbox as we've sent an e-mail to the e-mail address you linked to your
+								<?php echo isset($companNameTitle) ? htmlspecialchars($companNameTitle) : ''; ?> profile.
+								When you click on the link in the e-mail, you'll be
+								automatically forwarded to a page explaining how to create your new password.&nbsp;<br>
+								<br>
+								<strong>Haven't received an e-mail yet?</strong>&nbsp;<br>
+								Please check your spam folder and make sure our e-mail hasn't ended up there. If don't
+								receive our e-mail within 2 hours.<br>
+								<br>
 
-									<a href="<?php echo $fullurl; ?>">
-										<button style="background-color:#e0e0e0; float:none; color:#333; margin-right:10px;"
-											type="button" class="continue-process-btn">Back to login page
-										</button>
-									</a>
-								</div>
+								<a href="<?php echo $fullurl; ?>">
+									<button style="background-color:#e0e0e0; float:none; color:#333; margin-right:10px;"
+										type="button" class="continue-process-btn">Back to login page
+									</button>
+								</a>
+							</div>
 						<?php } ?>
 
 					</form>
@@ -213,11 +213,13 @@ if (isPost()) {
 			position: fixed;
 			left: 0;
 			top: 0;
-			background: #016402;
-			background: -moz-linear-gradient(top, #1b8cb8 0%, #6dc8e7 100%);
-			background: -webkit-linear-gradient(top, #036503 0%, #529152 100%);
-			background: linear-gradient(to bottom, #0a680a 0%, #629b62 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#20741f', endColorstr='#6dc8e7', GradientType=0);
+			background: #ff0000;
+			/* solid fallback for old browsers */
+			background: -moz-linear-gradient(top, #ff4d4d 0%, #cc0000 100%);
+			background: -webkit-linear-gradient(top, #ff4d4d 0%, #cc0000 100%);
+			background: linear-gradient(to bottom, #ff4d4d 0%, #cc0000 100%);
+
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0000', endColorstr='#6dc8e7', GradientType=0);
 		}
 	</style>
 </body>

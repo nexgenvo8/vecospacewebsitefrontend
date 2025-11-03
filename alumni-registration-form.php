@@ -248,7 +248,7 @@ if (isPost()) {
 <!-- Button -->
 <div style="text-align:left; margin-top:20px; margin-bottom:30px;">
   <a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;">
-    <input name="" type="button" style="background-color:#1db055; cursor:pointer; padding:12px 30px; outline:0px; border:0px; border-radius:3px; color:#FFFFFF; font-size:16px;" value="Confirm e-mail address">
+    <input name="" type="button" style="background-color:#FF0000; cursor:pointer; padding:12px 30px; outline:0px; border:0px; border-radius:3px; color:#FFFFFF; font-size:16px;" value="Confirm e-mail address">
   </a>
 </div>
 

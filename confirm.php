@@ -11,15 +11,15 @@ if (isset($_GET['_j']) && $_GET['_j'] != '') {
 	/*	echo '<br>=====<br>';
 		echo $strEmail=clean($strEmail);*/
 
-	unset($selectFields);
-	unset($whereFields);
-	unset($whereVals);
-
+	$selectFields = [];
+	$whereFields = [];
+	$whereVals = [];
+	$oops = 0;
 	$sqlLogin = "";
 	$sqlLogin = "select email,activeYN,firstName from " . _USERS_MASTER_TABLE_ . " where email='" . $strEmail . "' ";
 	$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
 	if ($resLogin) {
-		while ($rowLogin = mysql_fetch_array($resLogin)) {
+		while ($rowLogin = mysqli_fetch_array($resLogin)) {
 			$email = $rowLogin['email'];
 			$activeYN = $rowLogin['activeYN'];
 			$firstName = ucfirst($rowLogin["firstName"]);
@@ -57,7 +57,7 @@ if (isset($_GET['_j']) && $_GET['_j'] != '') {
 <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
 <div style="padding:30px;">
 <div style="font-size:22px; margin-bottom:10px;"><span style="color:#1a94c3;">Hi ' . $firstName . ',</span> It &prime;s time to get &prime;' . $companNameTitle . '&prime;</div>
-<div style="text-align:left; margin-top:20px; margin-bottom:40px;"><a href="' . $fullurl . 'timeline.html" style="text-decoration:none;"><input name="" type="button" style="background-color:#1db055; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px;" value="Explore ' . $companNameTitle . '"></a></div>
+<div style="text-align:left; margin-top:20px; margin-bottom:40px;"><a href="' . $fullurl . 'timeline.html" style="text-decoration:none;"><input name="" type="button" style="background-color:#FF0000; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px;" value="Explore ' . $companNameTitle . '"></a></div>
 <div style="margin-bottom:20px; font-size:15px; color:#1a94c3;"><strong>A few of the many benefits that you gain by being a member of ' . $companNameTitle . ':</strong></div>
 <div style="padding:10px; background-color:#F9F9F9; border:dashed 1px #ccc; border-radius: 2px;">
 <div style="color: #696969; margin-bottom: 22px; font-size: 14px; line-height: 20px;"><strong>Articles , Trivia and News:</strong> Stay inspired, informed and updated with relevant articles, written by leading management gurus, thought leaders and subject matter experts. Get a snapshot of top news and views-all on a single platform!</div>
@@ -128,15 +128,15 @@ You can create as many groups and chat simultaneously with each group.</div>
 			<div class="container">
 				<div class="second-step thankyou-confirm" style="width:500px;">
 					<?php if ($oops == 1) { ?><i class="fa fa-times-circle-o" aria-hidden="true"
-								style="color: #fd6363;"></i><?php } else { ?><i class="fa fa-check-circle-o"
-								aria-hidden="true"></i><?php } ?>
+							style="color: #fd6363;"></i><?php } else { ?><i class="fa fa-check-circle-o"
+							aria-hidden="true"></i><?php } ?>
 					<h2 style="text-align:center; color:#1a94c3;"><?php echo $textVar; ?></h2>
 					<form name="frmkonectt" id="frmkonectt" class="personal-data" method="post">
 						<div style="text-align:center; "> <?php if (trim($errMsg) != '') { ?>
-									<div id="emsgdiv" class="<?php echo $className; ?>"
-										style="display:block; margin-top:10px; margin-bottom:10px;"><?php echo $errMsg; ?><br>
-										<br>
-									</div>
+								<div id="emsgdiv" class="<?php echo $className; ?>"
+									style="display:block; margin-top:10px; margin-bottom:10px;"><?php echo $errMsg; ?><br>
+									<br>
+								</div>
 							<?php } ?><a href="<?php echo $fullurl; ?>"><button
 									style="background-color:#3ca3ce; float:none; color:#fff; margin-right:10px;"
 									type="button" class="continue-process-btn">Back to login page</button></a>

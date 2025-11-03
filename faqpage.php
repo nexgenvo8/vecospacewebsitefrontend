@@ -51,7 +51,7 @@ $post_result = mysqli_fetch_array($re2);
   <span class="clear"></span>
   <div class="container">
     <div class="helpwrap-cont">
-      <?php include('left_links.php'); ?>
+      <?php include('ndim_left_links.php'); ?>
       <div class="right-panel">
         <div class="main">
           <div class="accordion">
