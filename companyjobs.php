@@ -373,14 +373,14 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 		<?php
 		$cmsg = 'Thank you for posting a Job on ' . $companNameTitle . '. We are reviewing the same and will come back to you shortly.';
 
-		if ($_SESSION["s"] == 1) {
+		if (isset($_SESSION['s']) && $_SESSION["s"] == 1) {
 			?>
 			showsusmsg('SUCCESS', '<?php echo $cmsg; ?>', '');
 			<?php
 			$_SESSION["s"] = '';
 		}
 
-		if ($_SESSION["s"] == 2) {
+		if (isset($_SESSION['s']) && $_SESSION["s"] == 2) {
 			?>
 			showsusmsg('SUCCESS', 'Job updated successfully', '');
 			<?php

@@ -460,7 +460,7 @@ $offset = $startpage * $limit;
 			.pagination-number.active {
 				background: #FF0000;
 				color: #fff;
-				border-color: #20741f;
+				border-color: #FF0000;
 				pointer-events: none;
 			}
 
