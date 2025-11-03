@@ -192,13 +192,15 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 													$selectFields = [];
 													$whereFields = [];
 													$whereVals = [];
-													$rowCompany = isset($rowCompany) ? $rowCompany : [];
+													$levelId = isset($rowCompany["levelId"]) ? $rowCompany["levelId"] : 0;
 													$sqlOptions1 = "";
-													$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
-													$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-													if ($resOptions1) {
+													$sqlOptions1 = "SELECT id, optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE id=" . $levelId . " ";
+													$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+
+													if ($resOptions1 && mysqli_num_rows($resOptions1) > 0) {
 														while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-															if ($levelId == $rowOptions1['id']) {
+															// ✅ Use the already defined $levelId
+															if ((int) $levelId === (int) $rowOptions1['id']) {
 																$strSelected = 'selected="selected"';
 															} else {
 																$strSelected = "";
@@ -206,6 +208,7 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 															echo trim($rowOptions1['optionName']);
 														}
 													}
+
 													?>
 												</div>
 
@@ -245,7 +248,7 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 															$selectFields = [];
 															$whereFields = [];
 															$whereVals = [];
-
+															$levelId = isset($rowCompany["levelId"]) ? $rowCompany["levelId"] : 0;
 															$sqlOptions1 = "";
 															$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
 															$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
