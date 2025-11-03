@@ -1,79 +1,79 @@
-<?php
-include_once('inc.php');
-include_once('config/session-check.inc.php'); // check user login session
-$pageIndex = 6;
-$errMsg = '';
-if (isset($_POST['btnsubmit']) && $_POST['btnsubmit'] == 1) {
-	$groupName = clean($_POST["groupName"]);
-	$groupDetails = clean($_POST["groupDetails"]);
-	$groupLongDetails = clean($_POST["groupLongDetails"]);
-	//echo strlen($groupDetails);
-	if ((strlen($groupDetails) <= 150) && (strlen($groupLongDetails) <= 500) && $groupName != '') {
-		unset($insertFields);
-		unset($insertVals);
-		unset($whereFields);
-		unset($whereVals);
+	<?php
+	include_once('inc.php');
+	include_once('config/session-check.inc.php'); // check user login session
+	$pageIndex = 6;
+	$errMsg = '';
+	if (isset($_POST['btnsubmit']) && $_POST['btnsubmit'] == 1) {
+		$groupName = clean($_POST["groupName"]);
+		$groupDetails = clean($_POST["groupDetails"]);
+		$groupLongDetails = clean($_POST["groupLongDetails"]);
+		//echo strlen($groupDetails);
+		if ((strlen($groupDetails) <= 150) && (strlen($groupLongDetails) <= 500) && $groupName != '') {
+			unset($insertFields);
+			unset($insertVals);
+			unset($whereFields);
+			unset($whereVals);
 
-		$insertFields[0] = "groupDetails";
-		$insertFields[1] = "groupLongDetails";
-		$insertFields[2] = "groupName";
+			$insertFields[0] = "groupDetails";
+			$insertFields[1] = "groupLongDetails";
+			$insertFields[2] = "groupName";
 
-		$insertVals[0] = $groupDetails;
-		$insertVals[1] = $groupLongDetails;
-		$insertVals[2] = $groupName;
+			$insertVals[0] = $groupDetails;
+			$insertVals[1] = $groupLongDetails;
+			$insertVals[2] = $groupName;
 
-		$whereFields[0] = "id";
-		$whereFields[1] = "userId";
+			$whereFields[0] = "id";
+			$whereFields[1] = "userId";
 
-		$whereVals[0] = clean($_POST['txtId']);
-		$whereVals[1] = $_SESSION['sessUserId'];
+			$whereVals[0] = clean($_POST['txtId']);
+			$whereVals[1] = $_SESSION['sessUserId'];
 
-		$resUpdate = updateDB(_GROUP_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+			$resUpdate = updateDB(_GROUP_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
-		//header('Location:'.$fullurl.'about-group.html?groupId='.$_REQUEST['groupId'].'&s=1');
-		//exit();
-		$_SESSION["s"] = 1;
+			//header('Location:'.$fullurl.'about-group.html?groupId='.$_REQUEST['groupId'].'&s=1');
+			//exit();
+			$_SESSION["s"] = 1;
+		}
+
 	}
 
-}
+	if ($_REQUEST['groupId'] != '') {
+		$sql_group = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['groupId']) . " ";
+		$resgroup = mysqli_query($conn, $sql_group) or die(error_found(mysqli_error($conn)));
+		$rowGroup = mysqli_fetch_array($resgroup);
 
-if ($_REQUEST['groupId'] != '') {
-	$sql_group = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['groupId']) . " ";
-	$resgroup = mysqli_query($conn, $sql_group) or die(error_found(mysqli_error($conn)));
-	$rowGroup = mysqli_fetch_array($resgroup);
+		if ($rowGroup["groupThumb"] != '') {
+			$groupThumb = $rowGroup["groupThumb"];
+		} else {
+			$groupThumb = 'group.png';
+		}
+		$mytotalgroups = 0;
+		$totalm = "SELECT * from " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE groupId= " . $rowGroup["id"] . "";
+		$retotalm = mysqli_query($conn, $totalm) or die(mysqli_error($conn));
+		$mytotalgroups = mysqli_num_rows($retotalm);
 
-	if ($rowGroup["groupThumb"] != '') {
-		$groupThumb = $rowGroup["groupThumb"];
-	} else {
-		$groupThumb = 'group.png';
+		$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowGroup["userId"] . "";
+		$b = mysqli_query($conn, $a) or die(mysqli_error());
+		$userres = mysqli_fetch_array($b);
+
+		$friendnameurl = $userres['userurl'];
+
+		if ($userres["profilePhoto"] != '') {
+			$userphoto = $userres["profilePhoto"];
+		} else {
+			$userphoto = 'user-placeholder.jpg';
+		}
+
+		$groupsql = "SELECT id from " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . " and groupId=" . decodeStr($_REQUEST['groupId']) . " ";
+		$resultgroup = mysqli_query($conn, $groupsql) or die(mysqli_error($conn));
+		$mygroupid = mysqli_num_rows($resultgroup);
+
+		$groupsql1 = "SELECT id from " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . " and groupId=" . decodeStr($_REQUEST['groupId']) . " and status=1 ";
+		$resultgroup1 = mysqli_query($conn, $groupsql1) or die(mysqli_error($conn));
+		$mygroupid1 = mysqli_num_rows($resultgroup1);
 	}
-	$mytotalgroups = 0;
-	$totalm = "SELECT * from " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE groupId= " . $rowGroup["id"] . "";
-	$retotalm = mysqli_query($conn, $totalm) or die(mysqli_error($conn));
-	$mytotalgroups = mysqli_num_rows($retotalm);
 
-	$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowGroup["userId"] . "";
-	$b = mysqli_query($conn, $a) or die(mysqli_error());
-	$userres = mysqli_fetch_array($b);
-
-	$friendnameurl = $userres['userurl'];
-
-	if ($userres["profilePhoto"] != '') {
-		$userphoto = $userres["profilePhoto"];
-	} else {
-		$userphoto = 'user-placeholder.jpg';
-	}
-
-	$groupsql = "SELECT id from " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . " and groupId=" . decodeStr($_REQUEST['groupId']) . " ";
-	$resultgroup = mysqli_query($conn, $groupsql) or die(mysqli_error($conn));
-	$mygroupid = mysqli_num_rows($resultgroup);
-
-	$groupsql1 = "SELECT id from " . _GROUP_MEMBER_MASTER_TABLE_ . " WHERE userId= " . $_SESSION['sessUserId'] . " and groupId=" . decodeStr($_REQUEST['groupId']) . " and status=1 ";
-	$resultgroup1 = mysqli_query($conn, $groupsql1) or die(mysqli_error($conn));
-	$mygroupid1 = mysqli_num_rows($resultgroup1);
-}
-
-?>
+	?>
 <!DOCTYPE html>
 <html>
 
@@ -114,11 +114,11 @@ if ($_REQUEST['groupId'] != '') {
 									<div class="join-btn">
 										<!--<a href="<?php echo $fullurl; ?>about-group.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">About this group</a>-->
 										<?php if ($mygroupid == 0) { ?><a
-												href="common_action.php?groupId=<?php echo encodeStr($rowGroup['id']); ?>&action=groupjoinrequest"
-												target="actionfrm" class="konectt-btn">Join group</a> <?php } ?>
+													href="common_action.php?groupId=<?php echo encodeStr($rowGroup['id']); ?>&action=groupjoinrequest"
+													target="actionfrm" class="konectt-btn">Join group</a> <?php } ?>
 
 										<?php if ($mygroupid1 == 0 && $mygroupid == 1) { ?><a class="konectt-btn"
-												style="background-color:#18ad06;">Join request sent</a> <?php } ?>
+													style="background-color:#18ad06;">Join request sent</a> <?php } ?>
 									</div>
 								</div>
 							</div>
@@ -129,83 +129,83 @@ if ($_REQUEST['groupId'] != '') {
 										href="<?php echo $fullurl; ?>groups-detail.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Posts</a>
 								</li>
 								<?php if ($rowGroup['userId'] == $_SESSION['sessUserId']) { ?>
-									<li><a
-											href="<?php echo $fullurl; ?>joining-requests.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Joining
-											requests</a></li>
+										<li><a
+												href="<?php echo $fullurl; ?>joining-requests.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Joining
+												requests</a></li>
 								<?php } ?>
 								<!--<li><a href="#">Joining requests</a></li>-->
 								<li><a href="<?php echo $fullurl; ?>about-group.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>"
 										class="active">About this group</a></li>
 								<?php if ($rowGroup['userId'] == $_SESSION['sessUserId']) { ?>
-									<li><a
-											href="<?php echo $fullurl; ?>group-setting.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Group
-											setting</a></li>
-									<li><a
-											onClick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=invitegrpcontacts&groupId=<?php echo encodeStr($rowGroup['id']); ?>','Invite Contacts');">Invite
-											contacts</a></li>
+										<li><a
+												href="<?php echo $fullurl; ?>group-setting.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Group
+												setting</a></li>
+										<li><a
+												onClick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=invitegrpcontacts&groupId=<?php echo encodeStr($rowGroup['id']); ?>','Invite Contacts');">Invite
+												contacts</a></li>
 								<?php } ?>
 							</ul>
 							<div class="post-list" style="width:100%;">
 								<?php if ($rowGroup['userId'] == $_SESSION['sessUserId']) { ?>
-									<form enctype="multipart/form-data" name="frmgroup" id="frmgroup" method="post">
-										<div class="grp-setting">
-											<h2>About Group&nbsp;<?php if ($errMsg != '') { ?>
-													<div><?php //echo $errMsg; ?></div> <?php } ?>
-											</h2>
-											<div class="grp-setin-frm">
-												<label>Group Name<span class="reqstar">*</span></label>
-												<input name="groupName" type="text" class="input" id="groupName"
-													value="<?php echo stripslashes(trim($rowGroup["groupName"])); ?>"
-													maxlength="100">
-												<label>Short Description<span class="reqstar">*</span> <span
-														style="font-size:12px; margin:10px 0px;">(Max 150
-														Characters)</span></label>
-												<input name="groupDetails" type="text" class="input" id="groupDetails"
-													value="<?php echo stripslashes(trim($rowGroup["groupDetails"])); ?>"
-													maxlength="150">
+										<form enctype="multipart/form-data" name="frmgroup" id="frmgroup" method="post">
+											<div class="grp-setting">
+												<h2>About Group&nbsp;<?php if ($errMsg != '') { ?>
+															<div><?php //echo $errMsg; ?></div> <?php } ?>
+												</h2>
+												<div class="grp-setin-frm">
+													<label>Group Name<span class="reqstar">*</span></label>
+													<input name="groupName" type="text" class="input" id="groupName"
+														value="<?php echo stripslashes(trim($rowGroup["groupName"])); ?>"
+														maxlength="100">
+													<label>Short Description<span class="reqstar">*</span> <span
+															style="font-size:12px; margin:10px 0px;">(Max 150
+															Characters)</span></label>
+													<input name="groupDetails" type="text" class="input" id="groupDetails"
+														value="<?php echo stripslashes(trim($rowGroup["groupDetails"])); ?>"
+														maxlength="150">
 
 
 
-												<label>Long Description <span style="font-size:12px; margin:10px 0px;">(Max
-														500 Characters)</span></label>
-												<textarea name="groupLongDetails" class="textarea" id="groupLongDetails"
-													rows="6"
-													maxlength="500"><?php echo stripslashes(trim($rowGroup["groupLongDetails"])); ?></textarea>
+													<label>Long Description <span style="font-size:12px; margin:10px 0px;">(Max
+															500 Characters)</span></label>
+													<textarea name="groupLongDetails" class="textarea" id="groupLongDetails"
+														rows="6"
+														maxlength="500"><?php echo stripslashes(trim($rowGroup["groupLongDetails"])); ?></textarea>
 
-												<input type="hidden" name="txtId" id="txtId"
-													value="<?php echo decodeStr($_REQUEST['groupId']); ?>">
-												<div class="status">
-													<button class="grp_dtail-btn" type="submit" name="btnsubmit"
-														value="1">Update</button>
+													<input type="hidden" name="txtId" id="txtId"
+														value="<?php echo decodeStr($_REQUEST['groupId']); ?>">
+													<div class="status">
+														<button class="grp_dtail-btn" type="submit" name="btnsubmit"
+															value="1">Update</button>
+													</div>
+
 												</div>
-
 											</div>
-										</div>
-									</form>
-									<?php
+										</form>
+										<?php
 								} else {
 									if ($rowGroup["groupLongDetails"] != '') {
 										?>
-										<div class="grp-setting">
-											<h2>About Group</h2>
-											<div class="grp-setin-frm">
-												<?php echo stripslashes(nl2br($rowGroup["groupLongDetails"])); ?>
-											</div>
-										</div>
-										<?php
+												<div class="grp-setting">
+													<h2>About Group</h2>
+													<div class="grp-setin-frm">
+														<?php echo stripslashes(nl2br($rowGroup["groupLongDetails"])); ?>
+													</div>
+												</div>
+												<?php
 									} else {
 										?>
-										<div class="grp-setting" style="text-align:center;">No details currently.</div>
-										<?php
+												<div class="grp-setting" style="text-align:center;">No details currently.</div>
+												<?php
 
 									}
 									?>
-									<?php if ($mygroupid1 > 0) { ?>
-										<div style="margin-top:15px;"><a style="color:#FF0000;"
-												onClick="alertpopupmain('<?php echo $_REQUEST["groupId"]; ?>','leavepublicgrp');">Leave
-												this group</a></div>
-									<?php } ?>
-									<?php
+										<?php if ($mygroupid1 > 0) { ?>
+												<div style="margin-top:15px;"><a style="color:#C02621;"
+														onClick="alertpopupmain('<?php echo $_REQUEST["groupId"]; ?>','leavepublicgrp');">Leave
+														this group</a></div>
+										<?php } ?>
+										<?php
 								}
 								?>
 							</div>
@@ -220,9 +220,9 @@ if ($_REQUEST['groupId'] != '') {
 			<?php
 			if ($_SESSION["s"] == 1) {
 				?>
-				showsusmsg('SUCCESS', 'Group details updated successfully', '');
-				<?php
-				$_SESSION["s"] = '';
+					showsusmsg('SUCCESS', 'Group details updated successfully', '');
+					<?php
+					$_SESSION["s"] = '';
 			}
 			?>
 		</script>

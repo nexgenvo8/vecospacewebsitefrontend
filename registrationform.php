@@ -248,7 +248,7 @@ if (isPost()) {
 <!-- Button -->
 <div style="text-align:left; margin-top:20px; margin-bottom:30px;">
   <a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;">
-    <input name="" type="button" style="background-color:#FF0000; cursor:pointer; padding:12px 30px; outline:0px; border:0px; border-radius:3px; color:#FFFFFF; font-size:16px;" value="Confirm e-mail address">
+    <input name="" type="button" style="background-color:#C02621; cursor:pointer; padding:12px 30px; outline:0px; border:0px; border-radius:3px; color:#FFFFFF; font-size:16px;" value="Confirm e-mail address">
   </a>
 </div>
 
@@ -546,8 +546,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                    <option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?></option>
-                                    <?php
+                                        <option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?></option>
+                                        <?php
                                 }
                                 ?>
                             </select>
@@ -563,11 +563,11 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                    <option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
-                                        <?php //echo $m; 
-                                            ?>     <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
-                                    </option>
-                                    <?php
+                                        <option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
+                                            <?php //echo $m; 
+                                                ?>         <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
+                                        </option>
+                                        <?php
                                 }
                                 ?>
 
@@ -584,8 +584,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                    <option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?></option>
-                                    <?php
+                                        <option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?></option>
+                                        <?php
                                 }
                                 ?>
                             </select>
@@ -684,10 +684,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
                                             ?>
-                                            <option value="<?php echo trim($rowOptions['course_name']); ?>">
-                                                <?php echo trim($rowOptions['course_name']); ?>
-                                            </option>
-                                            <?php
+                                                    <option value="<?php echo trim($rowOptions['course_name']); ?>">
+                                                        <?php echo trim($rowOptions['course_name']); ?>
+                                                    </option>
+                                                    <?php
                                         }
                                     }
                                     ?>
@@ -711,10 +711,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
                                             ?>
-                                            <option value="<?php echo trim($rowOptions['department_name']); ?>">
-                                                <?php echo trim($rowOptions['department_name']); ?>
-                                            </option>
-                                            <?php
+                                                    <option value="<?php echo trim($rowOptions['department_name']); ?>">
+                                                        <?php echo trim($rowOptions['department_name']); ?>
+                                                    </option>
+                                                    <?php
                                         }
                                     }
                                     ?>
@@ -731,11 +731,11 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                     $end = date('Y-m-d', strtotime('+5 years'));
                                     while ($currentdate <= $end) {
                                         ?>
-                                        <option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
-                                               echo 'selected';
-                                           } ?>> <?php echo $currentdate;
-                                            $currentdate++; ?></option>
-                                        <?php
+                                            <option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
+                                                   echo 'selected';
+                                               } ?>> <?php echo $currentdate;
+                                                $currentdate++; ?></option>
+                                            <?php
                                     }
                                     ?>
                                 </select>
@@ -751,9 +751,9 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                     $currentdate = date("Y");
                                     while ($staringdate <= $currentdate) {
                                         ?>
-                                        <option value="<?php echo $staringdate; ?>"><?php echo $staringdate;
-                                           $staringdate++; ?></option>
-                                        <?php
+                                            <option value="<?php echo $staringdate; ?>"><?php echo $staringdate;
+                                               $staringdate++; ?></option>
+                                            <?php
                                     }
                                     ?>
                                 </select>
@@ -783,10 +783,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                                 $strSelected = "";
                                             }
                                             ?>
-                                            <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
-                                                <?php echo trim($rowOptions['optionName']); ?>
-                                            </option>
-                                            <?php
+                                                    <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
+                                                        <?php echo trim($rowOptions['optionName']); ?>
+                                                    </option>
+                                                    <?php
                                         }
                                     }
                                     ?>

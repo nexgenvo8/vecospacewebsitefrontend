@@ -1,25 +1,25 @@
-<?php
-include_once('inc.php');
-$_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-include_once('config/session-check.inc.php'); // check user login session
-$pageIndex = 22;
-$search = '';
-if (isset($_REQUEST['searchcontacts']) && $_REQUEST['searchcontacts'] != '') {
-	$search = clean($_REQUEST['searchcontacts']);
-}
-if ($search == '') {
-	$active = 1;
-	if (isset($_REQUEST['r']) && $_REQUEST['r'] == 1) {
-		$active = 2;
+	<?php
+	include_once('inc.php');
+	$_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	include_once('config/session-check.inc.php'); // check user login session
+	$pageIndex = 22;
+	$search = '';
+	if (isset($_REQUEST['searchcontacts']) && $_REQUEST['searchcontacts'] != '') {
+		$search = clean($_REQUEST['searchcontacts']);
 	}
-}
+	if ($search == '') {
+		$active = 1;
+		if (isset($_REQUEST['r']) && $_REQUEST['r'] == 1) {
+			$active = 2;
+		}
+	}
 
-$search = '';
-$limit = 10; // Records per page
-$startpage = isset($_REQUEST['startpage']) ? intval($_REQUEST['startpage']) : 0;
-$offset = $startpage * $limit;
+	$search = '';
+	$limit = 10; // Records per page
+	$startpage = isset($_REQUEST['startpage']) ? intval($_REQUEST['startpage']) : 0;
+	$offset = $startpage * $limit;
 
-?>
+	?>
 <!DOCTYPE html>
 <html>
 
@@ -53,19 +53,19 @@ $offset = $startpage * $limit;
 						<div class="contct-srch">
 							<?php if (isset($_POST['s']) && $_SESSION["s"] == 1) {
 								if ($_REQUEST['q'] == 1) { ?>
-									<div style="padding: 10px;
+											<div style="padding: 10px;
 	background-color: #d7f5bb;
 	margin-bottom: 9px;
 	border-radius: 5px;
 	text-align: center;
 	font-weight: bold;
 	border: 1px solid #ccecad;">Invitation has been sent.</div>
-								<?php }
+									<?php }
 								$_SESSION["s"] = '';
 							} ?>
 
 							<?php if (isset($_POST['q']) && $_REQUEST['q'] == 2) { ?>
-								<div style="padding: 10px;
+									<div style="padding: 10px;
 	background-color: #fff3f3;
 	margin-bottom: 9px;
 	border-radius: 5px;
@@ -183,51 +183,51 @@ $offset = $startpage * $limit;
 
 										?>
 
-										<li>
-											<div class="request-contct">
-												<div class="rimg"><a
-														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-														target="_blank" class="rqst-img"><img
-															src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a>
-												</div>
-												<div class="reqst-rdtail">
-													<div class="middl-nm">
-														<div class="left"><a
+												<li>
+													<div class="request-contct">
+														<div class="rimg"><a
 																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																target="_blank"><?php echo stripslashes(trim($userres["firstName"])); ?>
-																<?php echo stripslashes(trim($userres["lastName"])); ?></a>
-															<span class="comp"><?php echo $userres['jobTitle']; ?> at
-																<?php echo $userres['companyName']; ?></span>
+																target="_blank" class="rqst-img"><img
+																	src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a>
 														</div>
-														<div class="btns">
-															<a class="msg-btn"
-																href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=act"
-																target="actionfrm" onClick="$('#commonloader').show();"
-																style="margin-left: 10px; color: #1a94c3; border-color: #1a94c3;">Confirm</a>
-															<a class="msg-btn reject dlt"
-																href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=dec"
-																target="actionfrm"
-																onClick="$('#commonloader').show();">Decline</a>
+														<div class="reqst-rdtail">
+															<div class="middl-nm">
+																<div class="left"><a
+																		href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																		target="_blank"><?php echo stripslashes(trim($userres["firstName"])); ?>
+																		<?php echo stripslashes(trim($userres["lastName"])); ?></a>
+																	<span class="comp"><?php echo $userres['jobTitle']; ?> at
+																		<?php echo $userres['companyName']; ?></span>
+																</div>
+																<div class="btns">
+																	<a class="msg-btn"
+																		href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=act"
+																		target="actionfrm" onClick="$('#commonloader').show();"
+																		style="margin-left: 10px; color: #1a94c3; border-color: #1a94c3;">Confirm</a>
+																	<a class="msg-btn reject dlt"
+																		href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=dec"
+																		target="actionfrm"
+																		onClick="$('#commonloader').show();">Decline</a>
+																</div>
+															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-										</li>
-										<?php
+												</li>
+												<?php
 
-										$n++;
+												$n++;
 									}
 
 								}
 								?>
 								<?php if ($n == 0) { ?>
-									<div style="padding:0px; text-align:center;">
-										<div style="text-align:center;">No pending contact requests</div>
-									</div>
+										<div style="padding:0px; text-align:center;">
+											<div style="text-align:center;">No pending contact requests</div>
+										</div>
 
-									<script>
-										$('#pagetitlemain2').hide();
-									</script>
+										<script>
+											$('#pagetitlemain2').hide();
+										</script>
 								<?php } ?>
 							</ul>
 						</div>
@@ -309,35 +309,35 @@ $offset = $startpage * $limit;
 										$mystateName = $userres["cityName"];
 										$mylocationName = $userres["locationName"];
 										?>
-										<li>
-											<div class="request-contct">
-												<div class="rimg">
-													<a
-														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html">
-														<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
-															style="border:<?php echo profileborder($userres['userstype']); ?>">
-													</a>
-												</div>
-												<div class="reqst-rdtail">
-													<div class="middl-nm">
-														<div class="left">
-															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																class="nm"><?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
-																<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]); ?></a>
-															<span class="comp"><?php echo $userres['jobTitle']; ?> at
-																<?php echo $userres['companyName']; ?></span>
+												<li>
+													<div class="request-contct">
+														<div class="rimg">
+															<a
+																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html">
+																<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
+																	style="border:<?php echo profileborder($userres['userstype']); ?>">
+															</a>
 														</div>
-														<div class="btns">
-															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																class="msg-btn"><i class="fa fa-plus" aria-hidden="true"></i>
-																Add as contact</a>
+														<div class="reqst-rdtail">
+															<div class="middl-nm">
+																<div class="left">
+																	<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																		class="nm"><?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
+																		<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]); ?></a>
+																	<span class="comp"><?php echo $userres['jobTitle']; ?> at
+																		<?php echo $userres['companyName']; ?></span>
+																</div>
+																<div class="btns">
+																	<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																		class="msg-btn"><i class="fa fa-plus" aria-hidden="true"></i>
+																		Add as contact</a>
+																</div>
+															</div>
 														</div>
 													</div>
-												</div>
-											</div>
-										</li>
-										<?php
-										$n++;
+												</li>
+												<?php
+												$n++;
 									}
 								}
 								?>
@@ -374,41 +374,41 @@ $offset = $startpage * $limit;
 							?>
 
 							<?php if ($totalPages > 1) { ?>
-								<div class="pagination-wrapper">
-									<!-- 🔹 Smart Pagination -->
-									<div class="pagination-container">
-										<?php if ($startpage > 0) { ?>
-											<a href="?startpage=<?php echo $startpage - 1; ?>"
-												class="pagination-btn">Previous</a>
-										<?php } ?>
+									<div class="pagination-wrapper">
+										<!-- 🔹 Smart Pagination -->
+										<div class="pagination-container">
+											<?php if ($startpage > 0) { ?>
+													<a href="?startpage=<?php echo $startpage - 1; ?>"
+														class="pagination-btn">Previous</a>
+											<?php } ?>
 
-										<?php
-										$lastPage = $totalPages - 1;
+											<?php
+											$lastPage = $totalPages - 1;
 
-										// Always show first 3 pages
-										for ($i = 0; $i < min(3, $totalPages); $i++) {
-											$active = ($i == $startpage) ? 'active' : '';
-											echo "<a href='?startpage=$i' class='pagination-number $active'>" . ($i + 1) . "</a>";
-										}
+											// Always show first 3 pages
+											for ($i = 0; $i < min(3, $totalPages); $i++) {
+												$active = ($i == $startpage) ? 'active' : '';
+												echo "<a href='?startpage=$i' class='pagination-number $active'>" . ($i + 1) . "</a>";
+											}
 
-										// If current page is greater than 3, show it separately
-										if ($startpage >= 3 && $startpage < $lastPage - 1) {
-											echo "<a href='?startpage=$startpage' class='pagination-number active'>" . ($startpage + 1) . "</a>";
-										}
+											// If current page is greater than 3, show it separately
+											if ($startpage >= 3 && $startpage < $lastPage - 1) {
+												echo "<a href='?startpage=$startpage' class='pagination-number active'>" . ($startpage + 1) . "</a>";
+											}
 
-										// Always show last page if total > 3
-										if ($totalPages > 3) {
-											echo "<span class='pagination-dots'>...</span>";
-											echo "<a href='?startpage=$lastPage' class='pagination-number " . (($startpage == $lastPage) ? 'active' : '') . "'>" . ($lastPage + 1) . "</a>";
-										}
-										?>
+											// Always show last page if total > 3
+											if ($totalPages > 3) {
+												echo "<span class='pagination-dots'>...</span>";
+												echo "<a href='?startpage=$lastPage' class='pagination-number " . (($startpage == $lastPage) ? 'active' : '') . "'>" . ($lastPage + 1) . "</a>";
+											}
+											?>
 
-										<?php if ($startpage < $totalPages - 1) { ?>
-											<a href="?startpage=<?php echo $startpage + 1; ?>" class="pagination-btn">Next</a>
-										<?php } ?>
+											<?php if ($startpage < $totalPages - 1) { ?>
+													<a href="?startpage=<?php echo $startpage + 1; ?>" class="pagination-btn">Next</a>
+											<?php } ?>
+										</div>
+
 									</div>
-
-								</div>
 							<?php } ?>
 						</div>
 
@@ -443,7 +443,7 @@ $offset = $startpage * $limit;
 				display: inline-block;
 				background: #fff;
 				color: #007bff;
-				border: 1px solid #FF0000;
+				border: 1px solid #C02621;
 				padding: 6px 12px;
 				border-radius: 6px;
 				text-decoration: none;
@@ -453,14 +453,14 @@ $offset = $startpage * $limit;
 
 			.pagination-btn:hover,
 			.pagination-number:hover {
-				background: #FF0000;
+				background: #C02621;
 				color: #fff;
 			}
 
 			.pagination-number.active {
-				background: #FF0000;
+				background: #C02621;
 				color: #fff;
-				border-color: #FF0000;
+				border-color: #C02621;
 				pointer-events: none;
 			}
 
@@ -486,15 +486,15 @@ $offset = $startpage * $limit;
 			<?php
 			if (isset($_SESSION['s']) && $_SESSION["s"] == 1) {
 				?>
-				showsusmsg('SUCCESS', 'Request accepted', '');
-				<?php
-				$_SESSION["s"] = '';
+					showsusmsg('SUCCESS', 'Request accepted', '');
+					<?php
+					$_SESSION["s"] = '';
 			}
 			if (isset($_SESSION['d']) && $_SESSION["d"] == 1) {
 				?>
-				showerrormsg('SUCCESS', 'Request declined', '');
-				<?php
-				$_SESSION["d"] = '';
+					showerrormsg('SUCCESS', 'Request declined', '');
+					<?php
+					$_SESSION["d"] = '';
 			}
 
 			?>

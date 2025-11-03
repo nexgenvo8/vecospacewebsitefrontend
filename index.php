@@ -157,7 +157,7 @@ if (isPost()) {
     color: #676767;
 "><div style="display:block; font-size:18px; margin-bottom:10px;">Hello ' . $firstName . '</div>
 
-Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#FF0000;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
+Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#C02621;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
 </div>
 <table width="100%" height="90" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="
     background-color: #f7f7f7;
@@ -441,9 +441,9 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 							style="display:none;">
 							<h2 style="color: #0e7037;font-weight:600;">Register Now !!!</h2>
 							<?php if ($errMsg != '') { ?>
-								<div style="margin-bottom:10px; color:#FF0000;" class="<?php echo $className; ?>">
-									<?php echo $errMsg; ?>
-								</div><?php } ?>
+									<div style="margin-bottom:10px; color:#C02621;" class="<?php echo $className; ?>">
+										<?php echo $errMsg; ?>
+									</div><?php } ?>
 							<div class="regstr-inputs pd-right">
 								<input name="firstName" type="text" id="firstName" onKeyUp="hideerrordiv(this.id);"
 									value="<?php echo sanitizedboutput($firstName); ?>" maxlength="30"
@@ -472,9 +472,9 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 											$strSelected = "";
 										}
 										?>
-										<option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?>
-										</option>
-										<?php
+											<option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?>
+											</option>
+											<?php
 									}
 									?>
 								</select>
@@ -489,10 +489,10 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 											$strSelected = "";
 										}
 										?>
-										<option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
-											<?php //echo $m; ?> 	<?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
-										</option>
-										<?php
+											<option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
+												<?php //echo $m; ?>	 	<?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
+											</option>
+											<?php
 									}
 									?>
 								</select>
@@ -509,9 +509,9 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 											$strSelected = "";
 										}
 										?>
-										<option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?>
-										</option>
-										<?php
+											<option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?>
+											</option>
+											<?php
 									}
 									?>
 								</select>

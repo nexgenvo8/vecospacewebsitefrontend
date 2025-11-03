@@ -50,11 +50,11 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 
 	<style type="text/css">
 		ul.prjct-list li a.active {
-			color: #FF0000;
+			color: #C02621;
 		}
 
 		ul.prjct-list li a.active i.fa {
-			background-color: #FF0000;
+			background-color: #C02621;
 		}
 
 		ul.prjct-list li a.active:hover i.fa {
@@ -86,11 +86,11 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 						<div class="hding">
 							<h2>Freelancers</h2>
 							<?php if ($totalcheckFrelnce > 0) { ?>
-								<a class="rgstr-btn" href="<?php echo $fullurl; ?>register-freelancer.html">Edit my Project
-									Seeker profile</a>
+									<a class="rgstr-btn" href="<?php echo $fullurl; ?>register-freelancer.html">Edit my Project
+										Seeker profile</a>
 							<?php } else { ?>
-								<a href="<?php echo $fullurl; ?>register-freelancer.html" class="rgstr-btn">Register as a
-									Project Seeker</a>
+									<a href="<?php echo $fullurl; ?>register-freelancer.html" class="rgstr-btn">Register as a
+										Project Seeker</a>
 							<?php } ?>
 						</div>
 						<div class="frlncr-prfl">
@@ -101,8 +101,8 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 								<div class="frlncr-nm">
 									<a><?php echo $frlcfirstName . ' ' . $frlclastName; ?></a>
 									<?php if (decodeStr($_REQUEST['fid']) != $_SESSION["sessUserId"]) { ?>
-										<a onClick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=sendmsgtocontact&id=<?php echo $_REQUEST['fid']; ?>','Send a Message');"
-											class="rgstr-btn">Send message</a>
+											<a onClick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=sendmsgtocontact&id=<?php echo $_REQUEST['fid']; ?>','Send a Message');"
+												class="rgstr-btn">Send message</a>
 									<?php } ?>
 								</div>
 								<div class="offerd-sec">
@@ -143,8 +143,8 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 											foreach ($array as $value) //loop over values
 											{
 												if ($value != '') { ?>
-													<li><?php echo trim($value); ?></li>
-												<?php }
+																<li><?php echo trim($value); ?></li>
+														<?php }
 											}
 										} ?>
 									</ul>
@@ -172,51 +172,51 @@ $totalcheckFrelnce = mysqli_num_rows($rescheckFrelnce);
 							if ($totaRows > 0) {
 								while ($getResults = mysqli_fetch_array($resFreelancer)) {
 									?>
-									<li>
-										<div class="frlncr_box">
-											<div class="frlncr-hd">
-												<div class="img"><img
-														src="<?php echo $fullurl; ?>uploads/<?php echo $getResults["profilePhoto"]; ?>">
+											<li>
+												<div class="frlncr_box">
+													<div class="frlncr-hd">
+														<div class="img"><img
+																src="<?php echo $fullurl; ?>uploads/<?php echo $getResults["profilePhoto"]; ?>">
+														</div>
+														<div class="nm">
+															<a
+																href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"><?php echo $getResults['firstName']; ?>
+																<?php echo $getResults['lastName']; ?></a>
+														</div>
+													</div>
+													<div class="srvc-offer">
+														<span>Service offered</span>
+														<h3>
+															<?php
+															$whereFields = [];
+															$selectFields = []; // Empty because we are passing raw SQL
+															$whereVals = [];
+															$sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' and id='" . $getResults["serviceOffered"] . "' ";
+
+															$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+
+															// ✅ Prevent fatal error if query failed
+															if ($resOptions1 && mysqli_num_rows($resOptions1) > 0) {
+																while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
+																	echo trim($rowOptions1['optionName']);
+																}
+															} else {
+																// optional: show nothing or fallback text
+																// echo "N/A";
+															}
+															?>
+														</h3>
+													</div>
+
+													<div class="srvc-offer">
+														<span>Work Experience</span>
+														<h3><?php echo $getResults['experienceLevel']; ?></h3>
+													</div>
+													<a href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"
+														class="full-dtail"> <i class="fa fa-eye"></i> View Full Profile</a>
 												</div>
-												<div class="nm">
-													<a
-														href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"><?php echo $getResults['firstName']; ?>
-														<?php echo $getResults['lastName']; ?></a>
-												</div>
-											</div>
-											<div class="srvc-offer">
-												<span>Service offered</span>
-												<h3>
-													<?php
-													$whereFields = [];
-													$selectFields = []; // Empty because we are passing raw SQL
-													$whereVals = [];
-													$sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' and id='" . $getResults["serviceOffered"] . "' ";
-
-													$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-
-													// ✅ Prevent fatal error if query failed
-													if ($resOptions1 && mysqli_num_rows($resOptions1) > 0) {
-														while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-															echo trim($rowOptions1['optionName']);
-														}
-													} else {
-														// optional: show nothing or fallback text
-														// echo "N/A";
-													}
-													?>
-												</h3>
-											</div>
-
-											<div class="srvc-offer">
-												<span>Work Experience</span>
-												<h3><?php echo $getResults['experienceLevel']; ?></h3>
-											</div>
-											<a href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"
-												class="full-dtail"> <i class="fa fa-eye"></i> View Full Profile</a>
-										</div>
-									</li>
-									<?php
+											</li>
+											<?php
 								}
 							}
 							?>

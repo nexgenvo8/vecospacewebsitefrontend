@@ -1,63 +1,63 @@
-<?php
-include_once('inc.php');
-//include_once('config/session-check.inc.php');
-include_once('mail.php');
-$errMsg = '';
-$className = '';
-$textVar = 'Thank You!';
-if (isset($_GET['_j']) && $_GET['_j'] != '') {
-	$strEmail = $_GET["_j"];
-	$strEmail = base64_decode(base64_decode(base64_decode(base64_decode($strEmail))));
-	/*	echo '<br>=====<br>';
-		echo $strEmail=clean($strEmail);*/
+	<?php
+	include_once('inc.php');
+	//include_once('config/session-check.inc.php');
+	include_once('mail.php');
+	$errMsg = '';
+	$className = '';
+	$textVar = 'Thank You!';
+	if (isset($_GET['_j']) && $_GET['_j'] != '') {
+		$strEmail = $_GET["_j"];
+		$strEmail = base64_decode(base64_decode(base64_decode(base64_decode($strEmail))));
+		/*	echo '<br>=====<br>';
+			echo $strEmail=clean($strEmail);*/
 
-	$selectFields = [];
-	$whereFields = [];
-	$whereVals = [];
-	$oops = 0;
-	$sqlLogin = "";
-	$sqlLogin = "select email,activeYN,firstName from " . _USERS_MASTER_TABLE_ . " where email='" . $strEmail . "' ";
-	$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
-	if ($resLogin) {
-		while ($rowLogin = mysqli_fetch_array($resLogin)) {
-			$email = $rowLogin['email'];
-			$activeYN = $rowLogin['activeYN'];
-			$firstName = ucfirst($rowLogin["firstName"]);
-		}
+		$selectFields = [];
+		$whereFields = [];
+		$whereVals = [];
+		$oops = 0;
+		$sqlLogin = "";
+		$sqlLogin = "select email,activeYN,firstName from " . _USERS_MASTER_TABLE_ . " where email='" . $strEmail . "' ";
+		$resLogin = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
+		if ($resLogin) {
+			while ($rowLogin = mysqli_fetch_array($resLogin)) {
+				$email = $rowLogin['email'];
+				$activeYN = $rowLogin['activeYN'];
+				$firstName = ucfirst($rowLogin["firstName"]);
+			}
 
-		if ($activeYN == 'Y') {
-			$errMsg = "Your email address already verified. Please login.";
-			$className = 'errormsg  thanku-err';
-			$textVar = 'Oops!';
-			$oops = 1;
-		} else {
-			unset($insertFields);
-			unset($insertVals);
-			unset($whereFields);
-			unset($whereVals);
+			if ($activeYN == 'Y') {
+				$errMsg = "Your email address already verified. Please login.";
+				$className = 'errormsg  thanku-err';
+				$textVar = 'Oops!';
+				$oops = 1;
+			} else {
+				unset($insertFields);
+				unset($insertVals);
+				unset($whereFields);
+				unset($whereVals);
 
-			$insertFields[0] = "activeYN";
-			$insertVals[0] = 'Y';
+				$insertFields[0] = "activeYN";
+				$insertVals[0] = 'Y';
 
-			$whereFields[0] = "email";
-			$whereVals[0] = $email;
+				$whereFields[0] = "email";
+				$whereVals[0] = $email;
 
-			$resUserLoginTime = updateDB(_USERS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, ''); // verified the user email address	
-			if ($resUserLoginTime) {
-				$errMsg = "Your email address has been verified successfully.";
-				$className = 'confirmemail thanku-txt';
-				$textVar = 'Thank You!';
+				$resUserLoginTime = updateDB(_USERS_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, ''); // verified the user email address	
+				if ($resUserLoginTime) {
+					$errMsg = "Your email address has been verified successfully.";
+					$className = 'confirmemail thanku-txt';
+					$textVar = 'Thank You!';
 
-				$strEmail = '';
-				$strEmail = base64_encode(base64_encode(base64_encode(base64_encode($email))));
-				$mailBodyContent = '';
+					$strEmail = '';
+					$strEmail = base64_encode(base64_encode(base64_encode(base64_encode($email))));
+					$mailBodyContent = '';
 
-				$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . '" style="border:0px;"><img src="' . $fullurl . 'images/logo.jpg" width="217" style="border:0px;"></a></div>
+					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;"><a href="' . $fullurl . '" style="border:0px;"><img src="' . $fullurl . 'images/logo.jpg" width="217" style="border:0px;"></a></div>
 <div style="background-color:#f4f4f4; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
 <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
 <div style="padding:30px;">
 <div style="font-size:22px; margin-bottom:10px;"><span style="color:#1a94c3;">Hi ' . $firstName . ',</span> It &prime;s time to get &prime;' . $companNameTitle . '&prime;</div>
-<div style="text-align:left; margin-top:20px; margin-bottom:40px;"><a href="' . $fullurl . 'timeline.html" style="text-decoration:none;"><input name="" type="button" style="background-color:#FF0000; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px;" value="Explore ' . $companNameTitle . '"></a></div>
+<div style="text-align:left; margin-top:20px; margin-bottom:40px;"><a href="' . $fullurl . 'timeline.html" style="text-decoration:none;"><input name="" type="button" style="background-color:#C02621; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px;" value="Explore ' . $companNameTitle . '"></a></div>
 <div style="margin-bottom:20px; font-size:15px; color:#1a94c3;"><strong>A few of the many benefits that you gain by being a member of ' . $companNameTitle . ':</strong></div>
 <div style="padding:10px; background-color:#F9F9F9; border:dashed 1px #ccc; border-radius: 2px;">
 <div style="color: #696969; margin-bottom: 22px; font-size: 14px; line-height: 20px;"><strong>Articles , Trivia and News:</strong> Stay inspired, informed and updated with relevant articles, written by leading management gurus, thought leaders and subject matter experts. Get a snapshot of top news and views-all on a single platform!</div>
@@ -79,30 +79,30 @@ You can create as many groups and chat simultaneously with each group.</div>
 </div>
 </div>
 </div>';
-				$subject = 'Hi ' . $firstName . ', Welcome to ' . $companNameTitle . '!';
+					$subject = 'Hi ' . $firstName . ', Welcome to ' . $companNameTitle . '!';
 
-				$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
-				$headers .= "MIME-Version: 1.0\r\n";
-				$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+					$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
+					$headers .= "MIME-Version: 1.0\r\n";
+					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-				//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
-				send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
+					//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
+					send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 
+				}
 			}
-		}
 
+		} else {
+			$errMsg = "Invalid Access.";
+			$className = 'errormsg ';
+			$textVar = 'Oops!';
+			$oops = 1;
+			$in = 1;
+		}
 	} else {
-		$errMsg = "Invalid Access.";
-		$className = 'errormsg ';
-		$textVar = 'Oops!';
-		$oops = 1;
-		$in = 1;
+		header("Location:" . $fullurl . "");
+		exit();
 	}
-} else {
-	header("Location:" . $fullurl . "");
-	exit();
-}
-?>
+	?>
 <!DOCTYPE html>
 <html>
 
@@ -128,15 +128,15 @@ You can create as many groups and chat simultaneously with each group.</div>
 			<div class="container">
 				<div class="second-step thankyou-confirm" style="width:500px;">
 					<?php if ($oops == 1) { ?><i class="fa fa-times-circle-o" aria-hidden="true"
-							style="color: #fd6363;"></i><?php } else { ?><i class="fa fa-check-circle-o"
-							aria-hidden="true"></i><?php } ?>
+								style="color: #fd6363;"></i><?php } else { ?><i class="fa fa-check-circle-o"
+								aria-hidden="true"></i><?php } ?>
 					<h2 style="text-align:center; color:#1a94c3;"><?php echo $textVar; ?></h2>
 					<form name="frmkonectt" id="frmkonectt" class="personal-data" method="post">
 						<div style="text-align:center; "> <?php if (trim($errMsg) != '') { ?>
-								<div id="emsgdiv" class="<?php echo $className; ?>"
-									style="display:block; margin-top:10px; margin-bottom:10px;"><?php echo $errMsg; ?><br>
-									<br>
-								</div>
+									<div id="emsgdiv" class="<?php echo $className; ?>"
+										style="display:block; margin-top:10px; margin-bottom:10px;"><?php echo $errMsg; ?><br>
+										<br>
+									</div>
 							<?php } ?><a href="<?php echo $fullurl; ?>"><button
 									style="background-color:#3ca3ce; float:none; color:#fff; margin-right:10px;"
 									type="button" class="continue-process-btn">Back to login page</button></a>

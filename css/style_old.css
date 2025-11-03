@@ -459,7 +459,7 @@ header#header .logo {
     width: 553px;
     height: 400px;
     float: left;
-    border-right: 1.5px solid #FF0000;
+    border-right: 1.5px solid #C02621;
     /* padding-top: 130px; */
     margin-left: 100px;
     position: absolute;
@@ -611,7 +611,7 @@ form.signup {
 
 .errormsg {
     padding-bottom: 5px;
-    color: #FF0000;
+    color: #C02621;
     background-color: #fff;
     text-align: center;
     top: -20px;
@@ -2211,12 +2211,12 @@ ol.breadcrumb li:last-child:after {
     width: 100%;
     margin-bottom: 12px;
     border-radius: 2px;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 
 .showcurrentright {
     text-transform: uppercase;
-    background: #FF0000;
+    background: #C02621;
     padding: 9px 0px;
     color: #fff;
     font-weight: 500;
@@ -2231,7 +2231,7 @@ ol.breadcrumb li:last-child:after {
     text-transform: capitalize;
     float: left;
     margin-bottom: 5px;
-    color: #FF0000;
+    color: #C02621;
     font-weight: 500;
 }
 
@@ -2576,7 +2576,7 @@ li.user .usr-info {
     background-color: #fff;
     float: left;
     width: 100%;
-    border-bottom: solid 2px #FF0000;
+    border-bottom: solid 2px #C02621;
     ;
     /*margin-top:16px;*/
 }
@@ -2590,7 +2590,7 @@ li.user .usr-info {
     left: 0%;
     top: 0px;
     background-size: 100%;
-    background-color: #FF0000;
+    background-color: #C02621;
 }
 
 .user-bg-cover .roundcircle {
@@ -2753,7 +2753,7 @@ ul.nav_list li.user .img a:hover,
 
 .connctn span.count {
     display: block;
-    color: #FF0000;
+    color: #C02621;
     font-size: 27px;
     font-weight: 800;
     line-height: 22px;
@@ -4049,7 +4049,7 @@ ul.cntr_tab {
     padding: 0;
     float: left;
     border-radius: 2px;
-    background-color: #FF0000;
+    background-color: #C02621;
     list-style: none;
     position: relative;
 }
@@ -4109,7 +4109,7 @@ select:focus {
 
 .meet-right .tag {
     padding: 1px 0px;
-    background-color: #FF0000;
+    background-color: #C02621;
     display: block;
     margin-top: 0;
     color: #fff;
@@ -4176,12 +4176,12 @@ select:focus {
 }
 
 .ruatending ul li a.yes {
-    border-color: #FF0000;
-    color: #FF0000 !important;
+    border-color: #C02621;
+    color: #C02621 !important;
 }
 
 .ruatending ul li a.yes.active {
-    background-color: #FF0000 !important;
+    background-color: #C02621 !important;
     color: #fff !important;
 }
 
@@ -4549,7 +4549,7 @@ span.minimiz {
     cursor: pointer;
     font-weight: 600;
     font-size: 13px;
-    border: solid 1px #FF0000;
+    border: solid 1px #C02621;
     border-radius: 8px;
     margin-right: 10px;
     background-color: #ffffff;
@@ -4560,7 +4560,7 @@ span.minimiz {
 }
 
 .upload-img div i.fa {
-    color: #FF0000;
+    color: #C02621;
     margin-right: 5px;
 }
 
@@ -4586,12 +4586,12 @@ ul.upld-img-list.upload li:last-child {
     border-top: solid 0px #cadfca;
     padding-top: 0px;
     margin-bottom: 14px;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 
 .share_with select {
     color: #464646;
-    border: solid 1px #FF0000;
+    border: solid 1px #C02621;
     background-color: #ffffff;
     border-radius: 8px;
     /* border: 0; */
@@ -4609,7 +4609,7 @@ ul.upld-img-list.upload li:last-child {
 }
 
 .share_with select:focus {
-    border: solid 1px #FF0000;
+    border: solid 1px #C02621;
 }
 
 .share_with input.phto_btn {
@@ -4627,7 +4627,7 @@ ul.upld-img-list.upload li:last-child {
 }
 
 .share_with button {
-    background-color: #FF0000;
+    background-color: #C02621;
     border: 0;
     padding: 5px 16px;
     color: #fff;
@@ -4636,7 +4636,7 @@ ul.upld-img-list.upload li:last-child {
 }
 
 form.edit-layer .share_with button {
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 0 16px;
     color: #fff;
     margin-top: 3px;
@@ -5668,7 +5668,7 @@ ul.foooter-list li a:after {
     padding-bottom: 0;
     margin-bottom: 12px !important;
     background-color: #fff;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 
 .timlist:last-of-type {
@@ -5895,7 +5895,7 @@ ul.tmln_fttr li a .tltp {
 }
 
 .erorfldcls {
-    color: #FF0000;
+    color: #C02621;
     font-size: 12px;
     margin-bottom: 5px;
     display: none;
@@ -6480,7 +6480,7 @@ ul.cht_mmbr_list li {
     font-size: 15px;
     color: #fff;
     padding-left: 14px;
-    background: #FF0000;
+    background: #C02621;
 }
 
 .bulkmsg i {
@@ -7359,7 +7359,7 @@ div#msgchat .send-sec ul.send-list:after {
 }
 
 .postjobbtn2 {
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 6px 13px;
     display: inline-block;
     border-radius: 2px;
@@ -7375,7 +7375,7 @@ div#msgchat .send-sec ul.send-list:after {
     height: 25px;
     line-height: 25px;
     background-color: #fff;
-    color: #FF0000;
+    color: #C02621;
     border-radius: 50%;
     font-size: 15px;
 }
@@ -7400,7 +7400,7 @@ ul#notice-list .rquest-middle {
 }
 
 .grp-reqsteccpt {
-    color: #FF0000;
+    color: #C02621;
     text-align: center;
 }
 
@@ -7788,7 +7788,7 @@ ul.prjct-list li a i.fa {
 }
 
 ul.prjct-list li a.active i.fa {
-    background-color: #FF0000;
+    background-color: #C02621;
 }
 
 ul.prjct-list li a span {
@@ -8002,7 +8002,7 @@ span.edit i {
 .green-btn {
     padding: 10px 25px !important;
     border: 0px;
-    background-color: #FF0000;
+    background-color: #C02621;
     color: #fff;
     border-radius: 2px;
     font-weight: 600;
@@ -8126,7 +8126,7 @@ ul.prview-desc li.one:after {
     content: '';
     right: 0;
     bottom: 0;
-    border-right: solid #FF0000 204px;
+    border-right: solid #C02621 204px;
     border-top: solid 69px transparent;
     border-left: solid 10px transparent;
     z-index: -1;
@@ -8336,7 +8336,7 @@ ul.skill-list li {
 .prview-right a.apply-btn {
     display: block;
     padding: 10px 15px;
-    background-color: #FF0000;
+    background-color: #C02621;
     margin-bottom: 10px;
     color: #fff;
     border-radius: 2px;
@@ -8510,7 +8510,7 @@ ul.print-right li a i.fa {
     padding: 6px 15px;
     margin: 0 !important;
     font-size: 15px;
-    background-color: #FF0000;
+    background-color: #C02621;
 }
 
 .reslt {
@@ -8769,7 +8769,7 @@ ul#notice-list li .rquest-box .dropdwn ul.remove-list {
 
 .aplied {
     padding: 5px 10px;
-    background-color: #FF0000;
+    background-color: #C02621;
     margin-bottom: 20px;
     border: 1px #2ab55f solid;
     border-radius: 2px;
@@ -8803,7 +8803,7 @@ ul.frlncer-list {
 .hding a.rgstr-btn {
     display: inline-block;
     float: right;
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 8px 13px;
     text-transform: capitalize;
     color: #fff;
@@ -9021,7 +9021,7 @@ ul.frlncer-list {
 }
 
 .freelancerbuttons a:nth-child(2) {
-    background-color: #FF0000;
+    background-color: #C02621;
     margin-left: 5px;
     margin-right: 0;
 }
@@ -9391,11 +9391,11 @@ a.joingrp-btn {
 }
 
 a.view-btn:after {
-    border-top: solid 7px #FF0000 !important;
+    border-top: solid 7px #C02621 !important;
 }
 
 a.view-btn:before {
-    background-color: #FF0000 !important;
+    background-color: #C02621 !important;
 }
 
 .grupbuttons a:hover:after {
@@ -9448,7 +9448,7 @@ a.view-btn:after {
 }
 
 .grupbuttons a.view-btn {
-    background-color: #FF0000;
+    background-color: #C02621;
     position: relative;
 }
 
@@ -9814,7 +9814,7 @@ ul.grp-mmbr_list li a img {
     position: relative;
     margin-bottom: 12px;
     background-color: #fff;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 
 .usr-dtail .imag {
@@ -9830,7 +9830,7 @@ ul.grp-mmbr_list li a img {
 .cover-img .active-ago {
     font-size: 13px;
     display: block;
-    color: #FF0000;
+    color: #C02621;
     position: absolute;
     right: 25px;
     user-select: none;
@@ -10054,7 +10054,7 @@ ul.frnd-usractivity-button li span {
 }
 
 ul.frnd-usractivity-button li.activty {
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 5px 0;
     border-radius: 3px 0 0 3px;
     padding-top: 6px;
@@ -10158,7 +10158,7 @@ ul.frnd-usractivity-button li.prfl-complete {
     float: left;
     text-transform: capitalize;
     padding: 7px 20px;
-    background-color: #FF0000;
+    background-color: #C02621;
     margin: 0 !important;
 }
 
@@ -10787,7 +10787,7 @@ ul.more-list li.help {
 .online {
     width: 13px;
     height: 13px;
-    background-color: #FF0000;
+    background-color: #C02621;
     border-radius: 50%;
     position: absolute;
     right: 10px;
@@ -10942,7 +10942,7 @@ ul.more-list li.help {
     -webkit-text-stroke: 8px #fff;
     text-stroke: 8px #fff;
     margin-bottom: 0;
-    color: #FF0000;
+    color: #C02621;
 }
 
 .second-step.thankyou-confirm {
@@ -11289,7 +11289,7 @@ ul.project-list li {
     width: 90px;
     text-align: center;
     font-size: 26px;
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 19px 0;
     border-radius: 2px 0 0 2px;
     color: #fff;
@@ -12745,7 +12745,7 @@ ul.grp-chat-list li.type4.me {
 }
 
 
-/*ul.grp-chat-list li.type3 .chat-txt{background-color: #FF0000 !important;}
+/*ul.grp-chat-list li.type3 .chat-txt{background-color: #C02621 !important;}
 ul.grp-chat-list li.type4 .chat-txt{background-color: #607d8b !important;}*/
 
 .file-box {
@@ -13552,7 +13552,7 @@ ul.upld-img-list.logo li {
 }
 .pst-evnt-btns button {
     margin: auto;
-    background-color: #FF0000;
+    background-color: #C02621;
     color: #fff;
     border: 0;
     padding: 7px 25px;
@@ -13927,7 +13927,7 @@ a.writ-btn {
     float: right;
     padding: 5px 18px;
     color: #fff;
-    background-color: #FF0000;
+    background-color: #C02621;
     text-decoration: none;
     font-size: 15px;
     border-radius: 2px;
@@ -14514,7 +14514,7 @@ ul.employers-list.recomend li .employers .comp-mddl {
 .crt-employr .btn {
     font-size: 15px;
     text-decoration: none;
-    background-color: #FF0000;
+    background-color: #C02621;
 }
 .artcle.comp-profile .hm_right_sec .crt-employr {
     padding-right: 0;
@@ -15192,13 +15192,13 @@ a.accordion-section-title.active i.fa.fa-plus {
     border-radius: 2px;
     background-color: #fff;
     padding: 15px;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 .srchfcontct span {
     font-size: 16px;
     margin-bottom: 10px;
     display: block;
-    color: #FF0000;
+    color: #C02621;
 }
 .srch-field {
     width: 100%;
@@ -15328,14 +15328,14 @@ a.msg-btn.reject {
     background-color: #fff;
     margin-top: 10px;
     border-radius: 2px;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 .contct-list-cont h2 {
     padding: 20px;
     padding-bottom: 20px;
     margin-bottom: 0;
     border-bottom: solid 1px #e7e7e7;
-    color: #FF0000;
+    color: #C02621;
 }
 .contct-list-cont ul.cntct-list {
     padding: 20px;
@@ -15542,7 +15542,7 @@ ul.konections {
     width: 100%;
     float: left;
     text-align: center;
-    background: #FF0000;
+    background: #C02621;
     padding-bottom: 7px;
     position: inherit;
 }
@@ -15819,13 +15819,13 @@ ol.work-prjct-list li i.fa {
     text-align: center;
     line-height: 50px;
     margin: auto;
-    background-color: #FF0000;
+    background-color: #C02621;
     border-radius: 50%;
     color: #fff;
     margin-bottom: 20px;
 }
 ol.work-prjct-list li strong {
-    color: #FF0000;
+    color: #C02621;
 }
 .continuebutton {
     float: left;
@@ -16659,7 +16659,7 @@ a.ordr-btn {
     width: 100%;
     margin: auto;
     text-align: center;
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 10px 30px;
     color: #fff;
     font-size: 18px;
@@ -16789,7 +16789,7 @@ ul.bsdtail-author-info li span {
 }
 .bnnr-cap .getstart {
     padding: 10px 20px;
-    background-color: #FF0000;
+    background-color: #C02621;
     color: #fff;
     font-size: 18px;
     display: inline-block;
@@ -16938,7 +16938,7 @@ ul.bnfit-list li p {
     display: block;
     padding: 7px 25px;
     float: right;
-    background-color: #FF0000;
+    background-color: #C02621;
     color: #fff;
     border: 0;
     border-radius: 2px;
@@ -18288,7 +18288,7 @@ ul.compny-joblist li {
     display: block;
     padding: 7px 25px;
     float: right;
-    background-color: #FF0000;
+    background-color: #C02621;
     color: #fff;
     border: 0;
     cursor: pointer;
@@ -18852,7 +18852,7 @@ ul.nav_list li a.ripple {
     width: 100%;
 }
 .uploded-wrap .privacy-tag {
-    background-color: #FF0000;
+    background-color: #C02621;
     padding: 3px 10px;
     font-size: 12px;
     color: #fff;
@@ -19145,7 +19145,7 @@ button.uploded-sbmitbtn {
     float: right;
 }
 .srchanything {
-    color: #FF0000;
+    color: #C02621;
     font-weight: 600;
     font-size: 17px;
 }
@@ -20155,7 +20155,7 @@ ul.newarticle-list {
     background-color: rgba(255, 255, 255, 0.92);
     max-width: 100%;
     left: 10px;
-    border-left: 5px solid #FF0000;
+    border-left: 5px solid #C02621;
     padding: 10px;
     margin-right: 10px;
 }
@@ -22729,7 +22729,7 @@ ul.newarticle-list li {
     }
     
     ul.prview-desc li.one:after {
-        border-right: solid #FF0000 134px;
+        border-right: solid #C02621 134px;
         border-top: solid 59px transparent;
     }
     
@@ -24625,7 +24625,7 @@ ul.newarticle-list li {
     border: 0px;
     padding: 7px 25px;
     border-radius: 4px;
-    background: #FF0000;
+    background: #C02621;
     color: #fff;
 }
 .findmentordiv {
@@ -24636,7 +24636,7 @@ ul.newarticle-list li {
     border: 0px;
     padding: 7px 25px;
     border-radius: 4px;
-    background: #FF0000;
+    background: #C02621;
     color: #fff;
 }
 .mentormargtop {
@@ -24672,7 +24672,7 @@ ul.newarticle-list li {
     border-bottom: 1px solid #cccccc;
 }
 .btnslecectionactioninment a {
-    background: #FF0000;
+    background: #C02621;
     color: #fff;
     border-radius: 5px;
     padding: 5px 29px;
@@ -24701,7 +24701,7 @@ ul.newarticle-list li {
     border: 0px;
     padding: 6px 30px;
     border-radius: 4px;
-    background: #FF0000;
+    background: #C02621;
     color: #fff;
     margin-right: 20px;
 }
@@ -24742,8 +24742,8 @@ ul.newarticle-list li {
 }
 .serachwithmenteebtn {
     cursor: pointer;
-    background: #FF0000;
-    border: 1px solid #FF0000;
+    background: #C02621;
+    border: 1px solid #C02621;
     height: 33px;
     color: #fff;
     top: 0px;
@@ -24768,7 +24768,7 @@ ul.newarticle-list li {
 }
 .selectmentordiv {
     float: left;
-    background: #FF0000;
+    background: #C02621;
     color: #fff;
     padding: 5px 25px;
     border-radius: 4px;
@@ -24785,10 +24785,10 @@ ul.newarticle-list li {
     top: 40%;
 }
 .selectedmntnewborder {
-    border: 1px solid #FF0000!important;
+    border: 1px solid #C02621!important;
 }
 .removebtnnew {
-    background: #FF0000;
+    background: #C02621;
     border: 0px;
     padding: 5px 10px;
     color: #fff;
@@ -24868,7 +24868,7 @@ ul.newarticle-list li {
     position: relative;
 }
 .removeyesbtnaction {
-    background: #FF0000;
+    background: #C02621;
     padding: 6px 0px;
     width: 70px;
     height: 30px;
@@ -24894,7 +24894,7 @@ ul.newarticle-list li {
 .chatmessagetagline {
     margin-top: 0px;
     font-size: 18px;
-    color: #FF0000;
+    color: #C02621;
 }
 .userchatdiv {
     border: 1px solid #959595;
@@ -24937,7 +24937,7 @@ ul.newarticle-list li {
     background: #f5f5f5;
     height: 440px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #FF0000;
+    border-bottom: 2px solid #C02621;
 }
 .chawithmnteediv {
     background: #959595;
@@ -25004,7 +25004,7 @@ ul.newarticle-list li {
     margin-top: -5px;
     font-size: 16px;
     font-weight: 600;
-    color: #FF0000;
+    color: #C02621;
 }
 .inputmaessasetext {
     margin: 12px 0px;
@@ -25032,11 +25032,11 @@ ul.newarticle-list li {
     padding: 6px;
     text-align: center;
     border-radius: 9px;
-    border: 1px solid #FF0000;
+    border: 1px solid #C02621;
 }
 .buttondivuplodphoto i {
     margin-right: 6px;
-    color: #FF0000;
+    color: #C02621;
 }
 .sendmessaagepost {
     position: absolute;
@@ -25047,7 +25047,7 @@ ul.newarticle-list li {
 }
 .sendmessaagepost button {
     border: 0px;
-    background: #FF0000;
+    background: #C02621;
     color: #fff;
     padding: 6px 20px;
     border-radius: 5px;

@@ -1,18 +1,18 @@
 <div class="comp-head">
   <div class="comp-logo">
     <?php if ($createdby == $_SESSION["sessUserId"]) { ?>
-      <form class="edit" enctype="multipart/form-data" name="frmposthome" id="frmposthome" method="post"
-        target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
-        <span><i class="fa fa-pencil" aria-hidden="true"></i>
-          <input name="companyprofilephoto" id="companyprofilephoto" type="file"
-            onChange="$('#commonloader').show();$('#frmposthome').submit();"
-            style="left:0px; top:0px; width:100%; height:100%;opacity: 0; filter: alpha(opacity=0); ">
-          <input type="hidden" id="postId" name="postId" value="<?php echo $_REQUEST["companyId"]; ?>">
-          <input type="hidden" id="action" name="action" value="cmpprofilephoto">
-          <input type="hidden" id="companylogoimageOld" name="companylogoimageOld"
-            value="<?php echo stripslashes(trim($companyPhoto)); ?>">
-        </span>
-      </form><?php } ?>
+        <form class="edit" enctype="multipart/form-data" name="frmposthome" id="frmposthome" method="post"
+          target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
+          <span><i class="fa fa-pencil" aria-hidden="true"></i>
+            <input name="companyprofilephoto" id="companyprofilephoto" type="file"
+              onChange="$('#commonloader').show();$('#frmposthome').submit();"
+              style="left:0px; top:0px; width:100%; height:100%;opacity: 0; filter: alpha(opacity=0); ">
+            <input type="hidden" id="postId" name="postId" value="<?php echo $_REQUEST["companyId"]; ?>">
+            <input type="hidden" id="action" name="action" value="cmpprofilephoto">
+            <input type="hidden" id="companylogoimageOld" name="companylogoimageOld"
+              value="<?php echo stripslashes(trim($companyPhoto)); ?>">
+          </span>
+        </form><?php } ?>
 
     <img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($companyPhoto)); ?>">
 
@@ -20,9 +20,9 @@
   </div>
   <div class="comp-heading"><?php echo stripslashes($empCompanyName); ?>
     <span><?php if ($createdby == $_SESSION["sessUserId"]) {
-      if ($companyStatus == 0) { ?>   <?php } else { ?>
-          <div style="color:#FF0000; margin-left:10px;float: none;" class="deactivategrp">Under reviewing</div>
-        <?php }
+      if ($companyStatus == 0) { ?>     <?php } else { ?>
+              <div style="color:#C02621; margin-left:10px;float: none;" class="deactivategrp">Under reviewing</div>
+          <?php }
     } ?>
     </span>
     <div class="indstry">
@@ -47,14 +47,14 @@
             $apc = "select id from " . _COMPANY_FOLLOWERS_TABLE_ . " where  companyId= " . decodeStr($_REQUEST['companyId']) . " and userId=" . $_SESSION["sessUserId"] . " ";
             $bpc = mysqli_query($conn, $apc) or die(mysqli_error($conn));
             if (mysqli_num_rows($bpc) > 0) { ?>
-              <a href="<?php echo $fullurl; ?>company-profile.html?companyId=<?php echo trim($_REQUEST["companyId"]); ?>&status=2"
-                class="btn"><i class="fa fa-minus" aria-hidden="true"></i> Unfollow this company
-              </a>
-            <?php } else { ?><a
-                href="<?php echo $fullurl; ?>company-profile.html?companyId=<?php echo trim($_REQUEST["companyId"]); ?>&status=1"
-                class="btn"><i class="fa fa-plus" aria-hidden="true"></i> Follow this company
-              </a>
-            <?php }
+                    <a href="<?php echo $fullurl; ?>company-profile.html?companyId=<?php echo trim($_REQUEST["companyId"]); ?>&status=2"
+                      class="btn"><i class="fa fa-minus" aria-hidden="true"></i> Unfollow this company
+                    </a>
+                <?php } else { ?><a
+                      href="<?php echo $fullurl; ?>company-profile.html?companyId=<?php echo trim($_REQUEST["companyId"]); ?>&status=1"
+                      class="btn"><i class="fa fa-plus" aria-hidden="true"></i> Follow this company
+                    </a>
+                <?php }
           }
         }
         ?>

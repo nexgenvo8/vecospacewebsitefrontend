@@ -2915,9 +2915,9 @@ ul.tmln_fttr li a .tltp {
 }
 
 
-.errormsg{padding-bottom:5px;color:#FF0000;}
+.errormsg{padding-bottom:5px;color:#C02621;}
 .success{padding-bottom:5px; color:#00CC00;}
-.erorfldcls{color:#FF0000; font-size:12px; margin-bottom:5px; display:none;}
+.erorfldcls{color:#C02621; font-size:12px; margin-bottom:5px; display:none;}
 .error_message, .messagebox, .frm_err_msg {font-size:12px; margin-top:6px;}
 .error-messages {
     display: block;

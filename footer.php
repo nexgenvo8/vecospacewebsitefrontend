@@ -1,27 +1,27 @@
-<?php
-/*require 'vendor/autoload.php';
-use OpenTok\OpenTok;
+    <?php
+    /*require 'vendor/autoload.php';
+    use OpenTok\OpenTok;
 
-$apiKey = '45964872';
-$apiSecret = '90f7de5d12a1d2e9dd7b74ffef0721b04fc22c1d';
-$opentok = new OpenTok($apiKey, $apiSecret);
+    $apiKey = '45964872';
+    $apiSecret = '90f7de5d12a1d2e9dd7b74ffef0721b04fc22c1d';
+    $opentok = new OpenTok($apiKey, $apiSecret);
 
-use OpenTok\MediaMode;
-use OpenTok\ArchiveMode;
-
-
-// An automatically archived session:
-$sessionOptions = array(
-    'archiveMode' => ArchiveMode::ALWAYS,
-    'mediaMode' => MediaMode::ROUTED
-);
-$session = $opentok->createSession($sessionOptions);
+    use OpenTok\MediaMode;
+    use OpenTok\ArchiveMode;
 
 
-// Store this sessionId in the database for later use
-$sessionId = $session->getSessionId();
-$TokenRequest = $opentok->generateToken($sessionId);*/
-?>
+    // An automatically archived session:
+    $sessionOptions = array(
+        'archiveMode' => ArchiveMode::ALWAYS,
+        'mediaMode' => MediaMode::ROUTED
+    );
+    $session = $opentok->createSession($sessionOptions);
+
+
+    // Store this sessionId in the database for later use
+    $sessionId = $session->getSessionId();
+    $TokenRequest = $opentok->generateToken($sessionId);*/
+    ?>
 <script>
   $("input").keypress(function (event) {
     if (event.which == 13) {
@@ -111,7 +111,7 @@ $TokenRequest = isset($TokenRequest) ? $TokenRequest : '';
 <div class="foottr">
   <p style="
     text-align: center;
-    color: #FF0000;
+    color: #C02621;
     font-weight: 500;
     padding: 0px;
     margin: 5px;
@@ -121,9 +121,9 @@ $TokenRequest = isset($TokenRequest) ? $TokenRequest : '';
     <li><a href="<?php echo $fullurl; ?>contacts.html"><i class="fa fa-user" aria-hidden="true"></i></a>Contacts</li>
     <li><a href="<?php echo $fullurl; ?>groups.html"><i class="fa fa-users" aria-hidden="true"></i></a>Groups</li>
     <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
-      <li><a
-          href="<?php echo $fullurl; ?>myprofile/<?php echo encodeStr($_SESSION['sessUserId']); ?>/<?php echo $myurl; ?>.html"><img
-            src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></a>Profile</li><?php } ?>
+        <li><a
+            href="<?php echo $fullurl; ?>myprofile/<?php echo encodeStr($_SESSION['sessUserId']); ?>/<?php echo $myurl; ?>.html"><img
+              src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></a>Profile</li><?php } ?>
 
   </ul>
 </div>
@@ -201,63 +201,63 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
 
     $contactrequests = mysqli_num_rows($res_contact);
     ?>
-    <div onclick="$('#selectbuttons').hide();" class="chat-cont" <?php if ($contactrequests < 1) { ?>style="display:none;"
-      <?php } ?>>
-      <div class="chat-cont-header" id="mainfriedboxlist" onclick="hideshowfooterchatbox();"><span
-          id="msgheaderfooter">+</span>Messaging <span class="minimiz"> <a class="bulkmsg"
-            onclick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=sendbulkemails','New message');"><i
-              class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-          <!--<i class="fa fa-plus" aria-hidden="true" id="plusicon"  onclick="$('#chatcontactload').toggle();$('#minusicon').show();$('#plusicon').hide();"></i>
+        <div onclick="$('#selectbuttons').hide();" class="chat-cont" <?php if ($contactrequests < 1) { ?>style="display:none;"
+          <?php } ?>>
+          <div class="chat-cont-header" id="mainfriedboxlist" onclick="hideshowfooterchatbox();"><span
+              id="msgheaderfooter">+</span>Messaging <span class="minimiz"> <a class="bulkmsg"
+                onclick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=sendbulkemails','New message');"><i
+                  class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+              <!--<i class="fa fa-plus" aria-hidden="true" id="plusicon"  onclick="$('#chatcontactload').toggle();$('#minusicon').show();$('#plusicon').hide();"></i>
    <i style="display:none;" class="fa fa-minus" aria-hidden="true" id="minusicon"  onclick="$('#chatcontactload').toggle();$('#minusicon').hide();$('#plusicon').show();"></i>-->
-        </span></div>
-      <div class="chatsearchmsg" style="display:none;"><i class="fa fa-search" aria-hidden="true"></i><input type="text"
-          name="chatsearch" id="chatsearch" onkeyup="searchcontactfun();" placeholder="Search" /></div>
-      <div id="chatcontactload" style="display:none; height:320px;"> </div>
+            </span></div>
+          <div class="chatsearchmsg" style="display:none;"><i class="fa fa-search" aria-hidden="true"></i><input type="text"
+              name="chatsearch" id="chatsearch" onkeyup="searchcontactfun();" placeholder="Search" /></div>
+          <div id="chatcontactload" style="display:none; height:320px;"> </div>
 
 
 
 
-      <script>
-        $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php');
+          <script>
+            $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php');
 
-        function hideshowfooterchatbox() {
-          var msgheaderfooter = $("#msgheaderfooter").text();
-          if (msgheaderfooter == '+') {
-            $("#msgheaderfooter").text('-');
-            $("#chatcontactload").show();
-            $(".chatsearchmsg").show();
-          }
-          else {
-            $("#msgheaderfooter").text('+');
-            $("#chatcontactload").hide();
-            $(".chatsearchmsg").hide();
-          }
-        }
-
-
-
-
-        var win;
-        var winClosed;
-        clearInterval(winClosed);
-
-        function openvideocall() {
-
-          var vidchatuserid = $('#chatuserid').val();
-          $('.vdocall-msg').show();
-          $('.vdo-icon').addClass('active');
-          var uniqueNumber = new Date().getTime();
-
-          win = window.open('<?php $fullurl; ?>konectt-live.html?sendcall=1&s=<?php echo $sessionId; ?>&t=<?php echo $TokenRequest; ?>&u=' + vidchatuserid + '', '<?php echo $companNameTitle; ?> Video Call', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=960,height=600');
-
-          var winClosed = setInterval(function () {
-            if (win.closed) {
-              clearInterval(winClosed);
-              endcallmain();
+            function hideshowfooterchatbox() {
+              var msgheaderfooter = $("#msgheaderfooter").text();
+              if (msgheaderfooter == '+') {
+                $("#msgheaderfooter").text('-');
+                $("#chatcontactload").show();
+                $(".chatsearchmsg").show();
+              }
+              else {
+                $("#msgheaderfooter").text('+');
+                $("#chatcontactload").hide();
+                $(".chatsearchmsg").hide();
+              }
             }
 
-          }, 250);
-        }
+
+
+
+            var win;
+            var winClosed;
+            clearInterval(winClosed);
+
+            function openvideocall() {
+
+              var vidchatuserid = $('#chatuserid').val();
+              $('.vdocall-msg').show();
+              $('.vdo-icon').addClass('active');
+              var uniqueNumber = new Date().getTime();
+
+              win = window.open('<?php $fullurl; ?>konectt-live.html?sendcall=1&s=<?php echo $sessionId; ?>&t=<?php echo $TokenRequest; ?>&u=' + vidchatuserid + '', '<?php echo $companNameTitle; ?> Video Call', 'directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=960,height=600');
+
+              var winClosed = setInterval(function () {
+                if (win.closed) {
+                  clearInterval(winClosed);
+                  endcallmain();
+                }
+
+              }, 250);
+            }
 
 
 
@@ -265,646 +265,646 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
 
 
 
-        function closeit() {
-          win.close();
+            function closeit() {
+              win.close();
 
-        }
+            }
 
-        function endcallmain() {
-          $('.vdocall-msg').hide();
-          $('.vdo-icon').removeClass('active');
-          $('#getnotifications').load('common_action.php?videocallcut=1');
-        }
+            function endcallmain() {
+              $('.vdocall-msg').hide();
+              $('.vdo-icon').removeClass('active');
+              $('#getnotifications').load('common_action.php?videocallcut=1');
+            }
 
 
 
-      </script>
-    </div>
-    <div
-      style="width:336px; display:none; position:fixed; right:380px; bottom:0px; z-index:999; background-color:#FFFFFF; box-shadow: 0px 0px 5px #a0a0a0;"
-      id="usermainboxchat">
-      <div class="chat-cont-header">
-        <span id="userchatname" onclick="$('#loaduserchatbox').toggle();"></span>
-        <a href="#" id="videocallinguserIcon" onclick="$('#videocallinguserIcon').hide();" target="_blank"><span
-            class="vdo-icon">&nbsp;</span></a>
-        <span class="minimiz" onclick="$('#loaduserchatbox').toggle();"><i class="fa fa-minus"
-            aria-hidden="true"></i></span>
-        <span class="close-cht" style="position:absolute;font-size:inherit; right:14px; top:8px;"
-          onclick="$('#usermainboxchat').hide();clearint();$('#shb').val('0');"><i class="fa fa-times"
-            aria-hidden="true"></i></span>
-        <div class="vdocall-msg" style="display:none;">You are in this video call<div class="chat-btns">
-            <button
-              onclick="Declinecall();$('.chat-btns').hide();$('.chat-btns').hide();$('.vdocall-msg').hide();$('.vdo-icon').removeClass('active');">Decline</button>
-            <a href="<?php echo $fullurl; ?>konectt-live.html?ac=1" target="_blank"
-              onclick="$('.chat-btns').hide();stopring();"><button>Answer</button></a>
+          </script>
+        </div>
+        <div
+          style="width:336px; display:none; position:fixed; right:380px; bottom:0px; z-index:999; background-color:#FFFFFF; box-shadow: 0px 0px 5px #a0a0a0;"
+          id="usermainboxchat">
+          <div class="chat-cont-header">
+            <span id="userchatname" onclick="$('#loaduserchatbox').toggle();"></span>
+            <a href="#" id="videocallinguserIcon" onclick="$('#videocallinguserIcon').hide();" target="_blank"><span
+                class="vdo-icon">&nbsp;</span></a>
+            <span class="minimiz" onclick="$('#loaduserchatbox').toggle();"><i class="fa fa-minus"
+                aria-hidden="true"></i></span>
+            <span class="close-cht" style="position:absolute;font-size:inherit; right:14px; top:8px;"
+              onclick="$('#usermainboxchat').hide();clearint();$('#shb').val('0');"><i class="fa fa-times"
+                aria-hidden="true"></i></span>
+            <div class="vdocall-msg" style="display:none;">You are in this video call<div class="chat-btns">
+                <button
+                  onclick="Declinecall();$('.chat-btns').hide();$('.chat-btns').hide();$('.vdocall-msg').hide();$('.vdo-icon').removeClass('active');">Decline</button>
+                <a href="<?php echo $fullurl; ?>konectt-live.html?ac=1" target="_blank"
+                  onclick="$('.chat-btns').hide();stopring();"><button>Answer</button></a>
+              </div>
+            </div>
+          </div>
+          <div id="loaduserchatbox">
+            <div style="height:256px; overflow:auto;" id="loadchatusermsg"></div>
+            <div style="border-top:2px #00a0af solid;">
+              <div><span id="chatfieldbox"><textarea name="chatfieldfooter" id="chatfieldfooter" type="text"
+                    style="border:0px; max-width:100%;width: 100%;max-height: 100px; padding:10px; border:0px;"
+                    placeholder="Write a message here..." maxlength="800" /></textarea></span>
+
+                <form class="edit-layer" enctype="multipart/form-data" name="frmposthome2" id="frmposthome2" method="post"
+                  target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
+                  <span id="hpotohomeidftr"><input name="chatattachedfile" id="chatattachedfile" type="file"
+                      onChange="uploaduserfilesfun();" style="display:none;"
+                      accept="image/x-png,image/gif,image/jpeg,application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf"></span>
+                  <input type="hidden" name="action" id="action" value="chatattachedmsg" />
+                  <input type="hidden" name="contactchatuserid" id="contactchatuserid" value="" />
+                  <input type="hidden" name="loadmsgp" id="loadmsgp" value="1" />
+                  <input type="hidden" name="shb" id="shb" value="0" />
+                </form>
+                <script>
+                  function uploaduserfilesfun() {
+                    $('#frmposthome2').submit();
+                    $('#commonloader').show();
+
+                    var hpotohomeidhtml = $('#hpotohomeidftr').html();
+
+                    $('#chatattachedfile').remove();
+                    $('#hpotohomeidftr').html(hpotohomeidhtml);
+
+                  }
+                </script>
+                <ul class="emozi">
+
+                  <li class="emogi">
+                    <a href="javascript:void(0)" class="emoji-toggle" onclick="$('.emoji-list').show();"><i
+                        class="fa fa-smile-o" aria-hidden="true" id="emogilist"></i></a>
+                    <ul class="emoji-list">
+                      <?php include('smily.php'); ?>
+                    </ul>
+                  </li>
+                  <li class="atach"><a id="chatattachedbutton"><i class="fa fa-paperclip" aria-hidden="true"></i></a></li>
+
+
+
+
+                  <li class="send-sec"><span id="sendpressenter">Press Enter to Send</span> <button class="send"
+                      id="sendbuttonchat" onclick="clicktosendchat();" style="background-color: #ff7800;">Send</button>
+                    <div class="click-btn"><a id="sendclick"><i class="fa fa-ellipsis-h" aria-hidden="true"
+                          onclick="$('#selectbuttons').toggle();" id="openpressenter"></i></a>
+                      <form class="edit-layer" enctype="multipart/form-data" name="frmposthome3" id="frmposthome3" method="post"
+                        target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
+                        <ul class="send-list" id="selectbuttons" style="display:none;">
+                          <li><label><input type="radio" name="setpressenter" id="pressenter" value="1" <?php if ($_SESSION['sesssetpressenter'] == 1 || $_SESSION['sesssetpressenter'] == '') { ?> checked="checked"
+                                <?php } ?>
+                                onclick="$('#frmposthome3').submit();$('#sendpressenter').show();$('#sendbuttonchat').hide();$('#selectbuttons').hide();">
+                              <div class="presenter">Press Enter to Send</div>
+                            </label></li>
+                          <li><label><input type="radio" name="setpressenter" id="presssendbutton" value="2"
+                                onclick="$('#frmposthome3').submit();$('#sendpressenter').hide();$('#sendbuttonchat').show();$('#selectbuttons').hide();"
+                                <?php if ($_SESSION['sesssetpressenter'] == 2) { ?> checked="checked" <?php } ?>>
+                              <div class="presenter">Click Send</div>
+                            </label></li>
+                        </ul>
+                      </form>
+                    </div>
+                  </li>
+                </ul>
+
+
+                <script>
+                  <?php if (!isset($_POST['sesssetpressenter']) || $_SESSION['sesssetpressenter'] == 2) { ?>
+                      $('#sendpressenter').hide(); $('#sendbuttonchat').show(); $('#selectbuttons').hide();
+                  <?php } else { ?>
+                      $('#sendpressenter').show(); $('#sendbuttonchat').hide(); $('#selectbuttons').hide();
+                  <?php } ?>
+                </script>
+
+
+
+              </div>
+              <div id="textchatactiondiv" style="display:none;"></div>
+
+            </div>
           </div>
         </div>
-      </div>
-      <div id="loaduserchatbox">
-        <div style="height:256px; overflow:auto;" id="loadchatusermsg"></div>
-        <div style="border-top:2px #00a0af solid;">
-          <div><span id="chatfieldbox"><textarea name="chatfieldfooter" id="chatfieldfooter" type="text"
-                style="border:0px; max-width:100%;width: 100%;max-height: 100px; padding:10px; border:0px;"
-                placeholder="Write a message here..." maxlength="800" /></textarea></span>
+        <input type="hidden" name="chatuserid" id="chatuserid" />
 
-            <form class="edit-layer" enctype="multipart/form-data" name="frmposthome2" id="frmposthome2" method="post"
-              target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
-              <span id="hpotohomeidftr"><input name="chatattachedfile" id="chatattachedfile" type="file"
-                  onChange="uploaduserfilesfun();" style="display:none;"
-                  accept="image/x-png,image/gif,image/jpeg,application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,text/plain, application/pdf"></span>
-              <input type="hidden" name="action" id="action" value="chatattachedmsg" />
-              <input type="hidden" name="contactchatuserid" id="contactchatuserid" value="" />
-              <input type="hidden" name="loadmsgp" id="loadmsgp" value="1" />
-              <input type="hidden" name="shb" id="shb" value="0" />
-            </form>
-            <script>
-              function uploaduserfilesfun() {
-                $('#frmposthome2').submit();
-                $('#commonloader').show();
+        <script>
+          function openuserchatbox(id, name, url) {
 
-                var hpotohomeidhtml = $('#hpotohomeidftr').html();
+            $('#chatuserid').val(id);
+            $('#usermainboxchat').show();
+            $('#loaduserchatbox').show();
+            $('#userchatname').html('<a href="' + url + '">' + name + '</a>');
+            $('#loadchatusermsg').html('');
+            $('#loadchatusermsg').load('<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=' + id);
+            $("#loadchatusermsg").scrollTop($("#loadchatusermsg")[0].scrollHeight);
+            $("#chatfieldfooter").focus();
+          }
 
-                $('#chatattachedfile').remove();
-                $('#hpotohomeidftr').html(hpotohomeidhtml);
+          function typeandsendchat(id) {
+            //var chatfieldfooter = $('#chatfieldfooter').val();
+
+            var chatfieldfooter = document.getElementById("chatfieldfooter").value.replace(/\n/g, "<br />");
+            //var chatfieldfooter = document.getElementById("chatfieldfooter").value;
+
+            var shb = $("#shb").val();
+            if (chatfieldfooter != "<br />") {
+              //alert(chatfieldfooter);
+              chatfieldfooter = encodeURIComponent($.trim(chatfieldfooter));
+
+              if (chatfieldfooter != '' && id != '') {
+                $('#textchatactiondiv').load('<?php echo $fullurl; ?>getchat.php?action=chat&contactId=' + id + '&text=' + chatfieldfooter + '&shb=' + shb);
+
+                /*$("#chatfieldfooter").keyup(function (event) {
+                    $(this).val($(this).val().replace(/^\s*(\n)\s*$/, ''));
+ 
+                });*/
+
+                $("#chatfieldfooter").focus();
 
               }
-            </script>
-            <ul class="emozi">
-
-              <li class="emogi">
-                <a href="javascript:void(0)" class="emoji-toggle" onclick="$('.emoji-list').show();"><i
-                    class="fa fa-smile-o" aria-hidden="true" id="emogilist"></i></a>
-                <ul class="emoji-list">
-                  <?php include('smily.php'); ?>
-                </ul>
-              </li>
-              <li class="atach"><a id="chatattachedbutton"><i class="fa fa-paperclip" aria-hidden="true"></i></a></li>
-
-
-
-
-              <li class="send-sec"><span id="sendpressenter">Press Enter to Send</span> <button class="send"
-                  id="sendbuttonchat" onclick="clicktosendchat();" style="background-color: #ff7800;">Send</button>
-                <div class="click-btn"><a id="sendclick"><i class="fa fa-ellipsis-h" aria-hidden="true"
-                      onclick="$('#selectbuttons').toggle();" id="openpressenter"></i></a>
-                  <form class="edit-layer" enctype="multipart/form-data" name="frmposthome3" id="frmposthome3" method="post"
-                    target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
-                    <ul class="send-list" id="selectbuttons" style="display:none;">
-                      <li><label><input type="radio" name="setpressenter" id="pressenter" value="1" <?php if ($_SESSION['sesssetpressenter'] == 1 || $_SESSION['sesssetpressenter'] == '') { ?> checked="checked"
-                            <?php } ?>
-                            onclick="$('#frmposthome3').submit();$('#sendpressenter').show();$('#sendbuttonchat').hide();$('#selectbuttons').hide();">
-                          <div class="presenter">Press Enter to Send</div>
-                        </label></li>
-                      <li><label><input type="radio" name="setpressenter" id="presssendbutton" value="2"
-                            onclick="$('#frmposthome3').submit();$('#sendpressenter').hide();$('#sendbuttonchat').show();$('#selectbuttons').hide();"
-                            <?php if ($_SESSION['sesssetpressenter'] == 2) { ?> checked="checked" <?php } ?>>
-                          <div class="presenter">Click Send</div>
-                        </label></li>
-                    </ul>
-                  </form>
-                </div>
-              </li>
-            </ul>
-
-
-            <script>
-              <?php if (!isset($_POST['sesssetpressenter']) || $_SESSION['sesssetpressenter'] == 2) { ?>
-                $('#sendpressenter').hide(); $('#sendbuttonchat').show(); $('#selectbuttons').hide();
-              <?php } else { ?>
-                $('#sendpressenter').show(); $('#sendbuttonchat').hide(); $('#selectbuttons').hide();
-              <?php } ?>
-            </script>
-
-
-
-          </div>
-          <div id="textchatactiondiv" style="display:none;"></div>
-
-        </div>
-      </div>
-    </div>
-    <input type="hidden" name="chatuserid" id="chatuserid" />
-
-    <script>
-      function openuserchatbox(id, name, url) {
-
-        $('#chatuserid').val(id);
-        $('#usermainboxchat').show();
-        $('#loaduserchatbox').show();
-        $('#userchatname').html('<a href="' + url + '">' + name + '</a>');
-        $('#loadchatusermsg').html('');
-        $('#loadchatusermsg').load('<?php echo $fullurl; ?>load_chat_user_msg.php?userId2=' + id);
-        $("#loadchatusermsg").scrollTop($("#loadchatusermsg")[0].scrollHeight);
-        $("#chatfieldfooter").focus();
-      }
-
-      function typeandsendchat(id) {
-        //var chatfieldfooter = $('#chatfieldfooter').val();
-
-        var chatfieldfooter = document.getElementById("chatfieldfooter").value.replace(/\n/g, "<br />");
-        //var chatfieldfooter = document.getElementById("chatfieldfooter").value;
-
-        var shb = $("#shb").val();
-        if (chatfieldfooter != "<br />") {
-          //alert(chatfieldfooter);
-          chatfieldfooter = encodeURIComponent($.trim(chatfieldfooter));
-
-          if (chatfieldfooter != '' && id != '') {
-            $('#textchatactiondiv').load('<?php echo $fullurl; ?>getchat.php?action=chat&contactId=' + id + '&text=' + chatfieldfooter + '&shb=' + shb);
-
-            /*$("#chatfieldfooter").keyup(function (event) {
-                $(this).val($(this).val().replace(/^\s*(\n)\s*$/, ''));
- 
-            });*/
-
-            $("#chatfieldfooter").focus();
+            }
+            $("#chatfieldfooter").val('');
 
           }
-        }
-        $("#chatfieldfooter").val('');
-
-      }
 
 
 
 
 
-      $("#chatfieldfooter").keypress(function (e) {
-        if (e.which == 13) {
-          var setpressenter = $('input[name=setpressenter]:checked').val();
-          if (setpressenter == 1) {
+          $("#chatfieldfooter").keypress(function (e) {
+            if (e.which == 13) {
+              var setpressenter = $('input[name=setpressenter]:checked').val();
+              if (setpressenter == 1) {
+                var id = $('#chatuserid').val();
+                typeandsendchat(id);
+                e.preventDefault();
+              }
+
+            }
+          });
+
+          function clicktosendchat() {
             var id = $('#chatuserid').val();
             typeandsendchat(id);
-            e.preventDefault();
           }
 
-        }
-      });
+          function searchcontactfun() {
+            var chatsearch = '';
+            chatsearch = $('#chatsearch').val();
+            if (chatsearch != '') {
+              var chatsearch = encodeURIComponent(chatsearch);
+              $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php?chatsearch=' + chatsearch);
+            }
 
-      function clicktosendchat() {
-        var id = $('#chatuserid').val();
-        typeandsendchat(id);
-      }
-
-      function searchcontactfun() {
-        var chatsearch = '';
-        chatsearch = $('#chatsearch').val();
-        if (chatsearch != '') {
-          var chatsearch = encodeURIComponent(chatsearch);
-          $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php?chatsearch=' + chatsearch);
-        }
-
-      }
-      var blurvalue = 2;
-      clearInterval(handle);
+          }
+          var blurvalue = 2;
+          clearInterval(handle);
 
 
-      $(window).blur(function (e) {
+          $(window).blur(function (e) {
 
-        blurvalue = 1;
-      });
+            blurvalue = 1;
+          });
 
-      $(window).focus(function (e) {
+          $(window).focus(function (e) {
 
-        blurvalue = 2;
-      });
+            blurvalue = 2;
+          });
 
-      var handle = setInterval(function () {
+          var handle = setInterval(function () {
 
 
-        $('#getnotifications').load('<?php echo $fullurl; ?>getallnotifications.php');
+            $('#getnotifications').load('<?php echo $fullurl; ?>getallnotifications.php');
 
-        $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php');
+            $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php');
 
-      }, 10000);//5000000
+          }, 10000);//5000000
 
 
 
 
-      var handle2 = setInterval(function () {
+          var handle2 = setInterval(function () {
 
 
-        if (blurvalue == 2) {
+            if (blurvalue == 2) {
 
-          var id = $('#chatuserid').val();
-          $('#textchatactiondiv').load('<?php echo $fullurl; ?>getchat.php?action=getchat&contactId=' + id);
-          var id = $('#smpostid').val();
-          $('#loadstmtchat1').load('<?php echo $fullurl; ?>load_studentmentorchat.php?action=getchat&stmtId=' + id);
-          var chatsearch = '';
-          chatsearch = $('#chatsearch').val();
-          if (chatsearch != '') {
-            var chatsearch = encodeURIComponent(chatsearch);
-            $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php?chatsearch=' + chatsearch);
+              var id = $('#chatuserid').val();
+              $('#textchatactiondiv').load('<?php echo $fullurl; ?>getchat.php?action=getchat&contactId=' + id);
+              var id = $('#smpostid').val();
+              $('#loadstmtchat1').load('<?php echo $fullurl; ?>load_studentmentorchat.php?action=getchat&stmtId=' + id);
+              var chatsearch = '';
+              chatsearch = $('#chatsearch').val();
+              if (chatsearch != '') {
+                var chatsearch = encodeURIComponent(chatsearch);
+                $('#chatcontactload').load('<?php echo $fullurl; ?>load_chat_online_contacts.php?chatsearch=' + chatsearch);
+              }
+
+
+            }
+
+
+          }, 12000);
+
+
+
+
+
+
+          function clearint() {
+            clearInterval(handle);
           }
 
 
-        }
+          function opensharebox(url, title) {
+            var title = encodeURIComponent(title);
+            $('#sharebox').show();
+            $('#shareinner').load('shareinner.php?url=' + url + '&title=' + title);
+          }
+        </script>
+        <script>
+          function addmeetingdata() {
+            var meetingcontactchatuserid = $('#chatuserid').val();
+            sharefuncommonpopupwin('450px', 'auto', '<?php echo $fullurl; ?>common_popup_inner.php?id=1&type=setmeeting&meetingcontactchatuserid=' + meetingcontactchatuserid + '', 'Meeting Request', '');
 
+          } </script>
+    <?php } ?>
 
-      }, 12000);
-
-
-
-
-
-
-      function clearint() {
-        clearInterval(handle);
-      }
-
-
-      function opensharebox(url, title) {
-        var title = encodeURIComponent(title);
-        $('#sharebox').show();
-        $('#shareinner').load('shareinner.php?url=' + url + '&title=' + title);
-      }
-    </script>
     <script>
       function addmeetingdata() {
         var meetingcontactchatuserid = $('#chatuserid').val();
         sharefuncommonpopupwin('450px', 'auto', '<?php echo $fullurl; ?>common_popup_inner.php?id=1&type=setmeeting&meetingcontactchatuserid=' + meetingcontactchatuserid + '', 'Meeting Request', '');
 
       } </script>
-  <?php } ?>
-
-  <script>
-    function addmeetingdata() {
-      var meetingcontactchatuserid = $('#chatuserid').val();
-      sharefuncommonpopupwin('450px', 'auto', '<?php echo $fullurl; ?>common_popup_inner.php?id=1&type=setmeeting&meetingcontactchatuserid=' + meetingcontactchatuserid + '', 'Meeting Request', '');
-
-    } </script>
 
 
-  <div class="share-popup-cont" style="display: none;" id="sharebox">
-    <div class="share-pop">
-      <a class="grp-close" onclick="$('.share-popup-cont').hide();"><i class="fa fa-times" aria-hidden="true"></i></a>
-      <h2>Share</h2>
-      <ul class="share-list" id="shareinner">
+    <div class="share-popup-cont" style="display: none;" id="sharebox">
+      <div class="share-pop">
+        <a class="grp-close" onclick="$('.share-popup-cont').hide();"><i class="fa fa-times" aria-hidden="true"></i></a>
+        <h2>Share</h2>
+        <ul class="share-list" id="shareinner">
 
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <div class="popup-alert-cont" style="display:none;" id="alertpopup">
-  </div>
-
-
-  <div class="img-popup" id="imagepopup" style="display:none;">
-  </div>
+    <div class="popup-alert-cont" style="display:none;" id="alertpopup">
+    </div>
 
 
-  <div id="actionpostdivs" style=" display:none;"></div>
+    <div class="img-popup" id="imagepopup" style="display:none;">
+    </div>
 
-  <div class="share-popup" id="sharepopup">
-    <div class="sare-img-pop">
-      <h2>Upload file</h2>
-      <form class="edit-layer" enctype="multipart/form-data" name="frmposthome" id="frmposthome" method="post"
-        target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
 
-        <div class="share-pop-inner" id="sharepopinner">
+    <div id="actionpostdivs" style=" display:none;"></div>
 
-        </div>
+    <div class="share-popup" id="sharepopup">
+      <div class="sare-img-pop">
+        <h2>Upload file</h2>
+        <form class="edit-layer" enctype="multipart/form-data" name="frmposthome" id="frmposthome" method="post"
+          target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
 
-        <div class="popup-fttr" style="padding: 20px;"> <a
-            onclick="$('.share-popup').hide();$('#posturl').val('');removefilefunc();">Cancel</a>
-          <button type="submit" class="btn">Post</button>
-        </div>
-        <div id="hideremovablefilediv" style="display:none;"></div>
-        <script>
-          function removefilefunc() {
-            var hidact = $('#hidact').val();
-            var groupFileId = $('#groupFileId').val();
-            var hideremovablefile = $('#hideremovablefile').val();
-            if (hidact == 1 && groupFileId != '' && hideremovablefile != '') {
-              $("#hideremovablefilediv").load('<?php echo $fullurl; ?>common_action.php?action=rmpgrpfile&rmfileId=' + groupFileId + '&rmfilename=' + hideremovablefile);
+          <div class="share-pop-inner" id="sharepopinner">
+
+          </div>
+
+          <div class="popup-fttr" style="padding: 20px;"> <a
+              onclick="$('.share-popup').hide();$('#posturl').val('');removefilefunc();">Cancel</a>
+            <button type="submit" class="btn">Post</button>
+          </div>
+          <div id="hideremovablefilediv" style="display:none;"></div>
+          <script>
+            function removefilefunc() {
+              var hidact = $('#hidact').val();
+              var groupFileId = $('#groupFileId').val();
+              var hideremovablefile = $('#hideremovablefile').val();
+              if (hidact == 1 && groupFileId != '' && hideremovablefile != '') {
+                $("#hideremovablefilediv").load('<?php echo $fullurl; ?>common_action.php?action=rmpgrpfile&rmfileId=' + groupFileId + '&rmfilename=' + hideremovablefile);
+              }
             }
-          }
-        </script>
-      </form>
-    </div>
-  </div>
-  <div class="crt-grp-popup" style="display: none;" id="groupformdiv">
-    <div class="popup-inner">
-
-      <a class="grp-close" onClick="$('.crt-grp-popup').hide();$('body').css('overflow','auto');">
-        <i class="fa fa-times" aria-hidden="true"></i></a>
-      <form enctype="multipart/form-data" name="creategroup" id="creategroup" method="post" target="actionfrm"
-        action="<?php echo $fullurl; ?>common_action.php" onsubmit="formValidation('creategroup');return false" />
-      <div class="nw-grup">
-        <h3>Create Group</h3>
-        <label>Group type<span class="reqstar">*</span></label>
-        <select name="groupType" id="groupType" onchange="changegrouptype();">
-          <option value="0">Public</option>
-          <option value="1">Private</option>
-        </select>
-
-        <label>Group name<span class="reqstar">*</span></label>
-        <input type="text" name="groupName" id="groupName" class="validate"
-          placeholder="e.g. 'Marketing specialists Warsaw'" maxlength="100">
-        <script>
-          $("#groupName").focus();
-        </script>
-        <div id="textareadiv">
-          <label>Short group description</label>
-          <textarea name="groupDetails" id="groupDetails" rows="4" style="height:100px; margin-bottom:5px;"
-            placeholder="Describe your group " maxlength="150"></textarea>
-          <div style="margin-bottom:10px;">Max 150 Characters</div>
-        </div>
-        <div style=""><input type="checkbox" checked="checked" disabled="disabled" /> Yes, I agree to and accept the code
-          of <a href="<?php echo $fullurl; ?>conduct-guidelines.html" target="_blank">conduct for moderators</a>.</div>
+          </script>
+        </form>
       </div>
-      <div class="popup-fttr">
-        <button type="submit" class="konecttbtn konecttbtngbtn">Create</button>
-      </div>
-      <input type="hidden" name="action" id="action" value="addnewgrp" />
-      </form>
-
-
     </div>
-  </div>
+    <div class="crt-grp-popup" style="display: none;" id="groupformdiv">
+      <div class="popup-inner">
 
+        <a class="grp-close" onClick="$('.crt-grp-popup').hide();$('body').css('overflow','auto');">
+          <i class="fa fa-times" aria-hidden="true"></i></a>
+        <form enctype="multipart/form-data" name="creategroup" id="creategroup" method="post" target="actionfrm"
+          action="<?php echo $fullurl; ?>common_action.php" onsubmit="formValidation('creategroup');return false" />
+        <div class="nw-grup">
+          <h3>Create Group</h3>
+          <label>Group type<span class="reqstar">*</span></label>
+          <select name="groupType" id="groupType" onchange="changegrouptype();">
+            <option value="0">Public</option>
+            <option value="1">Private</option>
+          </select>
 
-
-
-  <div class="crt-grp-popup" id="inviteemail">
-    <div class="popup-inner" style="width: 400px">
-      <div class="invit">
-        <a class="grp-close" onclick="$('#inviteemail').hide();"><i class="fa fa-times" aria-hidden="true"></i></a>
-        <div id="showinvitediv">
-          <form enctype="multipart/form-data" name="inviteemailaddress" id="inviteemailaddress" method="post"
-            target="actionfrm" action="<?php echo $fullurl; ?>common_action.php" />
-          <div class="nw-grup">
-            <h3>Invite by email</h3>
-            <label>Email address<span class="reqstar">*</span></label>
-            <input type="text" name="txtuseremail" id="txtuseremail" placeholder="Separate e-mail addresses with commas."
-              maxlength="250" class="validate">
-
-            <input type="hidden" name="action" id="action" value="sendtouserinvitation">
-            <input type="hidden" name="groupinvitationid" id="groupinvitationid"
-              value="<?php echo encodeStr($_REQUEST['groupId']); ?>">
-            <input type="hidden" name="invitegroupname" id="invitegroupname"
-              value="<?php echo stripslashes(trim($rowGroup["groupName"])); ?>">
+          <label>Group name<span class="reqstar">*</span></label>
+          <input type="text" name="groupName" id="groupName" class="validate"
+            placeholder="e.g. 'Marketing specialists Warsaw'" maxlength="100">
+          <script>
+            $("#groupName").focus();
+          </script>
+          <div id="textareadiv">
+            <label>Short group description</label>
+            <textarea name="groupDetails" id="groupDetails" rows="4" style="height:100px; margin-bottom:5px;"
+              placeholder="Describe your group " maxlength="150"></textarea>
+            <div style="margin-bottom:10px;">Max 150 Characters</div>
           </div>
-          <div class="popup-fttr">
-            <button type="button" onClick="formValidation('inviteemailaddress');" class="konecttbtn">Send
-              invitation</button>
-          </div>
-          </form>
+          <div style=""><input type="checkbox" checked="checked" disabled="disabled" /> Yes, I agree to and accept the code
+            of <a href="<?php echo $fullurl; ?>conduct-guidelines.html" target="_blank">conduct for moderators</a>.</div>
         </div>
+        <div class="popup-fttr">
+          <button type="submit" class="konecttbtn konecttbtngbtn">Create</button>
+        </div>
+        <input type="hidden" name="action" id="action" value="addnewgrp" />
+        </form>
 
-        <div id="hideinvitediv" style="display:none;">
-          <div class="suces"><i class="fa-suc"><img src="<?php echo $fullurl; ?>images/suc.png"> </i>
-            <span>Invitation Sent!</span>
-            <div class="popup-fttr"> <a
-                onclick="$('#inviteemail').hide();$('#txtuseremail').val('');$('#sentmsgtextdiv').hide();">Close</a>
-              <button type="submit" onclick="$('#hideinvitediv').hide();$('#showinvitediv').show();">More
+
+      </div>
+    </div>
+
+
+
+
+    <div class="crt-grp-popup" id="inviteemail">
+      <div class="popup-inner" style="width: 400px">
+        <div class="invit">
+          <a class="grp-close" onclick="$('#inviteemail').hide();"><i class="fa fa-times" aria-hidden="true"></i></a>
+          <div id="showinvitediv">
+            <form enctype="multipart/form-data" name="inviteemailaddress" id="inviteemailaddress" method="post"
+              target="actionfrm" action="<?php echo $fullurl; ?>common_action.php" />
+            <div class="nw-grup">
+              <h3>Invite by email</h3>
+              <label>Email address<span class="reqstar">*</span></label>
+              <input type="text" name="txtuseremail" id="txtuseremail" placeholder="Separate e-mail addresses with commas."
+                maxlength="250" class="validate">
+
+              <input type="hidden" name="action" id="action" value="sendtouserinvitation">
+              <input type="hidden" name="groupinvitationid" id="groupinvitationid"
+                value="<?php echo encodeStr($_REQUEST['groupId']); ?>">
+              <input type="hidden" name="invitegroupname" id="invitegroupname"
+                value="<?php echo stripslashes(trim($rowGroup["groupName"])); ?>">
+            </div>
+            <div class="popup-fttr">
+              <button type="button" onClick="formValidation('inviteemailaddress');" class="konecttbtn">Send
                 invitation</button>
+            </div>
+            </form>
+          </div>
+
+          <div id="hideinvitediv" style="display:none;">
+            <div class="suces"><i class="fa-suc"><img src="<?php echo $fullurl; ?>images/suc.png"> </i>
+              <span>Invitation Sent!</span>
+              <div class="popup-fttr"> <a
+                  onclick="$('#inviteemail').hide();$('#txtuseremail').val('');$('#sentmsgtextdiv').hide();">Close</a>
+                <button type="submit" onclick="$('#hideinvitediv').hide();$('#showinvitediv').show();">More
+                  invitation</button>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
-
     </div>
-  </div>
 
 
-  <div class="vault-slide-cont">
-    <button class="close-vault"><img src="<?php echo $fullurl; ?>images/Close.svg"></button>
-  </div>
+    <div class="vault-slide-cont">
+      <button class="close-vault"><img src="<?php echo $fullurl; ?>images/Close.svg"></button>
+    </div>
 
 
-  <div class="loader" id="commonloader"><span><img src="<?php echo $fullurl; ?>images/loader.gif">
-      <span>Please wait...</span> </span></div>
+    <div class="loader" id="commonloader"><span><img src="<?php echo $fullurl; ?>images/loader.gif">
+        <span>Please wait...</span> </span></div>
 
-  <script>
-    function changegrouptype() {
-      var groupType = $("#groupType").val();
-      if (groupType == 1) {
-        $("#textareadiv").hide();
+    <script>
+      function changegrouptype() {
+        var groupType = $("#groupType").val();
+        if (groupType == 1) {
+          $("#textareadiv").hide();
+        }
+        else {
+          $("#textareadiv").show();
+        }
+
       }
-      else {
-        $("#textareadiv").show();
+
+      function userimgError(image) {
+        image.onerror = "";
+        image.src = "<?php echo $fullurl; ?>uploads/user-placeholder.jpg";
+        return true;
       }
-
-    }
-
-    function userimgError(image) {
-      image.onerror = "";
-      image.src = "<?php echo $fullurl; ?>uploads/user-placeholder.jpg";
-      return true;
-    }
-  </script>
+    </script>
 
 
-  <div class="crt-grp-popup" id="commonpopupwinouter" style="display:none;">
-    <div class="popup-inner" id="commonpopupwin">
-      <div class="invit">
-        <a class="grp-close" onClick="closefuncommonpopupwin();"><i class="fa fa-times" aria-hidden="true"></i></a>
+    <div class="crt-grp-popup" id="commonpopupwinouter" style="display:none;">
+      <div class="popup-inner" id="commonpopupwin">
+        <div class="invit">
+          <a class="grp-close" onClick="closefuncommonpopupwin();"><i class="fa fa-times" aria-hidden="true"></i></a>
 
 
-        <div class="nw-grup">
-          <h3 id="popuptitle">Loading...</h3>
-          <div id="commonpopupwinfile">
+          <div class="nw-grup">
+            <h3 id="popuptitle">Loading...</h3>
+            <div id="commonpopupwinfile">
 
+
+            </div>
+
+
+            <!-- <div class="popup-fttr"> <a onclick="$('#groupuserpopup').hide();">Close</a></div> -->
 
           </div>
 
 
-          <!-- <div class="popup-fttr"> <a onclick="$('#groupuserpopup').hide();">Close</a></div> -->
-
         </div>
-
 
       </div>
-
     </div>
-  </div>
-  <div id="getnotifications" style="display:none;"></div>
+    <div id="getnotifications" style="display:none;"></div>
 
-  <script>
-
-
-    /*24-10-2017*/
-    $('#chatattachedbutton').click(function () {
-      $('#chatattachedfile').click();
-      var contactchatuserid = $('#chatuserid').val();
-      $('#contactchatuserid').val(contactchatuserid);
-      //alert($('#chatuserid').val());
-
-    });
-    /***********/
-    $('#grpsearch').submit(function () {
-      // Get the Login Name value and trim it
-      var name = $.trim($('#searchgroups').val());
-      // Check if empty of not
-      if (name === '') {
-        //alert('Text-field is empty.');
-        return false;
-      }
-    });
+    <script>
 
 
+      /*24-10-2017*/
+      $('#chatattachedbutton').click(function () {
+        $('#chatattachedfile').click();
+        var contactchatuserid = $('#chatuserid').val();
+        $('#contactchatuserid').val(contactchatuserid);
+        //alert($('#chatuserid').val());
 
-    $(document).mouseup(function (e) {
-      var container = $(".remove-list");
-      if (!container.is(e.target) && container.has(e.target).length === 0) { container.hide(); }
-    });
-  </script>
+      });
+      /***********/
+      $('#grpsearch').submit(function () {
+        // Get the Login Name value and trim it
+        var name = $.trim($('#searchgroups').val());
+        // Check if empty of not
+        if (name === '') {
+          //alert('Text-field is empty.');
+          return false;
+        }
+      });
 
-  <div class="crt-grp-popup" id="grouppostpopup" style="display: none;">
-    <div class="popup-inner">
-      <a class="grp-close"
-        onClick="$('.crt-grp-popup').hide();$('#groupPostTitle').val('');$('#groupPostText').val('');"><i
-          class="fa fa-times" aria-hidden="true"></i></a>
 
-      <form class="nw-grup" enctype="multipart/form-data" name="frmposthome" id="frmposthome" method="post"
-        target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
-        <h3>Write a group post</h3>
-        <input type="text" name="groupPostTitle" id="groupPostTitle" placeholder="Write a title for group post"
-          maxlength="100" class="validate">
-        <textarea rows="4" name="groupPostText" id="groupPostText" placeholder="Write group post"
-          style="margin-bottom:5px;"></textarea>
-        <div class="post-img">
 
-          <div class="upload-img-cont" id="uploadgroupboximage"></div>
+      $(document).mouseup(function (e) {
+        var container = $(".remove-list");
+        if (!container.is(e.target) && container.has(e.target).length === 0) { container.hide(); }
+      });
+    </script>
 
-          <div class="upload-img" style="position: relative; margin-top:10px;" id="my-button">
+    <div class="crt-grp-popup" id="grouppostpopup" style="display: none;">
+      <div class="popup-inner">
+        <a class="grp-close"
+          onClick="$('.crt-grp-popup').hide();$('#groupPostTitle').val('');$('#groupPostText').val('');"><i
+            class="fa fa-times" aria-hidden="true"></i></a>
 
-            <table width="0">
-              <tbody>
-                <tr>
-                  <td> <i class="fa fa-cloud-upload" aria-hidden="true"></i></td>
-                  <td align="left"> Upload Photo</td>
-                </tr>
-              </tbody>
-            </table>
+        <form class="nw-grup" enctype="multipart/form-data" name="frmposthome" id="frmposthome" method="post"
+          target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
+          <h3>Write a group post</h3>
+          <input type="text" name="groupPostTitle" id="groupPostTitle" placeholder="Write a title for group post"
+            maxlength="100" class="validate">
+          <textarea rows="4" name="groupPostText" id="groupPostText" placeholder="Write group post"
+            style="margin-bottom:5px;"></textarea>
+          <div class="post-img">
+
+            <div class="upload-img-cont" id="uploadgroupboximage"></div>
+
+            <div class="upload-img" style="position: relative; margin-top:10px;" id="my-button">
+
+              <table width="0">
+                <tbody>
+                  <tr>
+                    <td> <i class="fa fa-cloud-upload" aria-hidden="true"></i></td>
+                    <td align="left"> Upload Photo</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+
           </div>
+          <input type="hidden" name="grouppostpost" id="grouppostpost" value="0">
+          <input type="hidden" name="groupId" id="groupId" value="<?php echo $_REQUEST['groupId']; ?>">
+          <input type="hidden" name="grouppostId" id="grouppostId" value="<?php echo encodeStr($grouppostId); ?>">
+          <div class="popup-fttr">
+            <a onClick="$('.crt-grp-popup').hide();$('#groupPostTitle').val('');$('#groupPostText').val('');">Cancel</a>
+            <button type="submit" onclick="$('#grouppostpost').val('1');">Post</button>
+          </div>
+        </form>
 
+        <form class="nw-grup" enctype="multipart/form-data" name="imagegroupfrmposthome" id="imagegroupfrmposthome"
+          method="post" target="actionfrm" action="<?php echo $fullurl; ?>common_action.php" style="display:none;">
+          <input name="groupimagefilehome" id="groupimagefilehome" type="file"
+            onChange="$('#commonloader').show();$('#imagegroupfrmposthome').submit();"
+            accept="image/x-png,image/gif,image/jpeg" style="display:none;">
 
+          <input type="hidden" name="groupId" id="groupId" value="<?php echo $_REQUEST['groupId']; ?>">
+          <input type="hidden" name="grouppostId" id="grouppostId" value="<?php echo encodeStr($grouppostId); ?>">
+        </form>
 
-        </div>
-        <input type="hidden" name="grouppostpost" id="grouppostpost" value="0">
-        <input type="hidden" name="groupId" id="groupId" value="<?php echo $_REQUEST['groupId']; ?>">
-        <input type="hidden" name="grouppostId" id="grouppostId" value="<?php echo encodeStr($grouppostId); ?>">
-        <div class="popup-fttr">
-          <a onClick="$('.crt-grp-popup').hide();$('#groupPostTitle').val('');$('#groupPostText').val('');">Cancel</a>
-          <button type="submit" onclick="$('#grouppostpost').val('1');">Post</button>
-        </div>
-      </form>
-
-      <form class="nw-grup" enctype="multipart/form-data" name="imagegroupfrmposthome" id="imagegroupfrmposthome"
-        method="post" target="actionfrm" action="<?php echo $fullurl; ?>common_action.php" style="display:none;">
-        <input name="groupimagefilehome" id="groupimagefilehome" type="file"
-          onChange="$('#commonloader').show();$('#imagegroupfrmposthome').submit();"
-          accept="image/x-png,image/gif,image/jpeg" style="display:none;">
-
-        <input type="hidden" name="groupId" id="groupId" value="<?php echo $_REQUEST['groupId']; ?>">
-        <input type="hidden" name="grouppostId" id="grouppostId" value="<?php echo encodeStr($grouppostId); ?>">
-      </form>
-
+      </div>
     </div>
-  </div>
 
-  <script>
+    <script>
 
 
-    function smilyfun(val) {
-      $('.emoji-list').hide();
-      chatfieldfooter = '';
-      if ($("#chatfieldfooter").val() != '') {
-        var chatfieldfooter = $("#chatfieldfooter").val();
+      function smilyfun(val) {
+        $('.emoji-list').hide();
+        chatfieldfooter = '';
+        if ($("#chatfieldfooter").val() != '') {
+          var chatfieldfooter = $("#chatfieldfooter").val();
+        }
+
+        $("#chatfieldfooter").val(chatfieldfooter + ' ' + val);
+        $("#chatfieldfooter").focus();
       }
 
-      $("#chatfieldfooter").val(chatfieldfooter + ' ' + val);
-      $("#chatfieldfooter").focus();
-    }
+      function loadmorechatbox(startpage, userId) {
+        var pageid = $("#livechattotalpage").val();
 
-    function loadmorechatbox(startpage, userId) {
-      var pageid = $("#livechattotalpage").val();
+        pageid = Number(pageid) + 1;
+        $("#livechattotalpage").val(pageid);
+        $("#pageid" + pageid).html('<div style="text-align:center;">Wait please...</div>');
+        $("#pageid" + pageid).load('<?php echo $fullurl; ?>load_more_chat_user_msg.php?startfrom=' + startpage + '&pageid=' + pageid + '&userId2=' + userId);
 
-      pageid = Number(pageid) + 1;
-      $("#livechattotalpage").val(pageid);
-      $("#pageid" + pageid).html('<div style="text-align:center;">Wait please...</div>');
-      $("#pageid" + pageid).load('<?php echo $fullurl; ?>load_more_chat_user_msg.php?startfrom=' + startpage + '&pageid=' + pageid + '&userId2=' + userId);
-
-    }
+      }
 
 
-    function loadmorechatboxmessage(startpage, userId) {
-      var pageid = $("#livechattotalpage").val();
+      function loadmorechatboxmessage(startpage, userId) {
+        var pageid = $("#livechattotalpage").val();
 
-      pageid = Number(pageid) + 1;
-      $("#livechattotalpage").val(pageid);
-      $("#pageid" + pageid).html('<div style="text-align:center;">Wait please...</div>');
-      $("#pageid" + pageid).load('load_more_chat_user_msg.php?startfrom=' + startpage + '&pageid=' + pageid + '&userId2=' + userId);
+        pageid = Number(pageid) + 1;
+        $("#livechattotalpage").val(pageid);
+        $("#pageid" + pageid).html('<div style="text-align:center;">Wait please...</div>');
+        $("#pageid" + pageid).load('load_more_chat_user_msg.php?startfrom=' + startpage + '&pageid=' + pageid + '&userId2=' + userId);
 
-    }
+      }
 
-    function copyToClipboard(element) {
-      var $temp = $("<input>");
-      $("body").append($temp);
-      $temp.val($(element).text()).select();
-      document.execCommand("copy");
-      $temp.remove();
-      $("#clpiboardcopy").fadeIn('fast');
-      setTimeout(function () {
-        $("#clpiboardcopy").fadeOut('fast');
+      function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+        $("#clpiboardcopy").fadeIn('fast');
+        setTimeout(function () {
+          $("#clpiboardcopy").fadeOut('fast');
 
-      }, 2500);
-    }
+        }, 2500);
+      }
 
-    $('input').keyup(function () { $('input').removeClass('redborderfield'); });
-    $('textarea').keyup(function () { $('textarea').removeClass('redborderfield'); });
-    $('select').keyup(function () { $('select').removeClass('redborderfield'); });
-    $('number').keyup(function () { $('number').removeClass('redborderfield'); });
+      $('input').keyup(function () { $('input').removeClass('redborderfield'); });
+      $('textarea').keyup(function () { $('textarea').removeClass('redborderfield'); });
+      $('select').keyup(function () { $('select').removeClass('redborderfield'); });
+      $('number').keyup(function () { $('number').removeClass('redborderfield'); });
 
-    $("input").attr('autocomplete', 'off');
-  </script>
+      $("input").attr('autocomplete', 'off');
+    </script>
 
-  <div id="clpiboardcopy"><i class="fa fa-check-circle" aria-hidden="true"></i> Link copied to clipboard.</div>
+    <div id="clpiboardcopy"><i class="fa fa-check-circle" aria-hidden="true"></i> Link copied to clipboard.</div>
 
 <?php } else { ?>
 
 
-  <style>
-    .hide-mob-footer .container {
-      width: 90%;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-  </style>
-  <footer class="hide-mob-footer">
-    <div class="container">
-      <div class="footer-left"><strong>
-          <div>
-            <div style="font-weight:normal;">
-              <div style="float:left;">&copy; <?php echo date("Y"); ?>&nbsp;NDIM VECOSPACE &nbsp;|
-                &nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
-              <div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png" style="width:50px;"></a></div>
+    <style>
+      .hide-mob-footer .container {
+        width: 90%;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+    </style>
+    <footer class="hide-mob-footer">
+      <div class="container">
+        <div class="footer-left"><strong>
+            <div>
+              <div style="font-weight:normal;">
+                <div style="float:left;">&copy; <?php echo date("Y"); ?>&nbsp;NDIM VECOSPACE &nbsp;|
+                  &nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
+                <div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png" style="width:50px;"></a></div>
+              </div>
             </div>
-          </div>
 
-          <p>
+            <p>
 
-          </p>
+            </p>
+        </div>
+        <div class="footer-menu" style="margin-top:9px;">
+          <ul class="foooter-list">
+            <li><a href="<?php echo $fullurl; ?>ndim-pvcypage.html">Privacy</a></li>
+            <li><a href="<?php echo $fullurl; ?>terms.html">Terms</a></li>
+            <li><a href="<?php echo $fullurl; ?>about.html">About</a></li>
+            <li><a href="<?php echo $fullurl; ?>contact-us.html">Contact Us</a></li>
+            <li><a href="<?php echo $fullurl; ?>faq.html">FAQ's</a></li>
+
+          </ul>
+          <ul class="foooter-list" style="display:none;">
+            <li><a href="<?php echo $fullurl; ?>companies.html">Corporate Connect</a></li>
+            <li><a href="<?php echo $fullurl; ?>articles-and-trivia.html">Article and Trivia</a></li>
+            <li><a href="<?php echo $fullurl; ?>events.html">Events</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-menu" style="margin-top:9px;">
-        <ul class="foooter-list">
-          <li><a href="<?php echo $fullurl; ?>ndim-pvcypage.html">Privacy</a></li>
-          <li><a href="<?php echo $fullurl; ?>terms.html">Terms</a></li>
-          <li><a href="<?php echo $fullurl; ?>about.html">About</a></li>
-          <li><a href="<?php echo $fullurl; ?>contact-us.html">Contact Us</a></li>
-          <li><a href="<?php echo $fullurl; ?>faq.html">FAQ's</a></li>
-
-        </ul>
-        <ul class="foooter-list" style="display:none;">
-          <li><a href="<?php echo $fullurl; ?>companies.html">Corporate Connect</a></li>
-          <li><a href="<?php echo $fullurl; ?>articles-and-trivia.html">Article and Trivia</a></li>
-          <li><a href="<?php echo $fullurl; ?>events.html">Events</a></li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+    </footer>
 
 <?php } ?>
 <input type="hidden" name="vcalluserId" id="vcalluserId" />
@@ -1026,10 +1026,10 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
   <?php
   if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
     ?>
-                                              /*var sessionsss = setInterval(function () {
-                                              //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
+                                                /*var sessionsss = setInterval(function () {
+                                                //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
 
-                                              }, 5000);*/
+                                                }, 5000);*/
 
   <?php } ?>
 </script>

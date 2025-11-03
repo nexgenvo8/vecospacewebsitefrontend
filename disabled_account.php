@@ -54,7 +54,7 @@ if (isPost()) {
 						<div id="stepsdetail1" style="text-align:center;">
 							<div class="half-input">
 								<?php if ($errMsg != '') { ?>
-										<div style="margin-bottom:10px; color:#FF0000;"><?php echo $errMsg; ?></div><?php } ?>
+											<div style="margin-bottom:10px; color:#C02621;"><?php echo $errMsg; ?></div><?php } ?>
 							</div>
 
 							<input type="hidden" name="txtAction" id="txtAction" value="reopen">
