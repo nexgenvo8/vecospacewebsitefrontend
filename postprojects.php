@@ -27,7 +27,8 @@ if (isset($_POST['projectTitle']) && trim($_POST['projectTitle']) != '') {
 	}
 	$proSkills = trim($_POST['proSkills']);
 	$proNature = normalclean($_POST['proNature']);
-	$projectStatus = normalclean($_POST['projectStatus']);
+	$projectStatus = isset($_POST['projectStatus']) ? normalclean($_POST['projectStatus']) : '';
+
 }
 
 
@@ -39,9 +40,10 @@ if (
 	trim($_POST['proCountry']) != '' &&
 	trim($_POST['proCity']) != '' &&
 	trim($_POST['projectDetails']) != '' &&
-	intval($_POST['projectStatus']) == 1 &&
+	intval($_POST['projectStatus'] ?? 0) == 1 &&
 	trim($_POST['proDuration']) != ''
 ) {
+
 
 
 	unset($insertFields);
