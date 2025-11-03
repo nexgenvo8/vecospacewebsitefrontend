@@ -533,7 +533,7 @@ if (file_exists($userfilename)) {
 															<td width="50px" align="center"><i class="fa fa-check-circle"
 																	aria-hidden="true"></i> </td>
 															<td align="left">Your invitation to add <strong
-																	style="font-size: 18px; font-weight:500; color: rgb(29, 176, 85);"><?php echo $myname; ?></strong>
+																	style="font-size: 18px; font-weight:500; color: #C02621;"><?php echo $myname; ?></strong>
 																as a contact has been sent. </td>
 														</tr>
 													</table>
