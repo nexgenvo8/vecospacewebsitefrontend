@@ -1,7 +1,7 @@
 <?php
 include_once('inc.php'); 
 include_once('mail.php');
-$companNameTitle="Jamia Millia Islamia VECOSPACE";
+$companNameTitle="NDIM VECOSPACE";
 $fullurl="http://jamia.vecospace.com/";
 $subject="Please confirm your ".$companNameTitle." registration now.";
 $query = "select * from userMaster where activeYN='N' and userId>1037 order by userId asc LIMIT 50";
