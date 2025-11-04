@@ -21,7 +21,8 @@ $sqlTotal = mysqli_num_rows($result);
 if ($sqlTotal - 20 > 0) {
 	?>
 	<div id="pageid2"><a class="loadmoremessagesclass"
-			onclick="loadmorechatbox('<?php echo ($sqlTotal - 20); ?>','<?php echo $userId2; ?>');">Load more messages</a></div>
+			onclick="loadmorechatbox('<?php echo ($sqlTotal - 20); ?>','<?php echo $userId2; ?>');">Load more messages</a>
+	</div>
 	<?php
 }
 
@@ -44,7 +45,7 @@ $sqlLogin = "";
 $sqlLogin = "select * from " . _CHAT_MASTER_TABLE_ . " where userId='" . $_SESSION['sessUserId'] . "' and contactId='" . decodeStr($userId2) . "' ORDER BY dateAdded ASC LIMIT " . $lsatsqlTotal . "," . $sqlTotal . "";
 $resLogin = getRecords(_CHAT_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
 if ($resLogin) {
-	while ($row = mysql_fetch_array($resLogin)) {
+	while ($row = mysqli_fetch_array($resLogin)) {
 
 
 
@@ -80,7 +81,8 @@ if ($resLogin) {
 
 							<?php if ($img == 0) { ?>
 								<div class="chatmsg<?php if (strpos($row["chatText"], 'maps/place') !== false) { ?> iframehave<?php } ?>">
-									<?php echo nl2br(showsmily($row["chatText"])); ?></div><?php } else { ?>
+									<?php echo nl2br(showsmily($row["chatText"])); ?>
+								</div><?php } else { ?>
 								<div class="imgbox">
 									<img src="<?php echo $fullurl; ?>uploads/<?php echo $row["chatFileName"]; ?>" style="width:200px;"
 										onClick="imagepopupmain('<?php echo 'x_' . $row["chatFileName"]; ?>');" />
@@ -104,7 +106,7 @@ if ($resLogin) {
 							<div class="userchatboxmain_time" id="usermsgid<?php echo $row['id']; ?>">
 								<?php if ($row['readDate'] != 0) {
 									echo date("h:i A", $row['readDate']);
-								} else { ?>					<?php echo date("h:i A"); ?>				<?php } ?>
+								} else { ?> 					<?php echo date("h:i A"); ?> 				<?php } ?>
 							</div>
 						</div>
 					</div>
@@ -120,7 +122,8 @@ if ($resLogin) {
 
 							<?php if ($img == 0) { ?>
 								<div class="chatmsg<?php if (strpos($row["chatText"], 'maps/place') !== false) { ?> iframehave<?php } ?>">
-									<?php echo nl2br(showsmily($row["chatText"])); ?></div><?php } else { ?>
+									<?php echo nl2br(showsmily($row["chatText"])); ?>
+								</div><?php } else { ?>
 								<div class="imgbox">
 									<img src="<?php echo $fullurl; ?>uploads/<?php echo $row["chatFileName"]; ?>" style="width:200px;"
 										onClick="imagepopupmain('<?php echo 'x_' . $row["chatFileName"]; ?>');" />
@@ -129,7 +132,7 @@ if ($resLogin) {
 							<div class="userchatboxmain_time_me" id="usermsgid<?php echo $row['id']; ?>">
 								<?php if ($row['readDate'] != 0) {
 									echo date("h:i A", $row['readDate']);
-								} else { ?>					<?php echo date("h:i A"); ?>				<?php } ?>
+								} else { ?> 					<?php echo date("h:i A"); ?> 				<?php } ?>
 							</div>
 						</div>
 					</div>
@@ -148,7 +151,7 @@ if ($resLogin) {
 							<div class="userchatboxmain_time_me" id="usermsgid<?php echo $row['id']; ?>">
 								<?php if ($row['readDate'] != 0) {
 									echo date("h:i A", $row['readDate']);
-								} else { ?>					<?php echo date("h:i A"); ?>				<?php } ?>
+								} else { ?> 					<?php echo date("h:i A"); ?> 				<?php } ?>
 							</div>
 						</div>
 					</div>
