@@ -344,22 +344,31 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
 
 
               <li class="send-sec"><span id="sendpressenter">Press Enter to Send</span> <button class="send"
-                  id="sendbuttonchat" onclick="clicktosendchat();" style="background-color: #ff7800;">Send</button>
+                  id="sendbuttonchat" onclick="clicktosendchat();" style="background-color: #860E66;">Send</button>
                 <div class="click-btn"><a id="sendclick"><i class="fa fa-ellipsis-h" aria-hidden="true"
                       onclick="$('#selectbuttons').toggle();" id="openpressenter"></i></a>
                   <form class="edit-layer" enctype="multipart/form-data" name="frmposthome3" id="frmposthome3" method="post"
                     target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
                     <ul class="send-list" id="selectbuttons" style="display:none;">
-                      <li><label><input type="radio" name="setpressenter" id="pressenter" value="1" <?php if ($_SESSION['sesssetpressenter'] == 1 || $_SESSION['sesssetpressenter'] == '') { ?> checked="checked"
-                            <?php } ?>
+                      <?php
+                      $pressSetting = $_SESSION['sesssetpressenter'] ?? ''; // safe default
+                      ?>
+                      <li>
+                        <label>
+                          <input type="radio" name="setpressenter" id="pressenter" value="1" <?php echo ($pressSetting == 1 || $pressSetting == '') ? 'checked="checked"' : ''; ?>
                             onclick="$('#frmposthome3').submit();$('#sendpressenter').show();$('#sendbuttonchat').hide();$('#selectbuttons').hide();">
                           <div class="presenter">Press Enter to Send</div>
-                        </label></li>
-                      <li><label><input type="radio" name="setpressenter" id="presssendbutton" value="2"
+                        </label>
+                      </li>
+                      <li>
+                        <label>
+                          <input type="radio" name="setpressenter" id="presssendbutton" value="2"
                             onclick="$('#frmposthome3').submit();$('#sendpressenter').hide();$('#sendbuttonchat').show();$('#selectbuttons').hide();"
-                            <?php if ($_SESSION['sesssetpressenter'] == 2) { ?> checked="checked" <?php } ?>>
+                            <?php echo ($pressSetting == 2) ? 'checked="checked"' : ''; ?>>
                           <div class="presenter">Click Send</div>
-                        </label></li>
+                        </label>
+                      </li>
+
                     </ul>
                   </form>
                 </div>
@@ -1019,10 +1028,10 @@ if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION
   <?php
   if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
     ?>
-                                  /*var sessionsss = setInterval(function () {
-                                  //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
+                                                  /*var sessionsss = setInterval(function () {
+                                                  //$('#checkscmntmsgtimeleftdiv').load('<?php $fullurl; ?>check_page_session.php');
 
-                                  }, 5000);*/
+                                                  }, 5000);*/
 
   <?php } ?>
 </script>
