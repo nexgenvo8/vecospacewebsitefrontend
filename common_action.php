@@ -1,4 +1,6 @@
 <?php
+
+
 include_once('inc.php');
 include_once('config/session-check.inc.php'); // check user login session
 include('mail.php');
@@ -730,7 +732,7 @@ if (isset($_FILES['imagefilehome']) && $_FILES['imagefilehome']['name'] != '' &&
 		?>
 		<script>
 			parent.$('#loadimagdiv').load('<?php echo $fullurl; ?>article_photo_home.php?postId=<?php echo $_REQUEST['articleId']; ?>');
-																																			/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
+																																											/*parent.$('#loadimagdiv').load('edit_article_photo_home.php?postId=<?php echo $postId; ?>');*/
 		</script>
 
 		<?php
@@ -1959,7 +1961,7 @@ if ($_REQUEST['action'] == 'groupchat' && trim($_REQUEST['grouptext']) != '' && 
 
 		<script>
 			<?php if ($rowGroupchat['msgType'] == 'text') { ?>
-				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
+				$('#groupchatlist').append('<li class="me"><div class="grp-chat-cntnt"><span class="usr"> <a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a></span><div class="gchatlist-right"><div class="time"><span class="nm"><a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo $userres['firstName']; ?>																																																												 			<?php echo $userres['lastName']; ?></a> </span><?php echo date("h:i A", $rowGroupchat['dateAdded']); ?></div><div class="chat-txt"><?php echo normalclean(showsmily($rowGroupchat["chatText"])); ?></div></div></div></li>');
 				$(".chats").animate({ scrollTop: $("#groupchatlist").outerHeight() }, 600);
 
 				<?php
@@ -2066,307 +2068,6 @@ if (isset($_REQUEST['dltGroupId']) && $_REQUEST['dltGroupId'] != '' && $_REQUEST
 
 }
 
-if (trim(isset($_REQUEST['txtuseremail1']) && $_REQUEST['txtuseremail1']) != '' && $_REQUEST['action'] == 'sendinvitation') {
-
-	?>
-	<script>
-		parent.$('#commonloader').show();
-	</script>
-	<?php
-	$useremailaddress = trim($_REQUEST['txtuseremail1']);
-	$arrsEmails = explode(',', $useremailaddress);
-	foreach ($arrsEmails as $email) {
-		$email = trim($email);
-		if ($email != '') {
-
-			if (strlen(trim(sanitizedboutput($email))) > 60) {
-
-
-			}
-
-			if (isValidEmailFunc(trim($email)) == 'n') {
-				?>
-				<!--<script>
-				parent.$('#commonloader').hide();
-				parent.showerrormsg('Error','Invalid "<?php echo $email; ?>" email address.','');
-			</script>-->
-				<?php
-				//exit();
-			} else {
-
-				/*$userEmailId=trim($email);
-				$sqlCheck="";
-				$sqlCheck=mysql_query("select email from "._USERS_MASTER_TABLE_." where email='".$userEmailId."' ");
-				if(mysql_num_rows($sqlCheck)>0)
-				{
-				?>
-				<!--<script>
-					parent.$('#commonloader').hide();
-					parent.showerrormsg('Error','This email address "<?php echo $userEmailId;?>" already registered with Konectt.','');
-				</script>-->
-				<?php
-				//exit();
-				}
-				else
-				{}	*/
-
-
-				$aa = "SELECT firstName,lastName,profilePhoto,userId from " . _USERS_MASTER_TABLE_ . " WHERE email='" . $email . "' ";
-				$res5 = mysqli_query($conn, $aa);
-				$getuser = mysqli_fetch_array($res5);
-
-				$firstName = $getuser['firstName'];
-				$lastName = $getuser['lastName'];
-				$profilePhoto = $getuser['profilePhoto'];
-				$shareduserId = $getuser['userId'];
-
-
-				if ($profilePhoto != '') {
-					$profilePhoto = $profilePhoto;
-				} else {
-					$profilePhoto = 'user-placeholder.jpg';
-				}
-
-				$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-				$res52 = mysqli_query($conn, $aa2);
-				$getuser2 = mysqli_fetch_array($res52);
-
-				$firstName2 = $getuser2['firstName'];
-				$lastName2 = $getuser2['lastName'];
-				$profilePhoto2 = $getuser2['profilePhoto'];
-				$jobTitle = $getuser2["jobTitle"];
-				$companyName = $getuser2["companyName"];
-				$userurl = $getuser2["userurl"];
-
-				if ($profilePhoto2 != '') {
-					$profilePhoto2 = $profilePhoto2;
-				} else {
-					$profilePhoto2 = 'user-placeholder.jpg';
-				}
-
-
-
-				if (trim($_REQUEST["sharedoc"]) == 1) {
-					$postId = decodeStr($_REQUEST['postId']);
-
-					/*unset($selectFields);
-					unset($whereFields);
-					unset($whereVals);
-
-					$sqlCheck1="";
-					$sqlCheck1="select id from "._VAULT_SHARE_MASTER_." where userId='".$shareduserId."' and postId=".$postId." ";
-					$resCheck1=getRecords(_VAULT_SHARE_MASTER_,$selectFields,$whereFields,$whereVals,_Y_,$sqlCheck1);
-					if($resCheck1)
-					{
-					}
-					else
-					{}*/
-
-
-
-					$insertFields = [];
-					$insertVals = [];
-					$whereFields = [];
-					$whereVals = [];
-
-					$insertFields[0] = "dateAdded";
-					$insertFields[1] = "userId";
-					$insertFields[2] = "postId";
-
-					$insertVals[0] = time();
-					$insertVals[1] = $shareduserId;
-					$insertVals[2] = $postId;
-
-					$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-
-					$dateAdded = time();
-
-					$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . $shareduserId . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
-					mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-					/*For email templates*/
-					$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
-					$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
-					$rowvault = mysqli_fetch_array($resvault);
-					$name = $rowvault['name'];
-					$documentFileName = trim($rowvault["documentFile"]);
-
-					$sharefileSize = trim($rowvault["fileSize"]);
-
-					$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
-
-
-
-					$mailBodyContent = '';
-					$mailBodyContent = '<div style="padding:20px 0px; text-align:center; background-color:#FFFFFF;">
-	 <a href="' . $fullurl . '" target="_blank" style="display: inline-block;padding: 10px;">
-    <img src="' . $fullurl . 'images/sdglogo.png" width="150px;">
-    </a>
-</div>
-<div style="background-color:#f4f4f4;user-select: none;-moz-user-select: none; font-family:Arial, Helvetica, sans-serif; font-size:13px; overflow:hidden; padding:30px 0px;text-align:center;">
-  <div style="margin:auto; width:600px; background-color:#FFFFFF; text-align:left;">
-    <div style="padding:30px;">
-      <div style="width: 60px;height: 60px;margin: auto;">
-        <a style="color:#1a94c3; text-decoration: none;" href="' . $fullurl . 'profile/' . encodeStr($_SESSION["sessUserId"]) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2"><img src="' . $fullurl . 'uploads/' . $profilePhoto2 . '" style="border-radius: 50%;width: 50px;height: 50px;display: block;"></a>
-      </div>
-    <span style="color:#1a94c3;font-size:22px;text-align: center;display: block;"><a style="color:#1a94c3; text-decoration: none;" href="' . $fullurl . 'profile/' . encodeStr($_SESSION["sessUserId"]) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2">' . $firstName2 . ' ' . $lastName2 . '</a> </span>
-        <div style="display: block;width: 100%;margin-top: 15px;margin-bottom: 35px;font-size: 18px;text-align: center;color:#000;"> Sent you a Document </div>
-      <div style="padding:10px; background-color:#F9F9F9; border:dashed 1px #ccc; border-radius: 2px;">
-
-
-     <div style="width: 100%;text-align: left;overflow: hidden;padding: 10px;">
-
-       <strong style="font-weight: 600;display: block;text-align: center;">File Size (' . $totalsharefileSize . ' MB) </strong>
-       <div style="font-size: 14px;  color: #a0a0a0; margin-top: 5px;text-align: center;">' . $documentFileName . ' </div></div>
-       <div style="width: 100%;overflow: hidden;text-align: center;">
-<a href="' . $fullurl . 'downloads.html?id=' . $_REQUEST['postId'] . '&uid=' . encodeStr($_SESSION["sessUserId"]) . '&cuid=' . $_SESSION['sessUserId'] . '&t=8" style="display: inline-block; padding: 10px 43px; background-color: #1a94c3; text-decoration: none; color: #fff;font-size: 18px; margin-top: 15px;border-radius: 24px;">Get Your Files</a></div>
-<div style="width: 100%;overflow:hidden;text-align: left;margin-top: 20px;">
-
-</div>
-
-
-      <div style="    margin-top: 20px; text-align: right; line-height: 30px;padding-top: 5px; border-top: solid 1px #e7e7e7; color: #afafaf;">Powered by ' . $companNameTitle . '</div>
-    </div>
-  </div>
-</div>';
-
-
-					$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
-
-					$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
-					$headers .= "MIME-Version: 1.0\r\n";
-					$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
-
-					//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
-					send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
-
-
-					?>
-					<script>
-						parent.$('#commonloader').hide();
-						parent.closefuncommonpopupwin();
-						parent.showsusmsg('SUCCESS', 'Successfully shared.', '');// with selected emails
-					</script>
-					<?php
-
-
-				} else {
-					$mailBodyContent = '';
-					if ($shareduserId == '') {
-						$mailBodyContent = '';
-						$mailBodyContent = '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
-    <tbody>
-    <tr>
-        <td align="center" valign="top">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;max-width:550px">
-                <tbody>
-                <tr>
-                    <td align="center" valign="top" style="width:100%;padding:20px 0">
-                        <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/sdglogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
-                </tr>
-                <tr>
-                  <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
-                        <h4 align="center" style="padding:0;margin:0 0 10px;color:#484848">Hey,</h4>
-                      <p align="center" style="margin:0 0 30px;padding:0;color:#484848;line-height:22px;padding-bottom: 12px;"><strong><a href="' . $fullurl . '" style="color:#1a94c3; text-decoration:none;">' . $firstName2 . '</a></strong> has invited you to join <a href="' . $fullurl . '" target="_blank" style="color:#1a94c3; text-decoration:none;">' . $companNameTitle . '</a>- a networking platform for exploring business and job opportunities.</p>
-                        <a href="' . $fullurl . '" style="display:inline-block;text-decoration:none;padding:15px 25px;font-weight:600;font-size:18px;margin:0 0 30px;color:#fff;background:#0abe51;border-radius:5px" target="_blank">Join ' . $companNameTitle . ' </a>
-                        <div style="text-align:center; margin-top:10px;">Sign up for free and discover a world full of possibilities </div></td>
-                </tr>
-                <tr>
-                    <td align="center" style="padding:0px;margin:0">
-                      <div style="font-size:12px;color:#666666;text-align:center;color:#838383;line-height:24px;padding:20px 0px;background-color: #e9e9e9;">ConnecWrk - a one stop platform for SMEs, freelancers and job seekers. <br>Copyright: OMSR Media Pvt. Ltd.<br>
- <a href="' . $fullurl . 'privacy.html" style="color:#838383; text-decoration:none;">Privacy Policy</a> | <a href="info@connecwrk.com" style="color:#838383; text-decoration:none;">Contact</a> | <a href="' . $fullurl . 'terms.html" style="color:#838383; text-decoration:none;">Terms</a></div></td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
-</div>';
-					} else {
-						$mailBodyContent = '';
-						$mailBodyContent = '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
-    <tbody>
-    <tr>
-        <td align="center" valign="top">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;max-width:550px">
-                <tbody>
-                <tr>
-                    <td align="center" valign="top" style="width:100%;padding:20px 0">
-                        <a href="' . $fullurl . '" target="_blank" >
-                            <img src="' . $fullurl . 'images/sdglogo.png" alt="' . $companNameTitle . '" width="100%" border="0" align="center" style="display:inline-block;text-align:center;max-width:140px">                        </a>                    </td>
-                </tr>
-                <tr>
-                  <td align="center" width="100%" style="background:#fff;color:#484848;padding:40px;border-radius:4px;    border-bottom: #33a9d7 solid 5px;">
-                        <h4 align="center" style="padding:0;margin:0 0 10px;color:#484848">Hey, ' . $firstName . '</h4>
-                      <p align="center" style="margin:0 0 30px;padding:0;color:#484848;line-height:22px;"><strong><a href="' . $fullurl . 'profile/' . encodeStr($_SESSION["sessUserId"]) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2" style="color:#1a94c3; text-decoration:none;">' . $firstName2 . '</a></strong> has invited you to join <a href="' . $fullurl . '" target="_blank" style="color:#1a94c3; text-decoration:none;">' . $companNameTitle . '</a>- a networking platform for exploring business and job opportunities.</p>
-                        <div><div style="
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
-    margin-bottom: 16px;
-    border-radius: 100%;
-    border: 3px #e9e9e9 solid;
-"><a href="' . $fullurl . 'profile/' . encodeStr($_SESSION["sessUserId"]) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2"><img src="' . $fullurl . 'uploads/' . $profilePhoto2 . '" style="
-    width: 100%;
-"></a></div></div>
-
-<a href="' . $fullurl . 'profile/' . encodeStr($_SESSION["sessUserId"]) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2" style="display:inline-block;text-decoration:none;padding:15px 25px;font-weight:600;font-size:18px;margin:0 0 30px;color:#fff;background:#0abe51;border-radius:5px" target="_blank">View Profile</a>
-                        </td>
-                </tr>
-                <tr>
-                    <td align="center" style="padding:0px;margin:0">
-                       <div style="font-size:12px;color:#666666;text-align:center;color:#838383;line-height:24px;padding:20px 0px;background-color: #e9e9e9;">ConnecWrk - a one stop platform for SMEs, freelancers and job seekers. <br>Copyright: OMSR Media Pvt. Ltd.<br>
- <a href="' . $fullurl . 'privacy.html" style="color:#838383; text-decoration:none;">Privacy Policy</a> | <a href="info@connecwrk.com" style="color:#838383; text-decoration:none;">Contact</a> | <a href="' . $fullurl . 'terms.html" style="color:#838383; text-decoration:none;">Terms</a></div> </td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-
-</div>';
-					}
-
-					//$subject="Invitation from ".$companNameTitle." website.";
-					$subject = "Invitation to Join ConnecWrk";
-
-					$sendername = ucfirst($firstName2) . ' ' . ucfirst($lastName2);
-					send_invitation_template_mail($sendername, $email, $subject, $mailBodyContent);
-					$_SESSION["s"] = 1;
-					?>
-					<script>
-						parent.$('#commonloader').hide();
-						parent.$('#txtuseremail1').val('');
-						window.top.location.href = "contacts.html?q=1";
-					</script>
-					<?php
-				}
-
-
-			}
-
-
-		}
-
-	}
-	?>
-	<script>
-		parent.$('#commonloader').hide();
-	</script>
-	<?php
-
-
-
-}
 
 
 if ($_REQUEST['action'] == 'uploadgroupimage' && $_REQUEST['groupId'] != '' && $_FILES['myphotofile']['name'] != '') {
@@ -6098,7 +5799,7 @@ if (
 
 	<script>
 		header('Content-Type: application/json');
-	echo json_encode([
+					echo json_encode([
 			'status' => 'success',
 			'type' => $fileExtention,
 			'file_url' => $fullurl. 'uploads/'.$file_name,

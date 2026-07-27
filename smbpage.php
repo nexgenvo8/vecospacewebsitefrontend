@@ -27,11 +27,10 @@ $pageIndex = 12;
 		<div class="container main">
 			<div class="home_container">
 				<?php include('left-sidebar.php'); ?>
-				<div
-					class="center_content <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
-					} else {
-						echo 'nologin';
-					} ?>">
+				<div class="center_content <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
+				} else {
+					echo 'nologin';
+				} ?>">
 					<div class="bx-shadow">
 						<?php include('businesstopinc.php'); ?>
 						<div class="smb-cont">
@@ -51,7 +50,8 @@ $pageIndex = 12;
 										today.</span>
 								</h1><br>
 								<div class="how-benefit">
-									<h2>The benefits for creating a Business Page on <?php echo $companNameTitle; ?></h2>
+									<h2>The benefits for creating a Business Page on <?php echo $companNameTitle; ?>
+									</h2>
 									<ul class="bnfit-list">
 										<li>
 											<i class="fa fa-check" aria-hidden="true"></i>
@@ -73,7 +73,7 @@ $pageIndex = 12;
 									</ul>
 									<div class="trnding-bsns">
 										<h2>Featured Industry pages <div class="bs-fot"
-												style="background-color:#ff7800;"><a
+												style="background-color:#860E66;"><a
 													href="<?php echo $fullurl; ?>smb-categories.html">View all</a></div>
 										</h2>
 										<ul class="trnding-bsns-list">
@@ -112,7 +112,8 @@ $pageIndex = 12;
 															<div class="img"><img
 																	src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($companyPhoto)); ?>">
 															</div>
-															<a class="bttl"><?php echo $rowCompany['companyBusinessName']; ?></a>
+															<a
+																class="bttl"><?php echo $rowCompany['companyBusinessName']; ?></a>
 															<span class="blocat"><?php echo $industryTypeName; ?></span>
 															<a href="<?php echo $fullurl; ?><?php echo _SMBURL_TEXT_; ?>/<?php echo encodeStr($rowCompany['id']); ?>/<?php echo makeContentUrl($rowCompany['companyBusinessName']); ?>.html"
 																class="fl-dtail-btn">View detail</a>

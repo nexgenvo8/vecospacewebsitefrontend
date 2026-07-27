@@ -4377,7 +4377,7 @@ ul.cntr_tab li a i.fa {
 }
 
 ul.cntr_tab li a.active i.fa {
-    color: #ff7800;
+    color: #860E66;
 }
 
 ul.cntr_tab li {
@@ -6400,7 +6400,7 @@ ul.cht_mmbr_list.message li .chat-cont-user-list.active {
 }
 
 .bgcolororange {
-    background-color: #ff7800 !important;
+    background-color: #860E66 !important;
 }
 
 .frfl-img span.tltp {
@@ -9387,7 +9387,7 @@ ul.curently-trendng-list li {
     display: inline-block;
     width: 45px;
     height: 45px;
-    background-color: #ff7800;
+    background-color: #860E66;
     border-radius: 50%;
     line-height: 45px;
     font-size: 22px;
@@ -10807,7 +10807,7 @@ ul.more-list li.help {
 }
 
 .online.standby {
-    background-color: #ff7800;
+    background-color: #860E66;
 }
 
 .chat-cont {

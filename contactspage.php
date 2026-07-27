@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include_once('inc.php');
 $_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 include_once('config/session-check.inc.php'); // check user login session
@@ -106,41 +109,43 @@ if ($search == '') {
 
 							</script>
 							<form enctype="multipart/form-data" name="frmposthome4" id="frmposthome4" method="post"
-								target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
+								action="<?php echo $fullurl; ?>common_action.php">
+
 								<div class="srchfcontct" style="margin-left:17px;">
 									<span>Invite people to <?php echo $companNameTitle; ?></span>
+
 									<div class="srch-field">
 										<input type="hidden" name="action" value="sendinvitation">
+
 										<input type="email" name="txtuseremail1" id="txtuseremail1" maxlength="250"
-											placeholder="Separate e-mail addresses with commas." class="validate">
-										<button type="button" onClick="formValidation('frmposthome4');subsrchfrm1();"
-											style="cursor: default;">Invite</button>
+											placeholder="Separate e-mail addresses with commas." class="validate"
+											required>
+
+										<button type="submit">Invite</button>
 									</div>
 								</div>
 							</form>
 
+
 							<script>
+								$(document).ready(function () {
 
+									$("#frmposthome4").on("submit", function (e) {
 
-								function subsrchfrm1() {
-
-									if ($("#txtuseremail1").val() != '') {
-										$("#frmposthome4").submit();
-									}
-								}
-
-								$("input").keypress(function (event) {
-
-									if (event.which == 13) {
-										event.preventDefault();
-
-										if ($("#txtuseremail1").val() != '') {
-											$("#frmposthome4").submit();
+										if ($("#txtuseremail1").val().trim() === '') {
+											alert("Please enter email address");
+											e.preventDefault();
+											return false;
 										}
-									}
-								});
 
+										// show loader only once
+										$('#commonloader').show();
+										return true;
+									});
+
+								});
 							</script>
+
 						</div>
 						<div class="pnding-contct">
 							<h2 id="pagetitlemain2">Pending contact requests</h2>

@@ -317,7 +317,7 @@
 			<li style="">
 				<a href="<?php echo $fullurl; ?>find-mentor.html"
 					class="<?php if ($pageIndex == 26) { ?>active<?php } ?> ripple">
-					<i class="micon" style="background-color: #ff7800;"><i class="fa fa-handshake-o"
+					<i class="micon" style="background-color: #860E66;"><i class="fa fa-handshake-o"
 							aria-hidden="true"></i></i>
 					<span class="tltp">Find Your Mentor</span></a>
 			</li>
@@ -328,7 +328,7 @@
 			<li style="">
 				<a href="<?php echo $fullurl; ?>become-a-mentor.html"
 					class="<?php if ($pageIndex == 27) { ?>active<?php } ?> ripple">
-					<i class="micon" style="background-color: #ff7800;"><i class="fa fa-handshake-o"
+					<i class="micon" style="background-color: #860E66;"><i class="fa fa-handshake-o"
 							aria-hidden="true"></i></i>
 					<span class="tltp">Become a Mentor</span></a>
 			</li>
@@ -338,7 +338,7 @@
 			<li style="">
 				<a href="<?php echo $fullurl; ?>articles-and-trivia.html"
 					class="<?php if ($pageIndex == 7) { ?>active<?php } ?> ripple">
-					<i class="micon" style="background-color: #ff7800;"><i class="fa fa-file-text-o"
+					<i class="micon" style="background-color: #860E66;"><i class="fa fa-file-text-o"
 							aria-hidden="true"></i></i>
 					<span class="tltp">Articles</span></a>
 			</li>
@@ -383,7 +383,7 @@
 			<li style="">
 				<a href="<?php echo $fullurl; ?>smb.html"
 					class="<?php if ($pageIndex == 12) { ?>active<?php } ?> ripple">
-					<i class="micon" style="background-color: #ff7800;"><i class="fa fa-industry"
+					<i class="micon" style="background-color: #860E66;"><i class="fa fa-industry"
 							aria-hidden="true"></i></i>
 					<!--<img src="images/bl_739_talent_lamp_businessman_lamp_energy_creativity_idea-512.png">-->
 							<span class="tltp">Career Enhancers</span></a>
@@ -392,7 +392,7 @@
 					<li style="">
 						<a href="<?php echo $fullurl; ?>all-notice.html"
 							class="<?php if ($pageIndex == 75) { ?>active<?php } ?> ripple">
-							<i class="micon" style="background-color: #ff7800;"><i class="fa fa-file-text"
+							<i class="micon" style="background-color: #860E66;"><i class="fa fa-file-text"
 									aria-hidden="true"></i></i>
 							<!--<img src="images/bl_739_talent_lamp_businessman_lamp_energy_creativity_idea-512.png">-->
 							<span class="tltp">Notice Board</span></a>
@@ -412,7 +412,7 @@
 					?>
 					<li class="hiden-d">
 						<a href="<?php echo $fullurl; ?>settings.html" class="ripple">
-							<i class="micon" style="background-color: #ff7800;"><i class="fa fa-cog" aria-hidden="true"></i></i>
+							<i class="micon" style="background-color: #860E66;"><i class="fa fa-cog" aria-hidden="true"></i></i>
 							<span class="tltp">Setting</span></a>
 					</li>
 					<li class="hiden-d">

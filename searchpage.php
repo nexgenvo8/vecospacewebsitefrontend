@@ -1208,7 +1208,7 @@ if ($keyword != '') {
 																									  echo '0';
 																								  } ?>);">
 																							<a><i class="fa fa-thumbs-up" aria-hidden="true"
-																									style="color: #ff7800;"></i><span>
+																									style="color: #860E66;"></i><span>
 																									<?php if ($totalpostlike != '') {
 																										echo $totalpostlike;
 																									} else {

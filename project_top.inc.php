@@ -22,8 +22,8 @@
   </li>
   <li>
     <a href="<?php echo $fullurl; ?>freelancers.html" <?php if ($ptab == 3) { ?>class="active frlcr" <?php } ?>><i
-        class="fa fa-user" aria-hidden="true" style=" background-color:#ff7800;"></i><span
-        style="color:#ff7800;">Internship Seekers
+        class="fa fa-user" aria-hidden="true" style=" background-color:#860E66;"></i><span
+        style="color:#860E66;">Internship Seekers
       </span></a>
   </li>
 </ul>
