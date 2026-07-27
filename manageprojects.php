@@ -39,6 +39,7 @@ $totalBookmproject = is_object($resBookmProject) ? mysqli_num_rows($resBookmProj
 $sqlInterestedProject = "SELECT id FROM " . _PROJECT_INTRESTED_TABLE_ . " WHERE userId=" . intval($_SESSION["sessUserId"]);
 $resInterestedProject = getRecords(_PROJECT_INTRESTED_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlInterestedProject);
 $totalInterestedproject = is_object($resInterestedProject) ? mysqli_num_rows($resInterestedProject) : 0;
+
 ?>
 
 <!DOCTYPE html>

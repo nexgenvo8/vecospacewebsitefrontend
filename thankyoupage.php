@@ -34,7 +34,7 @@ if (isset($_SESSION['registerEmail']) && isset($_SESSION['resendemail']) && $_SE
     color: #676767;
 "><div style="display:block; font-size:18px; margin-bottom:10px;">Hello,</div>
 
-Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#FF0000;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
+Thank you for registering with us. We are thrilled to have you on ' . $companNameTitle . '. To get you fully on board, we request you to verify your email address, by clicking on the button below.	</h2></div><div style="text-align:left; margin-top:20px; margin-bottom:30px;"><a href="' . $fullurl . 'confirm-registration.html?_j=' . $strEmail . '" style="text-decoration:none;"><input name="" type="button" style="background-color:#C02621;cursor: pointer; padding:12px 30px; outline:0px; border:0px; border-radius: 3px; color:#FFFFFF; font-size:16px; cursor:pointer;" value="Confirm e-mail address"></a></div>
 </div>
 <table width="100%" height="90" bgcolor="#ffffff" border="0" cellpadding="0" cellspacing="0" style="
     background-color: #f7f7f7;
@@ -87,7 +87,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
     <div class="banner">
       <div class="container">
         <div class="second-step" style="width:412px;">
-          <h2 style="text-align:center; color:#1a94c3;">Check your inbox</h2>
+          <h2 style="text-align:center; color:#C02621;">Check your inbox</h2>
           <form name="frmkonectt" id="frmkonectt" class="personal-data" method="post">
 
 
@@ -99,7 +99,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 
               <br>
               <?php if (isset($_GET['s']) && $_GET['s'] == 1) { ?>
-                <div style="color:#FF0000;">Mail sent successfully</div>
+                <div style="color:green;">Mail sent successfully</div>
                 <br>
               <?php } ?>
               <a href="<?php echo $fullurl; ?>thankyou.html?resendemail=1"><button
@@ -141,11 +141,12 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
       position: fixed;
       left: 0;
       top: 0;
-      background: #1a94c3;
-      background: -moz-linear-gradient(top, #1a94c3 0%, #6dc8e7 100%);
-      background: -webkit-linear-gradient(top, #1a94c3 0%, #6dc8e7 100%);
-      background: linear-gradient(to bottom, #1a94c3 0%, #6dc8e7 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1a94c3', endColorstr='#6dc8e7', GradientType=0);
+	background: #C02621;
+	background: -moz-linear-gradient(top, #8f1b17 0%, #e04a45 100%);
+	background: -webkit-linear-gradient(top, #8f1b17 0%, #e04a45 100%);
+	background: linear-gradient(to bottom, #8f1b17 0%, #e04a45 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#8f1b17', endColorstr='#e04a45', GradientType=0);
+
     }
   </style>
 </body>

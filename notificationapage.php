@@ -29,6 +29,8 @@ include_once('config/session-check.inc.php'); // check user login session
 </head>
 
 <body>
+<iframe name="actionfrm" style="display:none;"></iframe>
+
 	<div id="wrapper" class="active">
 
 		<?php include('header.php'); ?>
@@ -51,10 +53,12 @@ include_once('config/session-check.inc.php'); // check user login session
 
 							$sqlLogin = "";
 							$sqlLogin = "SELECT * FROM " . _NOTIFICATION_MASTER_TABLE_ . " 
-             WHERE userId='" . mysqli_real_escape_string($conn, $_SESSION['sessUserId']) . "' 
-             AND contactId!='" . mysqli_real_escape_string($conn, $_SESSION['sessUserId']) . "' 
-             ORDER BY dateAdded DESC 
-             LIMIT 0,50";
+							WHERE userId='" . mysqli_real_escape_string($conn, $_SESSION['sessUserId']) . "' 
+							OR contactId!='" . mysqli_real_escape_string($conn, $_SESSION['sessUserId']) . "' 
+							ORDER BY dateAdded DESC 
+							LIMIT 0,50";
+
+
 
 							// Run query directly for clarity
 							$resLogin = mysqli_query($conn, $sqlLogin);
@@ -135,6 +139,7 @@ include_once('config/session-check.inc.php'); // check user login session
 
 									while ($rowNotification = mysqli_fetch_array($resLogin)) {
 
+
 										$friendnameurl = '';
 										$userphoto = '';
 										$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowNotification["contactId"] . "";
@@ -148,7 +153,8 @@ include_once('config/session-check.inc.php'); // check user login session
 										} else {
 											$userphoto = 'user-placeholder.jpg';
 										}
-										if ($notiuser && is_array($notiuser)) {
+										if (true) {
+
 											$notiuserid = encodeStr($notiuser['userId']);
 											$notiName = trim(($notiuser["firstName"] ?? '') . ' ' . ($notiuser["lastName"] ?? ''));
 											$mycountryName = $notiuser["countryName"] ?? '';
@@ -383,7 +389,11 @@ include_once('config/session-check.inc.php'); // check user login session
 																<?php } ?>
 
 
-																<?php if ($rowNotification['notificationText'] == 'privategrouprequest') { ?>
+																<?php 
+																
+
+
+																if ($rowNotification['notificationText'] == 'privategrouprequest') { ?>
 																	<span class="timelinecontantsubline">wants to join his group <a
 																			href="<?php echo $fullurl; ?>groups-detail.html?groupId=<?php echo $notigroupid; ?>"><?php echo $notigroupname; ?></a></span>
 																	<div class="add-frnd">
@@ -491,6 +501,34 @@ include_once('config/session-check.inc.php'); // check user login session
 																<?php } ?>
 
 															<?php } ?>
+															
+															
+															<?php if ($rowNotification['postType'] == 500 && 
+																	  $rowNotification['notificationText'] == 'mentor_assigned') { ?>
+
+															<?php
+															// Fetch Mentor Info Correctly
+															$mentorId = intval($rowNotification["contactId"]); // ✅ mentor id
+
+															$mentorQuery = "SELECT firstName,lastName,userurl,profilePhoto 
+																			FROM " . _USERS_MASTER_TABLE_ . " 
+																			WHERE userId = $mentorId";
+
+															$mentorRes = mysqli_query($conn, $mentorQuery);
+															$mentor = mysqli_fetch_array($mentorRes);
+
+															$mentorName = trim(($mentor['firstName'] ?? '') . ' ' . ($mentor['lastName'] ?? ''));
+															?>
+
+															<span class="timelinecontantsubline">
+																👨‍🏫 <strong><?php echo $mentorName; ?></strong> Mohd Shadab is now your mentor
+															</span>
+
+															<?php } ?>
+
+
+
+
 
 															<?php if ($rowNotification['postType'] == 155) { ?>
 

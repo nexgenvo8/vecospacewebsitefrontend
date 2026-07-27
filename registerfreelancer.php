@@ -117,11 +117,11 @@ if ($serviceOffered == '0') {
 	<script src="<?php echo $fullurl; ?>js/main.js"></script>
 	<style type="text/css">
 		ul.prjct-list li a.active {
-			color: #FF0000;
+			color: #C02621;
 		}
 
 		ul.prjct-list li a.active i.fa {
-			background-color: #FF0000;
+			background-color: #C02621;
 		}
 
 		ul.prjct-list li a.active:hover i.fa {

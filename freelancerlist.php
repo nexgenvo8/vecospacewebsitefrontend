@@ -1,37 +1,37 @@
-    <?php
-    include_once('inc.php');
-    include_once('config/session-check.inc.php'); // check user login session
-    
-    $pageIndex = 11;
-    $ptab = 3;
+<?php
+include_once('inc.php');
+include_once('config/session-check.inc.php'); // check user login session
 
-    $no = 0;
-    $select = '';
-    $where = '';
-    $rs = '';
+$pageIndex = 11;
+$ptab = 3;
 
-    // Fix undefined "page"
-    $page = isset($_GET['page']) ? clean($_GET['page']) : 1;
-    $limit = 15;
+$no = 0;
+$select = '';
+$where = '';
+$rs = '';
 
-    $select = 'userId, serviceOffered, jobSkills, experienceLevel, professionalTitle, professionalBrief, freelancerStatus, userurl, firstName, lastName, profilePhoto';
-    $where = 'where freelancerStatus=1 and userId!=' . intval($_SESSION["sessUserId"]);
-    $targetpage = $fullurl . 'freelancers.html?records=' . $limit;
+// Fix undefined "page"
+$page = isset($_GET['page']) ? clean($_GET['page']) : 1;
+$limit = 15;
 
-    // === FIX: Check if GetRecordList() exists before calling ===
-    if (function_exists('GetRecordList')) {
-      $rs = GetRecordList($select, _USERS_MASTER_TABLE_, $where, $limit, $page, $targetpage);
-      $totalentry = $rs[1];
-      $paging = $rs[2];
-    } else {
-      die("Error: GetRecordList() function is not defined. Please include the file where it is defined.");
-    }
+$select = 'userId, serviceOffered, jobSkills, experienceLevel, professionalTitle, professionalBrief, freelancerStatus, userurl, firstName, lastName, profilePhoto';
+$where = 'where freelancerStatus=1 and userId!=' . intval($_SESSION["sessUserId"]);
+$targetpage = $fullurl . 'freelancers.html?records=' . $limit;
 
-    // Check Freelancer
-    $checkFrelnce = "SELECT userId FROM " . _USERS_MASTER_TABLE_ . " WHERE serviceOffered!=0 and userId='" . intval($_SESSION["sessUserId"]) . "' ";
-    $rescheckFrelnce = mysqli_query($conn, $checkFrelnce); // Changed to mysqli_query
-    $totalcheckFrelnce = is_object($rescheckFrelnce) ? mysqli_num_rows($rescheckFrelnce) : 0;
-    ?>
+// === FIX: Check if GetRecordList() exists before calling ===
+if (function_exists('GetRecordList')) {
+  $rs = GetRecordList($select, _USERS_MASTER_TABLE_, $where, $limit, $page, $targetpage);
+  $totalentry = $rs[1];
+  $paging = $rs[2];
+} else {
+  die("Error: GetRecordList() function is not defined. Please include the file where it is defined.");
+}
+
+// Check Freelancer
+$checkFrelnce = "SELECT userId FROM " . _USERS_MASTER_TABLE_ . " WHERE serviceOffered!=0 and userId='" . intval($_SESSION["sessUserId"]) . "' ";
+$rescheckFrelnce = mysqli_query($conn, $checkFrelnce); // Changed to mysqli_query
+$totalcheckFrelnce = is_object($rescheckFrelnce) ? mysqli_num_rows($rescheckFrelnce) : 0;
+?>
 
 <!DOCTYPE html>
 <html>
@@ -91,12 +91,12 @@
                 echo '(' . $totalentry . ')';
               } ?></h2>
               <?php if ($totalcheckFrelnce > 0) { ?>
-                  <a class="rgstr-btn"
-                    href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($_SESSION["sessUserId"]); ?>">My
-                    Project Seeker profile</a>
+                <a class="rgstr-btn"
+                  href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($_SESSION["sessUserId"]); ?>">My
+                  Project Seeker profile</a>
               <?php } else { ?>
-                  <a href="<?php echo $fullurl; ?>register-freelancer.html" class="rgstr-btn">Register as a Internship
-                    Seeker</a>
+                <a href="<?php echo $fullurl; ?>register-freelancer.html" class="rgstr-btn">Register as a Internship
+                  Seeker</a>
               <?php } ?>
             </div>
 
@@ -107,61 +107,61 @@
 
                 $no = 1;
                 ?>
-                  <li>
-                    <div class="frlncr_box">
-                      <div class="frlncr-hd">
-                        <div class="img"><img
-                            src="<?php echo $fullurl; ?>uploads/<?php echo $getResults["profilePhoto"]; ?>">
-                        </div>
-                        <div class="nm">
-                          <a
-                            href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"><?php echo $getResults['firstName']; ?>
-                            <?php echo $getResults['lastName']; ?></a>
-                        </div>
+                <li>
+                  <div class="frlncr_box">
+                    <div class="frlncr-hd">
+                      <div class="img"><img
+                          src="<?php echo $fullurl; ?>uploads/<?php echo $getResults["profilePhoto"]; ?>">
                       </div>
-                      <div class="srvc-offer">
-                        <span>Service offered</span>
-                        <h3><?php
-                        $selectFields = [];
-                        $whereFields = [];
-                        $whereVals = [];
-
-                        $sqlOptions1 = "";
-                        $sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' AND id='" . intval($getResults["serviceOffered"]) . "' ";
-                        $resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-
-                        // Fix: mysql_num_rows → mysqli_num_rows
-                        $totalpost1 = is_object($resOptions1) ? mysqli_num_rows($resOptions1) : 0;
-
-                        if ($totalpost1) {
-                          while ($rowOptions1 = mysqli_fetch_array($resOptions1, MYSQLI_ASSOC)) {
-                            echo trim($rowOptions1['optionName']);
-                          }
-                        }
-
-                        ?></h3>
+                      <div class="nm">
+                        <a
+                          href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"><?php echo $getResults['firstName']; ?>
+                          <?php echo $getResults['lastName']; ?></a>
                       </div>
-                      <div class="srvc-offer">
-                        <span>Work Experience</span>
-                        <h3><?php echo $getResults['experienceLevel']; ?></h3>
-                      </div>
-                      <a href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"
-                        class="full-dtail">View Full Profile</a>
                     </div>
-                  </li>
-                  <?php
+                    <div class="srvc-offer">
+                      <span>Service offered</span>
+                      <h3><?php
+                      $selectFields = [];
+                      $whereFields = [];
+                      $whereVals = [];
+
+                      $sqlOptions1 = "";
+                      $sqlOptions1 = "SELECT optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='projectindustries' AND id='" . intval($getResults["serviceOffered"]) . "' ";
+                      $resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+
+                      // Fix: mysql_num_rows → mysqli_num_rows
+                      $totalpost1 = is_object($resOptions1) ? mysqli_num_rows($resOptions1) : 0;
+
+                      if ($totalpost1) {
+                        while ($rowOptions1 = mysqli_fetch_array($resOptions1, MYSQLI_ASSOC)) {
+                          echo trim($rowOptions1['optionName']);
+                        }
+                      }
+
+                      ?></h3>
+                    </div>
+                    <div class="srvc-offer">
+                      <span>Work Experience</span>
+                      <h3><?php echo $getResults['experienceLevel']; ?></h3>
+                    </div>
+                    <a href="<?php echo $fullurl; ?>freelancer-profile.html?fid=<?php echo encodeStr($getResults['userId']); ?>"
+                      class="full-dtail">View Full Profile</a>
+                  </div>
+                </li>
+                <?php
 
               }
 
               ?>
               <?php if ($no == 1) { ?>
-                  <div class="pagingnumbers"><?php echo $paging; ?></div>
+                <div class="pagingnumbers"><?php echo $paging; ?></div>
 
               <?php }
               if ($no == 0) { ?>
 
-                  <div style="padding:20px; width:100%; text-align:center; float:left;">Sorry, we didn't find any Internship
-                    Seeker with these search terms.</div>
+                <div style="padding:20px; width:100%; text-align:center; float:left;">Sorry, we didn't find any Internship
+                  Seeker with these search terms.</div>
 
               <?php } ?>
             </ul>

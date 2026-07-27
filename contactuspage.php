@@ -222,7 +222,7 @@ $('#logintabledata4').hide();
 				<a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img
 						src="images/ndimlogo.png" style="width: 275px;" /></a>
 			</div>
-			<?php if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
+			<?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
 				<div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
 					<a href="javascript:void(0);">
 						<span class="usr_img"><img
@@ -244,7 +244,7 @@ $('#logintabledata4').hide();
 	<span class="clear"></span>
 	<div class="container">
 		<div class="helpwrap-cont">
-			<?php include('left_links.php'); ?>
+			<?php include('ndim_left_links.php'); ?>
 			<div class="right-panel">
 				<div class="" style="margin-bottom: 100px;
 	float: left;
@@ -259,7 +259,7 @@ $('#logintabledata4').hide();
 							<div style="margin-bottom:30px;font-size: 15px;text-align: left;">
 								Thank you for reaching out. If you have any queries, please fill the details in the fields
 								below and we shall get back with an answer soon.
-								You can also write to us on <a href="mailto:info@vecospace.com">info@vecospace.com</a>
+								You can also write to us on <a href="mailto:info@ndimvecospace.com">info@ndimvecospace.com</a>
 							</div>
 						<?php } ?>
 

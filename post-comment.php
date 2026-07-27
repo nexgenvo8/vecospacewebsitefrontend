@@ -1,17 +1,9 @@
 <?php
-//error_reporting(0);
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-include_once('inc.php');
-if (
-	isset($_REQUEST['commentbox'], $_REQUEST['parentId'], $_REQUEST['postId'], $_REQUEST['action']) &&
-	trim($_REQUEST['commentbox']) !== '' &&
-	trim($_REQUEST['parentId']) !== '' &&
-	trim($_REQUEST['postId']) !== '' &&
-	$_REQUEST['action'] === 'postcomment'
-) {
-	include('mail.php');
 
+include_once('inc.php');
+
+if (trim($_REQUEST['commentbox']) != '' && $_REQUEST['parentId'] != '' && $_REQUEST['postId'] != '' && $_REQUEST['action'] == 'postcomment') {
+	//include('mail.php'); 
 
 	$insertFields = [];
 	$insertVals = [];
@@ -49,7 +41,6 @@ if (
 	if ($_REQUEST["postType"] == 4) {
 		$notificationText = 'groupcomment';
 	}
-
 
 	$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "',userId='" . $userId . "',postId= " . ($_REQUEST["postId"]) . ",postType=" . $_REQUEST["postType"] . ",notificationText='$notificationText',dateAdded='$dateAdded'";
 	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
@@ -130,7 +121,7 @@ if (
 						}
 
 
-						$mailBodyContent = '';
+						$mailBodyContent .= '';
 						$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 		<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
 			<tbody>
@@ -151,25 +142,25 @@ if (
 							  
 							  <div style="text-align:center; margin-bottom:5px; margin-top:5px;font-size:18px;">' . $cmTitle . '</div>
 							  <div style="text-align:center; margin-top:10px; margin-bottom:30px;"><table border="0" align="center" cellpadding="5" cellspacing="0">
-							<tbody><tr>
-								<td colspan="2" align="center"><a href="' . $cmlink . '" style="display:inline-block;text-decoration:none;padding:15px 25px;font-weight:600;font-size:18px;margin:0 0 30px;color:#fff;background:#1a94c3;border-radius:5px;margin-bottom: 0px;" target="_blank">View Comment </a></td>
-								</tr>
-							</tbody></table>
-							</div>
-													<div style="text-align:center;"><div style="
-								width: 80px;
-								height: 80px;
-								overflow: hidden;margin:auto;
-								margin-bottom:12px;
-								border-radius: 100%;
-								border: 3px #e9e9e9 solid; margin:auto;
-							"><a href="' . $fullurl . 'profile/' . encodeStr($_SESSION['sessUserId']) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2"><img src="' . $fullurl . 'uploads/' . $profilePhoto2 . '" style="
-								width: 100%;
-							"></a></div>
-							<div style="text-align:center; margin-bottom:5px; margin-top:5px;"><strong>' . $firstName2 . ' ' . $lastName2 . '</strong></div>
-							<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $jobTitle . ' at ' . $companyName . '</div>
-							<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $cityName . ', ' . $countryName . '</div> 
-							</div>
+		  <tbody><tr>
+			<td colspan="2" align="center"><a href="' . $cmlink . '" style="display:inline-block;text-decoration:none;padding:15px 25px;font-weight:600;font-size:18px;margin:0 0 30px;color:#fff;background:#1a94c3;border-radius:5px;margin-bottom: 0px;" target="_blank">View Comment </a></td>
+			</tr>
+		</tbody></table>
+		</div>
+								<div style="text-align:center;"><div style="
+			width: 80px;
+			height: 80px;
+			overflow: hidden;margin:auto;
+			margin-bottom:12px;
+			border-radius: 100%;
+			border: 3px #e9e9e9 solid; margin:auto;
+		"><a href="' . $fullurl . 'profile/' . encodeStr($_SESSION['sessUserId']) . '/' . $userurl . '.html?cuid=' . $_SESSION['sessUserId'] . '&t=2"><img src="' . $fullurl . 'uploads/' . $profilePhoto2 . '" style="
+			width: 100%;
+		"></a></div>
+		<div style="text-align:center; margin-bottom:5px; margin-top:5px;"><strong>' . $firstName2 . ' ' . $lastName2 . '</strong></div>
+		<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $jobTitle . ' at ' . $companyName . '</div>
+		<div style="text-align:center; margin-bottom:2px; font-size:11px; color:#666666;">' . $cityName . ', ' . $countryName . '</div> 
+		</div>
 							  </div>
 								 
 						  </td>
@@ -201,7 +192,7 @@ if (
 
 						$subject = strip_tags($cmTitle);
 
-						send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
+						//send_template_mail(_FROM_EMAIL_TEMPLATE_ID_,$email,$subject,$mailBodyContent);
 						$_SESSION['checkmsgtimetable'] = '';
 
 					}
@@ -251,7 +242,7 @@ if (
 }
 
 
-if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
+if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
 	$aa = "select * from " . _COMMENT_MASTER_TABLE_ . " where postId=" . $_REQUEST['postId'] . " and postType=" . $_REQUEST['postType'] . " and parentId=0 ";
 	$res5 = mysqli_query($conn, $aa);
 	$totalpostcomment = mysqli_num_rows($res5);
@@ -279,8 +270,6 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 					<?php echo $totalpostcomment - 5; ?> more comment</a>
 			<?php } ?>
 
-
-
 		</div>
 
 	<?php } ?>
@@ -301,49 +290,39 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 		$startlmit = 0;
 		$limit = '5000';
 	}
-	$insertFields = [];
+
 	$selectFields = [];
 	$whereFields = [];
 	$whereVals = [];
+
+	$postId = isset($_REQUEST['postId']) ? (int) $_REQUEST['postId'] : 0;
+	$postType = isset($_REQUEST['postType']) ? (int) $_REQUEST['postType'] : 0;
+	$parentId = isset($comment['id']) ? (int) $comment['id'] : 0;
+
 	$a = "";
-
-	$a = "SELECT * FROM " . _COMMENT_MASTER_TABLE_ . " WHERE postId=" . (int) $_REQUEST['postId'] .
-		" AND commentText != '' AND postType=" . (int) $_REQUEST['postType'] .
-		" AND parentId=0 ORDER BY id DESC LIMIT " . (int) $startlmit . "," . (int) $limit;
-
+	$a = "select * from " . _COMMENT_MASTER_TABLE_ . " where postId=" . $postId . "  and commentText!='' and postType=" . $postType . " and parentId=0 order by id desc limit " . $startlmit . "," . $limit . "";
+	//$a="select * from "._COMMENT_MASTER_TABLE_." where postId=".$postId."  and commentText!='' and postType=".$postType." and parentId=0 order by id desc";
 	$b = getRecords(_COMMENT_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $a);
 
-	if (!$b) {
-		die("" . mysqli_error($conn));
-	}
-
 	while ($comment = mysqli_fetch_array($b)) {
-		if (!isset($comment["userId"]) || empty($comment["userId"])) {
-			continue;
-		}
 
-		$userId = (int) $comment["userId"];
-		$a2 = "SELECT * FROM userMaster WHERE userId = {$userId}";
-		$b2 = mysqli_query($conn, $a2);
+		$a2 = "SELECT * from usermaster WHERE userId = " . $comment["userId"] . "";
+		$b2 = mysqli_query($conn, $a2) or die(mysqli_error($conn));
 
-		if (!$b2) {
-
-		}
 
 		$userres2 = mysqli_fetch_array($b2);
 
-
-
-		if ($userres2["profilePhoto"] != '') {
-			$userphoto = $userres2["profilePhoto"];
+		if (isset($userres2['profilePhoto']) && trim($userres2['profilePhoto']) != '') {
+			$userphoto = $userres2['profilePhoto'];
 		} else {
 			$userphoto = 'user-placeholder.jpg';
 		}
 
 		$parentuserid = '';
 
-		$a235 = "SELECT userId from " . _SHAREANDUPDATES_TABLE_ . " WHERE id=" . $_REQUEST['postId'] . "";
+		$a235 = "SELECT userId from " . _SHAREANDUPDATES_TABLE_ . " WHERE id = " . $_REQUEST['postId'] . "";
 		$b235 = mysqli_query($conn, $a235) or die(mysqli_error($conn));
+
 		$postuserres2 = mysqli_fetch_array($b235);
 
 		?>
@@ -385,10 +364,8 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 						placeholder="Type your reply" maxlength="250" autocomplete="off">
 
 					<button type="button"
-						onclick="postcmnt('<?php echo $_REQUEST['postId']; ?>','<?php echo $_REQUEST['postType']; ?>','<?php echo encodeStr($postuserres2['userId']); ?>','<?php echo encodeStr($comment['userId']); ?>','<?php echo $comment['id']; ?>','<?php echo $comment['id']; ?>');"><i
+						onclick="postcmnt('<?php echo $_REQUEST['postId']; ?>','<?php echo $_REQUEST['postType']; ?>','<?php echo encodeStr($postuserres2['userId']); ?>','<?php echo encodeStr($comment["userId"]); ?>','<?php echo $comment['id']; ?>','<?php echo $comment['id']; ?>');"><i
 							class="fa fa-paper-plane" aria-hidden="true"></i></button>
-
-
 
 
 				</div>
@@ -402,40 +379,33 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 				});
 			</script>
 			<?php
-			$selectFields = [];
-			$whereFields = [];
-			$whereVals = [];
+
+			$postId = isset($_REQUEST['postId']) ? (int) $_REQUEST['postId'] : 0;
+			$postType = isset($_REQUEST['postType']) ? (int) $_REQUEST['postType'] : 0;
+			$parentId = isset($comment['id']) ? (int) $comment['id'] : 0;
+
+
 			$ab = "";
-			$postId = isset($_REQUEST['postId']) ? intval($_REQUEST['postId']) : 0;
-			$postType = isset($_REQUEST['postType']) ? intval($_REQUEST['postType']) : 0;
-			$parentId = isset($comment['id']) ? intval($comment['id']) : 0;
+			$ab = "SELECT * FROM " . _COMMENT_MASTER_TABLE_ . " 
+       WHERE postId = $postId 
+       AND commentText != '' 
+       AND postType = $postType 
+       AND parentId = $parentId";
 
-			$postId = intval($_REQUEST['postId'] ?? 0);
-			$postType = intval($_REQUEST['postType'] ?? 0);
-			$parentId = intval($comment['id'] ?? 0);
+			$bb = getRecords(_COMMENT_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $ab);
 
-			$query = "SELECT * FROM commentMaster WHERE postId = $postId AND commentText != '' AND postType = $postType AND parentId = $parentId";
-			$result = mysqli_query($conn, $query);
-
-			if (!$result) {
-				die("Query failed: " . mysqli_error($conn));
-			}
-
-			while ($comment2 = mysqli_fetch_array($result)) {
-				$a2 = "SELECT * from userMaster WHERE userId= " . $comment2["userId"] . "";
+			while ($comment2 = mysqli_fetch_array($bb)) {
+				$a2 = "SELECT * from usermaster WHERE userId = " . $comment2["userId"] . "";
 				$b2 = mysqli_query($conn, $a2) or die(mysqli_error($conn));
 				$userres23 = mysqli_fetch_array($b2);
 
-				if ($userres23["profilePhoto"] != '') {
-					$userphoto3 = $userres23["profilePhoto"];
+
+				if (isset($userres2['profilePhoto']) && trim($userres2['profilePhoto']) != '') {
+					$userphoto = $userres2['profilePhoto'];
 				} else {
-					$userphoto3 = 'user-placeholder.jpg';
+					$userphoto = 'user-placeholder.jpg';
 				}
 
-
-
-				// HTML for replies here...
-	
 				?>
 
 
@@ -452,26 +422,16 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 
 
 							<div class="timeand-rply">
-								<?php
-								echo (isset($comment2["dateAdded"]) && !empty($comment2["dateAdded"]))
-									? makedatetime($comment2["dateAdded"])
-									: "";
-								?>
+								<?php echo makedatetime($comment2["dateAdded"]); ?>
 							</div>
-
 
 
 
 						</div>
 					</div>
 					<div class="cmmnt-text">
-						<?php
-						echo (isset($comment2["commentText"]) && !empty($comment2["commentText"]))
-							? strip_tags(stripslashes(trim((string) $comment2["commentText"])))
-							: "";
-						?>
+						<?php echo strip_tags(stripslashes(trim($comment2["commentText"]))); ?>
 					</div>
-
 
 
 					<?php if ($userres23['userId'] == $_SESSION["sessUserId"] || $postuserres2['userId'] == $_SESSION["sessUserId"]) { ?>
@@ -493,6 +453,5 @@ if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION
 
 
 	<script>$('#commentdisplaybox<?php echo $_REQUEST['postId']; ?><?php echo $_REQUEST["postType"]; ?> span').text('<?php echo $totalpostcomment; ?>');</script>
-	<?php
-} // end while
-?>
+
+<?php } ?>

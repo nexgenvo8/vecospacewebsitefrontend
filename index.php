@@ -215,25 +215,41 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 			$sqlQuery = "SELECT firstName, lastName, email, userId, activeYN, userurl, timeZone, userAccountCloseStatus, userstype, password 
                      FROM " . _USERS_MASTER_TABLE_ . " 
                      WHERE email='" . mysqli_real_escape_string($conn, $username) . "' 
-                       AND activeYN='Y'";
+                       AND type !='admin' AND activeYN='Y'";
 
 			$res = mysqli_query($conn, $sqlQuery);
 
 
 			if ($res && mysqli_num_rows($res) > 0) {
 				$row = mysqli_fetch_assoc($res);
+				$storedHash = $row['password'];
+				$plainPassword = $_POST['txtPassword'];
+				$isValid = false;
+				// ✅ Case 1: If password is bcrypt hash
+				if (preg_match('/^\$2[aby]\$/', $storedHash)) {
+					if (password_verify($plainPassword, $storedHash)) {
+						$isValid = true;
+					}
+				} // ✅ Case 2: If password is old MD5 hash
+				elseif (md5($plainPassword) === $storedHash) {
+					$isValid = true;
 
-
+					// Optional: Upgrade to bcrypt after successful MD5 login
+					$newHash = password_hash($plainPassword, PASSWORD_BCRYPT);
+					$update = "UPDATE " . _USERS_MASTER_TABLE_ . " SET password='" . mysqli_real_escape_string($conn, $newHash) . "' WHERE userId=" . intval($row['userId']);
+					mysqli_query($conn, $update);
+				}
+				// print_r(md5($_POST['txtPassword']));die;
 
 				// Step 2 — Verify password
-				// Step 2 — Verify password
-				if (md5($passwordl) === $row['password']) {
+				if ($isValid) {
 					$firstlastName = $row["firstName"] . ' ' . $row["lastName"];
 					$_SESSION["sessFname"] = $row["firstName"];
 					$_SESSION["sessFullName"] = $firstlastName;
 					$_SESSION['sessEmail'] = $row['email'];
 					$_SESSION['sessUserId'] = $row['userId'];
 					$_SESSION['userstype'] = $row['userstype'];
+					$_SESSION['sessRegistrationNo'] = $row['registrationNo'];
 					$userAccountCloseStatus = $row['userAccountCloseStatus'];
 
 					setcookie('userId', encodeStr($row['userId']), time() + (60 * 60 * 24 * 60), "/");
@@ -249,16 +265,14 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 
 					$className1 = 'redborderfield';
 				}
-
 			} else {
-				echo "<pre>No user found with that email</pre>";
-				$className1 = 'redborderfield';
-			}
+					$className1 = 'redborderfield';
+					$_SESSION['swal_error'] = 'No user found with that email';
+					header("Location: ".$_SERVER['PHP_SELF']);
+					exit;
+				}
 		}
 	}
-
-
-
 }
 
 ?>
@@ -276,6 +290,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="js/jquery.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
 		/* .login-inputs{
 	display: none;
@@ -326,7 +341,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 		.mobile-message {
 			display: none;
 			/* Hidden by default */
-			color: #20741f;
+			color: #C02621;
 			background-color: #ffff;
 			padding: 10px 20px;
 			font-size: 14px;
@@ -335,10 +350,65 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 			box-shadow: 2px 2px 2px 2px #bfbdbd;
 		}
 
+		.registermessage {
+			display: none;
+		}
+
+		.registermessageweb {
+			display: flex;
+			align-items: start;
+			flex-direction: column;
+		}
+
+		.registermessage-inner {
+			display: block;
+			float: right;
+		}
+
+		.app-phone{
+			display:flex;
+		}
+		.app-web{
+			display:none;
+		}
+		
+		@media (min-width:  768px) {
+			.app-phone{
+			display:none;
+		}
+		.app-web{
+			display:flex;
+		}
+		}
+
+		.registermessage-inner a {
+			display: inline !important;
+			font-size: 14px !important;
+			margin: 0 !important;
+			float: initial !important;
+		}
+
 		/* Only show on screens smaller than 768px */
 		@media (max-width: 768px) {
 			.mobile-message {
 				display: block;
+			}
+
+			.registermessageweb {
+				display: none;
+			}
+
+			.registermessage {
+				display: block;
+				margin: 0 auto;
+				float: right;
+			}
+
+			.registermessage a {
+				display: inline !important;
+				font-size: 14px !important;
+				margin: 0 !important;
+				float: initial !important;
 			}
 		}
 	</style>
@@ -356,18 +426,55 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 						<input type="text" name="txtUsername" id="txtUsername2" maxlength="60" placeholder="Email"
 							tabindex="1" value="" class="validate <?php echo $className1; ?>"
 							onKeyUp="hideerrordiv(this.id);">
+							<div class="app-web" style="    justify-content: center;
+								padding: 4px 0;align-items: center;gap: 4px;x">
+								
+						<a href="https://apps.apple.com/us/app/ndim-vecospace/id6755224156" style="margin-bottom: 0; width: 88px !important; display: block; ">
+					   <img style=" width: 100%;;" src="images/ios-store.png">
+					</a>
+					<a href="https://play.google.com/store/apps/details?id=com.ndimvecospace" style="margin-bottom: 0; width: 88px !important; display: block; ">
+					   <img style=" width: 100%;" src="images/play-store.png">
+					</a>
+					</div>
 					</div>
 					<div class="login-inputs password-container">
-						<input type="password" name="txtPassword" id="txtPassword2" maxlength="60"
-							placeholder="Password" tabindex="1" class="validate <?php echo $className1; ?>">
-						<!--<span class="eye-icon" onclick="togglePassword()">👁️</span-->
+						<div class="password-container">
+							<input type="password" 
+								name="txtPassword" 
+								id="txtPassword2" 
+								maxlength="60"
+								placeholder="Password" 
+								tabindex="1" 
+								class="validate <?php echo $className1; ?>"
+								oninput="showEyeIcon()">
+
+							<span class="eye-icon" id="eyeIcon" onclick="togglePassword()">
+								👁️
+							</span>
+						</div>
+						<div class="registermessageweb">
+							<div class="registermessage-inner">Don't have an account?
+								<a href="<?php echo $fullurl; ?>registration-form.html">Register</a>
+							</div>
+
+						</div>
 						<a href="<?php echo $fullurl; ?>forgot-password.html">Forgot Password?</a>
 					</div>
+					<div class="registermessage">Don't have an account? <a
+							href="<?php echo $fullurl; ?>registration-form.html">Register</a></div>
 					<button type="button" onClick="formValidation('kUserLogin2');" tabindex="1"
 						style="margin-top:12px;">Log in</button>
 					<input type="hidden" name="txtAction" id="txtAction" value="login">
-
 				</form>
+				<div class="app-phone" style="    justify-content: center;
+								padding: 4px 0;align-items: center;gap: 4px;x">
+						<a href="https://apps.apple.com/us/app/ndim-vecospace/id6755224156" style="margin-bottom: 0; width: 88px !important; display: block; ">
+					   <img style=" width: 100%;;" src="images/ios-store.png">
+					</a>
+					<a href="https://play.google.com/store/apps/details?id=com.ndimvecospace" style="margin-bottom: 0; width: 88px !important; display: block; ">
+					   <img style=" width: 100%;" src="images/play-store.png">
+					</a>
+					</div>
 				<script>
 					$("input").keypress(function (event) {
 
@@ -378,19 +485,32 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 							}
 						}
 					});
+					function showEyeIcon() {
+					let passField = document.getElementById("txtPassword2");
+					let icon = document.getElementById("eyeIcon");
 
+					if (passField.value.trim() !== "") {
+						icon.style.display = "block";
+					} else {
+						icon.style.display = "none";
+					}
+				}
+
+				function togglePassword() {
+					const passwordField = document.getElementById("txtPassword2");
+
+					if (passwordField.type === "password") {
+						passwordField.type = "text";
+					} else {
+						passwordField.type = "password";
+					}
+				}
 				</script>
 			</div>
 		</header>
 		<div class="banner2">
 			<div class="banner">
-				<!-- <div class="mobile-overlay-container">
-					<div class="mobile-message">
-						<div style="font-size:16px; font-weight:500;">An Initiative By</div>
-						<div style="font-size:18px; font-weight:700;">UNIVERSITY PLACEMENT CELL</div>
-						<div style="font-size:20px; font-weight:500;">Jamia Millia Islamia</div>
-					</div>
-				</div> -->
+				
 
 				<div class="bannerblkbg"></div>
 				<div class="container">
@@ -416,6 +536,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 								<button type="button" name="txtAction" id="txtAction" value="login">
 
 							</form>
+							
 							<script>
 								$("input").keypress(function (event) {
 									if (event.which == 13) {
@@ -434,16 +555,15 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 										passwordField.type = "password";
 									}
 								}
-
 							</script>
 						</div>
 						<form class="signup" name="registrationtstep1" id="registrationtstep1" method="post"
 							style="display:none;">
 							<h2 style="color: #0e7037;font-weight:600;">Register Now !!!</h2>
 							<?php if ($errMsg != '') { ?>
-									<div style="margin-bottom:10px; color:#C02621;" class="<?php echo $className; ?>">
-										<?php echo $errMsg; ?>
-									</div><?php } ?>
+								<div style="margin-bottom:10px; color:#FF0000;" class="<?php echo $className; ?>">
+									<?php echo $errMsg; ?>
+								</div><?php } ?>
 							<div class="regstr-inputs pd-right">
 								<input name="firstName" type="text" id="firstName" onKeyUp="hideerrordiv(this.id);"
 									value="<?php echo sanitizedboutput($firstName); ?>" maxlength="30"
@@ -472,9 +592,9 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 											$strSelected = "";
 										}
 										?>
-											<option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?>
-											</option>
-											<?php
+										<option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?>
+										</option>
+										<?php
 									}
 									?>
 								</select>
@@ -489,10 +609,11 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 											$strSelected = "";
 										}
 										?>
-											<option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
-												<?php //echo $m; ?>	 	<?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
-											</option>
-											<?php
+										<option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
+											<?php //echo $m; 
+												?> 	<?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
+										</option>
+										<?php
 									}
 									?>
 								</select>
@@ -509,9 +630,9 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 											$strSelected = "";
 										}
 										?>
-											<option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?>
-											</option>
-											<?php
+										<option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?>
+										</option>
+										<?php
 									}
 									?>
 								</select>
@@ -549,7 +670,7 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 							<div style="font-weight:normal;">
 								<div style="float:left;">© 2023&nbsp;NDIM VECOSPACE &nbsp;|
 									&nbsp;Powered by &nbsp;&nbsp;&nbsp;</div>
-								<div><a href="http://deboxglobal.com/"><img src="images/Logo De Boxpng.png"
+								<div><a href="https://corrintech.com/"><img src="images/Logo De Boxpng.png"
 											style="width:50px;"></a></div>
 							</div>
 						</div>
@@ -560,11 +681,11 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 					</strong></div>
 				<div class="footer-menu2" style="/* margin-top:9px; */"><strong>
 						<ul class="foooter-list">
-							<li><a href="http://jmi.vecospace.com/privacy.html">Privacy</a></li>
-							<li><a href="http://jmi.vecospace.com/terms.html">Terms</a></li>
-							<li><a href="http://jmi.vecospace.com/about.html">About</a></li>
-							<li><a href="http://jmi.vecospace.com/contact-us.html">Contact Us</a></li>
-							<li><a href="http://jmi.vecospace.com/faq.html">FAQ's</a></li>
+							<li><a href="https://ndim.vecospace.com/ndim-pvcypage.html">Privacy</a></li>
+							<li><a href="https://ndim.vecospace.com/terms.html">Terms</a></li>
+							<li><a href="https://ndim.vecospace.com/about.html">About</a></li>
+							<li><a href="https://ndim.vecospace.com/contact-us.html">Contact Us</a></li>
+							<li><a href="https://ndim.vecospace.com/faq.html">FAQ's</a></li>
 
 
 					</strong></div>
@@ -655,8 +776,37 @@ Thank you for registering with us. We are thrilled to have you on ' . $companNam
 					width: 100%;
 					display: block;
 				}
+				
+				.password-container {
+				position: relative;
+			}
+
+			.eye-icon {
+				position: absolute;
+				right: 12px;
+				top: 50%;
+				transform: translateY(-50%);
+				cursor: pointer;
+				font-size: 18px;
+				background: transparent;
+				user-select: none;
+				z-index: 10;
+				display: none;  /* keep this, JS will show it */
+			}
 			</style>
 
 </body>
 
 </html>
+<?php if (isset($_SESSION['swal_error'])) { ?>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'User Not Found',
+            text: "<?php echo $_SESSION['swal_error']; ?>",
+            confirmButtonColor: '#d33'
+        });
+    });
+</script>
+<?php unset($_SESSION['swal_error']); } ?>

@@ -134,7 +134,12 @@ if ($_SESSION["sessUserId"] != '') {
 										if ($resLogin) {
 											while ($rowLogin = mysqli_fetch_array($resLogin)) {
 
-												$a = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " WHERE userId=" . $rowLogin["userId"];
+												$a = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " 
+												  WHERE userId = " . $rowLogin["userId"] . " 
+												  AND type != 'admin'";
+if (empty($userres['userId'])) {
+        continue;
+    }
 												$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
 												$userres = mysqli_fetch_array($b);
 
@@ -142,11 +147,14 @@ if ($_SESSION["sessUserId"] != '') {
 												$bData = mysqli_query($conn, $menterQuery) or die(mysqli_error($conn));
 												$mentorData1 = mysqli_fetch_array($bData);
 
-												$friendnameurl = $userres['userurl'];
-												if ($userres["profilePhoto"] != '') {
-													$userphoto = $userres["profilePhoto"];
+												$profilePhoto = trim($userres["profilePhoto"]);
+												$uploadPath = __DIR__ . "/uploads/" . $profilePhoto;
+
+												// If profile photo missing OR file not found → show placeholder
+												if ($profilePhoto == "" || !file_exists($uploadPath)) {
+													$userphoto = "user-placeholder.jpg"; // dummy image
 												} else {
-													$userphoto = 'user-placeholder.jpg';
+													$userphoto = $profilePhoto;
 												}
 
 												$mycountryName = $userres["countryName"];
@@ -154,7 +162,10 @@ if ($_SESSION["sessUserId"] != '') {
 												$mylocationName = $userres["locationName"];
 
 												if ($rowLogin['userstype'] == '3' || $rowLogin['userstype'] == '2' || $rowLogin['userstype'] == '4') {
-													if ($rowLogin['numberofMentees'] != '0') {
+
+													// assigned mentor? always allow
+													if ($rowLogin['userId'] == $where2 || $rowLogin['numberofMentees'] != '0') {
+
 
 														$menterQueryCount = "SELECT * FROM " . _STUDENT_REQUEST_MENTOR_FRND_MASTER_TABLE_ . " WHERE mentorId=" . $rowLogin["userId"];
 														$bDataC = mysqli_query($conn, $menterQueryCount) or die(mysqli_error($conn));
@@ -162,6 +173,7 @@ if ($_SESSION["sessUserId"] != '') {
 														//if($mentorData1!=$rowLogin['numberofMentees']){
 														?>
 														<li class="listwidthnew">
+														 <div class="full-mentor-row">
 															<div class="request-contct rerestmentcontact">
 																<div class="rimg"> <a
 																		href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html">
@@ -211,14 +223,14 @@ if ($_SESSION["sessUserId"] != '') {
 																		<?php
 																	} else {
 																		?>
-																		<div class="selectedmentordiv">Selected</div>
+																		<div class="selectedmentordiv">Assigned</div>
 																		<img src="images/checkednew.png">
 																		<?php
 																	}
 																	?>
 																</div>
 															</div>
-
+														</div>
 														</li>
 
 														<?php
@@ -240,6 +252,47 @@ if ($_SESSION["sessUserId"] != '') {
 					</div>
 				</div>
 			</div>
+			<style>
+			.full-mentor-row {
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		border: 1px solid #ddd;
+		border-radius: 8px;
+		padding: 15px;
+		background: #fff;
+	}
+
+
+	/* right side button container */
+	.rerestselectaction {
+		display: flex;
+		align-items: flex-start;   /* aligns button to top */
+	}
+
+	/* button div alignment */
+	.btnslecectionaction {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.selectmentordiv, .selectedmentordiv {
+		padding: 6px 14px;
+		border-radius: 4px;
+		background: #d9534f;
+		color: #fff;
+		cursor: pointer;
+		text-align: center;
+		white-space: nowrap;
+	}
+
+.selectedmentordiv {
+    background: #5cb85c;
+}
+
+</style>
 			<?php include('footer.php'); ?>
 			<script>
 				function reloadPage() {

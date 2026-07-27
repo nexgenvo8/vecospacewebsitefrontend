@@ -9,7 +9,7 @@ echo $query;  // postId=202581501&myId=13*/
 
 $pageIndex = 7;
 $pag = 1;
-$aa = "SELECT * from noticeBoard WHERE id= " . decodeStr($_REQUEST["postId"]) . " ";
+$aa = "SELECT * from noticeboard WHERE id= " . decodeStr($_REQUEST["postId"]) . " ";
 $res5 = mysqli_query($conn, $aa) or die(error_found(mysqli_error($conn)));
 $articletext = mysqli_fetch_array($res5);
 
@@ -18,6 +18,7 @@ if ($articletext['id'] == '') {
   header("Location: " . $fullurl . "404error.html");
   exit();
 }
+
 
 
 ?>
@@ -94,6 +95,16 @@ if ($articletext['id'] == '') {
 
                 <p><?php echo stripslashes($articletext['details']); ?></p>
               </div>
+
+
+
+
+
+
+
+
+
+
 
             </div>
 

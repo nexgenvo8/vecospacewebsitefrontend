@@ -72,9 +72,11 @@ $pageIndex = 10;
 									$whereVals = isset($whereVals) ? $whereVals : [];
 
 									$sqlEvents = "SELECT * FROM " . _EVENT_MASTER_TABLE_ . " 
-	              WHERE eventName != '' AND eventStatus = 1 " . $strWhereEvent . " 
-	              ORDER BY RAND() DESC 
-	              LIMIT 0,2";
+									  WHERE eventName != '' 
+									  AND eventStatus = 1 
+									  " . $strWhereEvent . " 
+									  ORDER BY dateAdded DESC 
+									  LIMIT 2";
 
 									// Replace getRecords() with mysqli_query
 									$resEvents = mysqli_query($conn, $sqlEvents);
@@ -157,9 +159,12 @@ $pageIndex = 10;
 								if ($resEvents && mysqli_num_rows($resEvents) > 0) {
 									while ($rowEvents = mysqli_fetch_assoc($resEvents)) {
 
-										$eventphoto = (!empty($rowEvents["eventThumb"]))
-											? $rowEvents["eventThumb"]
-											: 'events-placeholder.jpg';
+										if (!empty($rowName['imageName'])) {
+												$eventphoto = $rowName['imageName'];
+											} else {
+												$eventphoto = 'events-placeholder.jpg';
+											}
+											
 										?>
 										<li>
 											<a href="<?php echo $fullurl; ?>events-detail.html?eventId=<?php echo encodeStr($rowEvents['id']); ?>"

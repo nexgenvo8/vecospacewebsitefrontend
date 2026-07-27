@@ -1,6 +1,127 @@
 <?php
+/* ini_set('display_errors', 1);
+error_reporting(E_ALL); */
 include_once('inc.php'); 
 include_once('config/session-check.inc.php'); // check user login session
+$stmtSafeId = 0;
+
+if (!empty($_REQUEST['stmtId'])) {
+    $stmtSafeId = intval(decodeStr($_REQUEST['stmtId']));
+}
+
+if(isset($_POST['action']) && $_POST['action'] === 'edit'){
+
+
+
+    $msgId = intval($_POST['stmtId']);
+    $html  = mysqli_real_escape_string($conn, $_POST['html']);
+
+    if(!$msgId){
+        echo "Invalid ID";
+        exit;
+    }
+
+    $sql_up = "UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_."
+               SET chatText='".$html."'
+               WHERE id='".$msgId."'";
+
+    mysqli_query($conn, $sql_up) or die(mysqli_error($conn));
+
+ 
+    exit; // 🔥 CRITICAL
+}
+// ================== SAVE TESTIMONIAL ==================
+if(isset($_POST['action']) && $_POST['action'] === 'testimonial'){
+
+    $msgId = intval($_POST['msgId']);
+    $text  = mysqli_real_escape_string($conn, $_POST['text']);
+
+    mysqli_query($conn,"
+        UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_."
+        SET testimonial='".$text."'
+        WHERE id='".$msgId."'
+    ");
+
+    exit;
+}
+
+// ================== SAVE FEEDBACK ==================
+if(isset($_POST['action']) && $_POST['action'] === 'feedback'){
+
+    $msgId = intval($_POST['msgId']);
+    $text  = mysqli_real_escape_string($conn, $_POST['text']);
+
+    mysqli_query($conn,"
+        UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_."
+        SET feedback='".$text."'
+        WHERE id='".$msgId."'
+    ");
+
+    exit;
+}
+// ================== SAVE ATTENDANCE ==================
+// ================== SAVE ATTENDANCE ==================
+if(isset($_POST['attendance'])){
+
+    $msgId = intval($_POST['msgId']);
+    $attendance = ($_POST['attendance'] == 'yes') ? 'Yes' : 'No';
+
+    $q = mysqli_query($conn,"
+        UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_."
+        SET attendance='".$attendance."'
+        WHERE id='".$msgId."'
+    ");
+
+    if(!$q){
+        echo "SQL ERROR: " . mysqli_error($conn);
+    } else {
+        echo "success";
+    }
+
+    exit;
+}
+
+
+if(isset($_POST['action']) && $_POST['action'] === 'recording'){
+
+    $stmtId = decodeStr($_POST['stmtId']);
+
+    if(isset($_FILES['recording']) && $_FILES['recording']['error'] == 0){
+
+        $folder = "uploads/recordings/";
+
+        if(!is_dir($folder)){
+            mkdir($folder,0777,true);
+        }
+
+        $name = time().'_'.basename($_FILES['recording']['name']);
+        $path = $folder.$name;
+
+        move_uploaded_file($_FILES['recording']['tmp_name'], $path);
+
+        $chatText = "[recording]".$path;
+
+        $sql = "INSERT INTO "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET
+            userId='".$_SESSION['sessUserId']."',
+            contactId='".$stmtId."',
+            chatText='".mysqli_real_escape_string($conn,$chatText)."',
+            status='0',
+            meeting='0',
+            shareId='0',
+            alertStatus='0',
+            chatBy='".$_SESSION['sessUserId']."',
+            chatFileName='',
+            dateAdded='".time()."',
+            readDate='0',
+            postShare='0'";
+
+        mysqli_query($conn,$sql) or die(mysqli_error($conn));
+    }
+
+    exit;
+}
+
+
 if($_REQUEST['stmtId']!='' && $_REQUEST['action']=='chat' && trim($_REQUEST['text'])!=''){
 include('mail.php');
 
@@ -38,16 +159,20 @@ mysqli_query($conn,$sql_ins) or die(mysqli_error($conn));
 
 $sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET status=1 WHERE contactId= '".decodeStr($_REQUEST['stmtId'])."' AND userId='".$_SESSION["sessUserId"]."' ";
 mysqli_query($conn,$sql_ins) or die(mysqli_error($conn));
-/*if(trim($_REQUEST['shb'])==1)
+if(isset($_REQUEST['shb']) && trim($_REQUEST['shb']) == 1)
 {
-$sql_ins="UPDATE "._STUDENT_REQUEST_MENTOR_FRND_MASTER_TABLE_." SET birthdayStatus=1 WHERE contactId= '".decodeStr($_REQUEST['contactId'])."' AND userId='".$_SESSION["sessUserId"]."' ";
-mysqli_query($sql_ins) or die(mysqli_error($conn)); 
+    $sql_ins = "UPDATE "._STUDENT_REQUEST_MENTOR_FRND_MASTER_TABLE_." 
+                SET birthdayStatus=1 
+                WHERE contactId= '".decodeStr($_REQUEST['contactId'])."' 
+                AND userId='".$_SESSION["sessUserId"]."' ";
+
+    mysqli_query($conn, $sql_ins) or die(mysqli_error($conn)); 
 ?>
 <script>
 parent.$('#saybirthday<?php echo decodeStr($_REQUEST['contactId']); ?>').slideUp();
 </script>
 <?php
-}*/
+}
 $token='';
 $sqlMsgToken="";
 $sqlMsgToken="select token from "._MOBILE_NOTIFICATION_TABLE_." where userId='".decodeStr($_REQUEST["stmtId"])."' ORDER BY id desc ";
@@ -94,15 +219,17 @@ $n=0;
 	$whereVals =[];
 	
 $sqlLogin="";
-$sqlLogin="select * from "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." where userId='".$_SESSION['sessUserId']."' and contactId='".decodeStr($_REQUEST['stmtId'])."' and status=0 ORDER BY dateAdded asc LIMIT 0,1";
+$sqlLogin="select * from "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." where userId='".$_SESSION['sessUserId']."' and contactId=$stmtSafeId and status=0 ORDER BY dateAdded asc LIMIT 0,1";
 	$resLogin=getRecords(_STUDENT_MENTOR_CHAT_MASTER_TABLE_,$selectFields,$whereFields,$whereVals,_Y_,$sqlLogin); 	
 	if($resLogin)
 	{
 		while($row=mysqli_fetch_array($resLogin))
 			{
 				
-if($row["chatFileName"]!=''){ 
-$fileExt=findExtension($row["chatFileName"]);
+if(!empty($row["chatFileName"]) && function_exists('findExtension')){
+
+    $fileExt = strtolower(findExtension($row["chatFileName"]));
+
 
 if($fileExt=='jpeg'  || $fileExt=='JPEG' || $fileExt=='jpg'  || $fileExt=='JPG' || $fileExt=='png'  || $fileExt=='PNG')
 {
@@ -137,7 +264,7 @@ $("#loadstmtchat").scrollTop($("#loadstmtchat")[0].scrollHeight);
 </script>
 
 <?php
-$sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET status=1 WHERE contactId= '".decodeStr($_REQUEST['stmtId'])."' AND userId='".$_SESSION["sessUserId"]."' and id='".$msgid."' ";
+$sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET status=1 WHERE contactId= $stmtSafeId AND userId='".$_SESSION["sessUserId"]."' and id='".$msgid."' ";
 mysqli_query($conn,$sql_ins) or die(mysqli_error($conn));  
 
 if($row["meeting"]==1 && $row["status"]==0){
@@ -152,7 +279,7 @@ parent.$('#loadstmtchat').load("<?php echo $fullurl; ?>load_chat_user_msg.php?us
 } } 
 
 $a="";
-$a="select blockUser from "._CONTACT_MASTER_TABLE_." where contactId='".$_SESSION['sessUserId']."' AND userId='".decodeStr($_REQUEST['stmtId'])."' ";
+$a="select blockUser from "._CONTACT_MASTER_TABLE_." where contactId='".$_SESSION['sessUserId']."' AND userId=$stmtSafeId ";
 $b=mysqli_query($conn,$a);
 $c=mysqli_fetch_array($b); 
 if($c["blockUser"]!=1)
@@ -160,14 +287,14 @@ if($c["blockUser"]!=1)
 
 	
 $sqlLogin2="";
-$sqlLogin2="select id,readDate,dateAdded from "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." where userId='".$_SESSION['sessUserId']."' and contactId='".decodeStr($_REQUEST['stmtId'])."' and status=1 ORDER BY dateAdded desc LIMIT 0,1";
+$sqlLogin2="select id,readDate,dateAdded from "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." where userId='".$_SESSION['sessUserId']."' and contactId=$stmtSafeId and status=1 ORDER BY dateAdded desc LIMIT 0,1";
 	$resLogin2=getRecords(_STUDENT_MENTOR_CHAT_MASTER_TABLE_,$selectFields,$whereFields,$whereVals,_Y_,$sqlLogin2); 	
 	if($resLogin2)
 	{
 		while($row2=mysqli_fetch_array($resLogin2))
 			{
 			
-		$aa="SELECT readDate from "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." where contactId='".$_SESSION['sessUserId']."' and userId='".decodeStr($_REQUEST['stmtId'])."'  ORDER BY dateAdded desc						 LIMIT 0,1"; 
+		$aa="SELECT readDate from "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." where contactId='".$_SESSION['sessUserId']."' and userId=$stmtSafeId  ORDER BY dateAdded desc						 LIMIT 0,1"; 
 			$res5 = mysqli_query($conn,$aa);
 			
 			$getread=mysqli_fetch_array($res5);
@@ -185,7 +312,7 @@ $sqlLogin2="select id,readDate,dateAdded from "._STUDENT_MENTOR_CHAT_MASTER_TABL
 			}
 		
 
- $sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET readDate=".time()." WHERE readDate=0 and  contactId= '".decodeStr($_REQUEST['stmtId'])."' AND userId='".$_SESSION["sessUserId"]."' ";
+ $sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET readDate=".time()." WHERE readDate=0 and  contactId= $stmtSafeId AND userId='".$_SESSION["sessUserId"]."' ";
 mysqli_query($conn,$sql_ins) or die(mysqli_error($conn));
 	
 			
@@ -198,7 +325,7 @@ mysqli_query($conn,$sql_ins) or die(mysqli_error($conn));
 }
 
 
- $sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET chatStatus=0 WHERE contactId= '".decodeStr($_REQUEST['stmtId'])."' AND userId='".$_SESSION["sessUserId"]."' ";
+ $sql_ins="UPDATE "._STUDENT_MENTOR_CHAT_MASTER_TABLE_." SET chatStatus=0 WHERE contactId= $stmtSafeId AND userId='".$_SESSION["sessUserId"]."' ";
 mysqli_query($conn,$sql_ins) or die(mysqli_error($conn));
 
 

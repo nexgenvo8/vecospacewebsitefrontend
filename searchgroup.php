@@ -95,18 +95,13 @@ $mytotalgroups = mysqli_num_rows($bb);
 											$groupType = 'Private';
 										}
 
-										if (!empty($rowgroup["id"])) {
-											$sql_postgroup = "SELECT * FROM " . _SHAREANDUPDATES_TABLE_ . " WHERE groupId = " . intval($rowgroup["id"]) . " AND shareType != 0 ORDER BY id DESC";
+										if ($rowgroup["id"] != '') {
+											$sql_postgroup = "SELECT * from " . _SHAREANDUPDATES_TABLE_ . " WHERE groupId= " . $rowgroup["id"] . " and shareType!=0 order by id desc";
 											$respostgroup = mysqli_query($conn, $sql_postgroup) or die(mysqli_error($conn));
+											$rowGroupPost = mysqli_fetch_array($respostgroup);
 
-											if ($respostgroup && mysqli_num_rows($respostgroup) > 0) {
-												$rowGroupPost = mysqli_fetch_array($respostgroup);
-												$groupPostTitle = $rowGroupPost["postTitle"];
-											} else {
-												$groupPostTitle = ''; // or set a default value if needed
-											}
+											$groupPostTitle = $rowGroupPost["postTitle"];
 										}
-
 
 										if ($rowgroup["id"] != '') {
 											$totalgroupmembers = 0;
@@ -120,17 +115,19 @@ $mytotalgroups = mysqli_num_rows($bb);
 											$bg = mysqli_query($conn, $ag) or die(mysqli_error($conn));
 											$mygroupblockuser = mysqli_num_rows($bg);
 										}
-										if (isset($rowGroupPost) && !empty($rowGroupPost["userId"])) {
-											$a = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " WHERE userId = " . intval($rowGroupPost["userId"]);
+										if ($rowGroupPost["userId"] != '') {
+											$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowGroupPost["userId"] . "";
 											$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
-
-											if ($b && mysqli_num_rows($b) > 0) {
-												$userres = mysqli_fetch_array($b);
-												$friendnameurl = $userres['userurl'] ?? '';
-												$userphoto = !empty($userres["profilePhoto"]) ? $userres["profilePhoto"] : 'user-placeholder.jpg';
+											$userres = mysqli_fetch_array($b);
+											$friendnameurl = "";
+											$friendnameurl = $userres['userurl'];
+											$userphoto = "";
+											if ($userres["profilePhoto"] != '') {
+												$userphoto = $userres["profilePhoto"];
+											} else {
+												$userphoto = 'user-placeholder.jpg';
 											}
 										}
-
 
 
 

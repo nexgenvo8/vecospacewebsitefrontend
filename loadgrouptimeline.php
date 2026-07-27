@@ -68,8 +68,8 @@ if ($resLogin) {
 						<?php echo stripslashes(trim($userres["lastName"])); ?></a>
 
 					<label class="time"><?php echo $jobTitle; ?> 		<?php if ($companyName != '') {
-								   echo '- ' . $companyName;
-							   } ?></label>
+									echo '- ' . $companyName;
+								} ?></label>
 					<label class="time"><?php echo makedatetime($row["dateAdded"]); ?></label>
 				</div>
 				<?php if ($userres['userId'] == $_SESSION['sessUserId'] || $getusergroup['userId'] == $_SESSION['sessUserId']) { ?>
@@ -91,12 +91,14 @@ if ($resLogin) {
 
 
 					<div style="font-size:15px; font-weight:bold; margin-bottom:5px;">
-						<?php echo stripslashes(trim($row["postTitle"])); ?></div>
+						<?php echo stripslashes(trim($row["postTitle"])); ?>
+					</div>
 					<div class="timelinelistingcontant">
 						<?php echo substr(strip_tags(stripslashes(trim($row["postText"]))), 0, 5000);
 						if (strlen(strip_tags(stripslashes(trim($row["postText"])))) > 5000) { ?>...<a
 								href="<?php echo $fullurl; ?>single-group-post.html?postId=<?php echo encodeStr($row['id']); ?>">read
-								more</a><?php } ?></div>
+								more</a><?php } ?>
+					</div>
 
 				</div>
 
@@ -132,19 +134,19 @@ if ($resLogin) {
 				<table width="100%" cellpadding="0" cellspacing="0" border="0">
 					<tr>
 						<td width="15%">
-							<div id="post<?php echo $row["id"]; ?><?php echo $row["postType"]; ?>"
-								onclick="postlike(<?php echo $row["id"]; ?>,<?php echo $row["postType"]; ?>,<?php if ($totalpostlike != '') {
-										  echo $totalpostlike;
-									  } else {
-										  echo '0';
-									  } ?>);">
-								<a><i class="fa fa-thumbs-up" aria-hidden="true" style="color: #ff7800;"></i><span>
+							<div id="post<?php echo $row["id"]; ?><?php echo $row["postType"]; ?>" onclick="postlike(<?php echo $row["id"]; ?>,<?php echo $row["postType"]; ?>,<?php if ($totalpostlike != '') {
+											echo $totalpostlike;
+										} else {
+											echo '0';
+										} ?>);">
+								<a><i class="fa fa-thumbs-up" aria-hidden="true" style="color: #C02621;"></i><span>
 										<?php if ($totalpostlike != '') {
 											echo $totalpostlike;
 										} else {
 											echo '0';
 										} ?>
-									</span> Like </a></div>
+									</span> Like </a>
+							</div>
 
 						</td>
 						<td width="45%">
@@ -172,19 +174,19 @@ if ($resLogin) {
 
 
 				<ul class="tmln_fttr" style="display: none;">
-					<li id="post<?php echo $row["id"]; ?><?php echo $row["postType"]; ?>"
-						onclick="postlike(<?php echo $row["id"]; ?>,<?php echo $row["postType"]; ?>,<?php if ($totalpostlike != '') {
-								  echo $totalpostlike;
-							  } else {
-								  echo '0';
-							  } ?>);">
+					<li id="post<?php echo $row["id"]; ?><?php echo $row["postType"]; ?>" onclick="postlike(<?php echo $row["id"]; ?>,<?php echo $row["postType"]; ?>,<?php if ($totalpostlike != '') {
+									echo $totalpostlike;
+								} else {
+									echo '0';
+								} ?>);">
 						<a><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like <span>
 								<?php if ($totalpostlike != '') {
 									echo $totalpostlike;
 								} else {
 									echo '0';
 								} ?>
-							</span></a></li>
+							</span></a>
+					</li>
 
 					<!--<li><a onclick="opensharebox('<?php echo $fullurl; ?>view-article.html?postId=<?php echo encodeStr($row['id']); ?>','<?php echo stripslashes(trim($rowResults["postTitle"])); ?>');"><i class="fa fa-share" aria-hidden="true"></i> Share <span>0</span></a></li>-->
 
@@ -216,23 +218,21 @@ if ($resLogin) {
 										name="commentbox<?php echo $row['id']; ?><?php echo $row['postType']; ?>"
 										placeholder="Type your comment" maxlength="250">
 
-									<button type="button"
-										onclick="postcmnt('<?php echo $row['id']; ?>','<?php echo $row['postType']; ?>','<?php echo encodeStr($userres['userId']); ?>','','0','','<?php if ($_REQUEST['siglepost'] == 1) {
-													echo '10000';
-												} else {
-													echo '5';
-												} ?>');"><i
-											class="fa fa-paper-plane" aria-hidden="true"></i></button>
+									<button type="button" onclick="postcmnt('<?php echo $row['id']; ?>','<?php echo $row['postType']; ?>','<?php echo encodeStr($userres['userId']); ?>','','0','','<?php if ($_REQUEST['siglepost'] == 1) {
+												 echo '10000';
+											 } else {
+												 echo '5';
+											 } ?>');"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 
 
 									<script>
 										$("#commentbox<?php echo $row['id']; ?><?php echo $row['postType']; ?>").keypress(function (event) {
 											if (event.which == 13) {
 												postcmnt('<?php echo $row['id']; ?>', '<?php echo $row['postType']; ?>', '<?php echo encodeStr($userres['userId']); ?>', '', '0', '', '<?php if ($_REQUEST['siglepost'] == 1) {
-															echo '10000';
-														} else {
-															echo '5';
-														} ?>');
+															 echo '10000';
+														 } else {
+															 echo '5';
+														 } ?>');
 											}
 										});
 									</script>
@@ -249,10 +249,10 @@ if ($resLogin) {
 
 						<script>
 							$('#postcomment<?php echo $row['id']; ?><?php echo $row['postType']; ?>').load('<?php echo $fullurl; ?>post-comment.php?postId=<?php echo $row['id']; ?>&postType=<?php echo $row['postType']; ?>&parentId=0&limit=<?php if ($_REQUEST['siglepost'] == 1) {
-											  echo '10000';
-										  } else {
-											  echo '5';
-										  } ?>');
+											   echo '10000';
+										   } else {
+											   echo '5';
+										   } ?>');
 						</script>
 					<?php } ?>
 				</div>

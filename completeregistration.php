@@ -32,10 +32,10 @@ if (isPost()) {
 
 		if (trim($errMsg) == '') {
 
-			unset($insertFields);
-			unset($insertVals);
-			unset($whereFields);
-			unset($whereVals);
+			$insertFields = [];
+			$insertVals = [];
+			$whereFields = [];
+			$whereVals = [];
 
 			$insertFields[0] = "jobTitle";
 			$insertFields[1] = "industryId";
@@ -205,12 +205,12 @@ if (isPost()) {
 										$('#departmentnamediv').show();
 										$('#stpassingyeardiv').show();
 										$('#companyName').attr('placeholder', 'University');
-										$('#companyName').val('Jamia Millia Islamia');
+										$('#companyName').val('NDIM VECOSPACE');
 									}
 									if (userstype == 2) {
 										$('#departmentnamediv').show();
 										$('#companyName').attr('placeholder', 'University');
-										$('#companyName').val('Jamia Millia Islamia');
+										$('#companyName').val('NDIM VECOSPACE');
 									}
 									if (userstype == 3) {
 										$('#coursenamediv').show();
@@ -247,21 +247,21 @@ if (isPost()) {
 								<select name="coursename" id="coursename">
 									<option value="">Select Course</option>
 									<?php
-									unset($selectFields);
-									unset($whereFields);
-									unset($whereVals);
+									$selectFields = [];
+									$whereFields = [];
+									$whereVals = [];
 
 									$sqlOptions = "";
 									$sqlOptions = "SELECT * FROM " . _COURSE_MASTER_TABLE_ . "  order by course_name";
 									$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
 									if ($resOptions) {
-										while ($rowOptions = mysql_fetch_array($resOptions)) {
+										while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
 											?>
-													<option value="<?php echo trim($rowOptions['course_name']); ?>">
-														<?php echo trim($rowOptions['course_name']); ?>
-													</option>
-													<?php
+											<option value="<?php echo trim($rowOptions['course_name']); ?>">
+												<?php echo trim($rowOptions['course_name']); ?>
+											</option>
+											<?php
 										}
 									}
 									?>
@@ -274,21 +274,21 @@ if (isPost()) {
 								<select name="departmentname" id="departmentname">
 									<option value="">Select Department</option>
 									<?php
-									unset($selectFields);
-									unset($whereFields);
-									unset($whereVals);
+									$selectFields = [];
+									$whereFields = [];
+									$whereVals = [];
 
 									$sqlOptions = "";
 									$sqlOptions = "SELECT * FROM " . _DEPARTMENT_MASTER_TABLE_ . "  order by department_name";
 									$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
 									if ($resOptions) {
-										while ($rowOptions = mysql_fetch_array($resOptions)) {
+										while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
 											?>
-													<option value="<?php echo trim($rowOptions['department_name']); ?>">
-														<?php echo trim($rowOptions['department_name']); ?>
-													</option>
-													<?php
+											<option value="<?php echo trim($rowOptions['department_name']); ?>">
+												<?php echo trim($rowOptions['department_name']); ?>
+											</option>
+											<?php
 										}
 									}
 									?>
@@ -306,11 +306,11 @@ if (isPost()) {
 									$end = date('Y-m-d', strtotime('+5 years'));
 									while ($currentdate <= $end) {
 										?>
-											<option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
-												   echo 'selected';
-											   } ?>> <?php echo $currentdate;
-												$currentdate++; ?></option>
-											<?php
+										<option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
+											   echo 'selected';
+										   } ?>> <?php echo $currentdate;
+											$currentdate++; ?></option>
+										<?php
 									}
 									?>
 								</select>
@@ -325,11 +325,11 @@ if (isPost()) {
 									$currentdate = date("Y");
 									while ($staringdate <= $currentdate) {
 										?>
-											<option value="<?php echo $staringdate; ?>">
-												<?php echo $staringdate;
-												$staringdate++; ?>
-											</option>
-											<?php
+										<option value="<?php echo $staringdate; ?>">
+											<?php echo $staringdate;
+											$staringdate++; ?>
+										</option>
+										<?php
 									}
 									?>
 								</select>
@@ -338,31 +338,31 @@ if (isPost()) {
 							<div class="half-input">
 								<input type="text" name="companyName" id="companyName" placeholder="University"
 									onKeyUp="hideerrordiv(this.id);" class="validate" maxlength="100"
-									value="Jamia Millia Islamia">
+									value="NDIM VECOSPACE">
 							</div>
 							<div class="half-input" style=" display:none;" id="industrydiv">
 								<select name="industryId" id="industryId" onChange="hideerrordiv(this.id);">
 									<option value="0">Select Industry</option>
 									<?php
-									unset($selectFields);
-									unset($whereFields);
-									unset($whereVals);
+									$selectFields = [];
+									$whereFields = [];
+									$whereVals = [];
 
 									$sqlOptions = "";
 									$sqlOptions = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE optionType='industry' ";
 									$resOptions = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
 									if ($resOptions) {
-										while ($rowOptions = mysql_fetch_array($resOptions)) {
+										while ($rowOptions = mysqli_fetch_array($resOptions)) {
 											if ($industryId == $rowOptions['id']) {
 												$strSelected = 'selected="selected"';
 											} else {
 												$strSelected = "";
 											}
 											?>
-													<option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
-														<?php echo trim($rowOptions['optionName']); ?>
-													</option>
-													<?php
+											<option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
+												<?php echo trim($rowOptions['optionName']); ?>
+											</option>
+											<?php
 										}
 									}
 									?>

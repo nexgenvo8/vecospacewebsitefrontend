@@ -101,7 +101,7 @@ include_once('config/session-check.inc.php');
             $('.frndr').removeClass('active');
             $('.frndr i').css('color', '');
             link.classList.add('active');
-            $(link).find('i').css('color', '#FF0000');
+            $(link).find('i').css('color', '#C02621');
         }
 
         // Click event handler for icons

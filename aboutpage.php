@@ -26,10 +26,10 @@ $post_result = mysqli_fetch_array($re2);
   <div class="aboutheader">
     <div class="container">
       <div class="logo">
-        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/logo.png"
+        <a style="margin-top:0px; margin-bottom:0px;" href="<?php echo $fullurl; ?>"><img src="images/ndimlogo.png"
             style="width: 275px;" /></a>
       </div>
-      <?php if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
+      <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
         <div class="toggle hiden-xs" onclick="$('.setting_menu').toggle();">
           <a href="javascript:void(0);">
             <span class="usr_img"><img src="<?php echo $fullurl; ?>uploads/<?php echo $myprofilePhoto; ?>"></span>
@@ -48,9 +48,13 @@ $post_result = mysqli_fetch_array($re2);
   <span class="clear"></span>
   <div class="container">
     <div class="helpwrap-cont">
-      <?php include('left_links.php'); ?>
+      <?php include('ndim_left_links.php'); ?>
       <div class="right-panel">
-        <?php echo stripslashes($post_result['description']); ?>
+        <p>NDIM VECOSPACE is an education&nbsp;eco-space&nbsp;of NDIM, it started with the sole purpose as an opportunity to learn from your classmates and your professors. So that a person who&#39;s always been shy in the real-time class feels free to ask questions and can have a discussion with his/her fellow classmates.<br />
+We want NDIM VECOSPACEto be the remedy for students&nbsp;not given the intellectual space, freedom, or support to fulfill their educational potential and desire for learning. And we&nbsp;want NDIM VECOSPACEto empower instructors to have a positive, personal impact on more students.<br />
+NDIM VECOSPACEis designed to connect students, TAs, and professors so every student can get help when she needs it &mdash; even at 2 AM.<br />
+And given the unprecedented times, we are in, we hope NDIM VECOSPACE&nbsp;enhances your experience as a student, as a TA, and as a Professor.</p>
+
       </div>
     </div>
   </div>

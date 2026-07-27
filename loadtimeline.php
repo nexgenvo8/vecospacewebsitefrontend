@@ -1,6 +1,8 @@
 <?php
+
 include_once('inc.php');
 include_once('config/session-check.inc.php'); // check user login session
+
 $startpage = $_REQUEST['startpage'] ?? '';
 $endpage = $_REQUEST['endpage'] ?? '';
 $pageid = $_REQUEST['pageid'] ?? '';
@@ -59,7 +61,65 @@ if ($dob == date("m-d")) {
 	<?php
 }
 
-
+//unset($selectFields);
+//unset($whereFields);
+//unset($whereVals);
+//
+//$sqlQuery="";
+//$sqlQuery="select dob,userId,firstName,lastName,profilePhoto,userurl from "._USERS_MASTER_TABLE_." where userId IN(select contactId from "._CONTACT_MASTER_TABLE_." where userId='".$_SESSION['sessUserId']."' and status=1 and birthdayStatus=0) and dob!='0000-00-00' ";
+//$resQuery=getRecords(_USERS_MASTER_TABLE_,$selectFields,$whereFields,$whereVals,_Y_,$sqlQuery); 	
+//if($resQuery)
+//{
+//	while($rowcontacts=mysql_fetch_array($resQuery))
+//	{
+//			$userdob=$rowcontacts["dob"];
+//			  
+//			$userdobArr=explode("-", $userdob);
+//			$dobyear=$userdobArr[0];
+//			$dobmonth=$userdobArr[1];
+//			$dobday=$userdobArr[2];
+//			
+//			$userdob=$dobmonth.'-'.$dobday;
+//						
+//			if($userdob==date("m-d"))
+//			{
+//				
+//				$frienddobnameurl=$rowcontacts['userurl'];
+//				if($rowcontacts["profilePhoto"]!='')
+//				{
+//				$userdobphoto=$rowcontacts["profilePhoto"];
+//				} else {
+//				$userdobphoto='user-placeholder.jpg';
+//				}	
+?>
+<!--<div class="wish-list" id="saybirthday<?php echo $rowcontacts['userId']; ?>">
+				<div class="wish-box">
+		<div class="img">
+			<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowcontacts['userId']); ?>/<?php echo $frienddobnameurl; ?>.html" target="_blank" class="rqst-img"><img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userdobphoto)); ?>"></a>
+		</div>
+		<div class="wish-nam">
+			<label>Wish <?php echo stripslashes(trim($rowcontacts["firstName"])); ?> <?php echo stripslashes(trim($rowcontacts["lastName"])); ?> a <strong>Happy Birthday</strong></label>
+			
+	
+		<a onclick="openuserchatbox('<?php echo encodeStr($rowcontacts['userId']); ?>','<?php echo stripslashes(trim($rowcontacts["firstName"])); ?> <?php echo stripslashes(trim($rowcontacts["lastName"])); ?>','<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowcontacts['userId']); ?>/<?php echo $frienddobnameurl; ?>.html');$('#chatfieldfooter').val('Happy Birthday');$('#shb').val('1');" class="say-bday">Say Happy Birthday</a>
+		</div>
+		<div class="errow-drop"> <span class="errow"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+	  <ul class="erow-list">        
+		<li> <a href="<?php echo $fullurl; ?>common_action.php?contactId=<?php echo encodeStr($rowcontacts['userId']); ?>&action=removeshb" target="actionfrm"><i class="fa fa-window-close-o" aria-hidden="true"></i> Remove</a></li>
+		
+		
+	  </ul>
+	</div>
+	</div>
+	
+</div>-->
+<?php
+//	}
+//		
+//	}
+//}
+?>
+<?php
 $n = 0;
 $selectFields = [];
 $whereFields = [];
@@ -68,6 +128,7 @@ $whereVals = [];
 $sqlLogin = "";
 $sqlLogin = $postWhere;
 $resLogin = getRecords(_TIMELINE_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
+
 if ($resLogin) {
 	while ($row = mysqli_fetch_array($resLogin)) {
 
@@ -105,7 +166,7 @@ if ($resLogin) {
 
 
 
-				$jobTitle = $userres["jobTitle"];
+				$jobTitle = $userres["coursename"];
 				$companyName = $userres["companyName"];
 
 				$friendnameurl = $userres['userurl'];
@@ -131,7 +192,6 @@ if ($resLogin) {
 
 					if ($row["postId"] == $rowResults["id"]) {
 						?>
-
 
 
 						<div class="timlist" id="<?php echo $rowResults['id']; ?>">
@@ -185,7 +245,7 @@ if ($resLogin) {
 															class="fa fa-window-close-o" aria-hidden="true"></i> Remove</a>
 												</li>
 											<?php } else { ?>
-												<li><a onclick="alertpopupmain('<?php echo encodeStr($row['postId']); ?>','hidepost22');"><i
+												<li><a onclick="alertpopupmain('<?php echo encodeStr($row["postId"]); ?>','hidepost22');"><i
 															class="fa fa-eye-slash" aria-hidden="true"></i> Hide this post</a></li>
 												<li><a
 														onClick="funcommonpopupwin('400px','auto','<?php echo $fullurl; ?>common_popup_inner.php?id=<?php echo encodeStr($rowResults['id']); ?>&type=reportpost','Why are you reporting this?');"><i
@@ -215,7 +275,7 @@ if ($resLogin) {
 													onclick="copyToClipboard('#clipboard<?php echo ($rowResults['id']); ?>');"><i class="fa fa-link"
 														aria-hidden="true"></i> Copy link to post</a>
 											</li>
-											<li><a onclick="alertpopupmain('<?php echo encodeStr($row['postId']); ?>','hidepost');"><i
+											<li><a onclick="alertpopupmain('<?php echo encodeStr($row["postId"]); ?>','hidepost');"><i
 														class="fa fa-eye-slash" aria-hidden="true"></i> Hide this article</a></li>
 										</ul>
 									</div>
@@ -231,7 +291,15 @@ if ($resLogin) {
 										   } else {
 											   echo 'auto';
 										   } ?>; overflow:hidden;">
-											<?php echo stripslashes(nl2br(str_replace('&#63;', '', $rowResults["postText"]))); ?>
+											<?php
+											$text = stripslashes(nl2br(str_replace('&#63;', '', $rowResults["postText"])));
+											$text = preg_replace(
+												'/(https?:\/\/[^\s]+)/i',
+												'<a href="$1" target="_blank">$1</a>',
+												$text
+											);
+											echo $text;
+											?>
 										</div>
 										<?php
 										if (strlen((stripslashes($rowResults["postText"]))) > 200 && $rowResults["websiteshare"] == 0 && $rowResults["sharePost"] == 0 && $rowResults["postText"] != '') {
@@ -317,6 +385,9 @@ if ($resLogin) {
 									} ?></span>
 								</div>
 
+
+
+
 								<div style="position:absolute; right:15px;">
 									<span id="shareposts<?php echo $row["postId"]; ?><?php echo $row["postType"]; ?>"><span><?php if ($totalpostshared != '') {
 											  echo $totalpostshared;
@@ -347,22 +418,37 @@ if ($resLogin) {
 
 										</td>
 										<td width="45%">
-											<ul class="likes-mmbr"
-												id="likesmmbrdiv<?php echo $row["postId"]; ?><?php echo $row['postType']; ?>"></ul>
-
-											<script>
-												$('#likesmmbrdiv<?php echo $row['postId']; ?><?php echo $row['postType']; ?>')
-													.load(<?php echo json_encode($fullurl . "loadlikeusers.php?postId=" . $row['postId']); ?>);
-											</script>
-
-
-
+											<ul class="likes-mmbr loadlikeusers"
+												id="likesmmbrdiv<?php echo $row["postId"]; ?>_<?php echo $row['postType']; ?>_<?php echo $row['id']; ?>"
+												data-postid="<?php echo $row["postId"]; ?>" data-posttype="<?php echo $row["postType"]; ?>">
+											</ul>
 										</td>
+										<script>
+											$(document).ready(function () {
+												$('.loadlikeusers').each(function () {
+													var postId = $(this).data('postid');
+													var postType = $(this).data('posttype');
+													var $this = $(this);
+
+													// Load the like users for each post uniquely
+													$this.load('<?php echo rtrim($fullurl, "/"); ?>/loadlikeusers.php?postId=' + postId + '&postType=' + postType,
+														function (response, status, xhr) {
+															if (status === "error") {
+																console.error("Error loading likes for postId " + postId + ": " + xhr.status + " " + xhr.statusText);
+															}
+														}
+													);
+												});
+											});
+										</script>
+
+
 										<td width="20%" align="right">
-											<div id="commentdisplaybox<?php echo $row['postId']; ?><?php echo $row['postType']; ?>"
-												onclick="$('#postcomment<?php echo $row['postId']; ?><?php echo $row['postType']; ?>').show();$('#commnts-cont<?php echo $row['postId']; ?><?php echo $row['postType']; ?>').show();$('#commentbox<?php echo $row['postId']; ?><?php echo $row['postType']; ?>').focus();"
-												style="cursor:pointer;" class="triggerBtn"><i class="fa fa-commenting" aria-hidden="true"></i>
-												Comment </div>
+											<div id="commentdisplaybox<?php echo $row['postId'] . $row['postType']; ?>"
+												onclick="showComments('<?php echo $row['postId']; ?>', '<?php echo $row['postType']; ?>');"
+												style="cursor:pointer;" class="triggerBtn">
+												<i class="fa fa-commenting" aria-hidden="true"></i> Comment
+											</div>
 										</td>
 										<td width="20%" align="right">
 											<div><a
@@ -374,11 +460,11 @@ if ($resLogin) {
 
 
 								<ul class="tmln_fttr" style="display: none;">
-									<li id="post<?php echo $row["postId"]; ?><?php echo $row["postType"]; ?>" onclick="postlike(<?php echo $row["postId"]; ?>,<?php echo $row["postType"]; ?>,<?php if ($totalpostlike != '') {
+									<li id="post<?php echo $row["postId"]; ?><?php echo $row["postType"]; ?>" onclick="postlike(<?php echo $row['postId']; ?>,<?php echo $row['postType']; ?>,<?php if ($totalpostlike != '') {
 													echo $totalpostlike;
 												} else {
 													echo '0';
-												} ?>);">
+												} ?>;">
 										<a><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like <span>
 												<?php if ($totalpostlike != '') {
 													echo $totalpostlike;
@@ -387,6 +473,7 @@ if ($resLogin) {
 												} ?>
 											</span></a>
 									</li>
+
 
 
 
@@ -403,70 +490,129 @@ if ($resLogin) {
 									</li>
 								</ul>
 								<div class="commnts-cont" style="display:none;"
-									id="commnts-cont<?php echo $row['postId']; ?><?php echo $row['postType']; ?>">
+									id="commnts-cont<?php echo $row['postId'] . $row['postType']; ?>">
 									<div class="comnt-write">
-										<div class="write-cmnt-pic"> <img
-												src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($myprofilePhoto)); ?>"> </div>
+										<div class="write-cmnt-pic">
+											<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($myprofilePhoto)); ?>">
+										</div>
 										<div class="cmnt-inpt">
-
 											<input type="text" class="commentrowboxclass"
-												id="commentbox<?php echo $row['postId']; ?><?php echo $row['postType']; ?>"
-												name="commentbox<?php echo $row['postId']; ?><?php echo $row['postType']; ?>"
-												placeholder="Type your comment" maxlength="250">
+												id="commentbox<?php echo $row['postId'] . $row['postType']; ?>" placeholder="Type your comment"
+												maxlength="250">
 
-											<?php
-											$postId = $row['postId'];
-											$postType = $row['postType'];
-											$userId = encodeStr($userres['userId']);
-											$limit = isset($_REQUEST['siglepost']) && $_REQUEST['siglepost'] == 1 ? 10000 : 5;
-											?>
-											<button type="button" onclick='postcmnt(<?php
-											echo json_encode($postId) . "," .
-												json_encode($postType) . "," .
-												json_encode($userId) . "," .
-												json_encode("") . "," .
-												json_encode("0") . "," .
-												json_encode("") . "," .
-												json_encode($limit);
-											?>)'>
+											<button type="button" onclick="postcmnt('<?php echo $row['postId']; ?>',
+									   '<?php echo $row['postType']; ?>',
+									   '<?php echo encodeStr($userres['userId']); ?>',
+									   '', '0', '',
+									   '<?php echo (isset($_REQUEST['siglepost']) && $_REQUEST['siglepost'] == 1) ? '10000' : '5'; ?>');">
 												<i class="fa fa-paper-plane" aria-hidden="true"></i>
 											</button>
-
-
-
-											<script>
-												$("#commentbox<?php echo $postId . $postType; ?>").keypress(function (event) {
-													if (event.which == 13) {
-														postcmnt(
-															<?php echo json_encode($postId); ?>,
-															<?php echo json_encode($postType); ?>,
-															<?php echo json_encode($userId); ?>,
-															<?php echo json_encode(""); ?>,
-															<?php echo json_encode("0"); ?>,
-															<?php echo json_encode(""); ?>,
-															<?php echo json_encode($limit); ?>
-														);
-													}
-												});
-											</script>
-
-
 										</div>
 									</div>
+
 									<ul class="cmmnt-list" style="display:none;"
-										id="postcomment<?php echo $row['postId']; ?><?php echo $row['postType']; ?>">
+										id="postcomment<?php echo $row['postId'] . $row['postType']; ?>">
 										Loading...
 									</ul>
-									<script>$(".timlist .timlist #postcomment<?php echo $row['postId']; ?><?php echo $row['postType']; ?>").remove();</script>
-
-
 								</div>
+
+								<!-- <script>
+									function showComments(postId, postType) {
+										const commentContainer = document.getElementById("commnts-cont" + postId + postType);
+										const commentList = document.getElementById("postcomment" + postId + postType);
+										const commentBox = document.getElementById("commentbox" + postId + postType);
+
+										// Toggle visibility
+										commentContainer.style.display = "block";
+										commentList.style.display = "block";
+										commentBox.focus();
+
+										// Load comments only once
+										if (!commentList.getAttribute("data-loaded")) {
+											$(commentList).load(
+												"post-comment.php?postId=" + postId + "&postType=" + postType + "&parentId=0&limit=" +
+												(<?php echo (isset($_REQUEST['siglepost']) && $_REQUEST['siglepost'] == 1) ? '10000' : '5'; ?>),
+												function () {
+													commentList.setAttribute("data-loaded", "true");
+												}
+											);
+										}
+									}
+
+									// Enter key handler
+									$(document).on("keypress", ".commentrowboxclass", function (event) {
+										if (event.which === 13) {
+											const idParts = $(this).attr("id").replace("commentbox", "").match(/(\d+)(.*)/);
+											if (idParts) {
+												showComments(idParts[1], idParts[2]);
+												postcmnt(idParts[1], idParts[2], "<?php echo encodeStr($userres['userId']); ?>", "", "0", "", "<?php echo (isset($_REQUEST['siglepost']) && $_REQUEST['siglepost'] == 1) ? '10000' : '5'; ?>");
+											}
+										}
+									});
+
+								</script> -->
+								<script>
+									function showComments(postId, postType) {
+										const commentContainer = document.getElementById("commnts-cont" + postId + postType);
+										const commentList = document.getElementById("postcomment" + postId + postType);
+										const commentBox = document.getElementById("commentbox" + postId + postType);
+
+										// Show comment container
+										commentContainer.style.display = "block";
+										commentList.style.display = "block";
+										commentBox.focus();
+
+										// Always reload comments when opening
+										$(commentList).load(
+											"post-comment.php?postId=" + postId +
+											"&postType=" + postType +
+											"&parentId=0&limit=" +
+											(<?php echo (isset($_REQUEST['siglepost']) && $_REQUEST['siglepost'] == 1) ? '10000' : '5'; ?>)
+										);
+									}
+
+									// Enter key handler for comment box
+									$(document).on("keypress", ".commentrowboxclass", function (event) {
+										if (event.which === 13) { // Enter key
+											const idParts = $(this).attr("id").replace("commentbox", "").match(/(\d+)(.*)/);
+											if (idParts) {
+												const postId = idParts[1];
+												const postType = idParts[2];
+
+												// Post comment
+												postcmnt(
+													postId,
+													postType,
+													"<?php echo encodeStr($userres['userId']); ?>",
+													"",
+													"0",
+													"",
+													"<?php echo (isset($_REQUEST['siglepost']) && $_REQUEST['siglepost'] == 1) ? '10000' : '5'; ?>"
+												);
+
+												// Refresh comments after posting
+												showComments(postId, postType);
+											}
+										}
+									});
+								</script>
+								<script>
+									function showmyheader(postId, postType) {
+										// agar abhi koi logic nahi chahiye
+										// error avoid karne ke liye empty function bhi chalega
+										console.log('blur event:', postId, postType);
+									}
+								</script>
+
 							</div>
 						</div>
 
 						<script>
-							$('#postcomment<?php echo $row['postId']; ?><?php echo $row['postType']; ?>')
-								.load(<?php echo json_encode("post-comment.php?postId={$row['postId']}&postType={$row['postType']}&parentId=0&limit={$limit}"); ?>);
+							$('#postcomment<?php echo $row['postId']; ?><?php echo $row['postType']; ?>').load('post-comment.php?postId=<?php echo $row['postId']; ?>&postType=<?php echo $row['postType']; ?>&parentId=0&limit=<?php if (isset($_REQUEST['singlepost']) && $_REQUEST['siglepost'] == 1) {
+											echo '10000';
+										} else {
+											echo '5';
+										} ?>');
 						</script>
 
 

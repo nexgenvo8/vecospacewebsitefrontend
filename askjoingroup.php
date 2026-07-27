@@ -129,11 +129,11 @@ $grouppostId = $rowResults["id"];
 			</div>
 			<?php if (isset($acceptnotification) && $acceptnotification == 1) { ?>
 
-					<div class="accept-notification">
+				<div class="accept-notification">
 
 
-						<?php echo $msgacceptnotification; ?>
-					</div>
+					<?php echo $msgacceptnotification; ?>
+				</div>
 			<?php } ?>
 			<div class="home_container">
 				<?php include('left-sidebar.php'); ?>
@@ -143,13 +143,13 @@ $grouppostId = $rowResults["id"];
 							<div class="grp-dtail-had">
 								<div class="group-sec">
 									<?php if ($rowGroup['userId'] == $_SESSION['sessUserId']) { ?>
-											<a href="group-setting.html?groupId=<?php echo $_REQUEST['groupId']; ?>"
-												class="grp-logo"> <img
-													src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($groupThumb)); ?>">
-											</a>
+										<a href="group-setting.html?groupId=<?php echo $_REQUEST['groupId']; ?>"
+											class="grp-logo"> <img
+												src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($groupThumb)); ?>">
+										</a>
 									<?php } else { ?>
-											<img
-												src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($groupThumb)); ?>"><?php } ?>
+										<img
+											src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($groupThumb)); ?>"><?php } ?>
 									<div style="position:relative;" class="edit-grp">
 
 
@@ -160,12 +160,12 @@ $grouppostId = $rowResults["id"];
 									<div class="join-btn">
 										<!--<a href="<?php echo $fullurl; ?>about-group.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">About this group</a>  -->
 										<?php if ($mygroupid == 0) { ?><a
-													href="common_action.php?groupId=<?php echo encodeStr($rowGroup['id']); ?>&action=publicgroupjoinrequest"
-													target="actionfrm" class="konectt-btn"
-													onClick="$('#commonloader').show();">Join group</a> <?php } ?>
+												href="common_action.php?groupId=<?php echo encodeStr($rowGroup['id']); ?>&action=publicgroupjoinrequest"
+												target="actionfrm" class="konectt-btn"
+												onClick="$('#commonloader').show();">Join group</a> <?php } ?>
 
 										<?php if ($mygroupid1 == 0 && $mygroupid == 1) { ?><a class="konectt-btn"
-													style="background-color:#C02621;">Request sent</a> <?php } ?>
+												style="background-color:#18ad06;">Request sent</a> <?php } ?>
 									</div>
 								</div>
 							</div>
@@ -178,19 +178,19 @@ $grouppostId = $rowResults["id"];
 							<div class="post-list">
 
 								<?php if ($rowGroup["groupLongDetails"] != '') { ?> <span class="admn"
-											style="font-size:18px;">About this group</span><br>
-										<div class="post">
-											<div class="mmbrof_group_list">
-												<div class="grp-dtail-had" style="padding:0px; line-height:18px;border: 0;">
-													<div class="group-sec">
+										style="font-size:18px;">About this group</span><br>
+									<div class="post">
+										<div class="mmbrof_group_list">
+											<div class="grp-dtail-had" style="padding:0px; line-height:18px;border: 0;">
+												<div class="group-sec">
 
-														<div style="position:relative;padding-left: 0 !important;">
-															<?php echo getStrLength(strip_tags(stripslashes($rowGroup["groupLongDetails"])), 1000); ?>
-														</div>
+													<div style="position:relative;padding-left: 0 !important;">
+														<?php echo getStrLength(strip_tags(stripslashes($rowGroup["groupLongDetails"])), 1000); ?>
 													</div>
 												</div>
 											</div>
 										</div>
+									</div>
 								<?php } ?>
 
 
@@ -235,26 +235,26 @@ $grouppostId = $rowResults["id"];
 												}
 
 												?>
-														<li>
-															<div class="post">
-																<span class="postimg"><a
-																		href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img
-																			src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
-																			title="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"
-																			alt="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"></a></span>
-																<div class="post-had-right">
-																	<a
-																		href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo stripslashes(trim($userres["firstName"])); ?>
-																		<?php echo stripslashes(trim($userres["lastName"])); ?></a><br>
+												<li>
+													<div class="post">
+														<span class="postimg"><a
+																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img
+																	src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
+																	title="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"
+																	alt="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"></a></span>
+														<div class="post-had-right">
+															<a
+																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo stripslashes(trim($userres["firstName"])); ?>
+																<?php echo stripslashes(trim($userres["lastName"])); ?></a><br>
 
-																	<span
-																		style="color:#828282; font-size:12px;"><?php echo $userres["jobTitle"]; ?>
-																		at <?php echo $userres["companyName"]; ?></span>
-																</div>
-															</div>
-														</li>
-														<?php
-														$n++;
+															<span
+																style="color:#828282; font-size:12px;"><?php echo $userres["jobTitle"]; ?>
+																at <?php echo $userres["companyName"]; ?></span>
+														</div>
+													</div>
+												</li>
+												<?php
+												$n++;
 											}
 										}
 										?>
@@ -315,14 +315,14 @@ $grouppostId = $rowResults["id"];
 											}
 
 											?>
-													<li><a
-															href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img
-																src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
-																title="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"
-																alt="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"></a>
-													</li>
-													<?php
-													$n++;
+											<li><a
+													href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img
+														src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
+														title="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"
+														alt="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"></a>
+											</li>
+											<?php
+											$n++;
 										}
 									}
 									?>

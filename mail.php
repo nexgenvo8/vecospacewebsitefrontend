@@ -21,13 +21,13 @@ function send_template_mail_new($fromemail,$to,$subject,$description)
     
     		$mail->Port = '587';  
             //$mail->SMTPKeepAlive = true;
-    		$mail->Username = 'jmi@corrintech.com';
+    		$mail->Username = 'notification@corrintech.com';
     
-    		$mail->Password = 'jdjyqnhrrgpzyzza'; 
+    		$mail->Password = 'demhkqovxhtpqtnm'; 
     
-    		$mail->From = 'jmi@corrintech.com';
+    		$mail->From = 'notification@corrintech.com';
     
-    		$mail->FromName = "Jamia Millia Islamia";
+    		$mail->FromName = "corrintech";
     
     		$mail->Subject = $subject;
     
@@ -56,6 +56,36 @@ function send_template_mail_new($fromemail,$to,$subject,$description)
         }
 }
 
+function send_invitation_template_mail($fromname, $to, $subject, $description)
+{
+	$mail = new PHPMailer(true);
+
+	try {
+		$mail->isSMTP();
+		$mail->SMTPAuth = true;
+		$mail->SMTPSecure = 'tls';
+		$mail->Host = 'smtp.gmail.com';
+		$mail->Port = 587;
+
+		$mail->Username = 'notification@corrintech.com';
+		$mail->Password = 'demhkqovxhtpqtnm';
+
+		$mail->From = 'notification@corrintech.com';
+		$mail->FromName = $fromname;
+
+		$mail->Subject = $subject;
+		$mail->MsgHTML($description);
+
+		$mail->addAddress($to);
+		$mail->isHTML(true);
+		return $mail->send();
+
+	} catch (Exception $e) {
+		error_log($e->getMessage());
+		return false;
+	}
+}
+
 function send_template_mail($fromemail,$to,$subject,$description) 
 {
   
@@ -67,17 +97,16 @@ function send_template_mail($fromemail,$to,$subject,$description)
 
 		$mail->SMTPSecure = "tls";
 
-		$mail->Host = 'mail.vecospace.com';
+		$mail->Host = 'smtp.gmail.com';
 
 		$mail->Port = '587';  
 
-		$mail->Username = 'info@vecospace.com';
+		$mail->Username = 'notification@corrintech.com';
+		$mail->Password = 'demhkqovxhtpqtnm';
 
-		$mail->Password = 'admin@3214'; 
+		$mail->From = 'notification@corrintech.com';
 
-		$mail->From = 'info@vecospace.com';
-
-		$mail->FromName = 'Jamia Millia Islamia';
+		$mail->FromName = 'corrintech';
 
 		$mail->Subject = $subject;
 
@@ -114,13 +143,13 @@ function send_template_mail_reg($fromemail,$to,$subject,$description)
     
     		$mail->Port = '587';  
             //$mail->SMTPKeepAlive = true;
-    		$mail->Username = 'jmi@corrintech.com';
+    		$mail->Username = 'notification@corrintech.com';
     
-    		$mail->Password = 'jdjyqnhrrgpzyzza'; 
+    		$mail->Password = 'demhkqovxhtpqtnm'; 
     
-    		$mail->From = 'jmi@corrintech.com';
+    		$mail->From = 'notification@corrintech.com';
     
-    		$mail->FromName = "Jamia Millia Islamia";
+    		$mail->FromName = "corrintech";
     
     		$mail->Subject = $subject;
     

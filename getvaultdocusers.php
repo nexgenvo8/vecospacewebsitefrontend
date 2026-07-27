@@ -4,78 +4,78 @@ include_once('config/session-check.inc.php'); // check user login session
 include_once('mail.php');
 if ($_REQUEST['userId'] != '' && $_REQUEST['postId'] != '') {
 	?>
-		<script>
-			$('#commonloader').hide();
-		</script>
-		<?php
-		$postId = decodeStr($_REQUEST['postId']);
+	<script>
+		$('#commonloader').hide();
+	</script>
+	<?php
+	$postId = decodeStr($_REQUEST['postId']);
 
-		$selectFields = [];
+	$selectFields = [];
+	$whereFields = [];
+	$whereVals = [];
+
+	$sqlCheck1 = "";
+	$sqlCheck1 = "select id from " . _VAULT_SHARE_MASTER_ . " where userId='" . decodeStr($_REQUEST['userId']) . "' and postId=" . $postId . " ";
+	$resCheck1 = getRecords(_VAULT_SHARE_MASTER_, $selectFields, $whereFields, $whereVals, _Y_, $sqlCheck1);
+	if ($resCheck1) {
+	} else {
+
+		unset($insertFields);
+		unset($insertVals);
 		$whereFields = [];
 		$whereVals = [];
 
-		$sqlCheck1 = "";
-		$sqlCheck1 = "select id from " . _VAULT_SHARE_MASTER_ . " where userId='" . decodeStr($_REQUEST['userId']) . "' and postId=" . $postId . " ";
-		$resCheck1 = getRecords(_VAULT_SHARE_MASTER_, $selectFields, $whereFields, $whereVals, _Y_, $sqlCheck1);
-		if ($resCheck1) {
+		$insertFields[0] = "dateAdded";
+		$insertFields[1] = "userId";
+		$insertFields[2] = "postId";
+
+		$insertVals[0] = time();
+		$insertVals[1] = decodeStr($_REQUEST['userId']);
+		$insertVals[2] = $postId;
+
+		$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+
+
+		$dateAdded = time();
+
+		$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . decodeStr($_REQUEST['userId']) . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
+		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+		/*For email templates*/
+		$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
+		$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
+		$rowvault = mysqli_fetch_array($resvault);
+		$name = $rowvault['name'];
+		$documentFileName = trim($rowvault["documentFile"]);
+
+		$sharefileSize = trim($rowvault["fileSize"]);
+
+		$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
+
+		$aa = "SELECT email from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . decodeStr($_REQUEST['userId']) . "' ";
+		$res5 = mysqli_query($conn, $aa);
+		$getuser = mysqli_fetch_array($res5);
+		$email = $getuser["email"];
+
+		$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+		$res52 = mysqli_query($conn, $aa2);
+		$getuser2 = mysqli_fetch_array($res52);
+
+		$firstName2 = $getuser2['firstName'];
+		$lastName2 = $getuser2['lastName'];
+		$profilePhoto2 = $getuser2['profilePhoto'];
+		$jobTitle = $getuser2["jobTitle"];
+		$companyName = $getuser2["companyName"];
+		$userurl = $getuser2["userurl"];
+
+		if ($profilePhoto2 != '') {
+			$profilePhoto2 = $profilePhoto2;
 		} else {
+			$profilePhoto2 = 'user-placeholder.jpg';
+		}
 
-			unset($insertFields);
-			unset($insertVals);
-			$whereFields = [];
-			$whereVals = [];
-
-			$insertFields[0] = "dateAdded";
-			$insertFields[1] = "userId";
-			$insertFields[2] = "postId";
-
-			$insertVals[0] = time();
-			$insertVals[1] = decodeStr($_REQUEST['userId']);
-			$insertVals[2] = $postId;
-
-			$resInsert = insertDB(_VAULT_SHARE_MASTER_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
-
-
-			$dateAdded = time();
-
-			$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . decodeStr($_REQUEST['userId']) . "',postId= " . $postId . ",postType='20' ,notificationText='postvaultshare',dateAdded='" . $dateAdded . "'";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-			/*For email templates*/
-			$sql_vault = "SELECT name,fileSize,documentFile from " . _VAULT_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['postId']) . " ";
-			$resvault = mysqli_query($conn, $sql_vault) or die(mysqli_error($conn));
-			$rowvault = mysqli_fetch_array($resvault);
-			$name = $rowvault['name'];
-			$documentFileName = trim($rowvault["documentFile"]);
-
-			$sharefileSize = trim($rowvault["fileSize"]);
-
-			$totalsharefileSize = ceil($sharefileSize / 1024 / 1024);
-
-			$aa = "SELECT email from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . decodeStr($_REQUEST['userId']) . "' ";
-			$res5 = mysqli_query($conn, $aa);
-			$getuser = mysqli_fetch_array($res5);
-			$email = $getuser["email"];
-
-			$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-			$res52 = mysqli_query($conn, $aa2);
-			$getuser2 = mysqli_fetch_array($res52);
-
-			$firstName2 = $getuser2['firstName'];
-			$lastName2 = $getuser2['lastName'];
-			$profilePhoto2 = $getuser2['profilePhoto'];
-			$jobTitle = $getuser2["jobTitle"];
-			$companyName = $getuser2["companyName"];
-			$userurl = $getuser2["userurl"];
-
-			if ($profilePhoto2 != '') {
-				$profilePhoto2 = $profilePhoto2;
-			} else {
-				$profilePhoto2 = 'user-placeholder.jpg';
-			}
-
-			$mailBodyContent = '';
-			$mailBodyContent = '<div style="padding:20px 0px;text-align:center;background-color:#ffffff">
+		$mailBodyContent = '';
+		$mailBodyContent = '<div style="padding:20px 0px;text-align:center;background-color:#ffffff">
 	 <a href="' . $fullurl . '" style="display:inline-block;padding:10px" target="_blank">
     <img src="' . $fullurl . 'images/ndimlogo.png" width="150px;">
     </a>
@@ -101,16 +101,16 @@ if ($_REQUEST['userId'] != '' && $_REQUEST['postId'] != '') {
 </div></div>';
 
 
-			$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
+		$subject = "" . $firstName2 . " Shared a Document on " . $companNameTitle . "";
 
-			$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
-			$headers .= "MIME-Version: 1.0\r\n";
-			$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+		$headers = 'From: ' . $companNameTitle . '<do_not_reply@scgindia.in>' . "\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 
-			//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
-			send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
+		//$mailSent=@mail($email,$subject,$mailBodyContent,$headers);
+		send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, $mailBodyContent);
 
-		}
+	}
 
 }
 ?>
@@ -132,48 +132,48 @@ if ($_REQUEST['userId'] != '' && $_REQUEST['postId'] != '') {
 			$userphoto2 = 'user-placeholder.jpg';
 		}
 		?>
-			<li>
-				<div class="rquest-box">
-					<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2["userId"]); ?>/<?php echo $friendnameurl2; ?>.html"
-						target="_blank" class="rqst-img"><img
-							src="<?php echo $fullurl; ?>uploads/<?php echo $userphoto2; ?>"></a>
+		<li>
+			<div class="rquest-box">
+				<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2["userId"]); ?>/<?php echo $friendnameurl2; ?>.html"
+					target="_blank" class="rqst-img"><img
+						src="<?php echo $fullurl; ?>uploads/<?php echo $userphoto2; ?>"></a>
 
-					<div class="rqst-right">
-						<div class="rquest-middle">
-							<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2["userId"]); ?>/<?php echo $friendnameurl2; ?>.html"
-								target="_blank"><?php echo $userres2["firstName"]; ?>	 	<?php echo $userres2["lastName"]; ?></a>
-							<div style="font-size:12px; color:#9a9a9a;"><?php echo $userres2["jobTitle"]; ?> at
-								<?php echo $userres2["companyName"]; ?>
-							</div>
+				<div class="rqst-right">
+					<div class="rquest-middle">
+						<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres2["userId"]); ?>/<?php echo $friendnameurl2; ?>.html"
+							target="_blank"><?php echo $userres2["firstName"]; ?> 	<?php echo $userres2["lastName"]; ?></a>
+						<div style="font-size:12px; color:#9a9a9a;"><?php echo $userres2["jobTitle"]; ?> at
+							<?php echo $userres2["companyName"]; ?>
+						</div>
 
-							<?php
-							$n = 0;
-							unset($selectFields);
-							unset($whereFields);
-							unset($whereVals);
+						<?php
+						$n = 0;
+						unset($selectFields);
+						unset($whereFields);
+						unset($whereVals);
 
-							$sqlCheck = "";
-							$sqlCheck = mysqli_query(
-								$conn,
-								"SELECT * FROM " . _VAULT_SHARE_MASTER_ . " 
+						$sqlCheck = "";
+						$sqlCheck = mysqli_query(
+							$conn,
+							"SELECT * FROM " . _VAULT_SHARE_MASTER_ . " 
      WHERE userId = " . (int) $userres2['userId'] . " 
      AND postId = " . (int) decodeStr($_REQUEST['postId'])
-							) or die(mysqli_error($conn));
+						) or die(mysqli_error($conn));
 
-							if (mysqli_num_rows($sqlCheck) > 0) {
-								?>
-									<i class="fa fa-check greentick" aria-hidden="true"></i>
-									<?php
-							} else {
-								?>
-									<div class="add-frnd">
-										<a onclick="vaultsendrequest('<?php echo encodeStr($userres2['userId']); ?>');">Share</a>
-									</div>
-							<?php } ?>
-						</div>
+						if (mysqli_num_rows($sqlCheck) > 0) {
+							?>
+							<i class="fa fa-check greentick" aria-hidden="true"></i>
+							<?php
+						} else {
+							?>
+							<div class="add-frnd">
+								<a onclick="vaultsendrequest('<?php echo encodeStr($userres2['userId']); ?>');">Share</a>
+							</div>
+						<?php } ?>
 					</div>
 				</div>
-			</li>
+			</div>
+		</li>
 	<?php } ?>
 </ul>
 <script>

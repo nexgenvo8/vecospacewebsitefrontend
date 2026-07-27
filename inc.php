@@ -1,21 +1,18 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+ini_set('session.gc_maxlifetime', 2592000); // 30 days
+ini_set('session.cookie_lifetime', 2592000); // 30 days
+session_set_cookie_params(2592000); // 30 days
 
-// ini_set('session.gc_maxlifetime', 2592000);
-// ini_set('session.cookie_lifetime', 2592000);
-// session_set_cookie_params(2592000);
+session_start();
 
-// session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-
-include_once(__DIR__ . '/config/config.php');
-include_once(__DIR__ . '/config/database.php');
-include_once(__DIR__ . '/config/functions.php');
+error_reporting(0);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 
+include_once('config/config.php'); // contains all the defined common variables used in application
+include_once('config/database.php'); // contains all the tailored datbase functions to avoid direct query execution
+include_once('config/functions.php'); // contains all the functions used in the application
 ini_set('upload_max_filesize', '40M');
 ini_set('post_max_size', '40M');
 
@@ -27,14 +24,16 @@ function openConn()
 	}
 	return $conn;
 }
+mysqli_set_charset($conn, "utf8mb4");
+
 // $fullurl = 'https://jmi.vecospace.com/';
 // $withoutwwwurl = 'https://jmi.vecospace.com/';
 // $withouthttpsurl = 'https://jmi.vecospace.com/';
 // $domainname = 'vecospace.com';
 
-$fullurl = 'http://localhost/ndimvecospace/vecospacewebsitefrontend/';
-$withoutwwwurl = 'http://localhost/ndimvecospace/vecospacewebsitefrontend/';
-$withouthttpsurl = 'http://localhost/ndimvecospace/vecospacewebsitefrontend/';
+$fullurl = 'https://ndim.vecospace.com/';
+$withoutwwwurl = 'https://ndim.vecospace.com/';
+$withouthttpsurl = 'https://ndim.vecospace.com/';
 $domainname = 'vecospace.com';
 
 $actual_sitelink1 = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
@@ -50,6 +49,7 @@ function error_found($id)
 
 $companyname = 'Welcome to NDIM VECOSPACE';
 $companNameTitle = 'NDIM VECOSPACE';
+$ndimvecospace = 'Corrintech Technology Pvt. Ltd';
 
 // ✅ fixed session check (your OR condition was always true)
 if (isset($_SESSION["sessUserId"]) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0 && is_numeric($_SESSION["sessUserId"])) {

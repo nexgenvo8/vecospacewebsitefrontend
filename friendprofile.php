@@ -3,7 +3,7 @@
 
 include_once('inc.php');
 $ps = 1;
-if (isset($REQUEST['r']) && $_REQUEST['r'] != '') {
+if (isset($_REQUEST['r']) && $_REQUEST['r'] != '') {
 	$_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 }
 if ($_SESSION["sessUserId"] != '') {
@@ -299,7 +299,7 @@ if (file_exists($userfilename)) {
 									if ($aabb['id'] == '') { ?>
 
 										<?php
-										if (isset($_SESSION['sessUserId']) && $_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
+										if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) {
 											if ($blockeduser > 0) {
 												?>
 												<a class="btn grey addas-contct"
@@ -533,7 +533,7 @@ if (file_exists($userfilename)) {
 															<td width="50px" align="center"><i class="fa fa-check-circle"
 																	aria-hidden="true"></i> </td>
 															<td align="left">Your invitation to add <strong
-																	style="font-size: 18px; font-weight:500; color: #C02621;"><?php echo $myname; ?></strong>
+																	style="font-size: 18px; font-weight:500; color: color: #C02621;;"><?php echo $myname; ?></strong>
 																as a contact has been sent. </td>
 														</tr>
 													</table>
@@ -1014,6 +1014,7 @@ if (file_exists($userfilename)) {
 									$selectFields = [];
 									$whereFields = [];
 									$whereVals = [];
+
 									$sqlUserRec = "";
 									$sqlUserRec = "SELECT * FROM " . _USER_RECOMMENDATIONS_TABLE_ . " WHERE contactId=" . $useruserId . " and status=1 order by dateAdded desc ";
 									$resUserRec = getRecords(_USER_RECOMMENDATIONS_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlUserRec);
@@ -1068,9 +1069,11 @@ if (file_exists($userfilename)) {
 												</div>
 												<?php
 											}
+
 											?>
 										</li>
 										<?php
+
 									}
 									?>
 								</ul>
@@ -1111,4 +1114,5 @@ if (file_exists($userfilename)) {
 		<?php } ?>
 	</script>
 </body>
+
 </html>

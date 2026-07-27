@@ -29,13 +29,15 @@ if (isset($_SESSION["sessUserId"]) && !empty($_SESSION["sessUserId"])) {
 
 	// Check if records exist
 	$sql_inss4 = "SELECT id FROM " . _SHAREANDUPDATES_TABLE_ . " WHERE userId = $userId AND postType=0";
+	// print_r($sql_inss4);die;
 	$resresults4 = mysqli_query($conn, $sql_inss4);
+		// print_r($resresults4);die;
 	if (!$resresults4) {
 		die("Error fetching share updates: " . mysqli_error($conn));
 	}
-
+// 
 	$gettotalrows = mysqli_num_rows($resresults4);
-
+// print_r($gettotalrows);die;
 	if ($gettotalrows == 0) {
 		// Delete existing entries
 		$sql_del = "DELETE FROM " . _SHAREANDUPDATES_TABLE_ . " WHERE userId = $userId AND postType=0";
@@ -70,13 +72,15 @@ if (isset($_SESSION["sessUserId"]) && !empty($_SESSION["sessUserId"])) {
                       FROM " . _CONTACT_MASTER_TABLE_ . " 
                       WHERE userId = $userId AND status=1 AND birthdayStatus=1
                   ) 
-                  AND dob != '0000-00-00'";
+                ";
+// print_r($sqlQuery1);die;   AND dob != '0000-00-00'
 
 	$resQuery1 = mysqli_query($conn, $sqlQuery1);
+
 	if (!$resQuery1) {
 		die("Error fetching birthdays: " . mysqli_error($conn));
 	}
-
+// print_r('test');die;
 	while ($rowcontacts1 = mysqli_fetch_assoc($resQuery1)) {
 		$userdob1 = $rowcontacts1["dob"];
 		$userdobArr1 = explode("-", $userdob1);
@@ -234,7 +238,7 @@ $industryId = 19999999;
 												</div>
 												<div id="tagcontactdiv" style="display:none;"></div>
 												<textarea name="postText" id="postText" placeholder="What's in your mind"
-													onKeyUp="getsitecontent(); showmyheader();" onBlur="showmyheader();"
+													onKeyUp="showmyheader();" onBlur="showmyheader();"
 													onClick="$('#myheaderid').show();"></textarea><input type="hidden"
 													name="tageduserid" id="tageduserid" value="">
 												<input type="hidden" name="tagedcompanyid" id="tagedcompanyid" value="">
@@ -303,7 +307,7 @@ $industryId = 19999999;
 								</div>
 							</div>
 						</div>
-						<?php include('right-sidebar.php'); ?>
+						<?php  include('right-sidebar.php'); ?>
 					</div>
 				</div>
 			</div>
@@ -394,31 +398,37 @@ $industryId = 19999999;
 		}
 
 
-		function getsitecontent() {
-			var sitecontent = $('#postText').val();
-			gettag(sitecontent);
+			/* function getsitecontent() {
+		var sitecontent = $('#postText').val();
+		gettag(sitecontent);
 
+		var linkpasted = $('#linkpasted').val();
+		var detectedUrl = '';
 
-			var postType = $('#postType').val();
-			var linkpasted = $('#linkpasted').val();
+		URI.withinString(sitecontent, function (url) {
+			detectedUrl = url;
+		});
 
-			var nurl = '';
-			var url = sitecontent;
+		if (detectedUrl == '') return;
+		if (linkpasted == 1) return;
 
-			var result = URI.withinString(url, function (url) { nurl = url; });
+		$('#linkpasted').val(1);
 
-			if (nurl != '') {
+		$('#websitecontentblock').show();
+		$('#websitecontentblock').html('<div style="text-align:center;margin-bottom: 10px;"><img src="images/mainloading.gif"></div>');
 
-				var nurl = nurl.replace("https", "http");
-				if (postType == 2 && linkpasted == 0) {
-					$('#websitecontentblock').show();
-					$('#websitecontentblock').html('<div style="text-align:center;margin-bottom: 10px;"><img src="images/mainloading.gif"></div>');
-					$('#websitecontentblock').load('getwebsitecontent.php?viewpostid=<?php echo encodeStr($postId); ?>&url=' + nurl);
-				}
-			}
-		}
+		$('#websitecontentblock').load('getwebsitecontent.php?viewpostid=<?php echo encodeStr($postId); ?>&url=' + encodeURIComponent(detectedUrl));
+	}
+ */
+		/* $('#frmposthome').on('submit', function () {
+		var txt = $('#postText').val();
 
+		// remove all URLs from text
+		txt = txt.replace(/https?:\/\/[^\s]+/gi, '');
+		txt = txt.replace(/www\.[^\s]+/gi, '');
 
+		$('#postText').val(txt.trim());
+	}); */
 		$(document).ready(function () {
 			loadtimeline(1, 0, 20);
 		});

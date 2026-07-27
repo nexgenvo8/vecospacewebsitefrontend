@@ -6,7 +6,7 @@ include_once('config/session-check.inc.php'); // check user login session
 $pageIndex = 27;
 
 
-if (isset($_REQUEST['numberofMentees']) && $_REQUEST['numberofMentees'] != 0 && $_REQUEST['numberofMentees'] != '') {
+if ($_REQUEST['numberofMentees'] != 0 && $_REQUEST['numberofMentees'] != '') {
 
 
 	$insertFields = [];
@@ -24,7 +24,7 @@ if (isset($_REQUEST['numberofMentees']) && $_REQUEST['numberofMentees'] != 0 && 
 
 }
 
-if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['studentIdcontact'] != '' && $_REQUEST['action'] == 'actrequest') {
+if ($_REQUEST['studentIdcontact'] != '' && $_REQUEST['action'] == 'actrequest') {
 
 	$dateAdded = time();
 	$studentIdcontact = decodeStr($_REQUEST['studentIdcontact']);
@@ -37,7 +37,7 @@ if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['studentIdcontact'] != '' 
 	header('Location: become-a-mentor.html');
 }
 
-if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['removeresion']) {
+if (trim($_REQUEST['removeresion']) != '') {
 
 	$studentId = $_REQUEST['id'];
 	$status = $_REQUEST['status'];
@@ -103,54 +103,7 @@ if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['removeresion']) {
 				<?php include('left-sidebar.php'); ?>
 				<div class="center_content">
 					<div class="pnding-contct becomementordiv">
-						<div class="clearfix mentrbelwborder">
-							<?php
-							$selectFields = [];
-							$whereFields = [];
-							$whereVals = [];
-
-
-							$sqlLogin2 = "";
-							$sqlLogin2 = "select * from " . _USERS_MASTER_TABLE_ . " where userId='" . $_SESSION["sessUserId"] . "'";
-							$resLogin2 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin2);
-							$rowLogin2 = mysqli_fetch_array($resLogin2);
-							?>
-							<form enctype="multiple/formdata" name="hiremstudents">
-								<h4 class="insideslect">
-									<table class="mentortable" border="0" align="center" cellpadding="5"
-										cellspacing="0">
-										<tr class="mentorrow">
-											<td>I Want To Mentor&nbsp;&nbsp;</td>
-											<td></td>
-											<td>
-												<select name="numberofMentees" id="numberofMentees" disabled>
-													<option value="0">Select</option>
-													<?php
-													for ($i = 1; $i <= 5; $i++) { ?>
-														<option value="<?php echo $i; ?>" <?php if ($rowLogin2['numberofMentees'] == $i) {
-															   echo 'selected';
-														   } ?>
-															<?php if ($i < $rowLogin2['numberofMentees']) ?>>
-															<?php echo $i; ?>
-														</option>
-														<?php
-													}
-													?>
-												</select>
-												&nbsp;&nbsp;Student
-											</td>
-
-											<td class="subbtn73">
-												<button type="button" onclick="funcEditMentor();">Edit</button>&nbsp;
-												<button type="submit" class="hirestudentbtnsubmit">Submit</button>
-											</td>
-										</tr>
-									</table>
-
-								</h4>
-
-							</form>
-						</div>
+						
 						<div class="mentrbelwborder">
 							<script>
 								function funcEditMentor() {
@@ -201,7 +154,7 @@ if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['removeresion']) {
 							<div class="menteesearchdiv">
 								<form name="mentorsrchFrm" id="mentorsrchFrm">
 									<input type="text" name="mentorSearch" id="mentorSearch"
-										value="<?php echo $_GET['mentorSearch'] ?? ''; ?>" maxlength="60"
+										value="<?php echo $_GET['mentorSearch']; ?>" maxlength="60"
 										placeholder="Enter name or email address" autocomplete="off"
 										onkeyup="mentorSearch()">
 									<button type="button" class="serachwithmenteebtn"
@@ -239,8 +192,8 @@ if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['removeresion']) {
 
 								<button type="submit" class="hirestudentbtn"> Accepted <?php echo $accepted; ?>
 									Students</button>
-								<button type="submit" class="hirestudentbtn remainingstudens">Remaining
-									<?php echo $remaining; ?> Students</button>
+								<!-- <button type="submit" class="hirestudentbtn remainingstudens">Remaining
+									<?php echo $remaining; ?> Students</button> -->
 							</div>
 						</div>
 						<div class="contct-list-cont mentormargtop">
@@ -302,70 +255,7 @@ if (isset($_REQUEST['studentIdcontact']) && $_REQUEST['removeresion']) {
 													</div>
 												</div>
 											</div>
-											<div class="rerestselectaction">
-												<div class="btnslecectionactioninment">
-													<!-- <a href="common_action.php?studentIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=declinest">-->
-													<button id="removestudentBtn<?php echo encodeStr($userres['userId']); ?>"
-														class="removebtnnew"
-														onClick="$('#studentModal<?php echo encodeStr($userres['userId']); ?>').show();">Remove</button>
-
-
-													<div id="studentModal<?php echo encodeStr($userres['userId']); ?>"
-														class="studentcntmodal">
-														<form method="post" name="acceptrequestfomr" action=""
-															enctype="multiple/formdata">
-															<div class="modal-content">
-
-																<p class="preallywantrm">Do You Really Want To Remove</p>
-																<p class="usernameinpositon">
-																	<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
-																	<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]); ?>
-																</p>
-																<textarea name="removeresion" class="modeltextareafield"
-																	placeholder="Give Reason" required> </textarea>
-																<div class="removeactionbtn">
-																	<button class="removeyesbtnaction">Yes</button>
-																	<button class="close" type="button"
-																		onClick="$('#studentModal<?php echo encodeStr($userres['userId']); ?>').hide();">Cancel</button>
-																</div>
-															</div>
-															<input id="id" name="id" type="hidden"
-																value="<?php echo $rowLogin["studentId"]; ?>">
-															<input id="status" name="status" type="hidden"
-																value="<?php echo $rowLogin["status"]; ?>">
-															<input id="studentIdcontact" name="studentIdcontact" type="hidden"
-																value="studentIdcontact">
-														</form>
-													</div>
-
-
-
-
-													<!--</a>-->
-													<?php
-													if ($rowLogin['status'] == 0) {
-														?>
-														<a id="actrequesttomentor"
-															href="<?php echo $fullurl; ?>become-a-mentor.html?studentIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=actrequest"
-															onClick="$('#commonloader').show();">Accept<?php echo $studentData1['id']; ?>
-														</a>
-														<img src="images/unchecknew.png" class="unchekbcheckbuttonimg">
-														<?php
-													}
-													?>
-													<?php
-													$studentQuery = "SELECT * from " . _STUDENT_REQUEST_MENTOR_FRND_MASTER_TABLE_ . " WHERE mentorId= '" . $_SESSION["sessUserId"] . "' and status='1' and studentId='" . $rowLogin["studentId"] . "'";
-													$sData = mysqli_query($conn, $studentQuery) or die(mysqli_error($conn));
-													$studentDatas = mysqli_fetch_array($sData);
-													if ($studentDatas['status'] == 1) {
-														?>
-														<div class="selectedmentordiv">Accepted</div>
-														<img src="images/checkednew.png" class="bcheckbuttonimg">
-														<?php
-													}
-													?>
-												</div>
-											</div>
+											
 										</li>
 										<?php
 

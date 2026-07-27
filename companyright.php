@@ -28,32 +28,25 @@
 
 					$friendnameurl = '';
 					$userphoto = '';
-
-					$a = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " WHERE userId = " . intval($folloMembers["userId"]);
+					$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $folloMembers["userId"] . "";
 					$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
 					$userres = mysqli_fetch_array($b);
 
-					// ✅ Handle null or missing array values safely
-					$userres = isset($userres) && is_array($userres) ? $userres : [];
-
 					$friendnameurl = $userres['userurl'] ?? '';
+
 					$userphoto = $userres['profilePhoto'] ?? 'user-placeholder.jpg';
-					$userId = $userres['userId'] ?? 0;
-					$firstName = isset($userres['firstName']) ? trim((string) $userres['firstName']) : '';
-					$lastName = isset($userres['lastName']) ? trim((string) $userres['lastName']) : '';
 
 					?>
-					<li>
-						<a
-							href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userId); ?>/<?php echo $friendnameurl; ?>.html">
-							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes($userphoto); ?>"
-								title="<?php echo stripslashes($firstName . ' ' . $lastName); ?>"
-								alt="<?php echo stripslashes($firstName . ' ' . $lastName); ?>">
-						</a>
+					<li><a
+							href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"><img
+								src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
+								title="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"
+								alt="<?php echo stripslashes(trim($userres["firstName"])); ?> <?php echo stripslashes(trim($userres["lastName"])); ?>"></a>
 					</li>
 					<?php
 					$n++;
 				}
+
 				?>
 				<script>
 					$("#companyfollowers").text('<?php echo $n; ?> Followers');

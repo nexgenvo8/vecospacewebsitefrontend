@@ -11,73 +11,18 @@ $sqlLogin = "";
 $sqlLogin = "select id from " . _LANGUAGES_KONECTT_TABLE_ . " where userId='" . $_SESSION['sessUserId'] . "' ";
 $resLogin = getRecords(_LANGUAGES_KONECTT_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
 if ($resLogin) {
+	
 	while ($row = mysqli_fetch_array($resLogin)) {
 		$countlanguage = $countlanguage + 1;
 	}
 }
-
-
+ 
 ?>
-<?php
-unset($selectFields);
-$whereFields = [];
-$whereVals = [];
-$selectFields = [];
-$sqlOptions = "SELECT id,languagesName FROM " . _LANGUAGES_MASTER_TABLE_ . " ORDER BY languagesName ASC ";
-$resOptions = getRecords(_LANGUAGES_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
-
-$optionsHTML = '';
-if ($resOptions) {
-	while ($rowOptions = mysqli_fetch_array($resOptions)) {
-		$optionsHTML .= '<option value="' . trim($rowOptions['languagesName']) . '">' . trim($rowOptions['languagesName']) . '</option>';
-	}
-}
-$optionsHTML = addslashes($optionsHTML); // escape quotes for JS
-?>
-
-
-
-<script>
-	window.addnewlanguage = function (id, limt) {
-		id = Number(id);
-		limt = Number(limt);
-
-		if ($('#newlanguage' + id).length || limt < id) {
-			return;
-		}
-
-		var displayremove = '<a onClick="removelanguage(' + Number(id) + ');" class="remove">-</a>';
-
-		var optionsHTML = "<?php echo $optionsHTML; ?>"; // safely injected
-
-		$('#editlanguage ul').append(
-			'<li id="newlanguageli' + id + '">' +
-			'<select name="check_list[]" id="newlanguage' + id + '" onChange="addnewlanguage(' + Number(id + 1) + ',100);">' +
-			'<option value="">Select</option>' + optionsHTML +
-			'</select>' +
-			'<select name="check_listlang[]" id="languageExpertId' + id + '">' +
-			'<option value="0"> - </option>' +
-			'<option value="25">Basic knowledge</option>' +
-			'<option value="50">Good knowledge</option>' +
-			'<option value="75">Fluent</option>' +
-			'<option value="100">First language</option>' +
-			'</select>' +
-			displayremove +
-			'</li>'
-		);
-	};
-
-	window.removelanguage = function (id) {
-		$("#newlanguageli" + id).remove();
-	};
-</script>
-
 
 <h3>Languages</h3><a class="add_btn"
-	onClick="$('#editlanguage').show();$('#defaultlanguage').hide();addnewlanguage(<?php echo $countlanguage; ?>,100);$('#languagecontentboxs').hide();">
-	<i class="fa fa-plus-circle" aria-hidden="true"></i>
-	<?php if ($countlanguage > 1) { ?>Edit<?php } else { ?>Add<?php } ?>
-</a>
+	onClick="$('#editlanguage').show();$('#defaultlanguage').hide();addnewlanguage(<?php echo $countlanguage; ?>,100);$('#languagecontentboxs').hide();"><i
+		class="fa fa-plus-circle" aria-hidden="true"></i>
+	<?php if ($countlanguage > 1) { ?>Edit<?php } else { ?>Add<?php } ?></a>
 
 <?php if ($countlanguage == 1) { ?>
 	<div class="add_more" id="defaultlanguage">
@@ -178,6 +123,7 @@ $optionsHTML = addslashes($optionsHTML); // escape quotes for JS
 							?>
 						</select>
 
+
 						<select name="check_listlang[]" id="languageExpertId">
 							<option value="0"> - </option>
 							<?php
@@ -223,11 +169,10 @@ $optionsHTML = addslashes($optionsHTML); // escape quotes for JS
 
 </div>
 
-<!-- <script>
+<script>
 	function addnewlanguage(id, limt) {
 		var id = Number(id);
 		var limt = Number(limt);
-
 
 		if ($('#newlanguage' + id).length || limt < id) {
 
@@ -239,9 +184,9 @@ $optionsHTML = addslashes($optionsHTML); // escape quotes for JS
 
 
 			$('#editlanguage ul').append('<li id="newlanguageli' + id + '"><select name="check_list[]" id="newlanguage' + id + '" onChange="addnewlanguage(' + Number(id + 1) + ',100);"><option value="">Select</option><?php unset($selectFields);
+			$selectFields = [];
 			$whereFields = [];
 			$whereVals = [];
-			$selectFields = [];
 			$sqlOptions = "";
 			$sqlOptions = "SELECT id,languagesName FROM " . _LANGUAGES_MASTER_TABLE_ . " ORDER BY languagesName ASC ";
 			$resOptions = getRecords(_LANGUAGES_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions);
@@ -270,4 +215,4 @@ $optionsHTML = addslashes($optionsHTML); // escape quotes for JS
 	}
 
 
-</script> -->
+</script>

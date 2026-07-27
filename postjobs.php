@@ -1,8 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include_once('inc.php');
 include_once('config/session-check.inc.php'); // check user login session
 include('mail.php');
-$pageIndex = 8;
+$pageIndex = 14;
 
 $action = 'add';
 $btnValue = 'Submit Job';
@@ -49,35 +51,49 @@ if (isset($_REQUEST['id']) && $_REQUEST['id'] != '') {
 	$btnValue = 'Update Job';
 
 } else {
-	$sqlDetails = "SELECT * from " . _COMPANY_MASTER_TABLE_ . " WHERE id= " . decodeStr($_GET['companyId']) . " ";
-	$resDetails = mysqli_query($conn, $sqlDetails) or die(mysqli_error($conn));
-	$companyInfo = mysqli_fetch_array($resDetails);
-	$companyId = $_GET['companyId'];
 
-	$companyTypeId = $companyInfo["companyTypeId"];
+    if(isset($_GET['type']) && $_GET['type'] == 'market'){
+        
+        // Market job ke liye default values
+        $companyId = 0;
+        $companyTypeId = '';
+        $companyAddress = '';
+        $postalCode = '';
+        $companyName = '';
+        $fulljoblocation = '';
 
-	if ($companyInfo["countryId"] != 0 && $companyInfo["countryId"] != '') {
-		$atac = "";
-		$atac = "select * from " . _COUNTRIES_TABLE_ . " where  id= " . $companyInfo["countryId"] . " ";
-		$ptac = mysqli_query($conn, $atac) or die(mysqli_error($conn));
-		$rowcmpdetails = mysqli_fetch_array($ptac);
-		$empcountry_name = $rowcmpdetails['country_name'];
-	}
+    } else {
 
-	if ($companyInfo["stateId"] != 0 && $companyInfo["stateId"] != '') {
-		$atac = "";
-		$atac = "select * from " . _STATE_MASTER_TABLE_ . " where  id= " . $companyInfo["stateId"] . " ";
-		$ptac = mysqli_query($conn, $atac) or die(mysqli_error($conn));
-		$rowcmpdetails = mysqli_fetch_array($ptac);
-		$empstate_name = $rowcmpdetails['name'];
-	}
-	$fulljoblocation = $empcountry_name . ', ' . $empstate_name;
-	$companyAddress = trim($companyInfo['companyAddress']);
-	$postalCode = trim($companyInfo['postalCode']);
-	$companyName = trim($companyInfo['companyName']);
+        $sqlDetails = "SELECT * from " . _COMPANY_MASTER_TABLE_ . " WHERE id= " . decodeStr($_GET['companyId']) . " ";
+        $resDetails = mysqli_query($conn, $sqlDetails) or die(mysqli_error($conn));
+        $companyInfo = mysqli_fetch_array($resDetails);
+
+        $companyId = $_GET['companyId'];
+        $companyTypeId = $companyInfo["companyTypeId"] ?? '';
+
+        $empcountry_name = '';
+        $empstate_name = '';
+
+        if ($companyInfo["countryId"] != 0 && $companyInfo["countryId"] != '') {
+            $atac = "select * from " . _COUNTRIES_TABLE_ . " where id= " . $companyInfo["countryId"];
+            $ptac = mysqli_query($conn, $atac) or die(mysqli_error($conn));
+            $rowcmpdetails = mysqli_fetch_array($ptac);
+            $empcountry_name = $rowcmpdetails['country_name'] ?? '';
+        }
+
+        if ($companyInfo["stateId"] != 0 && $companyInfo["stateId"] != '') {
+            $atac = "select * from " . _STATE_MASTER_TABLE_ . " where id= " . $companyInfo["stateId"];
+            $ptac = mysqli_query($conn, $atac) or die(mysqli_error($conn));
+            $rowcmpdetails = mysqli_fetch_array($ptac);
+            $empstate_name = $rowcmpdetails['name'] ?? '';
+        }
+
+        $fulljoblocation = $empcountry_name . ', ' . $empstate_name;
+        $companyAddress = trim($companyInfo['companyAddress'] ?? '');
+        $postalCode = trim($companyInfo['postalCode'] ?? '');
+        $companyName = trim($companyInfo['companyName'] ?? '');
+    }
 }
-
-
 
 
 if (isset($_POST['jobTitle']) && $_POST['jobTitle'] != '') {
@@ -102,8 +118,8 @@ if (isset($_POST['jobTitle']) && $_POST['jobTitle'] != '') {
 	$jobLocation = clean($_POST['jobLocation']);
 
 	$status = normalclean($_POST['status']);
-	$jobStatus = trim($_POST['jobStatus']);
-	$jobConsultant = trim($_POST['jobConsultant']);
+$jobStatus = isset($_POST['jobStatus']) ? trim($_POST['jobStatus']) : 0;
+$jobConsultant = isset($_POST['jobConsultant']) ? trim($_POST['jobConsultant']) : 0;
 	$jobKeywords = normalclean($_POST['jobKeywords']);
 	$fulljoblocation = $jobLocation;
 	if ($appliedType == 1) {
@@ -113,11 +129,22 @@ if (isset($_POST['jobTitle']) && $_POST['jobTitle'] != '') {
 	}
 
 	$tc = 0;
-	$sqlcmp = "SELECT id from " . _COMPANY_MASTER_TABLE_ . " WHERE id= " . $companyId . " and userId='" . $_SESSION["sessUserId"] . "'";
-	$rescmp = mysqli_query($conn, $sqlcmp);
-	while ($getCompany = mysqli_fetch_array($rescmp)) {
-		$tc++;
-	}
+
+if(isset($_GET['type']) && $_GET['type'] == 'market'){
+    // Market job ke liye company check skip
+    $tc = 1;
+}else{
+
+    $sqlcmp = "SELECT id from " . _COMPANY_MASTER_TABLE_ . " 
+               WHERE id= " . $companyId . " 
+               and userId='" . $_SESSION["sessUserId"] . "'";
+
+    $rescmp = mysqli_query($conn, $sqlcmp);
+
+    while ($getCompany = mysqli_fetch_array($rescmp)) {
+        $tc++;
+    }
+}
 
 	if ($tc == 0) {
 		header("Location: " . $fullurl . "jobs.html");
@@ -126,7 +153,7 @@ if (isset($_POST['jobTitle']) && $_POST['jobTitle'] != '') {
 
 	if ($tc > 0) {
 
-		if ($jobTitle != '' && $companyTypeId != '' && $levelId != '' && $proSkills != '' && $status == 1 && $action == 'add') {
+		if ($careerJobTitle != '' && $companyTypeId != '' && $levelId != '' && $proSkills != '' && $status == 1 && $action == 'add') {
 
 
 			$insertFields = [];
@@ -193,7 +220,12 @@ if (isset($_POST['jobTitle']) && $_POST['jobTitle'] != '') {
 			//adminnotification($subject,$mailBodyContent);
 
 			//header('Location:'.$fullurl._SMBURL_TEXT_.'/'.encodeStr($postId).'/'.$pageulr.'.html');
-			header('Location:' . $fullurl . 'company-jobs.html?companyId=' . encodeStr($companyId) . '');
+			if(isset($_GET['type']) && $_GET['type'] == 'market'){
+				header('Location:' . $fullurl . 'jobs.html');
+			}else{
+				header('Location:' . $fullurl . 'company-jobs.html?companyId=' . encodeStr($companyId));
+			}
+			exit();
 			exit();
 
 		} elseif ($jobTitle != '' && $companyTypeId != '' && $levelId != '' && $proSkills != '' && $action == 'edit') {
@@ -252,7 +284,12 @@ if (isset($_POST['jobTitle']) && $_POST['jobTitle'] != '') {
 			$_SESSION["s"] = 2;
 			$_SESSION["post"] = 1;
 
-			header('Location:' . $fullurl . 'company-jobs.html?companyId=' . encodeStr($companyId) . '');
+			if(isset($_GET['type']) && $_GET['type'] == 'market'){
+    header('Location:' . $fullurl . 'jobs.html');
+}else{
+    header('Location:' . $fullurl . 'company-jobs.html?companyId=' . encodeStr($companyId));
+}
+exit();
 			exit();
 
 		}

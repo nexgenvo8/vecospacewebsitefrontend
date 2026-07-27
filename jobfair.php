@@ -1,167 +1,166 @@
-    <?php
-    include_once('inc.php');
-    include_once('config/session-check.inc.php'); // check user login session
-    include('mail.php');
-    ini_set('upload_max_filesize', '20M');
-    ini_set('post_max_size', '25M');
-    $pageIndex = 50;
-    //print_r($_POST);
-    
+<?php
+include_once('inc.php');
+include_once('config/session-check.inc.php'); // check user login session
+include('mail.php');
+ini_set('upload_max_filesize', '20M');
+ini_set('post_max_size', '25M');
+$pageIndex = 50;
+//print_r($_POST);
 
-    if (
-        !empty($_POST['studentId']) &&
-        !empty($_POST['mobile']) &&
-        (!empty($_POST['action']) && trim($_POST['action']) == 'addcompany')
-    ) {
 
-        $userId = $_SESSION['sessUserId'];
+if (
+    !empty($_POST['studentId']) &&
+    !empty($_POST['mobile']) &&
+    (!empty($_POST['action']) && trim($_POST['action']) == 'addcompany')
+) {
 
-        if (!$userId) {
-            echo "<script>
+    $userId = $_SESSION['sessUserId'];
+
+    if (!$userId) {
+        echo "<script>
             alert('Session expired. Please log in again.');
             window.location.href = 'https://jmi.vecospace.com/';
         </script>";
-            exit;
-        }
-
-        //////////////check already registered////////////////
-        $checkIfRegistered = "SELECT registrationNo FROM userMaster WHERE userId = '$userId' LIMIT 1";
-        $checkResult = mysqli_query($conn, $checkIfRegistered);
-        $checkRow = mysqli_fetch_assoc($checkResult);
-
-        if ($checkRow && !empty($checkRow['registrationNo'])) {
-            echo "<script>
-            alert('You are already registered. Your registration number is: {$checkRow['registrationNo']}');
-            window.location.href = 'job-fair.html';
-        </script>";
-            exit;
-        }
-
-        $studentId = trim($_POST['studentId']);
-        $mobile = trim($_POST['mobile']);
-        $semester = trim($_POST['semester']);
-        $photoIdType = trim($_POST['photoIdType']);
-        $jobTerms = trim($_POST['jobTerms']);
-        $prefix = 'UPC' . date('y') . date('m'); // e.g. UPC2509
-        $timename = time();
-
-        // ---------- File Upload Helper with error messages ----------
-        function uploadFile($field, $timename, $maxSize = 5242880)
-        {
-            if (isset($_FILES[$field]) && $_FILES[$field]['error'] !== 4) { // file chosen
-                $errorCode = $_FILES[$field]['error'];
-
-                if ($errorCode !== 0) {
-                    return "Upload failed (error code $errorCode). Please try again.";
-                }
-
-                $fileTmp = $_FILES[$field]['tmp_name'];
-                $fileName = $_FILES[$field]['name'];
-                $fileSize = $_FILES[$field]['size'];
-
-                // Validate size
-                if ($fileSize > $maxSize) {
-                    return "File too large! Max size is 5MB.";
-                }
-
-                // Validate image (Google Drive, PDFs, etc. will fail)
-                $check = @getimagesize($fileTmp);
-                if ($check === false) {
-                    return "Invalid file source! Please upload only images from Gallery or Camera, not Google Drive.";
-                }
-
-                // Validate extension
-                $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-                $allowedExt = ['jpg', 'jpeg', 'png'];
-                if (!in_array($ext, $allowedExt)) {
-                    return "Invalid file type! Only JPG and PNG are allowed.";
-                }
-
-                // Save
-                $filename = $timename . "_" . preg_replace('!\s+!', '-', $fileName);
-                $destination = "uploads/" . $filename;
-
-                if (move_uploaded_file($fileTmp, $destination)) {
-                    return $filename; // ✅ success
-                } else {
-                    return "Failed to save uploaded file. Please try again.";
-                }
-            }
-            return ''; // no file uploaded
-        }
-
-        // ---------- Upload files ----------
-        $errorMsg = "";
-
-        $university_file_name = uploadFile('universityIdAttchment', $timename);
-        if ($university_file_name && !file_exists("uploads/" . $university_file_name)) {
-            $errorMsg = $university_file_name;
-        }
-
-        $photo_id_name = uploadFile('studentphotoId', $timename);
-        if ($photo_id_name && !file_exists("uploads/" . $photo_id_name)) {
-            $errorMsg = $photo_id_name;
-        }
-
-        $profile_photo = uploadFile('profileimg', $timename);
-        if ($profile_photo && !file_exists("uploads/" . $profile_photo)) {
-            $errorMsg = $profile_photo;
-        }
-
-        // If error → alert and stop
-        if ($errorMsg !== "") {
-            echo "<script>alert('❌ $errorMsg'); window.history.back();</script>";
-            exit;
-        }
-
-        // ---------- Generate new registration number ----------
-        $query = "SELECT registrationNo FROM userMaster WHERE registrationNo LIKE '$prefix%' 
-               ORDER BY registrationNo DESC LIMIT 1";
-        $result = mysqli_query($conn, $query);
-        $row = mysqli_fetch_assoc($result);
-
-        if ($row) {
-            $lastRegNo = $row['registrationNo'];
-            $lastNumber = (int) substr($lastRegNo, -4);
-            $newNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
-        } else {
-            $newNumber = '0001';
-        }
-        $registrationNo = $prefix . $newNumber;
-
-        // ---------- Build Update Query ----------
-        $setParts = array(
-            "studentId = '" . mysqli_real_escape_string($conn, $studentId) . "'",
-            "mobile = '" . mysqli_real_escape_string($conn, $mobile) . "'",
-            "semester = '" . mysqli_real_escape_string($conn, $semester) . "'",
-            "photoIdType = '" . mysqli_real_escape_string($conn, $photoIdType) . "'",
-            "registrationNo = '" . mysqli_real_escape_string($conn, $registrationNo) . "'",
-            "jobTerms = '" . mysqli_real_escape_string($conn, $jobTerms) . "'"
-        );
-
-        if (!empty($university_file_name)) {
-            $setParts[] = "universityIdAttchment = '" . mysqli_real_escape_string($conn, $university_file_name) . "'";
-        }
-        if (!empty($photo_id_name)) {
-            $setParts[] = "studentphotoId = '" . mysqli_real_escape_string($conn, $photo_id_name) . "'";
-        }
-        if (!empty($profile_photo)) {
-            $setParts[] = "profilePhoto = '" . mysqli_real_escape_string($conn, $profile_photo) . "'";
-        }
-
-        $sql_ins = "UPDATE userMaster SET " . implode(", ", $setParts) . " WHERE userId = '$userId'";
-        mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
-
-        $_SESSION["s"] = 1;
-
-        echo "<script>
-        alert('✅ Saved Successfully! Your UPC Registration No: $registrationNo');
-        window.location.href = 'timeline.html';
-    </script>";
         exit;
     }
 
-    ?>
+    //////////////check already registered////////////////
+    $checkIfRegistered = "SELECT registrationNo FROM usermaster WHERE userId = '$userId' LIMIT 1";
+    $checkResult = mysqli_query($conn, $checkIfRegistered);
+    $checkRow = mysqli_fetch_assoc($checkResult);
+
+    if ($checkRow && !empty($checkRow['registrationNo'])) {
+        echo "<script>
+            alert('You are already registered. Your registration number is: {$checkRow['registrationNo']}');
+            window.location.href = 'job-fair.html';
+        </script>";
+        exit;
+    }
+
+    $studentId   = trim($_POST['studentId']);
+    $mobile      = trim($_POST['mobile']);
+    $semester    = trim($_POST['semester']);
+    $photoIdType = trim($_POST['photoIdType']);
+    $jobTerms    = trim($_POST['jobTerms']);
+    $prefix      = 'NDIM' . date('y') . date('m'); // e.g. UPC2509
+    $timename    = time();
+
+    // ---------- File Upload Helper with error messages ----------
+    function uploadFile($field, $timename, $maxSize = 5242880) {
+        if (isset($_FILES[$field]) && $_FILES[$field]['error'] !== 4) { // file chosen
+            $errorCode = $_FILES[$field]['error'];
+
+            if ($errorCode !== 0) {
+                return "Upload failed (error code $errorCode). Please try again.";
+            }
+
+            $fileTmp  = $_FILES[$field]['tmp_name'];
+            $fileName = $_FILES[$field]['name'];
+            $fileSize = $_FILES[$field]['size'];
+
+            // Validate size
+            if ($fileSize > $maxSize) {
+                return "File too large! Max size is 5MB.";
+            }
+
+            // Validate image (Google Drive, PDFs, etc. will fail)
+            $check = @getimagesize($fileTmp);
+            if ($check === false) {
+                return "Invalid file source! Please upload only images from Gallery or Camera, not Google Drive.";
+            }
+
+            // Validate extension
+            $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+            $allowedExt = ['jpg', 'jpeg', 'png'];
+            if (!in_array($ext, $allowedExt)) {
+                return "Invalid file type! Only JPG and PNG are allowed.";
+            }
+
+            // Save
+            $filename    = $timename . "_" . preg_replace('!\s+!', '-', $fileName);
+            $destination = "uploads/" . $filename;
+
+            if (move_uploaded_file($fileTmp, $destination)) {
+                return $filename; // ✅ success
+            } else {
+                return "Failed to save uploaded file. Please try again.";
+            }
+        }
+        return ''; // no file uploaded
+    }
+
+    // ---------- Upload files ----------
+    $errorMsg = "";
+
+    $university_file_name = uploadFile('universityIdAttchment', $timename);
+    if ($university_file_name && !file_exists("uploads/" . $university_file_name)) {
+        $errorMsg = $university_file_name;
+    }
+
+    $photo_id_name = uploadFile('studentphotoId', $timename);
+    if ($photo_id_name && !file_exists("uploads/" . $photo_id_name)) {
+        $errorMsg = $photo_id_name;
+    }
+
+    $profile_photo = uploadFile('profileimg', $timename);
+    if ($profile_photo && !file_exists("uploads/" . $profile_photo)) {
+        $errorMsg = $profile_photo;
+    }
+
+    // If error → alert and stop
+    if ($errorMsg !== "") {
+        echo "<script>alert('❌ $errorMsg'); window.history.back();</script>";
+        exit;
+    }
+
+    // ---------- Generate new registration number ----------
+    $query  = "SELECT registrationNo FROM usermaster WHERE registrationNo LIKE '$prefix%' 
+               ORDER BY registrationNo DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    $row    = mysqli_fetch_assoc($result);
+
+    if ($row) {
+        $lastRegNo   = $row['registrationNo'];
+        $lastNumber  = (int)substr($lastRegNo, -4);
+        $newNumber   = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+    } else {
+        $newNumber = '0001';
+    }
+    $registrationNo = $prefix . $newNumber;
+
+    // ---------- Build Update Query ----------
+    $setParts = array(
+        "studentId = '" . mysqli_real_escape_string($conn, $studentId) . "'",
+        "mobile = '" . mysqli_real_escape_string($conn, $mobile) . "'",
+        "semester = '" . mysqli_real_escape_string($conn, $semester) . "'",
+        "photoIdType = '" . mysqli_real_escape_string($conn, $photoIdType) . "'",
+        "registrationNo = '" .mysqli_real_escape_string($conn, $registrationNo) . "'",
+        "jobTerms = '" . mysqli_real_escape_string($conn, $jobTerms) . "'"
+    );
+
+    if (!empty($university_file_name)) {
+        $setParts[] = "universityIdAttchment = '" . mysqli_real_escape_string($conn,$university_file_name) . "'";
+    }
+    if (!empty($photo_id_name)) {
+        $setParts[] = "studentphotoId = '" . mysqli_real_escape_string($conn,$photo_id_name) . "'";
+    }
+    if (!empty($profile_photo)) {
+        $setParts[] = "profilePhoto = '" . mysqli_real_escape_string($conn,$profile_photo) . "'";
+    }
+
+    $sql_ins = "UPDATE usermaster SET " . implode(", ", $setParts) . " WHERE userId = '$userId'";
+    mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+    $_SESSION["s"] = 1;
+
+    echo "<script>
+        alert('✅ Saved Successfully! Your NDIM Registration No: $registrationNo');
+        window.location.href = 'timeline.html';
+    </script>";
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -267,30 +266,26 @@
                 <div class="center_content">
                     <div class="evnts post">
                         <div class="post-evnt company-edt">
-                            <h2>Placement Registration Form for JMI Students</h2>
-                            <p>Placement Registration form for students of Jamia Millia Islamia (University Placement
-                                Cell, Jamia Millia Islamia)</p>
-                             <p style="color:red;">⚠ Please upload document from Camera or Gallery only, not from Google Drive.</p>
-                            <?php if (!empty($registrationNo)) { ?>   
-                                <p style="color:#C02621;"><b>You are registered with UPC No#: <?php echo $registrationNo; ?></b></p>
+                            <h2>Placement Registration Form for NDIM Students</h2>
+                            <p>Placement Registration form for students of NDIM (New Delhi Institute of Management, NDIM)
+                                </p>
+                             <p style="color:#C02621;">⚠ Please upload document from Camera or Gallery only, not from Google Drive.</p>
+                            <?php if(!empty($registrationNo)){ ?>   
+                            <p style="color:#C02621;"><b>You are registered with NDIM No#: <?php echo $registrationNo; ?></b></p>
                             <?php } ?>
                             
                             <form name="frmcreatecompany" id="frmcreatecompany"  method="post" enctype="multipart/form-data" action="">
                                 
                                 <div style="display: flex;">
                                   <div style="padding:5px;">
-                                    <img style="width:80px;" src="<?php echo $fullurl; ?>uploads/<?php if ($profilePhoto != '') {
-                                          echo $profilePhoto;
-                                      } else {
-                                          echo "user-placeholder.jpg";
-                                      } ?>" width="18%" alt="profileimg" />
+                                    <img style="width:80px;" src="<?php echo $fullurl;?>uploads/<?php if($profilePhoto!=''){ echo $profilePhoto; }else{ echo "user-placeholder.jpg"; } ?>" width="18%" alt="profileimg" />
 
                                   </div>
-                                  <?php if (empty($profilePhoto)) { ?>
-                                      <div style="width: 30%;">
-                                      <label>Upload Your Photo</label>
-                                            <input type="file" accept="image/*"  name="profileimg"  class="validate" style="style="width:80px;" height: 36px;" >
-                                      </div>
+                                  <?php if(empty($profilePhoto)){ ?>
+                                  <div style="width: 30%;">
+                                  <label>Upload Your Photo</label>
+                                        <input type="file" accept="image/*"  name="profileimg"  class="validate" style="style="width:80px;" height: 36px;" >
+                                  </div>
                                   <?php } ?>
                                 </div>
                                 
@@ -306,9 +301,9 @@
                                     <select class="form-select" name="departmentname" id="departmentname" required>
                                         <option selected>Department</option>
                                         <?php
-                                        $selectFields = [];
-                                        $whereFields = [];
-                                        $whereVals = [];
+                                        $selectFields= [];
+                                        $whereFields =[];
+                                        $whereVals =[];
 
                                         $sqlOptions = "";
                                         $sqlOptions = "SELECT * FROM " . _DEPARTMENT_MASTER_TABLE_ . " WHERE status=1  order by department_name";
@@ -316,11 +311,9 @@
                                         if ($resOptions) {
                                             while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
-                                                ?>
-                                                        <option value="<?php echo trim($rowOptions['department_name']); ?>" <?php if ($departmentname == $rowOptions['department_name']) {
-                                                               echo "selected";
-                                                           } ?>><?php echo trim($rowOptions['department_name']); ?></option>
-                                                <?php
+                                        ?>
+                                                <option value="<?php echo trim($rowOptions['department_name']); ?>" <?php if($departmentname==$rowOptions['department_name']){ echo "selected"; } ?>><?php echo trim($rowOptions['department_name']); ?></option>
+                                        <?php
                                             }
                                         }
                                         ?>
@@ -331,9 +324,9 @@
                                     <select class="form-select" name="coursename" id="coursename" required>
                                         <option selected>Select Course</option>
                                         <?php
-                                        $selectFields = [];
-                                        $whereFields = [];
-                                        $whereVals = [];
+                                        $selectFields =[];
+                                        $whereFields =[];
+                                        $whereVals= [];
 
                                         $sqlOptions = "";
                                         $sqlOptions = "SELECT * FROM " . _COURSE_MASTER_TABLE_ . " WHERE status=1 order by course_name";
@@ -341,11 +334,9 @@
                                         if ($resOptions) {
                                             while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
-                                                ?>
-                                                        <option value="<?php echo trim($rowOptions['course_name']); ?>" <?php if ($coursename == $rowOptions['course_name']) {
-                                                               echo "selected";
-                                                           } ?>><?php echo trim($rowOptions['course_name']); ?></option>
-                                                <?php
+                                        ?>
+                                                <option value="<?php echo trim($rowOptions['course_name']); ?>" <?php if($coursename==$rowOptions['course_name']){ echo "selected"; } ?>><?php echo trim($rowOptions['course_name']); ?></option>
+                                        <?php
                                             }
                                         }
                                         ?>
@@ -369,27 +360,22 @@
                                     <label>Year of Passing<span class="reqstar">*</span></label>
                                     <select class="form-select" name="passingyear" id="passingyear" required>
                                         <option option="">Select Year</option>
-                                        <option value="2023" <?php if ($passingyear == '2023') {
-                                            echo "selected";
-                                        } ?>>2023</option>
-                                        <option value="2024" <?php if ($passingyear == '2024') {
-                                            echo "selected";
-                                        } ?>>2024</option>
-                                        <option value="2025" <?php if ($passingyear == '2025') {
-                                            echo "selected";
-                                        } ?>>2025</option>
+                                        <option value="2023" <?php if($passingyear=='2023'){ echo "selected"; } ?>>2023</option>
+                                        <option value="2024" <?php if($passingyear=='2024'){ echo "selected"; } ?>>2024</option>
+                                        <option value="2025" <?php if($passingyear=='2025'){ echo "selected"; } ?>>2025</option>
+                                        <option value="2026" <?php if($passingyear=='2026'){ echo "selected"; } ?>>2026</option>
                                         <?php
                                         $currentdate = date("Y", strtotime('+1 years'));
                                         $end = date('Y-m-d', strtotime('+5 years'));
                                         while ($currentdate <= $end) {
-                                            ?>
-                                                <option value="<?php echo $currentdate; ?>"
-                                                    <?php if ($currentdate == $passingyear) {
-                                                        echo 'selected';
-                                                    } ?>> <?php echo $currentdate;
-                                                     $currentdate++; ?>
-                                                </option>
-                                            <?php
+                                        ?>
+                                            <option value="<?php echo $currentdate; ?>"
+                                                <?php if ($currentdate == $passingyear) {
+                                                    echo 'selected';
+                                                } ?>> <?php echo $currentdate;
+                                            $currentdate++; ?>
+                                            </option>
+                                        <?php
                                         }
                                         ?>
                                     </select>
@@ -405,15 +391,9 @@
                                 <div class="form-grp fifty pd-right">
                                     <label>Gender<span class="reqstar">*</span></label>
                                     <select class="form-select" name="gender" id="gender" required>
-                                        <option option="Male" <?php if ($mygender == "Male") {
-                                            echo "selected";
-                                        } ?>>Male</option>
-                                        <option option="Female" <?php if ($mygender == "Female") {
-                                            echo "selected";
-                                        } ?>>Female</option>
-                                        <option option="Other" <?php if ($mygender == "Other") {
-                                            echo "selected";
-                                        } ?>>Other</option>
+                                        <option option="Male" <?php if($mygender=="Male"){ echo "selected"; } ?>>Male</option>
+                                        <option option="Female" <?php if($mygender=="Female"){ echo "selected"; } ?>>Female</option>
+                                        <option option="Other" <?php if($mygender=="Other"){ echo "selected"; } ?>>Other</option>
                                     </select>
                                 </div>
                                 </div>
@@ -430,21 +410,23 @@
                                     <label>Photo ID Type<span class="reqstar">*</span></label>
                                     <select class="form-select" name="photoIdType" id="photoIdType" required>
                                         <?php
-                                        $selectFields = [];
-                                        $whereFields = [];
-                                        $whereVals = [];
-
-                                        $sqlOptions1 = "";
-                                        $sqlOptions1 = "SELECT * FROM documentType ORDER BY name ";
-                                        $resOptions1 = getRecords("documentType", $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-                                        if ($resOptions1) {
-                                            while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-                                                ?>
-                                               <option value="<?php echo trim($rowOptions1['id']); ?>" ><?php echo trim($rowOptions1['name']); ?></option>
-                                              <?php
-                                            }
-                                        }
-                                        ?>
+                        			  	$selectFields= [];
+                        				$whereFields =[];
+                        				$whereVals =[];
+                        			
+                        				$sqlOptions1="";
+                        				$sqlOptions1="SELECT * FROM documenttype ORDER BY name ";
+                        				$resOptions1=getRecords("documenttype",$selectFields,$whereFields,$whereVals,_Y_,$sqlOptions1); 	
+                        				if($resOptions1)
+                        				{
+                        					while($rowOptions1=mysqli_fetch_array($resOptions1))
+                        					{
+                        			  ?>
+                        			   <option value="<?php echo trim($rowOptions1['id']); ?>" ><?php echo trim($rowOptions1['name']); ?></option>
+                        			  <?php
+                        			  		}
+                        			    }
+                        			  ?>
                                     </select>
                                 </div>
                                 <div class="form-grp hundred pd-right">
@@ -456,8 +438,8 @@
                                 <!-- Terms & Conditions Checkbox -->
                                 <label style="margin-top:10px;" class="trms">
                                 <input required type="checkbox" name="jobTerms" id="jobTerms" class="validate" value="1" autocomplete="off">
-                                I wish to abide by all the rules & guidelines given by University Placement Cell from time to time
-                                </label>
+                                I wish to abide by all the rules & guidelines given by New Delhi Institute of Management from time to time
+                            	</label>
 
                                 <!--<div class="form-grp thirty pd-left" style="width: 33% !important;">-->
                                 <!--    <label>Preference 1<span class="reqstar">*</span></label>-->

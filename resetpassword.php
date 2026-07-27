@@ -203,57 +203,57 @@ if ($r != 2) {
 						<?php if ($r != 2) {
 							if ($r != 1) { ?>
 
-										<div id="stepsdetail1">
+								<div id="stepsdetail1">
 
-											<div class="half-input">
-												<?php if (trim($errMsg) != '') { ?>
-														<div id="emsgdiv" class="<?php echo isset($className) ? $className : ''; ?>"
-															style="display:block; margin-top:10px; margin-bottom:10px;">
-															<?php echo $errMsg; ?>
-														</div>
-												<?php } ?>
-
-												<input type="password" class="input validate" name="newpassword" id="newpassword"
-													maxlength="16" placeholder="Enter new Password"
-													value="<?php echo htmlspecialchars($newpassword); ?>"
-													onKeyUp="hideerrordiv(this.id);">
-												<input type="password" class="input validate" name="confirmpassword"
-													id="confirmpassword" maxlength="16" placeholder="Enter confirm Password"
-													value="<?php echo htmlspecialchars($confirmpassword); ?>"
-													onKeyUp="hideerrordiv(this.id);">
+									<div class="half-input">
+										<?php if (trim($errMsg) != '') { ?>
+											<div id="emsgdiv" class="<?php echo isset($className) ? $className : ''; ?>"
+												style="display:block; margin-top:10px; margin-bottom:10px;">
+												<?php echo $errMsg; ?>
 											</div>
+										<?php } ?>
 
-											<input type="hidden" name="restpassword" id="restpassword" value="1">
-											<input type="hidden" name="textemail" id="textemail"
-												value="<?php echo isset($strEmail) ? $strEmail : ''; ?>">
-											<button type="button" onClick="formValidation('frmkonectt');subsrchfrm();"
-												class="continue-process-btn">Reset</button>
+										<input type="password" class="input validate" name="newpassword" id="newpassword"
+											maxlength="16" placeholder="Enter new Password"
+											value="<?php echo htmlspecialchars($newpassword); ?>"
+											onKeyUp="hideerrordiv(this.id);">
+										<input type="password" class="input validate" name="confirmpassword"
+											id="confirmpassword" maxlength="16" placeholder="Enter confirm Password"
+											value="<?php echo htmlspecialchars($confirmpassword); ?>"
+											onKeyUp="hideerrordiv(this.id);">
+									</div>
 
-										</div>
+									<input type="hidden" name="restpassword" id="restpassword" value="1">
+									<input type="hidden" name="textemail" id="textemail"
+										value="<?php echo isset($strEmail) ? $strEmail : ''; ?>">
+									<button type="button" onClick="formValidation('frmkonectt');subsrchfrm();"
+										class="continue-process-btn">Reset</button>
 
-								<?php }
+								</div>
+
+							<?php }
 						} ?>
 
 						<?php if ($r == 1) { ?>
-								<div style="text-align:center;">
-									<strong>Your Password updated successfully.</strong><br><br><br>
-									<a href="<?php echo isset($fullurl) ? $fullurl : '#'; ?>">
-										<button style="background-color:#e0e0e0; float:none; color:#333; margin:0px;"
-											type="button" class="continue-process-btn">Login</button>
-									</a>
-								</div>
+							<div style="text-align:center;">
+								<strong>Your Password updated successfully.</strong><br><br><br>
+								<a href="<?php echo isset($fullurl) ? $fullurl : '#'; ?>">
+									<button style="background-color:#e0e0e0; float:none; color:#333; margin:0px;"
+										type="button" class="continue-process-btn">Login</button>
+								</a>
+							</div>
 						<?php } ?>
 
 						<?php if ($r == 2) { ?>
-								<div style="text-align:center;">
-									<strong>That link isn't working.</strong><br><br>
-									Password reset links expire after 30 minutes if unused.<br><br>
-									If your link isn't working for any reason,<br>
-									you can <a
-										href="<?php echo isset($fullurl) ? $fullurl . 'forgot-password.html' : '#'; ?>">request
-										a new one.</a>
-									<br>
-								</div>
+							<div style="text-align:center;">
+								<strong>That link isn't working.</strong><br><br>
+								Password reset links expire after 30 minutes if unused.<br><br>
+								If your link isn't working for any reason,<br>
+								you can <a
+									href="<?php echo isset($fullurl) ? $fullurl . 'forgot-password.html' : '#'; ?>">request
+									a new one.</a>
+								<br>
+							</div>
 						<?php } ?>
 
 					</form>
@@ -305,11 +305,12 @@ if ($r != 2) {
 			position: fixed;
 			left: 0;
 			top: 0;
-			background: #1a94c3;
-			background: -moz-linear-gradient(top, #1b8cb8 0%, #6dc8e7 100%);
-			background: -webkit-linear-gradient(top, #1b8cb8 0%, #6dc8e7 100%);
-			background: linear-gradient(to bottom, #1b8cb8 0%, #6dc8e7 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1a94c3', endColorstr='#6dc8e7', GradientType=0);
+			background: #C02621;
+			background: -moz-linear-gradient(top, #E64A45 0%, #A11E1B 100%);
+			background: -webkit-linear-gradient(top, #E64A45 0%, #A11E1B 100%);
+			background: linear-gradient(to bottom, #E64A45 0%, #A11E1B 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E64A45', endColorstr='#A11E1B', GradientType=0);
+
 		}
 	</style>
 </body>

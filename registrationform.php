@@ -145,10 +145,12 @@ if (isPost()) {
         $whereVals = [];
 
         $sqlBrokerageDetails = "";
-        $sqlBrokerageDetails = "select email from " . _USERS_MASTER_TABLE_ . " where email='" . $email . "' ";
-        $resBrokerageDetails = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlBrokerageDetails);
-        if ($resBrokerageDetails) {
-            $errMsg = 'Email address <strong>"' . $email . '"</strong> already exits. Please try another .';
+        $email = mysqli_real_escape_string($conn, $email);
+        $sql = "SELECT email FROM " . _USERS_MASTER_TABLE_ . " WHERE email = '$email' LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result && mysqli_num_rows($result) > 0) {
+            $errMsg = 'Email address <strong>"' . $email . '"</strong> already exists. Please try another.';
             $className = 'errormsg';
         }
         if (trim($errMsg) == '') {
@@ -284,7 +286,7 @@ background-color: #f7f7f7;
 text-align: right;
 line-height: 30px;padding-top: 5px;
 border-top: solid 1px #e7e7e7;
-color: #afafaf;">Powered by ' . $companNameTitle . '
+color: #afafaf;">Powered by ' . $ndimvecospace . '
 </div>
 </div>
 </div>
@@ -391,7 +393,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Include jQuery first -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
     <!-- Include Select2 CSS and JS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -497,8 +499,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
         </header>
         <div class="banner">
             <!--<div class="bannerblkbg"></div>-->
-            <div class="container mt-5" style="background:white;width: 77%;padding: 15px;">
-                <h3 class="text-danger">Register Now !!!</h3>
+            <div class="container mt-5" style="background:white;width: 77%;padding: 15px;position:relative;">
+                <h3 class="" style="color: #C02621">Register Now !!!</h3>
+				<a href="https://ndim.vecospace.com/" class="form-close-btn">&times;</a>
+
                 <form name="registrationtstep1" id="registrationtstep1" method="post">
                     <div class="row g-3">
                         <?php
@@ -537,7 +541,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                     <div class="row g-3">
                         <div class="col-4 col-md-3" style="margin-bottom: 10px;">
                             <select class="form-select" id="day" name="day" required>
-                                <option value="0">Day</option>
+                                <option value="">Day</option>
                                 <?php
                                 for ($d = 1; $d <= 31; $d++) {
                                     if ($day == $d) {
@@ -546,15 +550,15 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                        <option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?></option>
-                                        <?php
+                                    <option value="<?php echo $d; ?>" <?php echo $strSelected; ?>><?php echo $d; ?></option>
+                                    <?php
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="col-4 col-md-3" style="margin-bottom: 10px;">
                             <select class="form-select" name="month" id="month" required>
-                                <option value="0">Month</option>
+                                <option value="">Month</option>
                                 <?php
                                 for ($m = 1; $m <= 12; $m++) {
                                     if ($month == $m) {
@@ -563,11 +567,11 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                        <option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
-                                            <?php //echo $m; 
-                                                ?>         <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
-                                        </option>
-                                        <?php
+                                    <option value="<?php echo $m; ?>" <?php echo $strSelected; ?>>
+                                        <?php //echo $m; 
+                                            ?>     <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
+                                    </option>
+                                    <?php
                                 }
                                 ?>
 
@@ -575,7 +579,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                         </div>
                         <div class="col-4 col-md-3" style="margin-bottom: 10px;">
                             <select class="form-select" name="year" id="year" required>
-                                <option value="0">Year</option>
+                                <option value="">Year</option>
                                 <?php
                                 for ($y = date('Y', strtotime('-10 years')); $y >= 1920; $y--) {
                                     if ($year == $y) {
@@ -584,8 +588,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         $strSelected = "";
                                     }
                                     ?>
-                                        <option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?></option>
-                                        <?php
+                                    <option value="<?php echo $y; ?>" <?php echo $strSelected; ?>><?php echo $y; ?></option>
+                                    <?php
                                 }
                                 ?>
                             </select>
@@ -633,12 +637,12 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                             $('#departmentnamediv').show();
                                             $('#stpassingyeardiv').show();
                                             $('#companyName').attr('placeholder', 'University');
-                                            $('#companyName').val('Jamia Millia Islamia');
+                                            $('#companyName').val('NDIM VECOSPACE ');
                                         }
                                         if (userstype == 2) {
                                             $('#departmentnamediv').show();
                                             $('#companyName').attr('placeholder', 'University');
-                                            $('#companyName').val('Jamia Millia Islamia');
+                                            $('#companyName').val('NDIM VECOSPACE');
                                         }
                                         if (userstype == 3) {
                                             $('#coursenamediv').show();
@@ -671,7 +675,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                             </div>
                             <div class="col-6 col-md-4" id="coursenamediv" style="margin-bottom: 10px;">
                                 <select class="form-select" name="coursename" id="coursename">
-                                    <option selected>Course</option>
+                                    <option value="">Course</option>
                                     <?php
                                     $selectFields = [];
                                     $whereFields = [];
@@ -684,10 +688,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
                                             ?>
-                                                    <option value="<?php echo trim($rowOptions['course_name']); ?>">
-                                                        <?php echo trim($rowOptions['course_name']); ?>
-                                                    </option>
-                                                    <?php
+                                            <option value="<?php echo trim($rowOptions['course_name']); ?>">
+                                                <?php echo trim($rowOptions['course_name']); ?>
+                                            </option>
+                                            <?php
                                         }
                                     }
                                     ?>
@@ -698,7 +702,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
 
                             <div class="col-6 col-md-4" id="departmentnamediv" style="margin-bottom: 10px;">
                                 <select class="form-select" name="departmentname" id="departmentname">
-                                    <option selected>Department</option>
+                                    <option value="">Department</option>
                                     <?php
                                     $selectFields = [];
                                     $whereFields = [];
@@ -711,10 +715,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                         while ($rowOptions = mysqli_fetch_array($resOptions)) {
 
                                             ?>
-                                                    <option value="<?php echo trim($rowOptions['department_name']); ?>">
-                                                        <?php echo trim($rowOptions['department_name']); ?>
-                                                    </option>
-                                                    <?php
+                                            <option value="<?php echo trim($rowOptions['department_name']); ?>">
+                                                <?php echo trim($rowOptions['department_name']); ?>
+                                            </option>
+                                            <?php
                                         }
                                     }
                                     ?>
@@ -722,20 +726,21 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                             </div>
                             <div class="col-6 col-md-4" id="stpassingyeardiv" style="margin-bottom: 10px;">
                                 <select class="form-select" name="passingyear" id="passingyear">
-                                    <option selected>Passing Year</option>
+                                    <option value="">Passing Year</option>
                                     <option value="2023">2023</option>
                                     <option value="2024">2024</option>
                                     <option value="2024">2025</option>
+                                    <option value="2024">2026</option>
                                     <?php
                                     $currentdate = date("Y", strtotime('+1 years'));
                                     $end = date('Y-m-d', strtotime('+5 years'));
                                     while ($currentdate <= $end) {
                                         ?>
-                                            <option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
-                                                   echo 'selected';
-                                               } ?>> <?php echo $currentdate;
-                                                $currentdate++; ?></option>
-                                            <?php
+                                        <option value="<?php echo $currentdate; ?>" <?php if ($currentdate == '2025') {
+                                               echo 'selected';
+                                           } ?>> <?php echo $currentdate;
+                                            $currentdate++; ?></option>
+                                        <?php
                                     }
                                     ?>
                                 </select>
@@ -745,15 +750,15 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
 
                             <div class="col-6 col-md-4" id="alpassingyeardiv" style="margin-bottom: 10px;">
                                 <select class="form-select" name="passingyear2" id="passingyear2">
-                                    <option selected>Passing Year</option>
+                                    <option value="">Passing Year</option>
                                     <?php
                                     $staringdate = 1950;
                                     $currentdate = date("Y");
                                     while ($staringdate <= $currentdate) {
                                         ?>
-                                            <option value="<?php echo $staringdate; ?>"><?php echo $staringdate;
-                                               $staringdate++; ?></option>
-                                            <?php
+                                        <option value="<?php echo $staringdate; ?>"><?php echo $staringdate;
+                                           $staringdate++; ?></option>
+                                        <?php
                                     }
                                     ?>
                                 </select>
@@ -766,7 +771,7 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
 
                             <div class="col-6 col-md-4" id="industrydiv" style="margin-bottom: 10px;">
                                 <select class="form-select" name="industryId" id="industryId">
-                                    <option value="0">Industry</option>
+                                    <option value="">Industry</option>
                                     <?php
                                     $selectFields = [];
                                     $whereFields = [];
@@ -783,10 +788,10 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                                                 $strSelected = "";
                                             }
                                             ?>
-                                                    <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
-                                                        <?php echo trim($rowOptions['optionName']); ?>
-                                                    </option>
-                                                    <?php
+                                            <option value="<?php echo trim($rowOptions['id']); ?>" <?php echo $strSelected; ?>>
+                                                <?php echo trim($rowOptions['optionName']); ?>
+                                            </option>
+                                            <?php
                                         }
                                     }
                                     ?>
@@ -796,8 +801,11 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                     </div>
                     <!-- Terms & Conditions Checkbox -->
                     <div class="form-check mt-3 terms-checkbox">
-                        <input class="form-check-input" type="checkbox" name="ppAndTcStatus" id="ppAndTcStatus"
-                            onClick="return false;" value="1" checked id="terms">
+                        <input class="form-check-input"
+						   type="checkbox"
+						   name="ppAndTcStatus"
+						   id="ppAndTcStatus"
+						   value="1">
                         <label class="form-check-label" for="terms">
                             I accept <?php echo $companNameTitle; ?>'s <a href="<?php echo $fullurl; ?>terms.html"
                                 target="_blank">Terms & Conditions</a></label>
@@ -813,8 +821,8 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
                     <input type="hidden" name="countryName" value="India">
                     <input type="hidden" name="cityName" value="Delhi">
                     <input type="hidden" name="timeZone" value="Asia/Kolkata">
-                    <button type="submit" class="btn btn-danger w-100 mt-4"
-                        onClick="formValidation('registrationtstep1');">Register Now</button>
+                    <button type="submit" class="btn w-100 mt-4" onClick="formValidation('registrationtstep1');"
+                        style="background-color: #C02621;color:#fff">Register Now</button>
                 </form>
             </div>
         </div>
@@ -895,6 +903,19 @@ color: #afafaf;">Powered by ' . $companNameTitle . '
             width: 100%;
             display: block;
         }
+		.form-close-btn {
+			position: absolute;
+			top: 10px;
+			right: 15px;
+			font-size: 22px;
+			color: #dc3545;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		.form-close-btn:hover {
+			color: #000;
+		}
     </style>
 
 </body>

@@ -185,7 +185,8 @@ $pageIndex = 75;
                                     $targetpage = $fullurl . 'all-notice.html?records=' . $limit . '&';
 
                                     // make sure GetRecordList uses mysqli_query internally
-                                    $rs = GetRecordList($select, "noticeBoard", $where, $limit, $page, $targetpage);
+                                    $rs = GetRecordList($select, _NOTICEBOARD_TABLE_, $where, $limit, $page, $targetpage);
+
 
                                     $totalentry = $rs[1];
                                     $paging = $rs[2];

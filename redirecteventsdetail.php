@@ -2,16 +2,19 @@
 include_once('inc.php');
 $pageIndex = 10;
 
-$conn = getDbConnection(); // Make sure inc.php has a mysqli connection function
+
 
 if ($_REQUEST['eventId'] != '' && $_REQUEST['status'] != '') {
 	$eventId = decodeStr($_REQUEST['eventId']);
 	$status = trim($_REQUEST['status']);
 
-	$sql_ins = "DELETE FROM " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE eventId= " . intval($eventId) . " AND userId=" . intval($_SESSION["sessUserId"]);
-	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+	/* $sql_ins = "DELETE FROM " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE eventId= " . intval($eventId) . " AND userId=" . intval($_SESSION["sessUserId"]);
+	
+	mysqli_query($conn, $sql_ins) or die(mysqli_error($conn)); */
 
 	$a = "INSERT INTO " . _EVENT_GUEST_MASTER_TABLE_ . " SET userId=" . intval($_SESSION["sessUserId"]) . ", eventId=" . intval($eventId) . ", status=" . intval($status) . ", dateAdded=" . time();
+	
+	
 	mysqli_query($conn, $a) or die(mysqli_error($conn));
 
 	/*header('Location:events-detail.html?eventId='.$_REQUEST['eventId'].'');

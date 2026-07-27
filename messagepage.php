@@ -84,7 +84,7 @@ $msg = 1;
   // Fetch last user from chatMaster
   $sqlMessage = mysqli_query(
     $conn,
-    "SELECT * FROM chatMaster WHERE contactId='" . mysqli_real_escape_string($conn, $_SESSION['sessUserId']) . "' ORDER BY id DESC LIMIT 0,1"
+    "SELECT * FROM chatmaster WHERE contactId='" . mysqli_real_escape_string($conn, $_SESSION['sessUserId']) . "' ORDER BY id DESC LIMIT 0,1"
   );
 
   if ($sqlMessage && mysqli_num_rows($sqlMessage) > 0) {

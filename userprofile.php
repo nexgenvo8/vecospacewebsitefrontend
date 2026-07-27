@@ -429,7 +429,7 @@ if ($_GET['id'] != '') {
 														onClick="funcommonpopupwin('450px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=educationalbg&id=<?php echo encodeStr($rowOptions["id"]); ?>','Educational background');"><i
 															class="fa fa-pencil" aria-hidden="true"></i>&nbsp;</a>
 												</li>
-												<li><a onclick="closefuncommonpopupwin();alertpopupmain('<?php echo encodeStr($rowOptions["id"]); ?>','deleducational');"
+												<li><a onclick="closefuncommonpopupwin();alertpopupmain('<?php echo encodeStr($rowOptions['id']); ?>','deleducational');"
 														class="dlt"><i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;</a>
 												</li>
 											</ul>

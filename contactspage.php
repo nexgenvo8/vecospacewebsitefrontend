@@ -1,25 +1,20 @@
-	<?php
-	include_once('inc.php');
-	$_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-	include_once('config/session-check.inc.php'); // check user login session
-	$pageIndex = 22;
-	$search = '';
-	if (isset($_REQUEST['searchcontacts']) && $_REQUEST['searchcontacts'] != '') {
-		$search = clean($_REQUEST['searchcontacts']);
+<?php
+include_once('inc.php');
+$_SESSION['loginredirectpageurl'] = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+include_once('config/session-check.inc.php'); // check user login session
+$pageIndex = 22;
+$search = '';
+if (isset($_REQUEST['searchcontacts']) && $_REQUEST['searchcontacts'] != '') {
+	$search = clean($_REQUEST['searchcontacts']);
+}
+if ($search == '') {
+	$active = 1;
+	if (isset($_REQUEST['r']) && $_REQUEST['r'] == 1) {
+		$active = 2;
 	}
-	if ($search == '') {
-		$active = 1;
-		if (isset($_REQUEST['r']) && $_REQUEST['r'] == 1) {
-			$active = 2;
-		}
-	}
+}
 
-	$search = '';
-	$limit = 10; // Records per page
-	$startpage = isset($_REQUEST['startpage']) ? intval($_REQUEST['startpage']) : 0;
-	$offset = $startpage * $limit;
-
-	?>
+?>
 <!DOCTYPE html>
 <html>
 
@@ -53,19 +48,19 @@
 						<div class="contct-srch">
 							<?php if (isset($_POST['s']) && $_SESSION["s"] == 1) {
 								if ($_REQUEST['q'] == 1) { ?>
-											<div style="padding: 10px;
+									<div style="padding: 10px;
 	background-color: #d7f5bb;
 	margin-bottom: 9px;
 	border-radius: 5px;
 	text-align: center;
 	font-weight: bold;
 	border: 1px solid #ccecad;">Invitation has been sent.</div>
-									<?php }
+								<?php }
 								$_SESSION["s"] = '';
 							} ?>
 
 							<?php if (isset($_POST['q']) && $_REQUEST['q'] == 2) { ?>
-									<div style="padding: 10px;
+								<div style="padding: 10px;
 	background-color: #fff3f3;
 	margin-bottom: 9px;
 	border-radius: 5px;
@@ -111,40 +106,41 @@
 
 							</script>
 							<form enctype="multipart/form-data" name="frmposthome4" id="frmposthome4" method="post"
-								target="actionfrm" action="<?php echo $fullurl; ?>common_action.php">
+								action="<?php echo $fullurl; ?>common_action.php">
+
 								<div class="srchfcontct" style="margin-left:17px;">
 									<span>Invite people to <?php echo $companNameTitle; ?></span>
+
 									<div class="srch-field">
 										<input type="hidden" name="action" value="sendinvitation">
+
 										<input type="email" name="txtuseremail1" id="txtuseremail1" maxlength="250"
-											placeholder="Separate e-mail addresses with commas." class="validate">
-										<button type="button" onClick="formValidation('frmposthome4');subsrchfrm1();"
-											style="cursor: default;">Invite</button>
+											placeholder="Separate e-mail addresses with commas." class="validate"
+											required>
+
+										<button type="submit">Invite</button>
 									</div>
 								</div>
 							</form>
 
+
 							<script>
+								$(document).ready(function () {
 
+									$("#frmposthome4").on("submit", function (e) {
 
-								function subsrchfrm1() {
-
-									if ($("#txtuseremail1").val() != '') {
-										$("#frmposthome4").submit();
-									}
-								}
-
-								$("input").keypress(function (event) {
-
-									if (event.which == 13) {
-										event.preventDefault();
-
-										if ($("#txtuseremail1").val() != '') {
-											$("#frmposthome4").submit();
+										if ($("#txtuseremail1").val().trim() === '') {
+											alert("Please enter email address");
+											e.preventDefault();
+											return false;
 										}
-									}
-								});
 
+										// show loader only once
+										$('#commonloader').show();
+										return true;
+									});
+
+								});
 							</script>
 						</div>
 						<div class="pnding-contct">
@@ -183,240 +179,208 @@
 
 										?>
 
-												<li>
-													<div class="request-contct">
-														<div class="rimg"><a
+										<li>
+											<div class="request-contct">
+												<div class="rimg"><a
+														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+														target="_blank" class="rqst-img"><img
+															src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a>
+												</div>
+												<div class="reqst-rdtail">
+													<div class="middl-nm">
+														<div class="left"><a
 																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																target="_blank" class="rqst-img"><img
-																	src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a>
+																target="_blank"><?php echo stripslashes(trim($userres["firstName"])); ?>
+																<?php echo stripslashes(trim($userres["lastName"])); ?></a>
+															<span class="comp"><?php echo $userres['jobTitle']; ?> at
+																<?php echo $userres['companyName']; ?></span>
 														</div>
-														<div class="reqst-rdtail">
-															<div class="middl-nm">
-																<div class="left"><a
-																		href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																		target="_blank"><?php echo stripslashes(trim($userres["firstName"])); ?>
-																		<?php echo stripslashes(trim($userres["lastName"])); ?></a>
-																	<span class="comp"><?php echo $userres['jobTitle']; ?> at
-																		<?php echo $userres['companyName']; ?></span>
-																</div>
-																<div class="btns">
-																	<a class="msg-btn"
-																		href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=act"
-																		target="actionfrm" onClick="$('#commonloader').show();"
-																		style="margin-left: 10px; color: #1a94c3; border-color: #1a94c3;">Confirm</a>
-																	<a class="msg-btn reject dlt"
-																		href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=dec"
-																		target="actionfrm"
-																		onClick="$('#commonloader').show();">Decline</a>
-																</div>
-															</div>
+														<div class="btns">
+															<a class="msg-btn"
+																href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=act"
+																target="actionfrm" onClick="$('#commonloader').show();"
+																style="margin-left: 10px; color: #1a94c3; border-color: #1a94c3;">Confirm</a>
+															<a class="msg-btn reject dlt"
+																href="common_action.php?userIdcontact=<?php echo encodeStr($userres['userId']); ?>&action=dec"
+																target="actionfrm"
+																onClick="$('#commonloader').show();">Decline</a>
 														</div>
 													</div>
-												</li>
-												<?php
+												</div>
+											</div>
+										</li>
+										<?php
 
-												$n++;
+										$n++;
 									}
 
 								}
 								?>
 								<?php if ($n == 0) { ?>
-										<div style="padding:0px; text-align:center;">
-											<div style="text-align:center;">No pending contact requests</div>
-										</div>
+									<div style="padding:0px; text-align:center;">
+										<div style="text-align:center;">No pending contact requests</div>
+									</div>
 
-										<script>
-											$('#pagetitlemain2').hide();
-										</script>
+									<script>
+										$('#pagetitlemain2').hide();
+									</script>
 								<?php } ?>
 							</ul>
 						</div>
-						<?php
-						$pageIndex = 22;
-						$search = '';
-						$limit = 10; // records per page
-						$startpage = isset($_REQUEST['startpage']) ? intval($_REQUEST['startpage']) : 0;
-						$offset = $startpage * $limit;
-						$pageid = $_REQUEST['pageid'] ?? '';
-
-						?>
-
 						<div class="contct-list-cont">
 							<?php
-							// 🔍 Search filter condition
+							// 🔸 Search Condition
 							if (isset($_GET['searchkeywords']) && $_GET['searchkeywords'] != '') {
-								$strWhereContacts = " AND (firstName LIKE '%" . $_GET['searchkeywords'] . "%' 
-                                OR lastName LIKE '%" . $_GET['searchkeywords'] . "%' 
-                                OR email LIKE '%" . $_GET['searchkeywords'] . "%')";
+								$strWhereContacts = " AND (firstName LIKE '%" . mysqli_real_escape_string($conn, $_GET['searchkeywords']) . "%' 
+            OR lastName LIKE '%" . mysqli_real_escape_string($conn, $_GET['searchkeywords']) . "%' 
+            OR email LIKE '%" . mysqli_real_escape_string($conn, $_GET['searchkeywords']) . "%')";
 							} else {
 								$strWhereContacts = "";
 								echo '<h2>People you may know</h2>';
 							}
 
-							$strWhere = '';
+							// 🔸 Pagination Setup
+							$limit = 10; // Records per page
+							$startpage = isset($_GET['startpage']) ? intval($_GET['startpage']) : 0;
+							$offset = $startpage * $limit;
 
-							if (isset($_POST['r']) && $_REQUEST['r'] == 1) {
-								$strWhere .= " and dateAdded between " . strtotime(date('Y-m-d', strtotime("-30 days"))) . " and " . strtotime(date('Y-m-d')) . " ";
-							}
-
-							if ($search != '') {
-								$strWhere .= " and contactId IN(select userId from " . _USERS_MASTER_TABLE_ . " where activeYN='Y' and userId!=106 and (firstName like '%" . $search . "%' OR lastName like '%" . $search . "%' OR email like '%" . $search . "%' ) ) ";
-							}
-
-							// 🧮 Total records count for pagination
-							$totalQuery = "SELECT COUNT(*) as total FROM " . _USERS_MASTER_TABLE_ . " 
-							WHERE activeYN='Y' 
-							AND userId!=106 
-							AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ") 
-							AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ") 
-							AND companyName!='' 
-							AND userId!='" . $_SESSION['sessUserId'] . "' 
-							$strWhereContacts";
-
-							$totalResult = mysqli_query($conn, $totalQuery);
+							// 🔸 Total Record Count
+							$totalRecordsQuery = "
+        SELECT COUNT(*) as total
+        FROM " . _USERS_MASTER_TABLE_ . "
+        WHERE activeYN = 'Y'
+        AND userId != 106
+		
+        AND userId NOT IN (
+            SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId = " . intval($_SESSION['sessUserId']) . "
+        )
+        AND userId NOT IN (
+            SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId = " . intval($_SESSION['sessUserId']) . "
+        )
+        AND companyName != ''
+        AND userId != " . intval($_SESSION['sessUserId']) . "
+        $strWhereContacts
+    ";
+							$totalResult = mysqli_query($conn, $totalRecordsQuery);
 							$totalRow = mysqli_fetch_assoc($totalResult);
 							$totalRecords = $totalRow['total'];
 							$totalPages = ceil($totalRecords / $limit);
-
-							// 🔹 Main query with LIMIT and OFFSET
-							$sqlLogin = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " 
-								WHERE activeYN='Y' 
-								AND userId!=106 
-								AND userId NOT IN (SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . $_SESSION["sessUserId"] . ") 
-								AND userId NOT IN (SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . $_SESSION["sessUserId"] . ") 
-								AND companyName!='' 
-								AND userId!='" . $_SESSION['sessUserId'] . "' 
-								$strWhereContacts 
-								ORDER BY userId DESC 
-								LIMIT $limit OFFSET $offset";
-
-							$resLogin = mysqli_query($conn, $sqlLogin);
-							$n = 0;
 							?>
 
 							<ul class="cntct-list">
 								<?php
+								$sqlLogin = "
+            SELECT * FROM " . _USERS_MASTER_TABLE_ . "
+            WHERE activeYN='Y'
+            AND userId!=106
+			AND type != 'admin'
+            AND userId NOT IN (
+                SELECT contactId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE userId=" . intval($_SESSION['sessUserId']) . "
+            )
+            AND userId NOT IN (
+                SELECT userId FROM " . _CONTACT_MASTER_TABLE_ . " WHERE contactId=" . intval($_SESSION['sessUserId']) . "
+            )
+            AND companyName!=''
+            AND userId!='" . intval($_SESSION['sessUserId']) . "'
+            $strWhereContacts
+            ORDER BY userId DESC
+            LIMIT $limit OFFSET $offset
+        ";
+
+								$resLogin = mysqli_query($conn, $sqlLogin);
+								$n = 0;
+
 								if ($resLogin && mysqli_num_rows($resLogin) > 0) {
 									while ($rowLogin = mysqli_fetch_array($resLogin)) {
-
-										$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowLogin["userId"];
-										$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
-										$userres = mysqli_fetch_array($b);
-
-										$friendnameurl = $userres['userurl'];
-										$userphoto = ($userres["profilePhoto"] != '') ? $userres["profilePhoto"] : 'user-placeholder.jpg';
-										$mycountryName = $userres["countryName"];
-										$mystateName = $userres["cityName"];
-										$mylocationName = $userres["locationName"];
+										$userphoto = $rowLogin["profilePhoto"] != '' ? $rowLogin["profilePhoto"] : 'user-placeholder.jpg';
+										$friendnameurl = $rowLogin['userurl'];
 										?>
-												<li>
-													<div class="request-contct">
-														<div class="rimg">
-															<a
-																href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html">
-																<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
-																	style="border:<?php echo profileborder($userres['userstype']); ?>">
+										<li>
+											<div class="request-contct">
+												<div class="rimg">
+													<a
+														href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowLogin['userId']); ?>/<?php echo $friendnameurl; ?>.html">
+														<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"
+															style="border:<?php echo profileborder($rowLogin['userstype']); ?>">
+													</a>
+												</div>
+												<div class="reqst-rdtail">
+													<div class="middl-nm">
+														<div class="left">
+															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowLogin['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																class="nm">
+																<?php echo htmlspecialchars($rowLogin["firstName"]); ?>
+																<?php echo htmlspecialchars($rowLogin["lastName"]); ?>
+															</a>
+															<span class="comp"><?php echo $rowLogin['jobTitle']; ?> at
+																<?php echo $rowLogin['companyName']; ?></span>
+														</div>
+														<div class="btns">
+															<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($rowLogin['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+																class="msg-btn">
+																<i class="fa fa-plus" aria-hidden="true"></i> Add as contact
 															</a>
 														</div>
-														<div class="reqst-rdtail">
-															<div class="middl-nm">
-																<div class="left">
-																	<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																		class="nm"><?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["firstName"]); ?>
-																		<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $userres["lastName"]); ?></a>
-																	<span class="comp"><?php echo $userres['jobTitle']; ?> at
-																		<?php echo $userres['companyName']; ?></span>
-																</div>
-																<div class="btns">
-																	<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-																		class="msg-btn"><i class="fa fa-plus" aria-hidden="true"></i>
-																		Add as contact</a>
-																</div>
-															</div>
-														</div>
 													</div>
-												</li>
-												<?php
-												$n++;
+												</div>
+											</div>
+										</li>
+										<?php
+										$n++;
 									}
+								} else {
+									echo '<div style="padding:30px; text-align:center;">No Contacts.</div>';
 								}
 								?>
 							</ul>
 
 							<!-- 🔸 Pagination Section -->
-							<?php
-							// Example before pagination:
-							$limit = 10;
-							$totalRecordsQuery = "
-								SELECT COUNT(*) as total
-								FROM " . _USERS_MASTER_TABLE_ . "
-								WHERE activeYN = 'Y'
-								AND userId != 106
-								AND userId NOT IN (
-									SELECT contactId
-									FROM " . _CONTACT_MASTER_TABLE_ . "
-									WHERE userId = " . intval($_SESSION['sessUserId']) . "
-								)
-								AND userId NOT IN (
-									SELECT userId
-									FROM " . _CONTACT_MASTER_TABLE_ . "
-									WHERE contactId = " . intval($_SESSION['sessUserId']) . "
-								)
-								AND companyName != ''
-								AND userId != " . intval($_SESSION['sessUserId']) . "
-							";
-
-							$totalResult = mysqli_query($conn, $totalRecordsQuery);
-							$totalRow = mysqli_fetch_assoc($totalResult);
-							$totalRecords = $totalRow['total'];
-
-							$totalPages = ceil($totalRecords / $limit);
-							?>
-
 							<?php if ($totalPages > 1) { ?>
-									<div class="pagination-wrapper">
-										<!-- 🔹 Smart Pagination -->
-										<div class="pagination-container">
-											<?php if ($startpage > 0) { ?>
-													<a href="?startpage=<?php echo $startpage - 1; ?>"
-														class="pagination-btn">Previous</a>
-											<?php } ?>
+								<div class="pagination-wrapper" style="text-align:center; margin-top:20px;">
+									<div class="pagination-container">
+										<?php if ($startpage > 0) { ?>
+											<a href="?startpage=<?php echo $startpage - 1; ?>"
+												class="pagination-btn">Previous</a>
+										<?php } ?>
 
-											<?php
-											$lastPage = $totalPages - 1;
+										<?php
+										$lastPage = $totalPages - 1;
 
-											// Always show first 3 pages
-											for ($i = 0; $i < min(3, $totalPages); $i++) {
-												$active = ($i == $startpage) ? 'active' : '';
-												echo "<a href='?startpage=$i' class='pagination-number $active'>" . ($i + 1) . "</a>";
-											}
+										// Show first 3 pages
+										for ($i = 0; $i < min(3, $totalPages); $i++) {
+											$active = ($i == $startpage) ? 'active' : '';
+											echo "<a href='?startpage=$i' class='pagination-number $active'>" . ($i + 1) . "</a>";
+										}
 
-											// If current page is greater than 3, show it separately
-											if ($startpage >= 3 && $startpage < $lastPage - 1) {
-												echo "<a href='?startpage=$startpage' class='pagination-number active'>" . ($startpage + 1) . "</a>";
-											}
+										// If current page is beyond first 3
+										if ($startpage >= 3 && $startpage < $lastPage - 1) {
+											echo "<a href='?startpage=$startpage' class='pagination-number active'>" . ($startpage + 1) . "</a>";
+										}
 
-											// Always show last page if total > 3
-											if ($totalPages > 3) {
-												echo "<span class='pagination-dots'>...</span>";
-												echo "<a href='?startpage=$lastPage' class='pagination-number " . (($startpage == $lastPage) ? 'active' : '') . "'>" . ($lastPage + 1) . "</a>";
-											}
-											?>
+										// Show last page if total > 3
+										if ($totalPages > 3) {
+											echo "<span class='pagination-dots'>...</span>";
+											echo "<a href='?startpage=$lastPage' class='pagination-number " . (($startpage == $lastPage) ? 'active' : '') . "'>" . ($lastPage + 1) . "</a>";
+										}
+										?>
 
-											<?php if ($startpage < $totalPages - 1) { ?>
-													<a href="?startpage=<?php echo $startpage + 1; ?>" class="pagination-btn">Next</a>
-											<?php } ?>
-										</div>
-
+										<?php if ($startpage < $totalPages - 1) { ?>
+											<a href="?startpage=<?php echo $startpage + 1; ?>" class="pagination-btn">Next</a>
+										<?php } ?>
 									</div>
+								</div>
 							<?php } ?>
 						</div>
+
+
+
+
+
 
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- 💅 Pagination Styles -->
 		<style>
 			.pagination-container {
 				display: flex;
@@ -470,9 +434,6 @@
 				font-weight: bold;
 			}
 		</style>
-
-
-
 		<?php include('footer.php'); ?>
 
 		<script>
@@ -486,19 +447,20 @@
 			<?php
 			if (isset($_SESSION['s']) && $_SESSION["s"] == 1) {
 				?>
-					showsusmsg('SUCCESS', 'Request accepted', '');
-					<?php
-					$_SESSION["s"] = '';
+				showsusmsg('SUCCESS', 'Request accepted', '');
+				<?php
+				$_SESSION["s"] = '';
 			}
 			if (isset($_SESSION['d']) && $_SESSION["d"] == 1) {
 				?>
-					showerrormsg('SUCCESS', 'Request declined', '');
-					<?php
-					$_SESSION["d"] = '';
+				showerrormsg('SUCCESS', 'Request declined', '');
+				<?php
+				$_SESSION["d"] = '';
 			}
 
 			?>
 		</script>
+
 </body>
 
 </html>

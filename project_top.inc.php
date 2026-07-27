@@ -18,12 +18,13 @@
   <li>
     <a href="<?php echo $fullurl; ?>manage-projects.html" <?php if ($ptab == 5) { ?>class="active" <?php } ?>><i
         class="fa fa-tasks" aria-hidden="true"></i><span>Manage Internships
-      </span></a>
+      </span>
+    </a>
   </li>
   <li>
     <a href="<?php echo $fullurl; ?>freelancers.html" <?php if ($ptab == 3) { ?>class="active frlcr" <?php } ?>><i
-        class="fa fa-user" aria-hidden="true" style=" background-color:#ff7800;"></i><span
-        style="color:#ff7800;">Internship Seekers
+        class="fa fa-user" aria-hidden="true" style=" background-color:#C02621;"></i><span
+        style="color:#C02621;">Internship Seekers
       </span></a>
   </li>
 </ul>

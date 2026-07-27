@@ -3,8 +3,8 @@ include_once('inc.php');
 include_once('config/session-check.inc.php'); // check user login session
 $url = trim($_REQUEST['url']);
 
+if (strpos($url, "http://") !== false || strpos($url, "https://") !== false) {
 
-if (strpos($url, "http://") !== false) {
 
 	?>
 	<script>
@@ -16,7 +16,9 @@ if (strpos($url, "http://") !== false) {
 	<?php
 	$contenttitle = '';
 
-	$url = str_replace('https', 'http', $url);
+	// DO NOT modify URL protocol
+$url = trim($url);
+
 
 	// 🔹 Use a proper context to set user-agent (many sites block requests without it)
 	$context = stream_context_create([
@@ -25,8 +27,23 @@ if (strpos($url, "http://") !== false) {
 			'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)\r\n"
 		]
 	]);
+function fetchUrl($url) {
+    $ch = curl_init($url);
 
-	$finalurl = @file_get_contents($url, false, $context); // 🔹 @ suppresses warnings
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
+
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    return $data;
+}
+
+$finalurl = fetchUrl($url);
+ // 🔹 @ suppresses warnings
 
 	if ($finalurl === false || trim($finalurl) == '') {
 		// 🔹 Avoid DOMDocument crash when HTML is empty
@@ -135,8 +152,8 @@ if (strpos($url, "http://") !== false) {
 			onclick="$('#websitecontentblock').html('');$('#websitecontentblock').hide();$('#linkpasted').val('0');">X</a>
 		<div id="linkcontent">
 			<div class="newsboxdiv">
-				<a href="<?php echo $url; ?>" onclick="countpostview('<?php echo $_REQUEST["viewpostid"]; ?>');"
-					target="_blank" style="text-decoration:none;">
+				<a href="<?php echo trim($url); ?>"
+				   >
 					<table width="100%" border="0" cellpadding="0" cellspacing="0">
 						<?php
 						$page_content = '';
@@ -144,9 +161,8 @@ if (strpos($url, "http://") !== false) {
 						$title = '';
 						$s = 0;
 
-						if (!empty($finalurl)) {
-							$page_content = @file_get_contents($finalurl); // fetch actual HTML content
-						}
+						$page_content = $finalurl;
+
 
 						if (!empty($page_content)) {
 							$dom_obj = new DOMDocument();
@@ -185,6 +201,9 @@ if (strpos($url, "http://") !== false) {
 							}
 
 							foreach ($imgarray as $imageName) {
+								if (preg_match('/logo|favicon|icon/i', $imageName)) {
+								continue;
+							}
 								$ext = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
 								if (in_array($ext, $type)) {
 									$size = @getimagesize($imageName);

@@ -9,16 +9,18 @@ $imgId=$_REQUEST['imgId'];
     <a class="img-clos" onclick="$('#eventimagepopup').hide();"><i class="fa fa-times"></i> </a>
 	
 	<?php
- 	
+ 	$selectFields = [];
+    $whereFields = [];
+    $whereVals = [];
 		$a="";
 		$a="select imageName from "._IMAGE_MASTER_TABLE_." where id=".$imgId."";
 		$b=getRecords(_IMAGE_MASTER_TABLE_,$selectFields,$whereFields,$whereVals,_Y_,$a); 	
 		if($b)
 		{
-			$numrows=mysql_num_rows($b); 
+			$numrows=mysqli_num_rows($b); 
 			$width='100%';
 			
-			while($rowimg=mysql_fetch_array($b))
+			while($rowimg=mysqli_fetch_array($b))
 			{
 		  ?>
    <img src="<?php echo $fullurl;?>uploads/<?php echo $rowimg['imageName']; ?>">

@@ -159,9 +159,9 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 
 						<?php include('companyheader.php'); ?>
 						<?php if ($createdby == $_SESSION["sessUserId"]) { ?>
-								<a class="crtjob-btn"
-									href="<?php echo $fullurl; ?>add-job.html?companyId=<?php echo $_REQUEST['companyId']; ?>">Post
-									Job</a>
+							<a class="crtjob-btn"
+								href="<?php echo $fullurl; ?>add-job.html?companyId=<?php echo $_REQUEST['companyId']; ?>">Post
+								Job</a>
 						<?php } ?>
 
 						<ul class="compny-joblist">
@@ -182,6 +182,107 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 									if ($rowCompany["userId"] == $_SESSION["sessUserId"] && $rowCompany["status"] == 0) {
 										$j = 1;
 										?>
+										<li>
+											<div class="cmpny-jobbox"><span
+													class="ago"><?php echo makedatetime(strtotime($rowCompany["dateAdded"])); ?></span>
+												<a href="<?php echo $fullurl; ?>view-job.html?id=<?php echo encodeStr($rowCompany['id']); ?>"
+													class="prfl-nam"><?php echo stripslashes($rowCompany["jobTitle"]); ?></a>
+												<div class="cmpny-nm" style="color:#d2953b;">
+													<?php
+													$selectFields = [];
+													$whereFields = [];
+													$whereVals = [];
+													$levelId = '';
+													$sqlOptions1 = "";
+													$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
+													$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+													if ($resOptions1) {
+														while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
+															if ($levelId == $rowOptions1['id']) {
+																$strSelected = 'selected="selected"';
+															} else {
+																$strSelected = "";
+															}
+															echo trim($rowOptions1['optionName']);
+														}
+													}
+													?>
+												</div>
+
+												<div class="cmpny-nm" style="font-size: 14px;"><strong>Location:
+													</strong><?php echo stripslashes($rowCompany["jobLocation"]); ?></div>
+												<p class="job-descrpt">
+
+
+
+													<?php echo getStrLength(strip_tags(stripslashes($rowCompany["jobDetails"])), 220);
+
+													?>
+
+												<div style="margin-top:5px; color:#FF0000;">Under Reviewing</div>
+
+												</p>
+											</div>
+
+										</li>
+
+										<?php
+									} else {
+
+										if ($rowCompany["status"] == 1) {
+
+											if ($rowCompany["jobStatus"] == 1) {
+												$j = 1;
+												?>
+
+												<li>
+													<div class="cmpny-jobbox"><span
+															class="ago"><?php echo makedatetime(strtotime($rowCompany["dateAdded"])); ?></span>
+														<a href="<?php echo $fullurl; ?>view-job.html?id=<?php echo encodeStr($rowCompany['id']); ?>"
+															class="prfl-nam"><?php echo stripslashes($rowCompany["jobTitle"]); ?></a>
+														<div class="cmpny-nm" style="color:#d2953b;">
+															<?php
+															$selectFields = [];
+															$whereFields = [];
+															$whereVals = [];
+
+															$sqlOptions1 = "";
+															$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
+															$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+															if ($resOptions1) {
+																while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
+																	if ($levelId == $rowOptions1['id']) {
+																		$strSelected = 'selected="selected"';
+																	} else {
+																		$strSelected = "";
+																	}
+																	echo trim($rowOptions1['optionName']);
+																}
+															}
+															?>
+														</div>
+
+														<div class="cmpny-nm" style="font-size: 14px;"><strong>Location:
+															</strong><?php echo stripslashes($rowCompany["jobLocation"]); ?></div>
+														<p class="job-descrpt">
+
+															<?php echo getStrLength(strip_tags(stripslashes($rowCompany["jobDetails"])), 220); ?>
+
+
+														</p>
+														<a href="<?php echo $fullurl; ?>view-job.html?id=<?php echo encodeStr($rowCompany['id']); ?>"
+															class="applyjob-btn">Apply Now</a>
+													</div>
+
+												</li>
+
+											<?php } else {
+												if ($rowCompany["userId"] == $_SESSION["sessUserId"]) {
+													$j = 1; ?>
+
+
+
+
 													<li>
 														<div class="cmpny-jobbox"><span
 																class="ago"><?php echo makedatetime(strtotime($rowCompany["dateAdded"])); ?></span>
@@ -192,15 +293,13 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 																$selectFields = [];
 																$whereFields = [];
 																$whereVals = [];
-																$levelId = isset($rowCompany["levelId"]) ? $rowCompany["levelId"] : 0;
-																$sqlOptions1 = "";
-																$sqlOptions1 = "SELECT id, optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE id=" . $levelId . " ";
-																$resOptions1 = getRecords(_OPTION_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
 
-																if ($resOptions1 && mysqli_num_rows($resOptions1) > 0) {
+																$sqlOptions1 = "";
+																$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
+																$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
+																if ($resOptions1) {
 																	while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-																		// ✅ Use the already defined $levelId
-																		if ((int) $levelId === (int) $rowOptions1['id']) {
+																		if ($levelId == $rowOptions1['id']) {
 																			$strSelected = 'selected="selected"';
 																		} else {
 																			$strSelected = "";
@@ -208,7 +307,6 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 																		echo trim($rowOptions1['optionName']);
 																	}
 																}
-
 																?>
 															</div>
 
@@ -216,117 +314,16 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 																</strong><?php echo stripslashes($rowCompany["jobLocation"]); ?></div>
 															<p class="job-descrpt">
 
+																<?php echo getStrLength(strip_tags(stripslashes($rowCompany["jobDetails"])), 220); ?>
 
 
-																<?php echo getStrLength(strip_tags(stripslashes($rowCompany["jobDetails"])), 220);
+															<div style="margin-top:5px; color:#FF0000;">Disabled Job</div>
 
-																?>
-
-															<div style="margin-top:5px; color:#C02621;">Under Reviewing</div>
-
-															</p>
 														</div>
 
 													</li>
 
 													<?php
-									} else {
-
-										if ($rowCompany["status"] == 1) {
-
-											if ($rowCompany["jobStatus"] == 1) {
-												$j = 1;
-												?>
-
-																	<li>
-																		<div class="cmpny-jobbox"><span
-																				class="ago"><?php echo makedatetime(strtotime($rowCompany["dateAdded"])); ?></span>
-																			<a href="<?php echo $fullurl; ?>view-job.html?id=<?php echo encodeStr($rowCompany['id']); ?>"
-																				class="prfl-nam"><?php echo stripslashes($rowCompany["jobTitle"]); ?></a>
-																			<div class="cmpny-nm" style="color:#d2953b;">
-																				<?php
-																				$selectFields = [];
-																				$whereFields = [];
-																				$whereVals = [];
-																				$levelId = isset($rowCompany["levelId"]) ? $rowCompany["levelId"] : 0;
-																				$sqlOptions1 = "";
-																				$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
-																				$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-																				if ($resOptions1) {
-																					while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-																						if ($levelId == $rowOptions1['id']) {
-																							$strSelected = 'selected="selected"';
-																						} else {
-																							$strSelected = "";
-																						}
-																						echo trim($rowOptions1['optionName']);
-																					}
-																				}
-																				?>
-																			</div>
-
-																			<div class="cmpny-nm" style="font-size: 14px;"><strong>Location:
-																				</strong><?php echo stripslashes($rowCompany["jobLocation"]); ?></div>
-																			<p class="job-descrpt">
-
-																				<?php echo getStrLength(strip_tags(stripslashes($rowCompany["jobDetails"])), 220); ?>
-
-
-																			</p>
-																			<a href="<?php echo $fullurl; ?>view-job.html?id=<?php echo encodeStr($rowCompany['id']); ?>"
-																				class="applyjob-btn">Apply Now</a>
-																		</div>
-
-																	</li>
-
-															<?php } else {
-												if ($rowCompany["userId"] == $_SESSION["sessUserId"]) {
-													$j = 1; ?>
-
-
-
-
-																			<li>
-																				<div class="cmpny-jobbox"><span
-																						class="ago"><?php echo makedatetime(strtotime($rowCompany["dateAdded"])); ?></span>
-																					<a href="<?php echo $fullurl; ?>view-job.html?id=<?php echo encodeStr($rowCompany['id']); ?>"
-																						class="prfl-nam"><?php echo stripslashes($rowCompany["jobTitle"]); ?></a>
-																					<div class="cmpny-nm" style="color:#d2953b;">
-																						<?php
-																						$selectFields = [];
-																						$whereFields = [];
-																						$whereVals = [];
-
-																						$sqlOptions1 = "";
-																						$sqlOptions1 = "SELECT id,optionName FROM " . _OPTION_MASTER_TABLE_ . " WHERE  id=" . $rowCompany["levelId"] . " ";
-																						$resOptions1 = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlOptions1);
-																						if ($resOptions1) {
-																							while ($rowOptions1 = mysqli_fetch_array($resOptions1)) {
-																								if ($levelId == $rowOptions1['id']) {
-																									$strSelected = 'selected="selected"';
-																								} else {
-																									$strSelected = "";
-																								}
-																								echo trim($rowOptions1['optionName']);
-																							}
-																						}
-																						?>
-																					</div>
-
-																					<div class="cmpny-nm" style="font-size: 14px;"><strong>Location:
-																						</strong><?php echo stripslashes($rowCompany["jobLocation"]); ?></div>
-																					<p class="job-descrpt">
-
-																						<?php echo getStrLength(strip_tags(stripslashes($rowCompany["jobDetails"])), 220); ?>
-
-
-																					<div style="margin-top:5px; color:#C02621;">Disabled Job</div>
-
-																				</div>
-
-																			</li>
-
-																			<?php
 
 
 												}
@@ -347,15 +344,15 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 								}
 								if ($j == 0) {
 									?>
-											<div style="padding:20px; text-align:center;">There are no jobs, currently in this company.
-											</div>
-											<?php
-								}
-							} else {
-								?>
 									<div style="padding:20px; text-align:center;">There are no jobs, currently in this company.
 									</div>
 									<?php
+								}
+							} else {
+								?>
+								<div style="padding:20px; text-align:center;">There are no jobs, currently in this company.
+								</div>
+								<?php
 							}
 							?>
 						</ul>
@@ -373,18 +370,18 @@ $totalEmployees = $totalEmployees + $getFollowersTotalMember;
 		<?php
 		$cmsg = 'Thank you for posting a Job on ' . $companNameTitle . '. We are reviewing the same and will come back to you shortly.';
 
-		if (isset($_SESSION['s']) && $_SESSION["s"] == 1) {
+		if ($_SESSION["s"] == 1) {
 			?>
-				showsusmsg('SUCCESS', '<?php echo $cmsg; ?>', '');
-				<?php
-				$_SESSION["s"] = '';
+			showsusmsg('SUCCESS', '<?php echo $cmsg; ?>', '');
+			<?php
+			$_SESSION["s"] = '';
 		}
 
-		if (isset($_SESSION['s']) && $_SESSION["s"] == 2) {
+		if ($_SESSION["s"] == 2) {
 			?>
-				showsusmsg('SUCCESS', 'Job updated successfully', '');
-				<?php
-				$_SESSION["s"] = '';
+			showsusmsg('SUCCESS', 'Job updated successfully', '');
+			<?php
+			$_SESSION["s"] = '';
 		}
 
 

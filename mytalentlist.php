@@ -104,7 +104,7 @@ if ($talentHave['id'] != '') {
 													<div class="img"><img
 															src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($talentProfilePhoto)); ?>">
 													</div><?php if ($rowCompany['status'] == 1) { ?>
-														<div class="smbstatus" style="background-color: #FF0000;">Active</div>
+														<div class="smbstatus" style="background-color: #C02621;">Active</div>
 													<?php } else { ?>
 														<div class="smbstatus">Inactive</div><?php } ?>
 													<div class="dtail-viewed">

@@ -291,25 +291,32 @@ if (isset($_REQUEST['id']) && $_REQUEST['id'] != '') {
 								<div class="cbp-row">
 
 									<div class="talent-photo">
+
 										<?php
 										$talentProfilePhoto = isset($talentProfilePhoto) ? $talentProfilePhoto : '';
 										?>
 
-										<?php if ($talentProfilePhoto != '') { ?>
-											<div class="photo-left">
-												<img id="blah"
-													src="<?php echo $fullurl; ?>uploads/<?php echo $talentProfilePhoto; ?>">
-											</div>
-										<?php } ?>
-										<div class="photo-right">
-											<div class="uplod-txt">Upload Profile Photo <span>For best view 370px -
-													410px</span></div>
-											<div class="uplod-btn">
-												<input name="talentProfilePhoto" id="talentProfilePhoto" type="file"
-													onChange="readURL(this);" accept="image/x-png,image/gif,image/jpeg">
+										<div class="photo-left">
+											<img id="blah"
+												 src="<?php echo ($talentProfilePhoto != '') ? $fullurl.'uploads/'.$talentProfilePhoto : ''; ?>"
+												 style="max-width:200px;">
+										</div>
 
+										<div class="photo-right">
+											<div class="uplod-txt">
+												Upload Profile Photo 
+												<span>For best view 370px - 410px</span>
+											</div>
+
+											<div class="uplod-btn">
+												<input name="talentProfilePhoto"
+													   id="talentProfilePhoto"
+													   type="file"
+													   onChange="readURL(this);"
+													   accept="image/x-png,image/gif,image/jpeg">
 											</div>
 										</div>
+
 									</div>
 
 								</div>
@@ -365,3 +372,23 @@ text-decoration: underline;">Delete this page</a>&nbsp;
 </body>
 
 </html>
+<script>
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            if (!document.getElementById('blah')) {
+                var img = document.createElement("img");
+                img.id = "blah";
+                img.style.maxWidth = "100px";
+                img.style.marginTop = "10px";
+                input.closest('.photo-left')?.appendChild(img);
+            }
+            document.getElementById('blah').src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>

@@ -101,9 +101,8 @@ $ptab = 6;
 
 							$sqlProject = "SELECT * FROM " . _PROJECT_MASTER_TABLE_ . " 
                        WHERE userId != " . intval($_SESSION["sessUserId"]) . " 
+                       
                        AND status = 1 
-                       AND finalPost = 1 
-                       AND projectStatus = 1 
                        ORDER BY id DESC LIMIT 0,5";
 
 							$resProject = mysqli_query($conn, $sqlProject) or die(mysqli_error($conn));

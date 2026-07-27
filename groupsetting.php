@@ -159,11 +159,11 @@ if ($_REQUEST['groupId'] != '') {
 									<div class="join-btn">
 										<!--<a href="<?php echo $fullurl; ?>about-group.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">About this group</a>-->
 										<?php if ($mygroupid == 0) { ?><a
-													href="common_action.php?groupId=<?php echo encodeStr($rowGroup['id']); ?>&action=groupjoinrequest"
-													target="actionfrm" class="konectt-btn">Join group</a> <?php } ?>
+												href="common_action.php?groupId=<?php echo encodeStr($rowGroup['id']); ?>&action=groupjoinrequest"
+												target="actionfrm" class="konectt-btn">Join group</a> <?php } ?>
 
 										<?php if ($mygroupid1 == 0 && $mygroupid == 1) { ?><a class="konectt-btn"
-													style="background-color:#18ad06;">Join request sent</a> <?php } ?>
+												style="background-color:#18ad06;">Join request sent</a> <?php } ?>
 									</div>
 
 								</div>
@@ -175,19 +175,19 @@ if ($_REQUEST['groupId'] != '') {
 										href="<?php echo $fullurl; ?>groups-detail.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Posts</a>
 								</li>
 								<?php if ($rowGroup['userId'] == $_SESSION['sessUserId']) { ?>
-										<li><a
-												href="<?php echo $fullurl; ?>joining-requests.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Joining
-												requests</a></li>
+									<li><a
+											href="<?php echo $fullurl; ?>joining-requests.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">Joining
+											requests</a></li>
 								<?php } ?>
 								<li><a
 										href="<?php echo $fullurl; ?>about-group.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>">About
 										this group</a></li>
 								<?php if ($rowGroup['userId'] == $_SESSION['sessUserId']) { ?>
-										<li><a href="<?php echo $fullurl; ?>group-setting.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>"
-												class="active">Group setting</a></li>
-										<li><a
-												onClick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=invitegrpcontacts&groupId=<?php echo encodeStr($rowGroup['id']); ?>','Invite Contacts');">Invite
-												contacts</a></li>
+									<li><a href="<?php echo $fullurl; ?>group-setting.html?groupId=<?php echo encodeStr($rowGroup['id']); ?>"
+											class="active">Group setting</a></li>
+									<li><a
+											onClick="funcommonpopupwin('520px','auto','<?php echo $fullurl; ?>common_popup_inner.php?type=invitegrpcontacts&groupId=<?php echo encodeStr($rowGroup['id']); ?>','Invite Contacts');">Invite
+											contacts</a></li>
 								<?php } ?>
 							</ul>
 							<div class="post-list" style="width:100%;">
@@ -200,8 +200,8 @@ if ($_REQUEST['groupId'] != '') {
 												<input name="imagefile" id="imagefile" type="file"
 													onChange="$('#frmgroup').submit();$('#commonloader').show();">
 												<?php if (isset($_GET['e']) && $_GET['e'] == 1) { ?>
-														<div style="margin-bottom:10px; color:#C02621;" class="">Oops! Please
-															upload image file with extension only .jpg, .png, .gif.</div>
+													<div style="margin-bottom:10px; color:#FF0000;" class="">Oops! Please
+														upload image file with extension only .jpg, .png, .gif.</div>
 												<?php } ?>
 											</div>
 
@@ -240,11 +240,11 @@ if ($_REQUEST['groupId'] != '') {
 		<?php include('footer.php'); ?>
 	</div>
 	<?php if ($_REQUEST['groupId'] != '') { ?>
-			<script>
-				function reloadPage() {
-					location.reload(true);
-				}
-			</script>
+		<script>
+			function reloadPage() {
+				location.reload(true);
+			}
+		</script>
 	<?php } ?>
 </body>
 

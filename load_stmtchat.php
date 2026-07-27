@@ -1,12 +1,15 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
+
 include_once('inc.php');
 include_once('config/session-check.inc.php'); // check user login session
 $userId2 = $_REQUEST['stmtId'];
 $msgdate = '';
 
-unset($selectFields);
-unset($whereFields);
-unset($whereVals);
+$selectFields =[];
+$whereFields = [];
+$whereVals =[];
 
 
 $sqlTotal = 0; // default
@@ -49,10 +52,41 @@ $sqlLogin = "";
 $sqlLogin = "select * from " . _STUDENT_MENTOR_CHAT_MASTER_TABLE_ . " where userId='" . $_SESSION['sessUserId'] . "' and contactId='" . decodeStr($userId2) . "' ORDER BY dateAdded ASC LIMIT " . $lsatsqlTotal . "," . $sqlTotal . "";
 $resLogin = mysqli_query($conn, $sqlLogin);
 $totalMsqlRow = mysqli_num_rows($resLogin);
+// ================= RECORDING CARD =================
+
+
 if ($totalMsqlRow > 0) {
 	while ($row = mysqli_fetch_array($resLogin)) {
 
+
+$attendance = $row['attendance']; // column name confirm karo
+
+$text = trim($row["chatText"]);
+
+if(strpos($text,'[recording]') === 0){
+
+    $file = str_replace('[recording]','',$text);
+
+    echo '
+    <div class="userchatboxmain">
+        <div class="recording-card">
+            🎤 Voice Message<br>
+            <audio controls src="'.$fullurl.$file.'" style="width:100%"></audio>
+        </div>
+    </div>';
+
+    continue;
+}
+
+
+
+
+
+
 		if ($row["chatFileName"] != '') {
+		
+
+
 			$fileExt = findExtension($row["chatFileName"]);
 
 			if ($fileExt == 'jpeg' || $fileExt == 'JPEG' || $fileExt == 'jpg' || $fileExt == 'JPG' || $fileExt == 'png' || $fileExt == 'PNG') {
@@ -64,9 +98,12 @@ if ($totalMsqlRow > 0) {
 			$img = 0;
 		}
 		?>
+		
 		<?php if ($msgdate != date("Y-m-d", $row['dateAdded'])) { ?>
 			<div class="chat-date"><?php echo date("j F Y", $row['dateAdded']); ?></div>
 		<?php } ?>
+
+
 		<?php if ($row["chatBy"] != $_SESSION['sessUserId']) {
 			$selst = 'select * from ' . _USERS_MASTER_TABLE_ . '  WHERE userId=' . decodeStr($_REQUEST["stmtId"]) . ' ';
 			$usersmt = mysqli_query($conn, $selst);
@@ -76,6 +113,9 @@ if ($totalMsqlRow > 0) {
 			} else {
 				$userphotot = 'user-placeholder.jpg';
 			}
+
+
+
 			if ($row["meeting"] == 0) { ?>
 				<div class="userchatboxmain">
 					<div class="userchatboxmain_user">
@@ -83,7 +123,7 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphotot)); ?>">
 						</div>
 						<div class="userchatboxmain_name"
-							style="font-size: 16px; font-weight: 600;color: #FF0000;    text-align: left;margin-left: 70px ">
+							style="font-size: 16px; font-weight: 600;color: #C02621;    text-align: left;margin-left: 70px ">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["firstName"]); ?>
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["lastName"]); ?>
 						</div>
@@ -91,7 +131,18 @@ if ($totalMsqlRow > 0) {
 							class="userchatboxmain_text chatmsg12 bg123none chatmsg<?php if (strpos($row["chatText"], 'iframe') !== false) { ?> iframehave<?php } ?>"
 							<?php if ($img == 1) { ?>style=" padding:0px !important;" <?php } ?>>
 							<?php if ($img == 0) {
-								echo nl2br(showsmily($row["chatText"]));
+								$html = $row["chatText"];
+
+								$attendanceAttr = ' data-attendance="'.$attendance.'"';
+
+								$html = str_replace(
+									'<div class="chat-event"',
+									'<div class="chat-event" data-msg-id="'.$row['id'].'" '.$attendanceAttr,
+									$html
+								);
+
+
+								echo nl2br(showsmily($html));
 							} else { ?>
 								<div class="imgbox" style="max-height:100px;">
 									<img src="<?php echo $fullurl; ?>uploads/<?php echo $row["chatFileName"]; ?>" style="max-height:100px;;"
@@ -112,12 +163,23 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphotot)); ?>">
 						</div>
 						<div class="userchatboxmain_name"
-							style="font-size: 16px; font-weight: 600;color: #FF0000;    text-align: left;margin-left: 70px;">
+							style="font-size: 16px; font-weight: 600;color: #C02621;    text-align: left;margin-left: 70px;">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["firstName"]); ?>
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsmt["lastName"]); ?>
 						</div>
 						<div class="userchatboxmain_text" style="margin-left: 70px;">
-							<div class="chatmsg" id="meeting<?php echo $row['id']; ?>"><?php echo nl2br(showsmily($row["chatText"])); ?>
+							<div class="chatmsg" id="meeting<?php echo $row['id']; ?>"><?php $html = $row["chatText"];
+
+							$attendanceAttr = ' data-attendance="'.$attendance.'"';
+
+							$html = str_replace(
+								'<div class="chat-event"',
+								'<div class="chat-event" data-msg-id="'.$row['id'].'" '.$attendanceAttr,
+								$html
+							);
+
+
+							echo nl2br(showsmily($html)); ?>
 							</div>
 
 							<div class="userchatboxmain_time" id="usermsgid<?php echo $row['id']; ?>">
@@ -140,6 +202,7 @@ if ($totalMsqlRow > 0) {
 			} else {
 				$userphoto = 'user-placeholder.jpg';
 			}
+
 			if ($row["meeting"] == 0) { ?>
 				<div class="userchatboxmain">
 					<div class="userchatboxmain_me">
@@ -147,7 +210,7 @@ if ($totalMsqlRow > 0) {
 							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>">
 						</div>
 						<div class="userchatboxmain_name_me"
-							style="font-size: 16px; font-weight: 600;color: #FF0000;     text-align: right;    margin-right: 70px;">
+							style="font-size: 16px; font-weight: 600;color: #C02621;     text-align: right;    margin-right: 70px;">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["firstName"]); ?>
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["lastName"]); ?>
 						</div>
@@ -155,7 +218,18 @@ if ($totalMsqlRow > 0) {
 							class="userchatboxmain_text_me bg123none chatmsg12 chatmsg<?php if (strpos($row["chatText"], 'iframe') !== false) { ?> iframehave<?php } ?>"
 							<?php if ($img == 1) { ?>style=" padding:0px !important;" <?php } ?>>
 							<?php if ($img == 0) {
-								echo nl2br(showsmily($row["chatText"]));
+								$html = $row["chatText"];
+
+								$attendanceAttr = ' data-attendance="'.$attendance.'"';
+
+								$html = str_replace(
+									'<div class="chat-event"',
+									'<div class="chat-event" data-msg-id="'.$row['id'].'" '.$attendanceAttr,
+									$html
+								);
+
+
+								echo nl2br(showsmily($html));
 							} else { ?>
 								<div class="imgbox" style="max-height:100px;">
 									<img src="<?php echo $fullurl; ?>uploads/<?php echo $row["chatFileName"]; ?>" style="max-height:100px;"
@@ -182,10 +256,21 @@ if ($totalMsqlRow > 0) {
 							}
 						</style>
 						<div class="userlestimagediv" style="width: 50px;     float: left !important;">
-							<img src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>">
+							<img src="<?php echo $fullurl; ?>uploads/<?php $html = $row["chatText"];
+
+						$attendanceAttr = ' data-attendance="'.$attendance.'"';
+
+						$html = str_replace(
+							'<div class="chat-event"',
+							'<div class="chat-event" data-msg-id="'.$row['id'].'" '.$attendanceAttr,
+							$html
+						);
+
+
+						echo nl2br(showsmily($html)); ?>">
 						</div>
 						<div class="userchatboxmain_name_me"
-							style="font-size: 16px; font-weight: 600;color: #FF0000;    text-align: left;margin-left: 70px;">
+							style="font-size: 16px; font-weight: 600;color: #C02621;    text-align: left;margin-left: 70px;">
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["firstName"]); ?>
 							<?php echo preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $resultsm["lastName"]); ?>
 						</div>
@@ -236,7 +321,7 @@ mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 	}
 
 </script>
-<script>
+<!--<script>
 	$("#loadstmtchat").scrollTop($("#loadstmtchat")[0].scrollHeight);
 	setTimeout(function () {
 		$("#loadstmtchat").scrollTop($("#loadstmtchat")[0].scrollHeight);
@@ -248,6 +333,18 @@ mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
 			scrollTop: $('#loadstmtchat')[0].scrollHeight
 		}, 2000);
 	}, 1000);//unsued
-</script>
+</script> -->
 
 <input type="hidden" name="livechatstmtpage" id="livechatstmtpage" value="1" />
+<style>
+
+.recording-card {
+    background: #fde2e2;
+    border-left: 4px solid #dc3545;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+</style>

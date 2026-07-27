@@ -194,7 +194,11 @@ border-color: #1a94c3;">Confirm</a>
 								$whereVals = [];
 
 								$sqlLogin = "";
-								$sqlLogin = "select * from " . _CONTACT_MASTER_TABLE_ . " where userId='" . $_SESSION['sessUserId'] . "' " . $strWhere . " and status=1 ";
+								$sqlLogin = "SELECT DISTINCT contactId 
+								 FROM " . _CONTACT_MASTER_TABLE_ . " 
+								 WHERE userId='" . $_SESSION['sessUserId'] . "' 
+								 AND status=1";
+
 								$resLogin = getRecords(_CONTACT_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlLogin);
 								if ($resLogin) {
 									while ($rowLogin = mysqli_fetch_array($resLogin)) {

@@ -96,6 +96,13 @@ if ($_REQUEST['eventId'] != '') {
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
   <script src="<?php echo $fullurl; ?>js/jquery.min.js"></script>
   <script src="<?php echo $fullurl; ?>js/main.js"></script>
+     <script>
+$(document).on("click", ".rugo", function (e) {
+    e.preventDefault();
+      
+    $(this).next(".go-btn-list").toggle();
+});
+</script>
 </head>
 
 <body>
@@ -213,7 +220,7 @@ if ($_REQUEST['eventId'] != '') {
                           <div class="addthis_inline_share_toolbox_tnos"></div>
                         </div>
                         <?php if ($_SESSION["sessUserId"] != '' && $_SESSION["sessUserId"] != 0) { ?>
-                          <div class="btn-going" style="margin-right:-15px;">
+                           <div class="btn-going" style="margin-right:-15px;">
                             <a class="rugo">Are You Going <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
                             <ul class="go-btn-list" style="display:none;">
                               <li><a
@@ -226,7 +233,9 @@ if ($_REQUEST['eventId'] != '') {
                                   href="<?php echo $fullurl; ?>events-detail.html?eventId=<?php echo trim($_REQUEST["eventId"]); ?>&status=3">No</a>
                               </li>
                             </ul>
-                          </div> <?php } ?>
+                          </div>
+
+							 <?php } ?>
                       </div>
                     </div>
                   </div>
@@ -255,43 +264,38 @@ if ($_REQUEST['eventId'] != '') {
                           $whereFields = [];
                           $whereVals = [];
 
-                          $sqlGroupMembers = "SELECT * FROM " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE eventId = " . intval($rowEvents["id"]) . " AND status = 1 ORDER BY id DESC LIMIT 0,6";
+                          $sqlGroupMembers = "";
+                          $sqlGroupMembers = "select * from " . _EVENT_GUEST_MASTER_TABLE_ . " WHERE  eventId= " . $rowEvents["id"] . " and status=1 order by id desc LIMIT 0,6 ";
                           $resGroupMembers = getRecords(_EVENT_GUEST_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlGroupMembers);
-
                           if ($resGroupMembers) {
                             while ($rowgroup = mysqli_fetch_array($resGroupMembers)) {
 
                               $eventfriendnameurl = '';
                               $eventuserphoto = '';
-                              $eventFirstName = '';
-                              $eventLastName = '';
-                              $eventUserId = 0;
 
                               $aa = "SELECT * FROM " . _USERS_MASTER_TABLE_ . " WHERE userId = " . intval($rowgroup["userId"]);
                               $ba = mysqli_query($conn, $aa) or die(mysqli_error($conn));
 
-                              if ($user = mysqli_fetch_array($ba)) {
-                                $eventfriendnameurl = $user['userurl'] ?? '';
-                                $eventuserphoto = !empty($user["profilePhoto"]) ? $user["profilePhoto"] : 'user-placeholder.jpg';
-                                $eventFirstName = stripslashes(trim($user["firstName"] ?? ''));
-                                $eventLastName = stripslashes(trim($user["lastName"] ?? ''));
-                                $eventUserId = $user['userId'] ?? 0;
+                              if ($eventuserres = mysqli_fetch_array($ba)) {
+                                $eventfriendnameurl = $eventuserres['userurl'] ?? '';
+
+                                if (!empty($eventuserres["profilePhoto"])) {
+                                  $eventuserphoto = $eventuserres["profilePhoto"];
+                                } else {
+                                  $eventuserphoto = 'user-placeholder.jpg';
+                                }
                               } else {
-                                // Defaults if no user found
+                                // Default values agar user data nahi mile
                                 $eventfriendnameurl = '';
                                 $eventuserphoto = 'user-placeholder.jpg';
-                                $eventFirstName = '';
-                                $eventLastName = '';
-                                $eventUserId = 0;
                               }
+
                               ?>
-                              <li>
-                                <a
-                                  href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($eventUserId); ?>/<?php echo $eventfriendnameurl; ?>.html">
-                                  <img src="<?php echo $fullurl; ?>uploads/<?php echo $eventuserphoto; ?>"
-                                    title="<?php echo $eventFirstName . ' ' . $eventLastName; ?>"
-                                    alt="<?php echo $eventFirstName . ' ' . $eventLastName; ?>">
-                                </a>
+                              <li><a
+                                  href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($eventuserres['userId']); ?>/<?php echo $eventfriendnameurl; ?>.html"><img
+                                    src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($eventuserphoto)); ?>"
+                                    title="<?php echo stripslashes(trim($eventuserres["firstName"])); ?> <?php echo stripslashes(trim($eventuserres["lastName"])); ?>"
+                                    alt="<?php echo stripslashes(trim($eventuserres["firstName"])); ?> <?php echo stripslashes(trim($eventuserres["lastName"])); ?>"></a>
                               </li>
                               <?php
                               $m++;
@@ -300,10 +304,9 @@ if ($_REQUEST['eventId'] != '') {
                           ?>
                         </ul>
                         <span
-                          class="going-mmbr"><strong><?php echo $totalimages ?? 0; ?></strong><?php echo $companNameTitle ?? ''; ?>
+                          class="going-mmbr"><strong><?php echo $totalimages; ?></strong><?php echo $companNameTitle; ?>
                           members are going to be there.</span>
                       </div>
-
                     <?php } ?>
 
                     <!--<div class="left-guest">
@@ -416,17 +419,7 @@ if ($_REQUEST['eventId'] != '') {
                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-              </div>
+            </div>
 
             </div>
           </form>

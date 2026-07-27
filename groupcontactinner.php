@@ -10,79 +10,79 @@ $groupUserId = isset($_REQUEST['groupUserId']) ? $_REQUEST['groupUserId'] : '';
 if (isset($_REQUEST['groupId']) && $groupUserId != '' && $_REQUEST['groupId'] != '') {
 	$groupId = decodeStr($_REQUEST['groupId']);
 	?>
-		<script>$('#commonloader').hide();</script>
-		<?php
-		$selectFields = [];
+	<script>$('#commonloader').hide();</script>
+	<?php
+	$selectFields = [];
+	$whereFields = [];
+	$whereVals = [];
+
+
+
+	$sqlCheck1 = "";
+	$sqlCheck1 = "select id from " . _GROUP_MEMBER_MASTER_TABLE_ . " where userId='" . decodeStr($groupUserId) . "' and groupId=" . $groupId . " ";
+	$resCheck1 = getRecords(_GROUP_MEMBER_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlCheck1);
+	if ($resCheck1) {
+	} else {
+		include_once('mail.php');
+		$insertFields = [];
+		$insertVals = [];
 		$whereFields = [];
 		$whereVals = [];
 
+		$insertFields[0] = "status";
+		$insertFields[1] = "userId";
+		$insertFields[2] = "groupId";
+		$insertFields[3] = "dateAdded";
+
+		$insertVals[0] = 0;
+		$insertVals[1] = decodeStr($groupUserId);
+		$insertVals[2] = $groupId;
+		$insertVals[3] = time();
+
+		$resInsert = insertDB(_GROUP_MEMBER_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
 
 
-		$sqlCheck1 = "";
-		$sqlCheck1 = "select id from " . _GROUP_MEMBER_MASTER_TABLE_ . " where userId='" . decodeStr($groupUserId) . "' and groupId=" . $groupId . " ";
-		$resCheck1 = getRecords(_GROUP_MEMBER_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlCheck1);
-		if ($resCheck1) {
+		$dateAdded = time();
+
+		$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . decodeStr($groupUserId) . "',groupId= " . $groupId . ",postType='4' ,notificationText='privategrouprequest',dateAdded='" . $dateAdded . "'";
+		mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+
+		/*For email templates*/
+		$sql_group = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['groupId']) . " ";
+		$resgroup = mysqli_query($conn, $sql_group) or die(mysqli_error($conn));
+		$rowGroup = mysqli_fetch_array($resgroup);
+		$groupName = $rowGroup['groupName'];
+
+		$aa = "SELECT email from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . decodeStr($groupUserId) . "' ";
+		$res5 = mysqli_query($conn, $aa);
+		$getuser = mysqli_fetch_array($res5);
+		$email = $getuser["email"];
+
+		$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,cityName,countryName from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
+		$res52 = mysqli_query($conn, $aa2);
+		$getuser2 = mysqli_fetch_array($res52);
+
+		$firstName2 = $getuser2['firstName'];
+		$lastName2 = $getuser2['lastName'];
+		$profilePhoto21 = $getuser2['profilePhoto'];
+		$jobTitle = $getuser2["jobTitle"];
+		$companyName = $getuser2["companyName"];
+		$userurl2 = $getuser2["userurl"];
+		$cityName = $getuser2["cityName"];
+		$countryName = $getuser2["countryName"];
+
+		if ($profilePhoto21 != '') {
+			$profilePhoto2 = $profilePhoto21;
 		} else {
-			include_once('mail.php');
-			$insertFields = [];
-			$insertVals = [];
-			$whereFields = [];
-			$whereVals = [];
-
-			$insertFields[0] = "status";
-			$insertFields[1] = "userId";
-			$insertFields[2] = "groupId";
-			$insertFields[3] = "dateAdded";
-
-			$insertVals[0] = 0;
-			$insertVals[1] = decodeStr($groupUserId);
-			$insertVals[2] = $groupId;
-			$insertVals[3] = time();
-
-			$resInsert = insertDB(_GROUP_MEMBER_MASTER_TABLE_, $insertFields, $insertVals, $whereFields, $whereVals, _N_, '');
+			$profilePhoto21 = 'user-placeholder.jpg';
+		}
 
 
-			$dateAdded = time();
+		$mailBodyContent = ''; // Initialize kar diya
 
-			$sql_ins = "insert into " . _NOTIFICATION_MASTER_TABLE_ . " set contactId='" . $_SESSION["sessUserId"] . "', userId='" . decodeStr($groupUserId) . "',groupId= " . $groupId . ",postType='4' ,notificationText='privategrouprequest',dateAdded='" . $dateAdded . "'";
-			mysqli_query($conn, $sql_ins) or die(mysqli_error($conn));
+		$mailBodyContent .= ''; // Ab warning nahi aayegi
 
-			/*For email templates*/
-			$sql_group = "SELECT * from " . _GROUP_MASTER_TABLE_ . " WHERE id= " . decodeStr($_REQUEST['groupId']) . " ";
-			$resgroup = mysqli_query($conn, $sql_group) or die(mysqli_error($conn));
-			$rowGroup = mysqli_fetch_array($resgroup);
-			$groupName = $rowGroup['groupName'];
-
-			$aa = "SELECT email from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . decodeStr($groupUserId) . "' ";
-			$res5 = mysqli_query($conn, $aa);
-			$getuser = mysqli_fetch_array($res5);
-			$email = $getuser["email"];
-
-			$aa2 = "SELECT firstName,lastName,profilePhoto,jobTitle,companyName,userId,userurl,cityName,countryName from " . _USERS_MASTER_TABLE_ . " WHERE userId='" . $_SESSION['sessUserId'] . "' ";
-			$res52 = mysqli_query($conn, $aa2);
-			$getuser2 = mysqli_fetch_array($res52);
-
-			$firstName2 = $getuser2['firstName'];
-			$lastName2 = $getuser2['lastName'];
-			$profilePhoto21 = $getuser2['profilePhoto'];
-			$jobTitle = $getuser2["jobTitle"];
-			$companyName = $getuser2["companyName"];
-			$userurl2 = $getuser2["userurl"];
-			$cityName = $getuser2["cityName"];
-			$countryName = $getuser2["countryName"];
-
-			if ($profilePhoto21 != '') {
-				$profilePhoto2 = $profilePhoto21;
-			} else {
-				$profilePhoto21 = 'user-placeholder.jpg';
-			}
-
-
-			$mailBodyContent = ''; // Initialize kar diya
-	
-			$mailBodyContent .= ''; // Ab warning nahi aayegi
-	
-			$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
+		$mailBodyContent .= '<div bgcolor="#E9E9E9" style="background:#e9e9e9;margin:0;padding:0 10px;font-family:"Open Sans",Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;border-bottom:10px solid #33a9d7">
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color:#e9e9e9;border-collapse:collapse;margin:0;padding:0">
     <tbody>
     <tr>
@@ -152,109 +152,109 @@ if (isset($_REQUEST['groupId']) && $groupUserId != '' && $_REQUEST['groupId'] !=
 </div>';
 
 
-			$subject = "" . $firstName2 . " invites you to join " . $groupName . " on " . $companNameTitle . "";
+		$subject = "" . $firstName2 . " invites you to join " . $groupName . " on " . $companNameTitle . "";
 
-			send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, str_replace('?', '', $mailBodyContent));
+		send_template_mail(_FROM_EMAIL_TEMPLATE_ID_, $email, $subject, str_replace('?', '', $mailBodyContent));
 
-		}
+	}
 
 }
 if ($keyword != '') {
 	?>
-		<ul class="cht_mmbr_list" id="loadgroupuserlist" style="height:200px;">
+	<ul class="cht_mmbr_list" id="loadgroupuserlist" style="height:200px;">
 
-			<?php
-			$n = 0;
-			$selectFields = [];
-			$whereFields = [];
-			$whereVals = [];
+		<?php
+		$n = 0;
+		$selectFields = [];
+		$whereFields = [];
+		$whereVals = [];
 
-			$sqlSearch = "";
-			//echo $sqlSearch="select * from "._USERS_MASTER_TABLE_."  a inner join "._GROUP_MEMBER_MASTER_TABLE_." b on a.userId=b.userId  where (a.firstName like '%".$keyword."%' OR a.lastName like '%".$keyword."%') and b.status=1 and b.groupId='".decodeStr($_REQUEST["groupId"])."' ";
-		
-			$sqlSearch = "select * from " . _USERS_MASTER_TABLE_ . " where (firstName like '%" . $keyword . "%' OR lastName like '%" . $keyword . "%') and userId IN (select userId from " . _CONTACT_MASTER_TABLE_ . " where contactId='" . $_SESSION['sessUserId'] . "' and status=1)  ";
-			$resSearch = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlSearch);
-			if ($resSearch) {
-				while ($rowSearch = mysqli_fetch_array($resSearch)) {
-
-
+		$sqlSearch = "";
+		//echo $sqlSearch="select * from "._USERS_MASTER_TABLE_."  a inner join "._GROUP_MEMBER_MASTER_TABLE_." b on a.userId=b.userId  where (a.firstName like '%".$keyword."%' OR a.lastName like '%".$keyword."%') and b.status=1 and b.groupId='".decodeStr($_REQUEST["groupId"])."' ";
+	
+		$sqlSearch = "select * from " . _USERS_MASTER_TABLE_ . " where (firstName like '%" . $keyword . "%' OR lastName like '%" . $keyword . "%') and userId IN (select userId from " . _CONTACT_MASTER_TABLE_ . " where contactId='" . $_SESSION['sessUserId'] . "' and status=1)  ";
+		$resSearch = getRecords(_USERS_MASTER_TABLE_, $selectFields, $whereFields, $whereVals, _Y_, $sqlSearch);
+		if ($resSearch) {
+			while ($rowSearch = mysqli_fetch_array($resSearch)) {
 
 
-					$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowSearch["userId"] . "";
-					$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
-					$userres = mysqli_fetch_array($b);
-
-					$friendnameurl = $userres['userurl'];
-					if ($userres["profilePhoto"] != '') {
-						$userphoto = $userres["profilePhoto"];
-					} else {
-						$userphoto = 'user-placeholder.jpg';
-					}
-
-					?>
 
 
-							<li>
-								<div class="frfl-img">
-									<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-										target="_blank"><img
-											src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a><a
-										href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
-										target="_blank"><?php echo $userres['firstName']; ?>			 			<?php echo $userres['lastName']; ?></a>
-									<span
-										style="width:120px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"><?php echo $userres["companyName"]; ?></span>
+				$a = "SELECT * from " . _USERS_MASTER_TABLE_ . " WHERE userId= " . $rowSearch["userId"] . "";
+				$b = mysqli_query($conn, $a) or die(mysqli_error($conn));
+				$userres = mysqli_fetch_array($b);
 
-									<?php
-									$n = 0;
-									unset($selectFields);
-									unset($whereFields);
-									unset($whereVals);
+				$friendnameurl = $userres['userurl'];
+				if ($userres["profilePhoto"] != '') {
+					$userphoto = $userres["profilePhoto"];
+				} else {
+					$userphoto = 'user-placeholder.jpg';
+				}
 
-									$sqlCheck = "";
-									$sqlCheck = mysqli_query(
-										$conn,
-										"SELECT * FROM " . _GROUP_MEMBER_MASTER_TABLE_ . " 
+				?>
+
+
+				<li>
+					<div class="frfl-img">
+						<a href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+							target="_blank"><img
+								src="<?php echo $fullurl; ?>uploads/<?php echo stripslashes(trim($userphoto)); ?>"></a><a
+							href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userres['userId']); ?>/<?php echo $friendnameurl; ?>.html"
+							target="_blank"><?php echo $userres['firstName']; ?> 			<?php echo $userres['lastName']; ?></a>
+						<span
+							style="width:120px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;"><?php echo $userres["companyName"]; ?></span>
+
+						<?php
+						$n = 0;
+						unset($selectFields);
+						unset($whereFields);
+						unset($whereVals);
+
+						$sqlCheck = "";
+						$sqlCheck = mysqli_query(
+							$conn,
+							"SELECT * FROM " . _GROUP_MEMBER_MASTER_TABLE_ . " 
      WHERE userId=" . (int) $userres['userId'] . " 
        AND groupId=" . (int) decodeStr($_REQUEST['groupId'])
-									);
+						);
 
-									if (mysqli_num_rows($sqlCheck) > 0) {
-										?>
-											<i class="fa fa-check greentick" aria-hidden="true"></i>
-											<?php
-									} else {
-										?>
-											<div class="add-frnd" style=" position:absolute; right:-5px; top:12px;">
-												<a
-													onclick="groupsendrequest('<?php echo encodeStr($userres['userId']); ?>');$('#commonloader').show();">Send
-													Request</a>
-											</div>
-									<?php } ?>
-
-
-								</div>
-							</li>
+						if (mysqli_num_rows($sqlCheck) > 0) {
+							?>
+							<i class="fa fa-check greentick" aria-hidden="true"></i>
 							<?php
-							$n++;
-				}
+						} else {
+							?>
+							<div class="add-frnd" style=" position:absolute; right:-5px; top:12px;">
+								<a
+									onclick="groupsendrequest('<?php echo encodeStr($userres['userId']); ?>');$('#commonloader').show();">Send
+									Request</a>
+							</div>
+						<?php } ?>
+
+
+					</div>
+				</li>
+				<?php
+				$n++;
 			}
-			?>
-			<?php if ($n == 0) { ?>
-					<div style="text-align:center; color:#666666; font-size:12px;">No Contact Found.</div><?php } ?>
+		}
+		?>
+		<?php if ($n == 0) { ?>
+			<div style="text-align:center; color:#666666; font-size:12px;">No Contact Found.</div><?php } ?>
 
-		</ul>
+	</ul>
 
 
-		<script>
-			$("#groupcontactinner").show();
-		</script>
-		<?php
+	<script>
+		$("#groupcontactinner").show();
+	</script>
+	<?php
 } else {
 	?>
-		<script>
-			$("#groupcontactinner").hide();
-		</script>
-		<?php
+	<script>
+		$("#groupcontactinner").hide();
+	</script>
+	<?php
 }
 ?>
 <input type="hidden" name="requestgroupId" id="requestgroupId" value="<?php echo $_REQUEST["groupId"]; ?>" />

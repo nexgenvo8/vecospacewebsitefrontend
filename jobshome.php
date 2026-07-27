@@ -142,7 +142,7 @@ $pageIndex = 14;
 									</p>
 								</li>
 								<li>
-									<p style="text-align:left;">Using this feature of JMI VECOSPACE students will have
+									<p style="text-align:left;">Using this feature of NDIM VECOSPACE students will have
 										ample opportunities for themselves to look for a job position and offer
 										available on the portal.</p>
 								</li>
@@ -183,6 +183,13 @@ $pageIndex = 14;
 													href="<?php echo $fullurl; ?>create-new-company.html"><i
 														class="fa fa-upload" aria-hidden="true"></i> Recruiters - Post a
 													Job</a><?php } ?>
+													
+													<a href="<?php echo $fullurl; ?>add-job.html?type=market" 
+													class="postjobbtn2"
+													style="background-color:#28a745;">
+													<i class="fa fa-briefcase"></i> Post Market Jobs
+													</a>
+													
 											<a href="<?php echo $fullurl; ?>search-job.html" class="postjobbtn2"
 												style="background-color: #00a0af;"> <i class="fa fa-search"
 													aria-hidden="true" style="color: #00a0af;"></i> Search Jobs</a>

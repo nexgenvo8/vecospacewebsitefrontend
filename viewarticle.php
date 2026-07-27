@@ -66,6 +66,7 @@ $totalpostcomment = mysqli_num_rows($res5);
 $userphoto = '';
 $friendnameurl = '';
 $user_jobTitle = stripslashes(strip_tags($userresarticles['jobTitle']));
+$coursename = stripslashes(strip_tags($userresarticles['coursename']));
 $user_companyName = stripslashes(strip_tags($userresarticles['companyName']));
 $friendnameurl = $userresarticles['userurl'];
 
@@ -459,7 +460,7 @@ if ($userresarticles["profilePhoto"] != '') {
 										<div class="ttl-head">
 											<a
 												href="<?php echo $fullurl; ?>profile/<?php echo encodeStr($userresarticles['userId']); ?>/<?php echo $friendnameurl; ?>.html"><?php echo stripslashes($userresarticles['firstName'] . ' ' . $userresarticles['lastName']); ?></a>
-											<span><?php echo $user_jobTitle; ?> at
+											<span><?php echo $coursename; ?> at
 												<?php echo $user_companyName; ?></span>
 											<a href="<?php echo $fullurl; ?>user-articles.html?id=<?php echo encodeStr($userresarticles['userId']); ?>"
 												class="mr-article" target="_blank"><?php echo $totalarticles; ?>
